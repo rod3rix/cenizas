@@ -54,7 +54,7 @@ public function login(Request $request): RedirectResponse
         if (auth()->user()->type == 'admin') {
             return redirect()->route('admin.dashboard');
         }else{
-            return redirect()->route('welcome');
+            return redirect()->route('home');
         }
     }else{
         return redirect()->route('login')
