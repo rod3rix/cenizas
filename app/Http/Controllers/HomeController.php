@@ -34,12 +34,12 @@ class HomeController extends Controller
      */
     public function dashboard(): View
     {
-        return view('dashboard');
+        return view('admin');
     }
 
     public function postularFondos()
     {
-        return view('postularFondos');          
+        return view('postularFondos');      
     }
 
     public function postularProyectos()
@@ -111,6 +111,15 @@ class HomeController extends Controller
     {
         return view('verPostulacionesProyectos');
     }
-    
+
+    public function verEstadoPostulaciones()
+    {
+        return view('verPostulacionesProyectos');
+    }
+
+    public function graciasRegistro()
+    {
+        return view('graciasRegistro');
+    }
 
 }

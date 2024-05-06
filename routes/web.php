@@ -2,19 +2,25 @@
 
 use Illuminate\Support\Facades\Route;
 
+
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
 
-
 //users routes
 Route::middleware(['auth', 'access-level:user'])->group(function () {
-  
-    Route::get('/welcome', [App\Http\Controllers\HomeController::class, 'index'])->name('welcome');
+    Route::get('/bienvenido',  [App\Http\Controllers\HomeController::class,'graciasRegistro'])->name('bienvenido');
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/postularFondos', [App\Http\Controllers\HomeController::class, 'postularFondos'])->name('postularFondos');
     Route::get('/postularProyectos', [App\Http\Controllers\HomeController::class, 'postularProyectos'])->name('postularProyectos');
+
+    Route::get('/verEstadoPostulaciones', [App\Http\Controllers\HomeController::class, 'verEstadoPostulaciones'])->name('verEstadoPostulaciones');
+
     Route::get('/editarPerfil', [App\Http\Controllers\HomeController::class, 'editarPerfil'])->name('editarPerfil');
     Route::get('/seguimientoProyectos',[App\Http\Controllers\HomeController::class,'seguimientoProyectos'])->name('seguimientoProyectos');
     Route::get('/enviarCaso', [App\Http\Controllers\HomeController::class,'enviarCaso'])->name('enviarCaso');

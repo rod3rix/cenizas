@@ -58,7 +58,7 @@
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">FONDOS CONCURSABLES</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{{ route('postularFondos') }}">POSTULAR FONDOS CONCURSABLES.</a></li>
-              <li><a class="dropdown-item" href="{{ route('verPostulacionesFondos') }}">VER ESTADO POSTULACIONES</a></li>
+              <li><a class="dropdown-item" href="{{ route('verPostulacionesProyectos') }}">VER ESTADO POSTULACIONES</a></li>
             </ul>
           </li>
         <li class="nav-item dropdown">
