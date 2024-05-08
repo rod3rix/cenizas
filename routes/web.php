@@ -14,6 +14,12 @@ Auth::routes();
 
 //users routes
 Route::middleware(['auth', 'access-level:user'])->group(function () {
+
+    //POST
+    Route::post('guardar-formulario', [App\Http\Controllers\HomeController::class, 'guardarFormulario1'])->name('guardar-formulario');
+
+    Route::get('/ingreso-caso',  [App\Http\Controllers\HomeController::class,'ingresoCaso'])->name('ingreso-caso');
+
     Route::get('/bienvenido',  [App\Http\Controllers\HomeController::class,'graciasRegistro'])->name('bienvenido');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/postularFondos', [App\Http\Controllers\HomeController::class, 'postularFondos'])->name('postularFondos');
