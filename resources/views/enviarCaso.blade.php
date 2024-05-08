@@ -26,7 +26,9 @@
 
                 <div class="card-body">
                     <form method="POST" id="frm1" name="frm1" enctype="multipart/form-data">
-                         <input id="frm" id="frm" value="1" type="hidden"> 
+                         <input id="frm" id="frm" value="1" type="hidden">
+                         <div id="urlRegiones" style="display: none;" data-url="{{ route('getRegiones') }}"></div>
+
                         @csrf
 
                         <div class="form-group row">
@@ -145,23 +147,7 @@
 
                             <div class="col-md-12">
                                  <select id="region" name="region" type="text" class="form-control @error('region') is-invalid @enderror">
-                                    <option value="">Seleccione</option>
-                                    <option>Arica-Parinacota</option>
-                                    <option>Tarapacá</option>
-                                    <option>Antofagasta</option>
-                                    <option>Atacama</option>
-                                    <option>Coquimbo</option>
-                                    <option>Valparaíso</option>
-                                    <option>Metropolitana</option>
-                                    <option>O'Higgins</option>
-                                    <option>Maule</option>
-                                    <option>Ñuble</option>
-                                    <option>Bío Bío</option>
-                                    <option>Araucanía</option>
-                                    <option>Los Ríos</option>
-                                    <option>Los Lagos</option>
-                                    <option>Aysén</option>
-                                    <option>Magallanes y Antártica Chilena</option>
+    <option value="">Seleccione una región</option>
                                 </select>
                                 
 
@@ -177,13 +163,7 @@
 
                             <div class="col-md-12">
                                  <select id="comuna" name="comuna" type="text" class="form-control @error('comuna') is-invalid @enderror">
-                                    <option value="">Seleccione</option>
-                                    <option value="1" >Comuna</option>
-                                    <option value="2">Comuna</option>
-                                    <option value="3">otro</option>
                                 </select>
-                                
-
                                 @error('comuna')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -257,44 +237,8 @@
 </div>
      
 <!-- Scripts -->
-<script>
 
-   function enviarFormulario(idFrm) {
-
-    var formData = new FormData(document.getElementById(idFrm));
-
-    $('form :input').removeClass('is-invalid');
-    $('.invalid-feedback').remove();
-
-    $.ajax({
-        url: 'guardar-formulario',
-        method: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-   success: function(response, textStatus, xhr) {
-        if (xhr.status === 200) {
-            // La solicitud fue exitosa, ahora verifica el contenido de la respuesta
-            if (response.success) {
-                // Si la respuesta indica éxito, puedes realizar alguna acción, como redireccionar a otra página
-                window.location.href = 'ingreso-caso';
-            } else {
-                // Si la respuesta indica que hubo errores de validación, muestras los mensajes de error debajo de los campos correspondientes
-                $.each(response.errors, function(key, value) {
-                    // Encuentra el campo correspondiente al error y muestra el mensaje de error
-                    $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
-                });
-            }
-        } else {
-            console.error('Error en la solicitud:', xhr.status);
-            // Aquí puedes manejar otros tipos de errores de solicitud si es necesario
-        }
-    },
-    error: function(xhr, status, error) {
-        console.error('Hubo un problema al enviar el formulario:', error);
-    }
-    });
-}
-</script>
+<script src="{{ asset('js/frm.js') }}"></script>
+<script src="{{ asset('js/regiones_comunas.js') }}"></script>
 
 @endsection
