@@ -16,6 +16,10 @@ Auth::routes();
 //users routes
 Route::middleware(['auth', 'access-level:user'])->group(function () {
 
+
+Route::post('casosUsuario', [App\Http\Controllers\FrmController::class, 'casosUsuario'])->name('casosUsuario');
+
+
 Route::post('getRegiones',
     [App\Http\Controllers\FrmController::class, 'getRegiones'])->name('getRegiones');
 
@@ -46,6 +50,8 @@ Route::post('getComunas',
 // admin routes
 Route::middleware(['auth', 'access-level:admin'])->group(function () {
   
+    Route::post('casosUsuarioAdmin', [App\Http\Controllers\FrmController::class, 'casosUsuarioAdmin'])->name('casosUsuarioAdmin');
+
     Route::get('/admin/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('admin.dashboard');
 
     Route::get('/usuariosRegistrados', [App\Http\Controllers\HomeController::class, 'usuariosRegistrados'])->name('usuariosRegistrados');
@@ -54,6 +60,9 @@ Route::middleware(['auth', 'access-level:admin'])->group(function () {
     Route::get('/verPostulacionesFondos',  [App\Http\Controllers\HomeController::class, 'verPostulacionesFondos'])->name('verPostulacionesFondos');
     Route::get('/verSugerenciaReclamo',  [App\Http\Controllers\HomeController::class, 'verSugerenciaReclamo'])->name('verSugerenciaReclamo');
     Route::get('/verPostulacionesProyectos',  [App\Http\Controllers\HomeController::class, 'verPostulacionesProyectos'])->name('verPostulacionesProyectos');
+
+    Route::get('responderCaso/{id}', [App\Http\Controllers\HomeController::class, 'responderCaso'])->name('responderCaso');
+
 });
 
 

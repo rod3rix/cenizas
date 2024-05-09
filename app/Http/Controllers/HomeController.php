@@ -141,4 +141,9 @@ class HomeController extends Controller
         return view('enviarCaso',['user' => $user]);
     } 
 
+    public function responderCaso()
+    {
+        return view('responderCaso');
+    }
+
 }

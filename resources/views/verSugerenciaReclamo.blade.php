@@ -30,38 +30,6 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>20987</td>
-                <td>NOMBRE CASO XXXX</td>
-                <td>JUAN PERÉZ</td>
-                <td>20/03/2024</td>
-                <td>CERRADO</td>
-                <td><a href="#">VER RESPUESTA</a></td>
-            </tr>
-            <tr>
-                <td>20987</td>
-                <td>NOMBRE CASO XXXX</td>
-                <td>FABIO MARTIN</td>
-                <td>ENVIADO</td>
-                <td>ABIERTO</td>
-                <td><a href="#">RESPONDER</a></td>
-            </tr>
-            <tr>
-                <td>20987</td>
-                <td>NOMBRE CASO XXXX</td>
-                <td>JUAN PERÉZ</td>
-                <td>20/03/2024</td>
-                <td>CERRADO</td>
-                <td><a href="#">VER RESPUESTA</a></td>
-            </tr>
-            <tr>
-                <td>20987</td>
-                <td>NOMBRE CASO XXXX</td>
-                <td>FABIO MARTIN</td>
-                <td>ENVIADO</td>
-                <td>ABIERTO</td>
-                <td><a href="#">RESPONDER</a></td>
-            </tr>
         </tbody>
         <tfoot>
            <!--  <tr>
@@ -79,5 +47,37 @@
      
 <!-- Scripts -->
 <script src="{{ asset('js/datatable.js') }}" defer></script>
+<script>    
+    $(document).ready(function() {
+    // Realizar la solicitud AJAX para obtener los datos de los casos
+    $.ajax({
+        url: '{{ route("casosUsuarioAdmin") }}', // Ruta del controlador para obtener los casos
+        type: 'POST', // Cambiamos el método HTTP a POST
+        dataType: 'json', // Esperamos recibir datos en formato JSON
+        data: {_token: '{{ csrf_token() }}'}, // Incluir el token CSRF en los datos de la solicitud
+        success: function(response) {
+            // Limpiar el cuerpo de la tabla
+            $('#registros tbody').empty();
+
+            // Iterar sobre los datos recibidos y agregarlos a la tabla
+            $.each(response, function(index, caso) {
+                $('#registros tbody').append(
+                    '<tr>' +
+                    '<td>' + caso.id + '</td>' +
+                    '<td>' + caso.asunto + '</td>' +
+                    '<td>' + caso.nombre_usuario + '</td>' +
+                    '<td>' + caso.fecha_creacion + '</td>' +
+                    '<td>' + caso.estado + '</td>' +
+                    '<td>' + caso.respuesta + '</td>' +
+                    '</tr>'
+                );
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al cargar los casos:', error);
+        }
+    });
+});
+</script>
 
 @endsection

@@ -7,12 +7,6 @@ namespace App\Models;
 // use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
-<?php
-
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
-
 class Casos extends Model
 {
     /**
@@ -30,6 +24,8 @@ class Casos extends Model
         'asunto',
         'descripcion',
         'archivo',
+        'estado',
+        'respuesta',
         'created_at',
         'updated_at'
     ];

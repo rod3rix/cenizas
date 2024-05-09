@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Regiones;
 use App\Models\Comunas;
+use App\Models\Casos;
 
 class FrmController extends Controller
 {
@@ -25,7 +26,6 @@ class FrmController extends Controller
      
      public function guardarFrm(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'tipo' => 'required',
             'localidad' => 'required',
@@ -99,4 +99,32 @@ class FrmController extends Controller
         return response()->json($regiones);
     }
 
+     public function casosUsuario()
+    {
+   
+        $casos = Casos::where('idUser', '=', auth()->id())->get();
+        $casos->transform(function ($caso) {
+            $caso->fecha_creacion = Carbon::parse($caso->created_at)->format('d-m-Y');
+            $caso->estado = $caso->estado === null || $caso->estado == 0 ? 'ABIERTO' : 'CERRADO';
+            $caso->respuesta = $caso->respuesta === null ? 'EN ESPERA' : '<a href="">VER RESPUESTA</a>';
+            return $caso;
+        });
+        return response()->json($casos);
+    }
+
+     public function casosUsuarioAdmin()
+    {
+   
+        $casos = Casos::join('users', 'casos.idUser', '=', 'users.id')
+                        ->select('casos.*', 'users.name as nombre_usuario')
+                        ->get();
+
+        $casos->transform(function ($caso) {
+            $caso->fecha_creacion = Carbon::parse($caso->created_at)->format('d-m-Y');
+            $caso->estado = $caso->estado === null || $caso->estado == 0 ? 'ABIERTO' : 'CERRADO';
+            $caso->respuesta = $caso->respuesta === null ? '<a href="' . route("responderCaso", ['id' => $caso->id]) . '">RESPONDER</a>' : '<a href="">VER RESPUESTA</a>';
+            return $caso;
+        });
+        return response()->json($casos);
+    }
 }
