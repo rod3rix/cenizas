@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Regiones;
 use App\Models\Comunas;
+use App\Models\Casos;
 
 class HomeController extends Controller
 {
@@ -33,16 +34,6 @@ class HomeController extends Controller
         return view('home');
     } 
   
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function dashboard(): View
-    {
-        return view('admin');
-    }
-
     public function postularFondos()
     {
         return view('postularFondos');      
@@ -88,35 +79,17 @@ class HomeController extends Controller
         return view('agradecimiento'); 
     }
   
-    public function usuariosRegistrados()
-    {
-        return view('usuariosRegistrados'); 
-    }
+    
 
-    public function seguimientoFondos()
-    {
-        return view('seguimientoFondos'); 
-    }
+   
 
-    public function seguimientoCasosAdmin()
-    {
-        return view('seguimientoCasosAdmin'); 
-    }
+    
 
-    public function verPostulacionesFondos()
-    {
-        return view('verPostulacionesFondos'); 
-    }
+    
 
-    public function verSugerenciaReclamo()
-    {
-        return view('verSugerenciaReclamo'); 
-    }
+    
 
-    public function verPostulacionesProyectos()
-    {
-        return view('verPostulacionesProyectos');
-    }
+    
 
     public function verEstadoPostulaciones()
     {
@@ -141,9 +114,117 @@ class HomeController extends Controller
         return view('enviarCaso',['user' => $user]);
     } 
 
-    public function responderCaso()
+   
+
+   
+
+     public function getComunas(Request $request)
     {
-        return view('responderCaso');
+        $regionId = $request->input('region_id');
+
+        // Aquí obtienes las comunas según el ID de la región
+        $comunas = Comunas::where('region_id', $regionId)->get();
+
+        return response()->json($comunas);
     }
 
+    public function getRegiones(Request $request)
+    {
+        // Obtener las regiones desde la base de datos
+        $regiones = Regiones::all();
+
+        // Devolver las regiones como respuesta JSON
+        return response()->json($regiones);
+    }
+
+
+     public function confirmacionRespuestaCaso()
+    {
+        return view('confirmacionRespuestaCaso');
+    }
+
+     public function casosUsuario()
+    {
+        $casos = Casos::where('idUser', '=', auth()->id())
+                        ->join('users', 'casos.idUser', '=', 'users.id')
+                        ->select('casos.*', 'users.name as nombre_usuario','casos.id as caso_id')
+                        ->get();
+
+        $casos->transform(function ($caso) {
+        $caso->fecha_creacion = Carbon::parse($caso->created_at)->format('d-m-Y');
+        $caso->estado = $caso->estado === null || $caso->estado == 0 ? 'ABIERTO' : 'CERRADO';
+        $caso->respuesta = $caso->respuesta === null ? 'EN ESPERA' : '<a href="' . route("respuestaCaso", ['id' => $caso->caso_id]) . '">VER RESPUESTA</a>';
+            return $caso;
+        });
+
+        return response()->json($casos);
+    }
+
+     public function guardarFrm(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'tipo' => 'required',
+            'localidad' => 'required',
+            'region' => 'required',
+            'comuna' => 'required',
+            'direccion' => 'required',
+            'asunto' => 'required',
+            'descripcion' => 'required',
+            'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->toArray()
+            ]);
+        }
+
+        $archivo = $request->file('archivo');
+
+        // Guardar el archivo en el directorio deseado
+        $nombreArchivo = 'caso_' . auth()->id() . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
+        $archivo->storeAs('archivos', $nombreArchivo);
+
+        $insertedId = \DB::table('casos')->insertGetId([
+            'idUser' => auth()->id(),
+            'tipo' => $request->tipo,
+            'localidad' => $request->localidad,
+            'region_id' => $request->region,
+            'comuna_id' => $request->comuna,
+            'direccion' => $request->direccion,
+            'asunto' => $request->asunto,
+            'descripcion' => $request->descripcion,
+            'archivo' => $nombreArchivo,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        if ($insertedId) {
+            // El insert fue exitoso
+            return response()->json([
+                'success' => true,
+                'message' => '¡El formulario se ha enviado correctamente y el archivo se ha subido!'
+            ]);
+        } else {
+            // El insert falló
+            return response()->json([
+                'success' => false,
+                'message' => 'Hubo un error al guardar el formulario en la base de datos.'
+            ], 500); // 500 es el código de estado para errores internos del servidor
+        }
+    }
+
+    public function respuestaCaso($id)
+    {
+        // Obtener el caso específico según el ID proporcionado en la URL
+    $caso = Casos::join('users', 'casos.idUser', '=', 'users.id')
+                 ->join('regiones', 'casos.region_id', '=', 'regiones.id')
+                 ->join('comunas', 'casos.comuna_id', '=', 'comunas.id')
+                 ->select('casos.*', 'users.*', 'regiones.nombre as region', 'comunas.nombre as comuna','casos.id as casoid')
+                 ->findOrFail($id);
+
+        // Pasar el caso a la vista 'responderCaso'
+        return view('respuestaCaso', compact('caso'));
+    }
 }

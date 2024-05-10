@@ -18,14 +18,15 @@ class Casos extends Model
         'idUser',
         'tipo',
         'localidad',
-        'region',
-        'comuna',
+        'region_id',
+        'comuna_id',
         'direccion',
         'asunto',
         'descripcion',
         'archivo',
         'estado',
         'respuesta',
+        'archivo_respuesta',
         'created_at',
         'updated_at'
     ];
