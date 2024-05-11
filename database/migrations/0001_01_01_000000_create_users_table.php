@@ -14,8 +14,13 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('apellido_paterno')->nullable();
+            $table->string('apellido_materno')->nullable();
+            $table->string('rut')->nullable();
+            $table->string('fono')->nullable();
             $table->string('email')->unique();
-            $table->integer('rol')->default(3); //1-superadmin, 2-admin, 3-normal-user
+            $table->integer('rol')->default(0); //1-superadmin, 2-admin, 3-normal-user
+            $table->tinyInteger('type')->default(1); // 1 = User, 2 = Admin
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
@@ -26,15 +31,6 @@ return new class extends Migration
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
-        });
-
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
         });
     }
 

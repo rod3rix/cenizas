@@ -17,15 +17,19 @@ return new class extends Migration
             $table->foreign('idUser')->references('id')->on('users');
             $table->string('tipo');
             $table->string('localidad');
-            $table->integer('region');
-            $table->integer('comuna');
+            $table->unsignedBigInteger('region_id');
+            $table->foreign('region_id')->references('id')->on('regiones');
+            $table->unsignedBigInteger('comuna_id');
+            $table->foreign('comuna_id')->references('id')->on('comunas');
             $table->string('direccion');
             $table->string('asunto');
             $table->string('descripcion');
             $table->string('archivo');
+            $table->integer('estado')->nullable();
+            $table->string('respuesta', 2500)->nullable();
+            $table->string('archivo_respuesta')->nullable();
             $table->timestamps();
         });
-
     }
 
     /**
