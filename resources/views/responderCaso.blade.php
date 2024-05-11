@@ -42,13 +42,13 @@
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">Apellido paterno:</strong>
-            {{ $caso->apellido }}
+            {{ $caso->apellido_paterno }}
         </p>
     </div>
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">Apellido materno:</strong>
-            {{ $caso->appellido }}
+            {{ $caso->apellido_materno }}
         </p>
     </div>
     <div class="media text-muted pt-3">

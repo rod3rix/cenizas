@@ -16,11 +16,6 @@
 
                             <div class="col-md-12">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>El rut ingresado es incorrecto.</strong>
-                                </span>
-
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -29,12 +24,25 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="apellido" class="col-md-12 col-form-label  text-align-left">{{ __('Apellido') }}</label>
+                            <label for="apellido_paterno" class="col-md-12 col-form-label  text-align-left">{{ __('Apellido Paterno') }}</label>
 
                             <div class="col-md-12">
-                                <input id="apellido" type="text" class="form-control @error('apellido') is-invalid @enderror" name="apellido" value="{{ old('apellido') }}" required autocomplete="name" autofocus>
+                                <input id="apellido_paterno" type="text" class="form-control @error('apellido_paterno') is-invalid @enderror" name="apellido_paterno" value="{{ old('apellido_paterno') }}" required autocomplete="apellido_paterno" autofocus>
 
-                                @error('apellido')
+                                @error('apellido_paterno')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="apellido_materno" class="col-md-12 col-form-label  text-align-left">{{ __('Apellido Materno') }}</label>
+
+                            <div class="col-md-12">
+                                <input id="apellido_materno" type="text" class="form-control @error('apellido_materno') is-invalid @enderror" name="apellido_materno" value="{{ old('apellido_materno') }}" required autocomplete="apellido_paterno" autofocus>
+
+                                @error('apellido_materno')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

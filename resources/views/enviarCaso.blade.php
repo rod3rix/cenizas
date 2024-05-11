@@ -78,7 +78,7 @@
                             <label for="apellidop" class="col-md-12 col-form-label text-md-left">{{ __('4. Apellido Paterno*') }}</label>
 
                             <div class="col-md-12">
-                                <input id="apellidop" type="text" class="form-control @error('apellidop') is-invalid @enderror" name="apellidop" value="{{ $user->apellido }}" required autocomplete="apellidop" autofocus disabled>
+                                <input id="apellido_paterno" type="text" class="form-control @error('apellido_paterno') is-invalid @enderror" name="apellido_paterno" value="{{ $user->apellido_paterno }}" required autocomplete="apellido_paterno" autofocus disabled>
 
                                 @error('apellidop')
                                     <span class="invalid-feedback" role="alert">
@@ -88,10 +88,10 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="apellidom" class="col-md-12 col-form-label text-md-left">{{ __('5. Apellido Materno*') }}</label>
+                            <label for="apellido_materno" class="col-md-12 col-form-label text-md-left">{{ __('5. Apellido Materno*') }}</label>
 
                             <div class="col-md-12">
-                                <input id="apellidom" type="text" class="form-control @error('apellidom') is-invalid @enderror" name="apellidom" value="{{ $user->apellido }}" required autocomplete="apellidom" autofocus disabled>
+                                <input id="apellido_materno" type="text" class="form-control @error('apellido_materno') is-invalid @enderror" name="apellido_materno" value="{{ $user->apellido_materno }}" required autocomplete="apellido_materno" autofocus disabled>
 
                                 @error('apellidom')
                                     <span class="invalid-feedback" role="alert">
@@ -100,8 +100,6 @@
                                 @enderror
                             </div>
                         </div>
-                        
-
                         <div class="form-group row">
                             <label for="rut" class="col-md-12 col-form-label text-md-left">{{ __('6. RUT*') }}</label>
 
@@ -115,7 +113,6 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="form-group row">
                             <label for="email" class="col-md-12 col-form-label text-md-left">{{ __('7. E-Mail*') }}</label>
 
@@ -147,7 +144,7 @@
 
                             <div class="col-md-12">
                                  <select id="region" name="region" type="text" class="form-control @error('region') is-invalid @enderror">
-    <option value="">Seleccione una región</option>
+                                    <option value="">Seleccione una región</option>
                                 </select>
                                 
 
@@ -214,10 +211,10 @@
                             <label for="archivo" class="col-md-12 col-form-label text-md-left">{{ __('14. Adjuntar foto o Video') }}</label>
                             <div class="col-md-12">
                                 <input type="file" id="archivo" name="archivo" class="@error('archivo') is-invalid @enderror">
-        <small>(Formatos .pdf, .zip, .rar. Tamaño máximo 20 mb.)</small>
-        @error('archivo')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
+                                <small>(Formatos .pdf, .zip, .rar. Tamaño máximo 20 mb.)</small>
+                                @error('archivo')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">

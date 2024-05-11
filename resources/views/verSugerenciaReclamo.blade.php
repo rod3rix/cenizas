@@ -65,7 +65,7 @@
                     '<tr>' +
                     '<td>' + caso.caso_id + '</td>' +
                     '<td>' + caso.asunto + '</td>' +
-                    '<td>' + caso.nombre_usuario + '</td>' +
+                    '<td>' + caso.name + '</td>' +
                     '<td>' + caso.fecha_creacion + '</td>' +
                     '<td>' + caso.estado + '</td>' +
                     '<td>' + caso.respuesta + '</td>' +
