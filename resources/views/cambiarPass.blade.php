@@ -9,7 +9,7 @@
                 <div class="card-header">Cambiar Contraseña</div>
 
                 <div class="card-body">
-                    <form id="changePasswordForm">
+                    <form id="changePasswordUsu">
     @csrf
 
     <div class="form-group row mb-3">
@@ -62,7 +62,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#changePasswordForm').submit(function(e) {
+        $('#changePasswordUsu').submit(function(e) {
             e.preventDefault();
 
             $('form :input').removeClass('is-invalid');
@@ -72,13 +72,13 @@
 
             $.ajax({
                 type: 'POST',
-                url: '{{ route("change.password") }}',
+                url: '{{ route("cambiar.pass") }}',
                 data: formData,
                 success: function(response, textStatus, xhr) {
                     if (xhr.status === 200) {
                         // La solicitud fue exitosa, ahora verifica el contenido de la respuesta
                         if (response.success) {
-                            window.location.href = 'confirmacionPassAdmin';
+                            window.location.href = 'confirmacionPass';
                         } else {
                             // Si la respuesta indica que hubo errores de validación, muestra los mensajes de error debajo de los campos correspondientes
                             $.each(response.errors, function(key, value) {

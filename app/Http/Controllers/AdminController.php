@@ -179,9 +179,9 @@ public function cerrarCaso(Request $request)
         return view('cambiarPassAdmin');
     } 
 
-    public function confirmacionPass()
+    public function confirmacionPassAdmin()
     {
-        return view('confirmacionPass');
+        return view('confirmacionPassAdmin');
     }
 
      public function changePassword(Request $request)

@@ -9,6 +9,14 @@ Route::get('/', function () {
 Auth::routes();
 //users routes
 Route::middleware(['auth', 'access-level:user'])->group(function () {
+
+Route::post('cambiar-pass', [App\Http\Controllers\HomeController::class, 'changePasswordUsu'])->name('cambiar.pass');
+
+
+ Route::get('cambiarPass', [App\Http\Controllers\HomeController::class, 'cambiarPass'])->name('cambiarPass');
+
+  Route::get('confirmacionPass', [App\Http\Controllers\HomeController::class, 'confirmacionPass'])->name('confirmacionPass');
+
 Route::post('casosUsuario', [App\Http\Controllers\HomeController::class, 'casosUsuario'])->name('casosUsuario');
 Route::post('getRegiones',
     [App\Http\Controllers\HomeController::class, 'getRegiones'])->name('getRegiones');
@@ -44,7 +52,7 @@ Route::middleware(['auth', 'access-level:admin'])->group(function () {
 
       Route::get('verPerfil', [App\Http\Controllers\AdminController::class, 'verPerfil'])->name('verPerfil');
 
-      Route::get('confirmacionPass', [App\Http\Controllers\AdminController::class, 'confirmacionPass'])->name('confirmacionPass');
+      Route::get('confirmacionPassAdmin', [App\Http\Controllers\AdminController::class, 'confirmacionPassAdmin'])->name('confirmacionPassAdmin');
 
             Route::get('cambiarPassAdmin', [App\Http\Controllers\AdminController::class, 'cambiarPassAdmin'])->name('cambiarPassAdmin');
     Route::post('casosUsuarioAdmin', [App\Http\Controllers\AdminController::class, 'casosUsuarioAdmin'])->name('casosUsuarioAdmin');

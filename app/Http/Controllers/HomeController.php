@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Regiones;
 use App\Models\Comunas;
 use App\Models\Casos;
+use Illuminate\Support\Facades\Hash;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -78,18 +80,7 @@ class HomeController extends Controller
     {
         return view('agradecimiento'); 
     }
-  
-    
 
-   
-
-    
-
-    
-
-    
-
-    
 
     public function verEstadoPostulaciones()
     {
@@ -226,5 +217,60 @@ class HomeController extends Controller
 
         // Pasar el caso a la vista 'responderCaso'
         return view('respuestaCaso', compact('caso'));
+    }
+
+    public function cambiarPass()
+    {
+        return view('cambiarPass');
+    } 
+
+    public function confirmacionPass()
+    {
+        return view('confirmacionPass');
+    }
+
+    public function changePasswordUsu(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+        'current_password' => [
+            'required',
+            function ($attribute, $value, $fail) {
+                if (!Auth::attempt(['email' => Auth::user()->email, 'password' => $value])) {
+                    $fail('La contraseña actual no es válida.');
+                }
+            },
+        ],
+        'new_password' => [
+            'required',
+            'string',
+            'different:current_password', // Nueva regla: debe ser diferente de la contraseña actual
+            'min:8',
+            'confirmed',
+        ],
+        ], [
+            'current_password.required' => 'El campo contraseña actual es obligatorio.',
+            'new_password.required' => 'El campo nueva contraseña es obligatorio.',
+            'new_password.different' => 'La nueva contraseña debe ser diferente de la contraseña actual.',
+            'new_password.min' => 'El campo nueva contraseña debe tener al menos :min caracteres.',
+            'new_password.confirmed' => 'La confirmación de la nueva contraseña no coincide.',
+        ]);
+
+
+        if ($validator->fails()) {
+        return response()->json([
+            'success' => false,
+            'errors' => $validator->errors()->toArray()
+        ]);
+        }   
+
+        // // Obtener el usuario autenticado
+        $user = auth()->user();
+
+        // Cambiar la contraseña del usuario
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        // Devolver una respuesta de éxito
+        return response()->json(['success' => true, 'message' => '¡La contraseña ha sido cambiada correctamente!']);
     }
 }
