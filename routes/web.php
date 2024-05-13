@@ -10,10 +10,15 @@ Auth::routes();
 //users routes
 Route::middleware(['auth', 'access-level:user'])->group(function () {
 
+Route::post('updateProfile', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
+
+Route::get('/verPerfilUsu', [App\Http\Controllers\HomeController::class, 'verPerfilUsu'])->name('verPerfilUsu');
+
 Route::post('cambiar-pass', [App\Http\Controllers\HomeController::class, 'changePasswordUsu'])->name('cambiar.pass');
 
-
  Route::get('cambiarPass', [App\Http\Controllers\HomeController::class, 'cambiarPass'])->name('cambiarPass');
+
+ Route::get('confirmacionUsuario', [App\Http\Controllers\HomeController::class, 'confirmacionUsuario'])->name('confirmacionUsuario');
 
   Route::get('confirmacionPass', [App\Http\Controllers\HomeController::class, 'confirmacionPass'])->name('confirmacionPass');
 
@@ -33,7 +38,7 @@ Route::get('/ingreso-caso',  [App\Http\Controllers\HomeController::class,'ingres
     Route::get('/postularFondos', [App\Http\Controllers\HomeController::class, 'postularFondos'])->name('postularFondos');
     Route::get('/postularProyectos', [App\Http\Controllers\HomeController::class, 'postularProyectos'])->name('postularProyectos');
     Route::get('/verEstadoPostulaciones', [App\Http\Controllers\HomeController::class, 'verEstadoPostulaciones'])->name('verEstadoPostulaciones');
-    Route::get('/editarPerfil', [App\Http\Controllers\HomeController::class, 'editarPerfil'])->name('editarPerfil');
+
     Route::get('/seguimientoProyectos',[App\Http\Controllers\HomeController::class,'seguimientoProyectos'])->name('seguimientoProyectos');
     Route::get('/enviarCaso', [App\Http\Controllers\HomeController::class,'enviarCaso'])->name('enviarCaso');
     Route::get('/seguimientoCasosUsu', [App\Http\Controllers\HomeController::class,'seguimientoCasosUsu'])->name('seguimientoCasosUsu');

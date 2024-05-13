@@ -229,6 +229,11 @@ class HomeController extends Controller
         return view('confirmacionPass');
     }
 
+    public function confirmacionUsuario()
+    {
+        return view('confirmacionUsuario');
+    }
+    
     public function changePasswordUsu(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -273,4 +278,51 @@ class HomeController extends Controller
         // Devolver una respuesta de éxito
         return response()->json(['success' => true, 'message' => '¡La contraseña ha sido cambiada correctamente!']);
     }
+
+        public function updateProfile(Request $request)
+    {
+        
+        $user = Auth::user();
+
+        $validator = Validator::make($request->all(), [
+            'email' => [
+                'required',
+                'email',
+                function ($attribute, $value, $fail) use ($user) {
+                    $existingUser = \App\Models\User::where('email', $value)->first();
+                    if ($existingUser && $existingUser->id !== $user->id) {
+                        $fail('El correo electrónico ya está en uso.');
+                    }
+                },
+            ],
+            'fono' => [
+            'required',
+            'min:8',
+            ],
+        ]);
+
+        if ($validator->fails()) {
+        return response()->json([
+            'success' => false,
+            'errors' => $validator->errors()->toArray()
+        ]);
+        }  
+
+        $user = auth()->user();
+        $user->update($request->all());
+
+        return response()->json(['success' => true]);
+    }
+
+     public function verPerfilUsu()
+    {
+       $user = DB::table('users')
+                ->where('id', '=', auth()->id())
+                ->get();
+
+                $user=$user[0];
+
+        return view('verPerfilUsu',['user' => $user]);
+    }
+
 }

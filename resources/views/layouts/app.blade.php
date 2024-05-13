@@ -135,10 +135,10 @@
                                     @endif
 
                                     @if(auth::user()->type=="user")
-                                    <a class="dropdown-item" href="{{ route('editarPerfil') }}">
+                                    <a class="dropdown-item" href="{{ route('verPerfilUsu') }}">
                                         {{ __('Perfil Personal') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('editarPerfil') }}">
+                                    <a class="dropdown-item" href="{{ route('verPerfilUsu') }}">
                                         {{ __('Perfil Persona Juridica') }}
                                     </a>
 
