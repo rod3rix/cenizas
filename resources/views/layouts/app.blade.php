@@ -126,8 +126,11 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     @if(auth::user()->type=="admin")
-                                    <a class="dropdown-item" href="{{ route('editarPerfil') }}">
+                                    <a class="dropdown-item" href="{{ route('verPerfil') }}">
                                         {{ __('Ver Perfil') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('cambiarPassAdmin') }}">
+                                        {{ __('Cambiar contraseña') }}
                                     </a>
                                     @endif
 

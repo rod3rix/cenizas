@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Regiones;
 use App\Models\Comunas;
 use App\Models\Casos;
+use Illuminate\Support\Facades\Hash;
+use Auth;
+
 
 class AdminController extends Controller
 {
@@ -109,9 +112,17 @@ class AdminController extends Controller
 public function cerrarCaso(Request $request)
 {
     // Validar la existencia y tipo del archivo
-    $request->validate([
+    $validator = Validator::make($request->all(), [
+        'respuesta' => 'required|string|max:2500',
         'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
     ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'success' => false,
+            'errors' => $validator->errors()->toArray()
+        ]);
+    }
 
     try {
         // Obtener el archivo del request
@@ -122,7 +133,6 @@ public function cerrarCaso(Request $request)
         $archivo->storeAs('archivos', $nombreArchivo);
 
         // Actualizar los campos respuesta y archivo_respuesta con el ID proporcionado en el URL usando Eloquent
-
         $caso = Casos::findOrFail($request->casoId);
         $caso->respuesta = $request->input('respuesta');
         $caso->archivo_respuesta = $nombreArchivo;
@@ -152,4 +162,76 @@ public function cerrarCaso(Request $request)
         ], 500);
     }
 }
+
+    public function verPerfil()
+    {
+       $user = DB::table('users')
+                ->where('id', '=', auth()->id())
+                ->get();
+
+                $user=$user[0];
+
+        return view('verPerfil',['user' => $user]);
+    }
+
+    public function cambiarPassAdmin()
+    {
+        return view('cambiarPassAdmin');
+    } 
+
+    public function confirmacionPass()
+    {
+        return view('confirmacionPass');
+    }
+
+     public function changePassword(Request $request)
+    {
+            $validator = Validator::make($request->all(), [
+        'current_password' => [
+            'required',
+            function ($attribute, $value, $fail) {
+                if (!Auth::attempt(['email' => Auth::user()->email, 'password' => $value])) {
+                    $fail('La contraseña actual no es válida.');
+                }
+            },
+        ],
+        'new_password' => [
+            'required',
+            'string',
+            'different:current_password', // Nueva regla: debe ser diferente de la contraseña actual
+            'min:8',
+            'confirmed',
+        ],
+        ], [
+            'current_password.required' => 'El campo contraseña actual es obligatorio.',
+            'new_password.required' => 'El campo nueva contraseña es obligatorio.',
+            'new_password.different' => 'La nueva contraseña debe ser diferente de la contraseña actual.',
+            'new_password.min' => 'El campo nueva contraseña debe tener al menos :min caracteres.',
+            'new_password.confirmed' => 'La confirmación de la nueva contraseña no coincide.',
+        ]);
+
+
+        if ($validator->fails()) {
+        return response()->json([
+            'success' => false,
+            'errors' => $validator->errors()->toArray()
+        ]);
+        }   
+
+        // // Obtener el usuario autenticado
+        $user = auth()->user();
+
+        // // Verificar si la contraseña actual es válida
+        // if (!Hash::check($request->current_password, $user->password)) {
+        //     return response()->json(['success' => false, 'message' => 'La contraseña actual no es válida.']);
+        // }
+
+        // Cambiar la contraseña del usuario
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        // Devolver una respuesta de éxito
+        return response()->json(['success' => true, 'message' => '¡La contraseña ha sido cambiada correctamente!']);
+    }
+
 }

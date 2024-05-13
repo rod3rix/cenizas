@@ -3,12 +3,34 @@
 @section('content')
 
 <section class="jumbotron">
-    <div class="container ">
-      <h1 class="jumbotron-heading text-center"><b>Responder Caso</b></h1>
-      <p class="lead text-muted text-center">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una.</p>
+<div class="container ">
+    <div class="media text-muted pt-3">
+        <h3>SUGERENCIA, RECLAMO U OTRO CASO N°:{{ $caso->casoid }}</h3>
+        <p class="media-body pb-3 mb-0 small lh-125">
+            <strong class="d-block text-gray-dark"></strong>
+            {{ $caso->respuesta }}
+        </p>
+    </div>
+    <div class="media text-muted pt-3">
+        <p class="media-body pb-3 mb-0 small lh-125 text-md-right">
+            <div class="mb-3">
+          ARCHIVO ADJUNTO:<br>
+            <a href="{{ asset('storage/archivos/' . $caso->archivo) }}" download>{{ $caso->archivo_respuesta }}</a>
+            </div>
+        </p>
+    </div>
  
-  <div class="my-3 p-3 bg-white rounded shadow-sm">
-    <h4 class="border-bottom border-gray pb-2 mb-0">N° CASO {{ $caso->casoid }}</h4>    
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+    <button class="accordion-button  text-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Ver detalles Caso ingresado
+    </button>
+
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">Tipo:</strong>
@@ -94,24 +116,15 @@
         <a href="{{ asset('storage/archivos/' . $caso->archivo) }}" download>{{ $caso->archivo }}</a>
         </p>
     </div>
-<form id="cerrarCasoForm">
-    <input type="hidden" id="casoId" value="{{ $caso->casoid }}">
-    <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125">
-            <strong class="d-block text-gray-dark">RESPUESTA:</strong>
-            {{ $caso->respuesta }}
-        </p>
-    </div>
-    <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 text-md-right">
-            <strong class="d-block text-gray-dark">Adjuntar archivo (Formatos .pdf, .zip, .rar. Tamaño máximo 20 mb.):</strong>
-            <div class="mb-3">
-          Descargar archivo:
-            <a href="{{ asset('storage/archivos/' . $caso->archivo) }}" download>{{ $caso->archivo_respuesta }}</a>
-            </div>
-        </p>
-    </div>
-</form>
 </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 </section>
 @endsection

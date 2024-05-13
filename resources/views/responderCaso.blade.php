@@ -121,7 +121,10 @@
         <p class="media-body pb-3 mb-0 small lh-125 text-md-right">
             <strong class="d-block text-gray-dark">Adjuntar archivo (Formatos .pdf, .zip, .rar. Tamaño máximo 20 mb.):</strong>
             <div class="mb-3">
-                <input class="form-control" type="file" id="archivo" accept=".pdf,.zip,.rar">
+                <input class="form-control @error('archivo') is-invalid @enderror" type="file" id="archivo" accept=".pdf,.zip,.rar">
+                @error('archivo')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
                 <div id="archivoAlert" class="alert alert-danger d-none" role="alert">
                     ¡El archivo es obligatorio!
                 </div>
@@ -156,43 +159,22 @@
         // Mostrar el modal de confirmación cuando se hace clic en el botón
         $('#cerrarCasoBtn').click(function(e) {
             e.preventDefault();
-
-            // Obtener los valores de los campos
-            var respuesta = $('#respuesta').val();
-            var archivo = $('#archivo').prop('files')[0];
-            var casoId = $('#casoId').val();
-
-            // Validar campos obligatorios
-            var camposCompletos = true;
-            if (respuesta.trim() === '') {
-                $('#respuestaAlert').removeClass('d-none');
-                camposCompletos = false;
-            } else {
-                $('#respuestaAlert').addClass('d-none');
-            }
-            if (archivo === undefined) {
-                $('#archivoAlert').removeClass('d-none');
-                camposCompletos = false;
-            } else {
-                $('#archivoAlert').addClass('d-none');
-            }
-
-            if (!camposCompletos) {
-                return;
-            }
-
             // Mostrar el modal de confirmación
             $('#confirmModal').modal('show');
         });
 
         // Realizar la solicitud AJAX para cerrar el caso cuando se da confirmación
         $('#confirmCierreBtn').click(function() {
+
+            $('form :input').removeClass('is-invalid');
+            $('.invalid-feedback').remove();
+
             // Obtener los valores de los campos
             var respuesta = $('#respuesta').val();
-            var archivo = $('#archivo').prop('files')[0];
+            var archivo = $('#archivo')[0].files[0];
             var casoId = $('#casoId').val();
 
-            // Crear objeto FormData para enviar los datos
+            // Validate fields
             var formData = new FormData();
             formData.append('_token', '{{ csrf_token() }}');
             formData.append('casoId', casoId);
@@ -204,29 +186,34 @@
                 url: "{{ route('cerrarCaso') }}",
                 type: 'POST',
                 data: formData,
-                processData: false, // Evitar procesamiento de datos
-                contentType: false, // No configurar el tipo de contenido
-                success: function(response) {
-                    if (response.success) {
-                        $('#successAlert').removeClass('d-none');
-                        //$('#successMessage').text(response.message);
-                          // Si la respuesta indica éxito, puedes realizar alguna acción, como redireccionar a otra página
-                        window.location.href = '../confirmacionRespuestaCaso';
+                processData: false,
+                contentType: false,
+                success: function(response, textStatus, xhr) {
+                    if (xhr.status === 200) {
+                        // La solicitud fue exitosa, ahora verifica el contenido de la respuesta
+                        if (response.success) {
+                            // Si la respuesta indica éxito, cierra el modal y redirecciona a otra página
+                            $('#confirmModal').modal('hide');
+                            window.location.href = '../confirmacionRespuestaCaso';
+                        } else {
+                            // Si la respuesta indica que hubo errores de validación, muestra los mensajes de error debajo de los campos correspondientes
+                            $.each(response.errors, function(key, value) {
+                                // Encuentra el campo correspondiente al error y muestra el mensaje de error
+                                $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
+                            });
+                        }
                     } else {
-                        $('#errorAlert').removeClass('d-none');
-                        $('#errorMessage').text(response.message);
+                        console.error('Error en la solicitud:', xhr.status);
+                        // Aquí puedes manejar otros tipos de errores de solicitud si es necesario
                     }
                 },
                 error: function(xhr, status, error) {
-                    $('#errorAlert').removeClass('d-none');
-                    $('#errorMessage').text('Hubo un error al procesar la solicitud.');
+                    console.error('Hubo un problema al enviar el formulario:', error);
                 }
             });
-
-            // Ocultar el modal de confirmación
-            $('#confirmModal').modal('hide');
+             $('#confirmModal').modal('hide');
         });
     });
-
 </script>
+
 @endsection

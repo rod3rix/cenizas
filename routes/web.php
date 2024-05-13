@@ -37,7 +37,16 @@ Route::get('/ingreso-caso',  [App\Http\Controllers\HomeController::class,'ingres
 
 // admin routes
 Route::middleware(['auth', 'access-level:admin'])->group(function () {
+    
+    Route::post('/change-password', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('change.password');
+
     Route::get('/admin/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+      Route::get('verPerfil', [App\Http\Controllers\AdminController::class, 'verPerfil'])->name('verPerfil');
+
+      Route::get('confirmacionPass', [App\Http\Controllers\AdminController::class, 'confirmacionPass'])->name('confirmacionPass');
+
+            Route::get('cambiarPassAdmin', [App\Http\Controllers\AdminController::class, 'cambiarPassAdmin'])->name('cambiarPassAdmin');
     Route::post('casosUsuarioAdmin', [App\Http\Controllers\AdminController::class, 'casosUsuarioAdmin'])->name('casosUsuarioAdmin');
     Route::get('/usuariosRegistrados', [App\Http\Controllers\AdminController::class, 'usuariosRegistrados'])->name('usuariosRegistrados');
     Route::get('/seguimientoFondos', [App\Http\Controllers\AdminController::class, 'seguimientoFondos'])->name('seguimientoFondos');
