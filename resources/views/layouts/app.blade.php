@@ -138,7 +138,7 @@
                                     <a class="dropdown-item" href="{{ route('verPerfilUsu') }}">
                                         {{ __('Perfil Personal') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('verPerfilUsu') }}">
+                                    <a class="dropdown-item" href="{{ route('personaJuridica') }}">
                                         {{ __('Perfil Persona Juridica') }}
                                     </a>
 

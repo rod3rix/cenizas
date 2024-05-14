@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Regiones;
 use App\Models\Comunas;
 use App\Models\Casos;
+use App\Models\PersonaJuridicas;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 
@@ -151,6 +152,21 @@ class HomeController extends Controller
         return response()->json($casos);
     }
 
+     public function listarPersonaJuridicas()
+    {
+        $personaJuridicas = PersonaJuridicas::where('user_id', auth()->id())->get();
+
+        $personaJuridicas->transform(function ($personaJuridica) {
+            // Transformar los datos según sea necesario
+            // Por ejemplo, puedes formatear la fecha y el estado aquí
+           $personaJuridica->rut_link = '<a href="' . route("editarPersonaJuridica", ["id" => $personaJuridica->id]) . '">' . $personaJuridica->rut . '</a>';
+            return $personaJuridica;
+        });
+
+    return response()->json($personaJuridicas);
+    
+    }
+
      public function guardarFrm(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -217,6 +233,17 @@ class HomeController extends Controller
 
         // Pasar el caso a la vista 'responderCaso'
         return view('respuestaCaso', compact('caso'));
+    }
+
+    public function editarPersonaJuridica($id)
+    {
+        $personaJuridica = DB::table('persona_juridicas')
+                ->where('id', '=', $id)
+                ->get();
+
+        $personaJuridica=$personaJuridica[0];
+
+        return view('editarPersonaJuridica',['personaJuridica' => $personaJuridica]);
     }
 
     public function cambiarPass()
@@ -324,5 +351,121 @@ class HomeController extends Controller
 
         return view('verPerfilUsu',['user' => $user]);
     }
+
+     public function personaJuridica()
+    {
+       $user = DB::table('users')
+                ->where('id', '=', auth()->id())
+                ->get();
+
+                $user=$user[0];
+
+        return view('personaJuridica');
+    }
+
+     public function confirmacionPersonaJuridica()
+    {
+    
+        return view('confirmacionPersonaJuridica');
+    }
+
+     public function confirmacionEditarPersonaJuridica()
+    {
+    
+        return view('confirmacionEditarPersonaJuridica');
+    }    
+
+        public function crearPersonaJuridica(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'rut' => 'required|string|max:255|unique:persona_juridicas,rut',
+            'razon_social' => 'required|string|max:255',
+            'relacion' => 'required|string|max:255',
+            'estado' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+            'success' => false,
+            'errors' => $validator->errors()->toArray()
+            ]);
+        }  
+
+          try {
+        // Insertar el registro y obtener el ID del nuevo registro insertado
+        $insertedId = PersonaJuridicas::insertGetId([
+            'user_id' => auth()->id(),
+            'rut' => $request->rut,
+            'razon_social' => $request->razon_social,
+            'relacion' => $request->relacion,
+            'estado' => $request->estado,
+        ]);
+
+        // Verificar si se obtuvo un ID válido
+        if ($insertedId) {
+            // El insert fue exitoso
+            return response()->json([
+                'success' => true,
+                'message' => 'El registro se ha insertado correctamente con el ID: ' . $insertedId
+            ]);
+        } else {
+            // El insert falló
+            return response()->json([
+                'success' => false,
+                'message' => 'Hubo un error al guardar el formulario en la base de datos.'
+            ], 500); // 500 es el código de estado para errores internos del servidor
+        }
+    } catch (\Exception $e) {
+        // Capturar y manejar cualquier excepción
+        return response()->json([
+            'success' => false,
+            'message' => 'Error al crear persona jurídica: ' . $e->getMessage()
+        ], 500);
+    }
+
+}
+
+public function actualizarPersonaJuridica(Request $request)
+{
+    
+    $validator = Validator::make($request->all(), [
+            'razon_social' => 'required|string|max:255',
+    ]);
+
+    if ($validator->fails()) {
+            return response()->json([
+            'success' => false,
+            'errors' => $validator->errors()->toArray()
+            ]);
+    }  
+
+
+    try {
+    // Validar los datos
+    $validatedData = $request->validate([
+        'razon_social' => 'required|string|max:255',
+        // Agrega otras reglas de validación si es necesario
+    ]);
+
+    // Obtener el ID de la persona jurídica
+    $personaJuridica_id = $request->personaJuridica_id;
+
+    // Actualizar los campos en la base de datos
+    PersonaJuridicas::where('id', $personaJuridica_id)->update([
+        'razon_social' => $validatedData['razon_social'],
+        'relacion' => $request->relacion,
+        'estado' => $request->estado,
+        // Otros campos si es necesario
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Los datos se actualizaron correctamente'], 200);
+    } catch (\Exception $e) {
+    return response()->json(['error' => 'Error al actualizar los datos'], 500);
+    }
+}
+
 
 }

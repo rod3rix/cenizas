@@ -10,7 +10,23 @@ Auth::routes();
 //users routes
 Route::middleware(['auth', 'access-level:user'])->group(function () {
 
+
+Route::post('/actualizarPersonaJuridica',  [App\Http\Controllers\HomeController::class, 'actualizarPersonaJuridica'])->name('actualizarPersonaJuridica');
+
+Route::get('/editarPersonaJuridica/{id}',  [App\Http\Controllers\HomeController::class, 'editarPersonaJuridica'])->name('editarPersonaJuridica');
+
+Route::post('/listarPersonaJuridicas',  [App\Http\Controllers\HomeController::class, 'listarPersonaJuridicas'])->name('listarPersonaJuridicas');
+
+Route::post('/crearPersonaJuridica',  [App\Http\Controllers\HomeController::class, 'crearPersonaJuridica'])->name('crearPersonaJuridica');
+
+
 Route::post('updateProfile', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
+
+Route::get('confirmacionPersonaJuridica', [App\Http\Controllers\HomeController::class, 'confirmacionPersonaJuridica'])->name('confirmacionPersonaJuridica');
+
+Route::get('confirmacionEditarPersonaJuridica', [App\Http\Controllers\HomeController::class, 'confirmacionEditarPersonaJuridica'])->name('confirmacionEditarPersonaJuridica');
+
+Route::get('personaJuridica', [App\Http\Controllers\HomeController::class, 'personaJuridica'])->name('personaJuridica');
 
 Route::get('/verPerfilUsu', [App\Http\Controllers\HomeController::class, 'verPerfilUsu'])->name('verPerfilUsu');
 
