@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Regiones;
 use App\Models\Comunas;
 use App\Models\Casos;
+use App\Models\PuntajeUser;
 use Illuminate\Support\Facades\Hash;
 use Auth;
-
 
 class AdminController extends Controller
 {
@@ -174,6 +174,19 @@ public function cerrarCaso(Request $request)
         return view('verPerfil',['user' => $user]);
     }
 
+    public function detalleUser($id)
+    {
+
+        $user = DB::table('users')
+            ->leftJoin('puntaje_users', 'users.id', '=', 'puntaje_users.user_id')
+            ->select('users.*', 'puntaje_users.influencia', 'puntaje_users.vecindad', 'puntaje_users.vecindad_mlc', 'puntaje_users.poder')
+            ->where('users.id', $id)
+            ->first();
+
+        return view('detalleUsuario',['user' => $user]);
+    }
+
+
     public function cambiarPassAdmin()
     {
         return view('cambiarPassAdmin');
@@ -182,6 +195,11 @@ public function cerrarCaso(Request $request)
     public function confirmacionPassAdmin()
     {
         return view('confirmacionPassAdmin');
+    }
+
+    public function confirmacionAsignacion()
+    {
+        return view('confirmacionAsignacion');
     }
 
      public function changePassword(Request $request)
@@ -232,6 +250,61 @@ public function cerrarCaso(Request $request)
 
         // Devolver una respuesta de éxito
         return response()->json(['success' => true, 'message' => '¡La contraseña ha sido cambiada correctamente!']);
+    }
+
+
+    public function getData()
+        {
+               $data = DB::table('users')
+                ->leftJoin('puntaje_users', 'users.id', '=', 'puntaje_users.user_id')
+                ->select(
+                    'users.*',
+                    DB::raw('COALESCE(puntaje_users.influencia, 0) as influencia'),
+                    DB::raw('COALESCE(puntaje_users.vecindad, 0) as vecindad'),
+                    DB::raw('COALESCE(puntaje_users.vecindad_mlc, 0) as vecindad_mlc'),
+                    DB::raw('COALESCE(puntaje_users.poder, 0) as poder')
+                )
+                ->get();
+
+    // Transformar los datos antes de enviarlos
+    $data->transform(function ($user) {
+        // Aplicar formato al campo 'rut'
+        $user->rut = $this->formatRut($user->rut);
+        // Agregar el enlace con el ID del usuario
+        $user->user_id_link = '<a href="' . route("detalleUser", ["id" => $user->id]) . '">' . $user->id . '</a>';
+        return $user;
+    }); 
+
+
+            return response()->json($data);
+}
+
+    // Función para dar formato al rut
+private function formatRut($rut)
+{
+    // Implementa aquí tu lógica para formatear el rut, por ejemplo, agregando los puntos y el guión
+    // Aquí hay un ejemplo básico de formateo:
+    return substr($rut, 0, -1).substr($rut, -1);
+}
+
+public function guardarPuntaje(Request $request)
+    {
+        // Obtener el usuario actual autenticado (o el usuario que corresponda)
+        $userId = $request->user_id;
+
+        // Buscar si el usuario ya tiene un registro en la tabla puntaje_user
+        $puntajeUser = PuntajeUser::where('user_id', $userId)->first();
+
+        // Si el usuario ya tiene un registro, actualizarlo; de lo contrario, crear uno nuevo
+        if ($puntajeUser) {
+            $puntajeUser->update($request->all());
+        } else {
+            //$request->merge(['user_id' => $userId]);
+            PuntajeUser::create($request->all());
+        }
+
+        // Devolver una respuesta de éxito
+        return response()->json(['success' => true, 'message' => 'Puntaje guardado exitosamente']);
     }
 
 }

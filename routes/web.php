@@ -50,16 +50,21 @@ Route::get('/ingreso-caso',  [App\Http\Controllers\HomeController::class,'ingres
 
 // admin routes
 Route::middleware(['auth', 'access-level:admin'])->group(function () {
+
+    Route::post('/users/data', [App\Http\Controllers\AdminController::class, 'getData'])->name('users.data');
+
     
     Route::post('/change-password', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('change.password');
 
+    Route::post('guardarPuntaje', [App\Http\Controllers\AdminController::class, 'guardarPuntaje'])->name('guardarPuntaje');
+
     Route::get('/admin/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
 
-      Route::get('verPerfil', [App\Http\Controllers\AdminController::class, 'verPerfil'])->name('verPerfil');
+    Route::get('verPerfil', [App\Http\Controllers\AdminController::class, 'verPerfil'])->name('verPerfil');
 
-      Route::get('confirmacionPassAdmin', [App\Http\Controllers\AdminController::class, 'confirmacionPassAdmin'])->name('confirmacionPassAdmin');
+    Route::get('confirmacionPassAdmin', [App\Http\Controllers\AdminController::class, 'confirmacionPassAdmin'])->name('confirmacionPassAdmin');
 
-            Route::get('cambiarPassAdmin', [App\Http\Controllers\AdminController::class, 'cambiarPassAdmin'])->name('cambiarPassAdmin');
+    Route::get('cambiarPassAdmin', [App\Http\Controllers\AdminController::class, 'cambiarPassAdmin'])->name('cambiarPassAdmin');
     Route::post('casosUsuarioAdmin', [App\Http\Controllers\AdminController::class, 'casosUsuarioAdmin'])->name('casosUsuarioAdmin');
     Route::get('/usuariosRegistrados', [App\Http\Controllers\AdminController::class, 'usuariosRegistrados'])->name('usuariosRegistrados');
     Route::get('/seguimientoFondos', [App\Http\Controllers\AdminController::class, 'seguimientoFondos'])->name('seguimientoFondos');
@@ -67,10 +72,14 @@ Route::middleware(['auth', 'access-level:admin'])->group(function () {
     Route::get('/verPostulacionesFondos',  [App\Http\Controllers\AdminController::class, 'verPostulacionesFondos'])->name('verPostulacionesFondos');
     Route::get('/verSugerenciaReclamo',  [App\Http\Controllers\AdminController::class, 'verSugerenciaReclamo'])->name('verSugerenciaReclamo');
     Route::get('/verPostulacionesProyectos',  [App\Http\Controllers\AdminController::class, 'verPostulacionesProyectos'])->name('verPostulacionesProyectos');
-    Route::get('responderCaso/{id}', [App\Http\Controllers\AdminController::class, 'responderCaso'])->name('responderCaso');
+    
+    Route::get('detalleUser/{id}', [App\Http\Controllers\AdminController::class, 'detalleUser'])->name('detalleUser');
+
+     Route::get('responderCaso/{id}', [App\Http\Controllers\AdminController::class, 'responderCaso'])->name('responderCaso');
     Route::get('respuestaCasoAdmin/{id}', [App\Http\Controllers\AdminController::class, 'respuestaCasoAdmin'])->name('respuestaCasoAdmin');
     Route::post('cerrarCaso', [App\Http\Controllers\AdminController::class, 'cerrarCaso'])->name('cerrarCaso');
-    Route::get('confirmacionRespuestaCaso',  [App\Http\Controllers\HomeController::class,'confirmacionRespuestaCaso'])->name('confirmacionRespuestaCaso');
+    Route::get('confirmacionRespuestaCaso',  [App\Http\Controllers\AdminController::class,'confirmacionRespuestaCaso'])->name('confirmacionRespuestaCaso');
+    Route::get('confirmacionAsignacion',  [App\Http\Controllers\AdminController::class,'confirmacionAsignacion'])->name('confirmacionAsignacion');
 });
 
 
