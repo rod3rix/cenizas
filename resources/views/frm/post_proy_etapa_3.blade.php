@@ -4,13 +4,11 @@
          <div class="card">
             <div class="card-header"><b><u>{{ __('  TIPO PROYECTO') }}</b></u></div>
             <div class="card-body">
-               <form method="POST" action="{{ route('register') }}">
-                  @csrf
                   <div class="form-group row">
-                     <label for="nombres" class="col-md-12 col-form-label text-md-left">{{ __('1. Nombre Proyecto*') }}</label>
+                     <label for="nombre_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('1. Nombre Proyecto*') }}</label>
                      <div class="col-md-12">
-                        <input id="nombres" type="text" class="form-control @error('nombres') is-invalid @enderror" name="nombres" value="{{ old('nombres') }}" required autocomplete="nombres" autofocus>
-                        @error('name')
+                        <input id="nombre_proyecto" name="nombre_proyecto" type="text" class="form-control @error('nombre_proyecto') is-invalid @enderror"  value="{{ old('nombre_proyecto') }}" autocomplete="nombre_proyecto" autofocus>
+                        @error('nombre_proyecto')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                         </span>
@@ -18,21 +16,27 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="apellidos" class="col-md-12 col-form-label text-md-left">{{ __('2. Equipamiento comunitario/Mejoramiento infraestuctura/ Calidad de Vida y Desarrollo comunitario*') }}</label>
+                     <label for="tipo_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('2. Tipo de proyecto*') }}</label>
                      <div class="col-md-12">
-                        <input id="apellidos" type="text" class="form-control @error('apellidos') is-invalid @enderror" name="apellidos" value="{{ old('apellidos') }}" required autocomplete="apellidos" autofocus>
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
+                        <select id="tipo_proyecto" class="form-control @error('tipo_proyecto') is-invalid @enderror" name="tipo_proyecto" required autocomplete="tipo_proyecto" autofocus>
+                           <option value="">Seleccione</option>
+                           <option value="Apoyo a emprendimientos y oficios en vías de formalización">Apoyo a emprendimientos y oficios en vías de formalización</option>
+                           <option value="Equipamiento para organizaciones">Equipamiento para organizaciones</option>
+                           <option value="Mejoramiento infraestructura sedes y entorno comunitario">Mejoramiento infraestructura sedes y entorno comunitario</option>
+                           <option value="Medio ambiente y cultura">Medio ambiente y cultura</option>
+                       </select>
+                       @error('tipo_proyecto')
+                           <span class="invalid-feedback" role="alert">
+                               <strong>{{ $message }}</strong>
+                           </span>
+                       @enderror
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="telefono" class="col-md-12 col-form-label text-md-left">{{ __('3. Fundamentación - Razones que motivan lacalidad del proyecto') }}</label>
+                     <label for="lugar_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('3. Lugar de ejeccución del proyecto*') }}</label>
                      <div class="col-md-12">
-                        <textarea id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus></textarea>
-                        @error('name')
+                        <textarea id="lugar_proyecto" name="lugar_proyecto" type="text" class="form-control @error('lugar_proyecto') is-invalid @enderror" name="lugar_proyecto" value="{{ old('lugar_proyecto') }}" required autocomplete="lugar_proyecto" autofocus></textarea>
+                        @error('lugar_proyecto')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                         </span>
@@ -40,217 +44,65 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="telefono" class="col-md-12 col-form-label text-md-left">{{ __('4. Descripción del proyecto / Qué se va hacer*') }}</label>
-                     <div class="col-md-12">
-                        <textarea id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus></textarea>
-                        @error('name')
+                     <label for="telefono" class="col-md-12 col-form-label text-md-left">{{ __('4. Número beneficiarios directos e indirectos *') }}</label>
+                      <label for="directos" class="col-md-2 col-form-label text-md-left">{{ __('Directos') }}</label>
+                      <div class="col-md-2">
+                        <input id="directos" type="text" class="form-control @error('directos') is-invalid @enderror" name="directos" value="{{ old('directos') }}" required autocomplete="directos" autofocus onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12">
+                        @error('directos')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                         </span>
                         @enderror
                      </div>
+                      <label for="indirectos" class="col-md-2 col-form-label text-md-left">{{ __('Indirectos') }}</label>
+                     <div class="col-md-2">
+                        <input id="indirectos" type="text" class="form-control @error('indirectos') is-invalid @enderror" name="indirectos" value="{{ old('indirectos') }}" required autocomplete="indirectos" autofocus onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12">
+                        @error('indirectos')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                     </div>     
                   </div>
+                  <hr>
                   <div class="form-group row">
-                     <label for="telefono" class="col-md-12 col-form-label text-md-left">{{ __('5. Objetivo general*') }}</label>
-                     <div class="col-md-12">
-                        <textarea id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus></textarea>
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>
-                  </div>
-                  <div class="form-group row">
-                     <label for="rut" class="col-md-12 col-form-label text-md-left">{{ __('6. Objetivos Especificos*') }}</label>
-                     <div class="col-md-12">
-                        <textarea id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus></textarea>
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>
-                  </div>
-                  <div class="form-group row">
-                     <label for="email" class="col-md-12 col-form-label text-md-left">{{ __('7. Lugar de cierre del proyecto*') }}</label>
-                     <div class="col-md-12">
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-                        @error('email')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>
-                  </div>
-                  <div class="form-group row">
-                     <label for="telefono" class="col-md-12 col-form-label text-md-left">{{ __('8. Número de beneficiarios directos e indirectos *') }}</label>
-                     <div class="col-md-6">
-                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus>
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>
-                     <div class="col-md-6">
-                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus>
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>
-                  </div>
-                  <div class="form-group row">
-                     <label for="telefono" class="col-md-12 col-form-label text-md-left">{{ __('9. Fecha de inicio / Fecha Término *') }}</label>
-                      <label for="telefono" class="col-md-4 col-form-label text-md-left">{{ __('Fecha de inicio') }}</label>
-                      <label for="telefono" class="col-md-4 col-form-label text-md-left">{{ __('Fecha Término') }}</label>
-                      <label for="telefono" class="col-md-4 col-form-label text-md-left">{{ __('Cantidad de días') }}</label>
-                     <div class="col-md-4">
-                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus>
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>
-                     <div class="col-md-4">
-                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus>
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>
-                     <div class="col-md-4">
-                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus>
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>            
-                  </div>
-                  <div class="form-group row">
-                     <label for="telefono" class="col-md-12 col-form-label text-md-left">{{ __('10. Presupuesto: Agregar: Recursos Humanos, Materiales e insumos') }}</label>
-                      <label for="telefono" class="col-md-2 col-form-label text-md-left">{{ __('Detalle') }}</label>
-                      <div class="col-md-5">
-                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus>
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>
-                     <label for="telefono" class="col-md-1 col-form-label text-md-left">{{ __('Monto') }}</label>
+                     <label for="aporte_solicitado" class="col-md-12 col-form-label text-md-left">{{ __('5.  Montos del proyecto') }}</label>
+                     <label for="aporte_solicitado" class="col-md-2 col-form-label text-md-left">{{ __('Aporte solicitado') }}</label>
                       <div class="col-md-4">
-                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus placeholder="$">
-                        @error('name')
+                        <input id="aporte_solicitado" type="text" class="form-control @error('aporte_solicitado') is-invalid @enderror" name="aporte_solicitado" value="{{ old('aporte_solicitado') }}" required autocomplete="aporte_solicitado" autofocus placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12">
+                        @error('aporte_solicitado')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                         </span>
                         @enderror
                      </div>
                   </div>
-                  <div class="form-group row">
-                      <label for="telefono" class="col-md-2 col-form-label text-md-left">{{ __('Detalle') }}</label>
-                      <div class="col-md-5">
-                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus>
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>
-                     <label for="telefono" class="col-md-1 col-form-label text-md-left">{{ __('Monto') }}</label>
-                      <div class="col-md-4">
-                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus placeholder="$">
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>
-                  </div>
-                  <div class="form-group row">
-                     <div class="col-md-2"></div>
-                     <div class="col-md-10">
-                        <button type="button" class="btn btn-primary btn-block">{{ __('Agregar otro') }}</button>
-                     </div>
-                  </div>
-                  <div class="form-group row">
-                     <label for="telefono" class="col-md-2 col-form-label text-md-left">{{ __('Total') }}</label>
-                     <div class="col-md-10">
-                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus placeholder="$">
-                     </div>
-                  </div>
-                  <div class="form-group row">
-                      <label for="telefono" class="col-md-12 col-form-label text-md-left">{{ __('11. Montos solicitados') }}</label>  
-                      <label for="telefono" class="col-md-2 col-form-label text-md-left">{{ __('Aporte solicitado') }}</label>
-                      <div class="col-md-10">
-                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus placeholder="$">
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>
-                  </div>
-
-                  <div class="form-group row">
-                      <label for="telefono" class="col-md-2 col-form-label text-md-left">{{ __('Aporte de terceros') }}</label>
-                      <div class="col-md-10">
-                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus placeholder="$">
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>
-                  </div>
-
-                  <div class="form-group row">
-                      <label for="telefono" class="col-md-2 col-form-label text-md-left">{{ __('Aporte propio') }}</label>
-                      <div class="col-md-10">
-                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus placeholder="$">
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>
-                  </div>
-                  
-                  <div class="form-group row">
-                     <label for="telefono" class="col-md-2 col-form-label text-md-left">{{ __('Total') }}</label>
-                     <div class="col-md-10">
-                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus placeholder="$">
-                     </div>
-                  </div>
-
-                  <div class="form-group row">
-                      <label for="telefono" class="col-md-12 col-form-label text-md-left">12. Cargar Anexo - Declaración jurada simple con firma del representante legal* &nbsp;&nbsp;<br>&nbsp;  &nbsp; (formato .pdf, .zip, .rar. Tamaño máximo 20 mb.)</label>  
-                  </div>
-
+                  <hr>
                   <div class="form-group row">
                      <div class="col-md-12">
-                        <input id="telefono" type="file" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus placeholder="$">
+                        <div class="form-check form-check-inline">
+                           <label class="form-check-label" for="inlineCheckbox1">6. Minera Las Cenizas tiene el derecho de tomar fotografías y hacer visitas del proyecto. Además, instalar placa conmemorativa*<br>Marcar casilla para aceptar cláusula</label>
+                          <input class="form-check-input" type="checkbox" id="acepto_clausula_proy" name="acepto_clausula_proy" value="1">
+                         
+                        </div>
+                        @error('acepto_clausula_proy')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                      </div>
                   </div>
-
+                  <hr>
                   <div class="form-group row">
                      <div class="col-md-12  text-md-right">
-                        <button type="submit" class="btn btn-primary">
+                         <button type="button" onclick="btn_volver(2)" class="btn btn-primary">
                         {{ __('Anterior') }}
                         </button>
-
-                         <button type="submit" class="btn btn-primary">
-                        {{ __('Siguiente') }}
+                         <button type="button" onclick="validarFrmProy(3)" class="btn btn-primary">
+                           {{ __('Siguiente') }}
                         </button>
                      </div>
                   </div>
-               </form>
             </div>
          </div>
       </div>

@@ -19,10 +19,11 @@ Route::post('/listarPersonaJuridicas',  [App\Http\Controllers\HomeController::cl
 
 Route::post('/crearPersonaJuridica',  [App\Http\Controllers\HomeController::class, 'crearPersonaJuridica'])->name('crearPersonaJuridica');
 
-
 Route::post('updateProfile', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
 
 Route::get('confirmacionPersonaJuridica', [App\Http\Controllers\HomeController::class, 'confirmacionPersonaJuridica'])->name('confirmacionPersonaJuridica');
+
+Route::get('confirmacionProyecto', [App\Http\Controllers\HomeController::class, 'confirmacionProyecto'])->name('confirmacionProyecto');
 
 Route::get('confirmacionEditarPersonaJuridica', [App\Http\Controllers\HomeController::class, 'confirmacionEditarPersonaJuridica'])->name('confirmacionEditarPersonaJuridica');
 
@@ -46,6 +47,8 @@ Route::post('getComunas',
     [App\Http\Controllers\HomeController::class, 'getComunas'])->name('getComunas');
     //POST
 Route::post('guardar-formulario', [App\Http\Controllers\HomeController::class, 'guardarFrm'])->name('guardar-formulario');
+
+Route::post('validarFrmProy', [App\Http\Controllers\HomeController::class, 'validarFrmProy'])->name('validarFrmProy');
 
 Route::get('/ingreso-caso',  [App\Http\Controllers\HomeController::class,'ingresoCaso'])->name('ingreso-caso');
 // ************************************************************************

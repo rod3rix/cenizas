@@ -4,9 +4,7 @@
          <div class="card">
             <div class="card-header"><b><u>{{ __('  TIPO PROYECTO') }}</b></u></div>
             <div class="card-body">
-               <form method="POST" action="{{ route('register') }}">
-                  @csrf
-                 <div class="form-group row">
+                <div class="form-group row">
                       <label for="telefono" class="col-md-12 col-form-label text-md-left">1. Mis organizaciones jurídicas asociadas*</label>  
                   </div>
 
@@ -69,16 +67,15 @@
              
                   <div class="form-group row">
                      <div class="col-md-12  text-md-right">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="button" onclick="btn_volver(3)" class="btn btn-primary">
                         {{ __('Anterior') }}
                         </button>
 
-                         <button type="submit" class="btn btn-primary">
-                        {{ __('Siguiente') }}
+                        <button type="button" onclick="validarFrmProy(4)" class="btn btn-primary">
+                           {{ __('Finalizar') }}
                         </button>
                      </div>
                   </div>
-               </form>
             </div>
          </div>
       </div>

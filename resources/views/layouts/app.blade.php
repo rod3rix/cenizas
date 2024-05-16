@@ -26,7 +26,15 @@
     <!-- Scripts -->
     <!-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) -->
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.7.1.js"></script> -->
+
+    <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- jQuery UI -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 

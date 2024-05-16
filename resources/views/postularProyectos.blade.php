@@ -19,81 +19,40 @@
         <hr>
 
     <div class="container">
-          <button type="button" class="btn btn-info btn-arrow-right btn-lg">ANTECEDENTES GENERALES</button>
-          <button type="button" class="btn btn-info btn-arrow-right btn-lg">DATOS ORGANIZACIÓN</button>
-          <button type="button" class="btn btn-info btn-arrow-right btn-lg">TIPO PROYECTO</button>
-          <button type="button" class="btn btn-info btn-arrow-right btn-lg">RELACIONES JURÍDICAS</button>
+          <button type="button" id="bt_et1" class="btn btn-info btn-arrow-right btn-lg">ANTECEDENTES GENERALES</button>
+          <button type="button" id="bt_et2" class="btn btn-arrow-right btn-lg">DATOS ORGANIZACIÓN</button>
+          <button type="button" id="bt_et3"class="btn  btn-arrow-right btn-lg">TIPO PROYECTO</button>
+          <button type="button" id="bt_et4" class="btn btn-arrow-right btn-lg">RELACIONES JURÍDICAS</button>
     </div>
 
     <div class="container">
+    <form method="POST" id="frm_proy" name="frm_proy" enctype="multipart/form-data">
+        <input id="frm"  name="frm" type="hidden"  value="1" >
+        @csrf
+        <div class="bt_et1">
         @include('frm.post_proy_etapa_1')
+        </div>
+        <div class="bt_et2">
         @include('frm.post_proy_etapa_2')
+        </div>
+        <div class="bt_et3">        
         @include('frm.post_proy_etapa_3')
+        </div>
+        <div class="bt_et4">
         @include('frm.post_proy_etapa_4')
+        </div>
+      <form>  
     </div>
 
 </div>
-
+<script src="{{ asset('js/frm_proy.js') }}"></script>
 <script>
     $(document).ready(function(){
-        // $("#mostrar").on( "click", function() {
-        //     $('#target').show(); //muestro mediante id
-        //     $('.target').show(); //muestro mediante clase
-        //  });
-        // $("#ocultar").on( "click", function() {
-        //     $('#target').hide(); //oculto mediante id
-        //     $('.target').hide(); //muestro mediante clase
-        // });
-
         var op=1;
 
         if(op==1){
             $('#etapa_1').show();
         }
-        if(op==2){
-            $('#etapa_2').show();
-        }
-        if(op==3){
-            $('#etapa_3').show();
-        }
-        if(op==4){
-            $('#etapa_4').show();
-        }
-
-        //alert(op);
-        // switch(op) { 
-        //     case '1':
-        //         $('#etapa_1').show();
-        //     break;
-        //     case '2':
-        //         $('#etapa_2').show();
-        //     break;
-        //     case '3':
-        //         alert(op);
-        //         $('#etapa_3').show();
-        //     break;
-        //     case '4':
-        //         $('#etapa_4').show();
-        //     break; 
-        // }
-
     });
-</script>    
-
-      
-<!-- <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-
-
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                   
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
+</script>
 @endsection
