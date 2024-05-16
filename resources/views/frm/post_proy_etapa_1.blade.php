@@ -71,7 +71,7 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="pueblo_originario" class="col-md-12 col-form-label text-md-left">{{ __('9. Pertenece a pueblo originario') }}</label>
+                     <label for="pueblo_originario" class="col-md-12 col-form-label text-md-left">{{ __('9. Pertenece a pueblo originario *') }}</label>
                      <div class="col-md-12">
                         <div class="form-check form-check-inline">
                           <input class="form-check-input" id="pueblo_originario" name="pueblo_originario" type="radio" value="1">
@@ -89,7 +89,7 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="discapacidad" class="col-md-12 col-form-label text-md-left">{{ __('10. Discapacidad') }}</label>
+                     <label for="discapacidad" class="col-md-12 col-form-label text-md-left">{{ __('10. Discapacidad *') }}</label>
                      <div class="col-md-12">
                         <div class="form-check form-check-inline">
                           <input class="form-check-input" type="radio" id="discapacidad" name="discapacidad" value="1">
@@ -107,7 +107,7 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="fecha_nacimiento" class="col-md-12 col-form-label text-md-left">{{ __('11. Fecha nacimiento') }}</label>
+                     <label for="fecha_nacimiento" class="col-md-12 col-form-label text-md-left">{{ __('11. Fecha nacimiento *') }}</label>
                      <div class="col-md-6">
                         <input id="fecha_nacimiento" type="text" class="form-control @error('fecha_nacimiento') is-invalid @enderror" name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}" required autocomplete="fecha_nacimiento" autofocus readonly>
                            @error('fecha_nacimiento')
@@ -118,7 +118,7 @@
                      </div>  
                   </div>
                   <div class="form-group row">
-                     <label for="actividad_economica" class="col-md-12 col-form-label text-md-left">{{ __('12. Actividad económica') }}</label>
+                     <label for="actividad_economica" class="col-md-12 col-form-label text-md-left">{{ __('12. Actividad económica *') }}</label>
                      <div class="col-md-12">
                         <input id="actividad_economica" type="text" class="form-control @error('actividad_economica') is-invalid @enderror" name="actividad_economica" value="{{ old('actividad_economica') }}" required autocomplete="actividad_economica" autofocus>
                         @error('actividad_economica')
@@ -140,7 +140,7 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="formacion_formal" class="col-md-12 col-form-label text-md-left">{{ __('14. Posee formación formal ') }}</label>
+                     <label for="formacion_formal" class="col-md-12 col-form-label text-md-left">{{ __('14. Posee formación formal *') }}</label>
                      <div class="col-md-12">
                         <input id="formacion_formal" type="text" class="form-control @error('formacion_formal') is-invalid @enderror"name="formacion_formal" value="{{ old('formacion_formal') }}" required autocomplete="formacion_formal" autofocus>
                         @error('formacion_formal')
@@ -151,7 +151,7 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="profesion" class="col-md-12 col-form-label text-md-left">{{ __('15. Profesión') }}</label>
+                     <label for="profesion" class="col-md-12 col-form-label text-md-left">{{ __('15. Profesión *') }}</label>
                      <div class="col-md-12">
                         <input id="profesion" type="text" class="form-control @error('profesion') is-invalid @enderror" name="profesion" value="{{ old('profesion') }}" required autocomplete="profesion" autofocus>
                         @error('profesion')
@@ -166,7 +166,7 @@
                         <div class="form-check form-check-inline">
                           <input class="form-check-input" type="checkbox" id="acepto_clausula" name="acepto_clausula" value="1">
                         </div>
-                          <label class="form-check-label" for="acepto_clausula">Acepto cláusula de tratamiento de información personal* <br> Marcar casilla para aceptar cláusula..</label>
+                          <label class="form-check-label" for="acepto_clausula">Acepto cláusula de tratamiento de información personal * <br> Marcar casilla para aceptar cláusula..</label>
                         
                         @error('acepto_clausula')
                         <span class="invalid-feedback" role="alert">

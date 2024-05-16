@@ -5,7 +5,7 @@
             <div class="card-header"><b><u>{{ __('  TIPO PROYECTO') }}</b></u></div>
             <div class="card-body">
                   <div class="form-group row">
-                     <label for="nombre_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('1. Nombre Proyecto*') }}</label>
+                     <label for="nombre_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('1. Nombre Proyecto *') }}</label>
                      <div class="col-md-12">
                         <input id="nombre_proyecto" name="nombre_proyecto" type="text" class="form-control @error('nombre_proyecto') is-invalid @enderror"  value="{{ old('nombre_proyecto') }}" autocomplete="nombre_proyecto" autofocus>
                         @error('nombre_proyecto')
@@ -16,7 +16,7 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="tipo_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('2. Tipo de proyecto*') }}</label>
+                     <label for="tipo_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('2. Tipo de proyecto *') }}</label>
                      <div class="col-md-12">
                         <select id="tipo_proyecto" class="form-control @error('tipo_proyecto') is-invalid @enderror" name="tipo_proyecto" required autocomplete="tipo_proyecto" autofocus>
                            <option value="">Seleccione</option>
@@ -66,7 +66,7 @@
                   </div>
                   <hr>
                   <div class="form-group row">
-                     <label for="aporte_solicitado" class="col-md-12 col-form-label text-md-left">{{ __('5.  Montos del proyecto') }}</label>
+                     <label for="aporte_solicitado" class="col-md-12 col-form-label text-md-left">{{ __('5.  Montos del proyecto *') }}</label>
                      <label for="aporte_solicitado" class="col-md-2 col-form-label text-md-left">{{ __('Aporte solicitado') }}</label>
                       <div class="col-md-4">
                         <input id="aporte_solicitado" type="text" class="form-control @error('aporte_solicitado') is-invalid @enderror" name="aporte_solicitado" value="{{ old('aporte_solicitado') }}" required autocomplete="aporte_solicitado" autofocus placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12">
@@ -81,7 +81,7 @@
                   <div class="form-group row">
                      <div class="col-md-12">
                         <div class="form-check form-check-inline">
-                           <label class="form-check-label" for="inlineCheckbox1">6. Minera Las Cenizas tiene el derecho de tomar fotografías y hacer visitas del proyecto. Además, instalar placa conmemorativa*<br>Marcar casilla para aceptar cláusula</label>
+                           <label class="form-check-label" for="inlineCheckbox1">6. Minera Las Cenizas tiene el derecho de tomar fotografías y hacer visitas del proyecto. Además, instalar placa conmemorativa *<br>Marcar casilla para aceptar cláusula</label>
                           <input class="form-check-input" type="checkbox" id="acepto_clausula_proy" name="acepto_clausula_proy" value="1">
                          
                         </div>

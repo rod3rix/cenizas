@@ -16,6 +16,7 @@ use App\Models\PostulacionProyectos;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 
+
 class HomeController extends Controller
 {
     /**
@@ -50,7 +51,7 @@ class HomeController extends Controller
                 ->get();
 
                 $user=$user[0];
-                
+
         return view('postularProyectos',['user' => $user]);
     }
 
@@ -158,6 +159,37 @@ class HomeController extends Controller
         });
 
         return response()->json($casos);
+    }
+
+      public function listarApoyoProyectos()
+    {
+        $postulacion = PostulacionProyectos::where('user_id', auth()->id())->get();
+
+       
+$postulacion = $postulacion->transform(function ($postulacion) {
+    switch ($postulacion->estado) {
+        case 1:
+            $postulacion->estado_texto = 'Enviado';
+            $postulacion->resolucion = 'En proceso';
+            break;
+        case 2:
+            $postulacion->estado_texto = 'Aceptado';
+            $postulacion->resolucion = '<a href="#">Ver Respuesta</a>';
+            break;
+        case 3:
+            $postulacion->estado_texto = 'Rechazado';
+            $postulacion->resolucion = '<a href="#">Ver Respuesta</a>';
+            break;
+    } 
+
+    // Formatear la fecha created_at
+    $postulacion->created_at_formatted = Carbon::parse($postulacion->created_at)->format('d-m-Y');
+    
+    return $postulacion;
+});
+
+    return response()->json($postulacion);
+    
     }
 
      public function listarPersonaJuridicas()

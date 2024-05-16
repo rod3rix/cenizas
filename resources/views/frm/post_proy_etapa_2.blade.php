@@ -5,7 +5,7 @@
             <div class="card-header"><b><u>{{ __('  DATOS ORGANIZACIÓN') }}</b></u></div>
             <div class="card-body">
                  <div class="form-group row">
-                     <label for="nombre_organizacion" class="col-md-12 col-form-label text-md-left">{{ __('1. Nombre Organización*') }}</label>
+                     <label for="nombre_organizacion" class="col-md-12 col-form-label text-md-left">{{ __('1. Nombre Organización *') }}</label>
                      <div class="col-md-12">
                         <input id="nombre_organizacion" type="text" class="form-control @error('nombre_organizacion') is-invalid @enderror" name="nombre_organizacion" id="nombre_organizacion" value="{{ old('nombre_organizacion') }}" required autocomplete="nombre_organizacion" autofocus>
                         @error('nombre_organizacion')
@@ -38,7 +38,7 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="personalidad_juridica" class="col-md-12 col-form-label text-md-left">{{ __('4. Personalidad Jurídica') }}</label>
+                     <label for="personalidad_juridica" class="col-md-12 col-form-label text-md-left">{{ __('4. Personalidad Jurídica *') }}</label>
                      <div class="col-md-12">
                         <input id="personalidad_juridica" name="personalidad_juridica" type="text" class="form-control @error('personalidad_juridica') is-invalid @enderror" name="personalidad_juridica" value="{{ old('personalidad_juridica') }}" required autocomplete="rut" autofocus>
                         @error('personalidad_juridica')

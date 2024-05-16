@@ -17,6 +17,9 @@ Route::get('/editarPersonaJuridica/{id}',  [App\Http\Controllers\HomeController:
 
 Route::post('/listarPersonaJuridicas',  [App\Http\Controllers\HomeController::class, 'listarPersonaJuridicas'])->name('listarPersonaJuridicas');
 
+Route::post('/listarApoyoProyectos',  [App\Http\Controllers\HomeController::class, 'listarApoyoProyectos'])->name('listarApoyoProyectos');
+
+
 Route::post('/crearPersonaJuridica',  [App\Http\Controllers\HomeController::class, 'crearPersonaJuridica'])->name('crearPersonaJuridica');
 
 Route::post('updateProfile', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
