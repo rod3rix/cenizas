@@ -22,15 +22,6 @@
                       <tbody>
                           <!-- Aquí se agregarán dinámicamente los datos -->
                       </tbody>
-                       <!--  <tfoot>
-                        <tr>
-                              <th>FOLIO</th>
-                              <th>NOMBRE PROYECTO</th>
-                              <th>FECHA ENVÍO</th>
-                              <th>ESTADO</th>
-                              <th>RESOLUCION</th>
-                        </tr>
-                    </tfoot> -->
                   </table>
         </div>
 </div>

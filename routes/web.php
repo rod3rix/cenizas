@@ -2,14 +2,21 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function () {  
+    if(auth()->user()){
+         if (auth()->user()->type == 'admin') {
+            return redirect()->route('admin.dashboard');
+          }else{
+            return redirect()->route('home');
+         }
+    }else{
+       return redirect()->route('login');      
+    }
 });
 
 Auth::routes();
 //users routes
 Route::middleware(['auth', 'access-level:user'])->group(function () {
-
 
 Route::post('/actualizarPersonaJuridica',  [App\Http\Controllers\HomeController::class, 'actualizarPersonaJuridica'])->name('actualizarPersonaJuridica');
 
@@ -73,9 +80,11 @@ Route::get('/ingreso-caso',  [App\Http\Controllers\HomeController::class,'ingres
 // admin routes
 Route::middleware(['auth', 'access-level:admin'])->group(function () {
 
-    Route::post('/users/data', [App\Http\Controllers\AdminController::class, 'getData'])->name('users.data');
+    Route::get('/detalleProyectoAdmin/{id}',  [App\Http\Controllers\AdminController::class,'detalleProyectoAdmin'])->name('detalleProyectoAdmin');
 
-    
+    Route::post('/listarApoyoProyectosAdmin',  [App\Http\Controllers\AdminController::class, 'listarApoyoProyectosAdmin'])->name('listarApoyoProyectosAdmin');
+
+    Route::post('/users/data', [App\Http\Controllers\AdminController::class, 'getData'])->name('users.data');
     Route::post('/change-password', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('change.password');
 
     Route::post('guardarPuntaje', [App\Http\Controllers\AdminController::class, 'guardarPuntaje'])->name('guardarPuntaje');
@@ -85,6 +94,8 @@ Route::middleware(['auth', 'access-level:admin'])->group(function () {
     Route::get('verPerfil', [App\Http\Controllers\AdminController::class, 'verPerfil'])->name('verPerfil');
 
     Route::get('confirmacionPassAdmin', [App\Http\Controllers\AdminController::class, 'confirmacionPassAdmin'])->name('confirmacionPassAdmin');
+
+    Route::get('confirmacionProyectoAdmin', [App\Http\Controllers\AdminController::class, 'confirmacionProyectoAdmin'])->name('confirmacionProyectoAdmin');
 
     Route::get('cambiarPassAdmin', [App\Http\Controllers\AdminController::class, 'cambiarPassAdmin'])->name('cambiarPassAdmin');
     Route::post('casosUsuarioAdmin', [App\Http\Controllers\AdminController::class, 'casosUsuarioAdmin'])->name('casosUsuarioAdmin');
@@ -100,6 +111,9 @@ Route::middleware(['auth', 'access-level:admin'])->group(function () {
      Route::get('responderCaso/{id}', [App\Http\Controllers\AdminController::class, 'responderCaso'])->name('responderCaso');
     Route::get('respuestaCasoAdmin/{id}', [App\Http\Controllers\AdminController::class, 'respuestaCasoAdmin'])->name('respuestaCasoAdmin');
     Route::post('cerrarCaso', [App\Http\Controllers\AdminController::class, 'cerrarCaso'])->name('cerrarCaso');
+
+    Route::post('cerrarProyecto', [App\Http\Controllers\AdminController::class, 'cerrarProyecto'])->name('cerrarProyecto');
+
     Route::get('confirmacionRespuestaCaso',  [App\Http\Controllers\AdminController::class,'confirmacionRespuestaCaso'])->name('confirmacionRespuestaCaso');
     Route::get('confirmacionAsignacion',  [App\Http\Controllers\AdminController::class,'confirmacionAsignacion'])->name('confirmacionAsignacion');
 });

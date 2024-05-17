@@ -12,6 +12,7 @@ use App\Models\Regiones;
 use App\Models\Comunas;
 use App\Models\Casos;
 use App\Models\PuntajeUser;
+use App\Models\PostulacionProyectos;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 
@@ -202,6 +203,12 @@ public function cerrarCaso(Request $request)
         return view('confirmacionAsignacion');
     }
 
+public function confirmacionProyectoAdmin()
+    {
+        return view('confirmacionProyectoAdmin');
+    }
+    
+
      public function changePassword(Request $request)
     {
             $validator = Validator::make($request->all(), [
@@ -307,4 +314,106 @@ public function guardarPuntaje(Request $request)
         return response()->json(['success' => true, 'message' => 'Puntaje guardado exitosamente']);
     }
 
+       public function listarApoyoProyectosAdmin()
+    {
+        $postulacion = PostulacionProyectos::join('users', 'postulacion_proyectos.user_id', '=', 'users.id')->get(['postulacion_proyectos.*', 'users.*','postulacion_proyectos.id']);
+
+        $postulacion = $postulacion->transform(function ($postulacion) {
+            switch ($postulacion->estado) {
+                case 1:
+                    $postulacion->calificacion = '<a href="#">Calificar</a>';
+                    $postulacion->estado = 'En proceso';
+                    $postulacion->respuesta = '<a href="' . route("detalleProyectoAdmin", ["id" => $postulacion->id]) . '">Responder</a>';
+                    break;
+                case 2:
+                    $postulacion->calificacion = '<a href="#">Ver Calificación</a>';
+                    $postulacion->estado = 'Enviado';
+                    $postulacion->respuesta = '<a href="#">Ver Respuesta</a>';
+                    break;
+                case 3:
+                    $postulacion->calificacion = '<a href="#">Ver Calificación</a>';
+                    $postulacion->estado = 'Enviado';
+                    $postulacion->respuesta = '<a href="#">Ver Respuesta</a>';
+                    break;
+            } 
+
+            // Formatear la fecha created_at
+            $postulacion->created_at_formatted = Carbon::parse($postulacion->created_at)->format('d-m-Y');
+            
+            return $postulacion;
+        });
+
+         return response()->json($postulacion);
+    
+    }    
+
+     public function detalleProyectoAdmin($id)
+    {
+
+        $pproy = DB::table('postulacion_proyectos')
+            ->join('users', 'users.id', '=', 'postulacion_proyectos.user_id')
+            ->select('users.*','postulacion_proyectos.*')
+            ->where('postulacion_proyectos.id', $id)
+            ->first();
+
+        return view('detalleProyectoAdmin',['pproy' => $pproy]);
+    }
+
+    public function cerrarProyecto(Request $request)
+    {
+    // Validar la existencia y tipo del archivo
+    $validator = Validator::make($request->all(), [
+        'respuesta' => 'required|string|max:2500',
+        'estado_proyecto' => 'required',
+        'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'success' => false,
+            'errors' => $validator->errors()->toArray()
+        ]);
+    }
+
+    try {
+        // Obtener el archivo del request
+        $archivo = $request->file('archivo');
+
+        // Guardar el archivo en el directorio deseado
+        $nombreArchivo = 'res_proy_' . auth()->id() . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
+        $archivo->storeAs('archivos', $nombreArchivo);
+
+        // Actualizar los campos respuesta y archivo_respuesta con el ID proporcionado en el URL usando Eloquent
+
+        $caso = PostulacionProyectos::findOrFail($request->pproy_id);
+        $caso->respuesta = $request->input('respuesta');
+        $caso->archivo_respuesta = $nombreArchivo;
+        $caso->estado = $request->input('estado_proyecto');
+        $caso->updated_at = Carbon::now();
+        $caso->save();
+
+        // Verificar si la actualización fue exitosa
+        if ($caso) {
+            // La actualización fue exitosa
+            return response()->json([
+                'success' => true,
+                'message' => '¡La respuesta y el archivo se han actualizado correctamente!'
+            ]);
+        } else {
+            // La actualización falló
+            return response()->json([
+                'success' => false,
+                'message' => 'Hubo un error al actualizar la respuesta y el archivo.'
+            ], 500); // 500 es el código de estado para errores internos del servidor
+        }
+    } catch (\Exception $e) {
+
+        dd($e);
+        // Manejar la excepción
+        return response()->json([
+            'success' => false,
+            'message' => 'Hubo un error al procesar la solicitud: ' . $e->getMessage()
+        ], 500);
+    }
+}
 }
