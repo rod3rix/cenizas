@@ -14,14 +14,13 @@
 
     <!-- Estilos de Bootstrap 5.3.3 -->
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css" rel="stylesheet">
+    <link href="css/dataTables.bootstrap5.css" rel="stylesheet">
 
-    <link href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.css" rel="stylesheet">
+    <link href="css/buttons.bootstrap5.css" rel="stylesheet">
     
-    <!--  -->    
-    <link href="https://cdn.rawgit.com/westonganger/bootstrap-directional-buttons/master/dist/bootstrap-directional-buttons.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap-directional-buttons.css" rel="stylesheet" type="text/css" />
 
     <!-- Scripts -->
     <!-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) -->
