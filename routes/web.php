@@ -80,9 +80,17 @@ Route::get('/ingreso-caso',  [App\Http\Controllers\HomeController::class,'ingres
 // admin routes
 Route::middleware(['auth', 'access-level:admin'])->group(function () {
 
+    // Ruta para obtener detalles del usuario
+    Route::post('getUserDetails', [App\Http\Controllers\AdminController::class, 'getUserDetails'])->name('getUserDetails');
+
+    // Ruta para actualizar el usuario
+    Route::post('updateUser/{id}', [App\Http\Controllers\AdminController::class, 'updateUser'])->name('updateUser');
+
     Route::post('registrarUsuAdmin', [App\Http\Controllers\AdminController::class, 'registrarUsuAdmin'])->name('registrarUsuAdmin');
 
     Route::get('/detalleProyectoAdmin/{id}',  [App\Http\Controllers\AdminController::class,'detalleProyectoAdmin'])->name('detalleProyectoAdmin');
+
+    Route::post('/listarUsuariosAdmin',  [App\Http\Controllers\AdminController::class, 'listarUsuariosAdmin'])->name('listarUsuariosAdmin');
 
     Route::post('/listarApoyoProyectosAdmin',  [App\Http\Controllers\AdminController::class, 'listarApoyoProyectosAdmin'])->name('listarApoyoProyectosAdmin');
 

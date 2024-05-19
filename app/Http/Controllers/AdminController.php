@@ -447,6 +447,7 @@ public function registrarUsuAdmin(Request $request)
         $user->email = $request->email;
         $user->fono = $request->telefono;
         $user->zona = $request->zona;
+        $user->type = 2;
         $user->password = bcrypt($request->password);
         $user->created_at = Carbon::now();
         $user->updated_at = Carbon::now();
@@ -473,5 +474,73 @@ public function registrarUsuAdmin(Request $request)
             'message' => 'Hubo un error al procesar la solicitud: ' . $e->getMessage()
         ], 500);
     }
-}
+    }
+
+    public function listarUsuariosAdmin()
+    {
+        $users = User::where('type', 2)
+            ->select('users.*')
+            ->get();
+
+        $users = $users->transform(function ($user) {
+        return [
+            'id' => $user->id,
+            'name' => $user->name,
+            'apellido_paterno' => $user->apellido_paterno,
+            'rut' => $user->rut,
+            'link_editar' => '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal" data-id="'.$user->id.'">Ver Detalles</button>'
+            ];
+        });
+
+         return response()->json($users);
+    }
+
+    public function getUserDetails(Request $request)
+    {
+        $user = User::findOrFail($request->id);
+        return response()->json($user);
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+
+     // Validar la existencia y tipo del archivo
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:2500',
+            'apellido_paterno' => 'required|string|max:2500',
+            'apellido_materno' => 'required|string|max:2500',
+            'rut' => 'required|string|max:255|unique:users,rut',
+            'email' => 'required|string||email||max:2500|unique:users,email',
+            'telefono' => 'required|string|max:2500',
+            'zona' => 'required|string|max:2500',
+            'password' => 'required|string|max:2500|min:8'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->toArray()
+            ]);
+        }
+
+        $user = User::findOrFail($id);
+        // Actualizar los datos del usuario
+        $user->name = $request->name;
+        $user->apellido_paterno = $request->apellido_paterno;
+        $user->apellido_materno = $request->apellido_materno;
+        $user->rut = $request->rut;
+        $user->email = $request->email;
+        $user->fono = $request->telefono;
+        $user->zona = $request->zona;
+
+        //Actualizar la contraseña solo si se proporciona
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return response()->json(['success' => true,
+              'message' => 'Usuario actualizado con éxito']);
+    }
 }

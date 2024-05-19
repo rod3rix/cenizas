@@ -14,24 +14,26 @@
           </p>
         </div>
         @if(auth::user()->id=="1")
+
         <div class="container mt-5">
-            <div id="statusMessage" class="alert alert-success d-none" role="alert"></div>
-            <div class="row justify-content-center">
-                <div class="col-12">
-                    <div class="accordion" id="accordionExample">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button text-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Ingresar Usuarios Adminitradores
-                                </button>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse hide" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <!-- Aquí puedes agregar el contenido de la sección de administración de usuarios -->
-                                    <div class="container mt-5">
+        <!-- Div para mostrar el mensaje de estado -->
+        <div id="statusMessage" class="alert alert-success d-none" role="alert"></div>
+        <!-- Primer acordeón -->
+        <div class="accordion" id="accordionOne">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed text-center-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        Ingresar Usuarios Administradores
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionOne">
+                    <div class="accordion-body">
+                        <!-- Aquí puedes agregar el contenido de la sección de administración de usuarios -->
+                        <div class="container mt-5">
                             <div class="row justify-content-center">
                                 <div class="col-md-8">
-                                    <form method="POST" id="frm1" name="frm1">
+                                    <!-- Contenido del primer acordeón -->
+                                            <form method="POST" id="frm1" name="frm1">
                                         @csrf
 
                                         <div class="row mb-3">
@@ -145,6 +147,42 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Segundo acordeón independiente -->
+        <div class="accordion" id="accordionTwo">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed text-center-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Editar Usuarios Administradores
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionTwo">
+                    <div class="accordion-body">
+                        <!-- Aquí puedes agregar el contenido de la sección de edición de usuarios administradores -->
+                        <div class="container mt-5">
+                            <div class="row justify-content-center">
+                                <div class="col-md-8">
+                                    <div  class="container">          
+                                        <h5><b>Listado de Usuarios Administradores</b></h5>
+                                              <table id="registros" class="table table-striped table-bordered" style="width:100%">
+                                                  <thead>
+                                                      <tr>
+                                                          <th>ID</th>
+                                                          <th>NOMBRE</th>
+                                                          <th>APELLIDO</th>
+                                                          <th>RUT</th>
+                                                          <th>ACCION</th>
+                                                      </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                      <!-- Aquí se agregarán dinámicamente los datos -->
+                                                  </tbody>
+                                              </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -152,8 +190,80 @@
                 </div>
             </div>
         </div>
-        @endif
-      </section>
+    </div>
+@endif
+
+<!-- Modal -->
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userModalLabel">Editar Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="userForm">
+                    @csrf
+                    <input type="hidden" id="userId" name="id">
+                    <div class="mb-3 row">
+                        <label for="modalUserName" class="col-sm-4 col-form-label">Nombre</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modalUserName" name="name">
+                             @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="modalUserApellidoPaterno" class="col-sm-4 col-form-label">Apellido Paterno</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modalUserApellidoPaterno" name="apellido_paterno">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="modalUserApellidoMaterno" class="col-sm-4 col-form-label">Apellido Materno</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modalUserApellidoMaterno" name="apellido_materno">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="modalUserRut" class="col-sm-4 col-form-label">RUT</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modalUserRut" name="rut">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="modalUserEmail" class="col-sm-4 col-form-label">Email</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control" id="modalUserEmail" name="email">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="modalUserTelefono" class="col-sm-4 col-form-label">Teléfono</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modalUserTelefono" name="telefono">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="modalUserZona" class="col-sm-4 col-form-label">Zona</label>
+                        <div class="col-sm-8">
+                         <select class="form-select" id="modalUserZona" name="zona">
+                            <option value="1">Taltal</option>
+                            <option value="2">Cabildo</option>
+                        </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+
 <script>
 
 function formatRut(cliente) {
@@ -182,8 +292,12 @@ function enviarFormulario(idFrm) {
             if (response.success) {
                 // Si la respuesta indica éxito, puedes realizar alguna acción, como redireccionar a otra página
                 $('#statusMessage').removeClass('d-none').text(response.message);
-                $('#collapseOne').collapse('hide');
-                $('#frm1')[0].reset();
+                
+                 $('#collapseTwo').collapse('toggle');  // Cerrar el acordeón
+                setTimeout(function() {
+                    $('#userModal').modal('hide');
+                   
+                }, 2000);
 
             } else {
                 // Si la respuesta indica que hubo errores de validación, muestras los mensajes de error debajo de los campos correspondientes
@@ -203,6 +317,120 @@ function enviarFormulario(idFrm) {
     });
 }
 
+
+
+
+    
+$(document).ready(function() {
+    $.ajax({
+        url: '{{ route("listarUsuariosAdmin") }}',
+        type: 'POST',
+        dataType: 'json',
+        data: {_token: '{{ csrf_token() }}'},
+        success: function(response) {
+             $('#registros').DataTable({
+                language: {
+                    url: "{{ asset('lang/datatables/Spanish.json') }}"
+                },
+                data: response,
+                columns: [
+                    { data: 'id' },
+                    { data: 'name' },
+                    { data: 'apellido_paterno' },
+                    { data: 'rut' },
+                    { data: 'link_editar' }
+                ],
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'copy',
+                        exportOptions: {
+                            modifier: {
+                                page: 'all' // Exportar todas las páginas
+                            }
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            modifier: {
+                                page: 'all' // Exportar todas las páginas
+                            }
+                        },
+                        filename: 'Portal Comunidades', // Nombre del archivo Excel
+                        title: 'Portal Comunidades'
+                    },
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            modifier: {
+                                page: 'all' // Exportar todas las páginas
+                            }
+                        },
+                        filename: 'Portal Comunidades', // Nombre del archivo PDF
+                        title: 'Portal Comunidades'
+                    }
+                ],
+                paging: true // Habilitar paginación
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al cargar los datos:', error);
+        }
+    });
+        // Cuando se abra el modal, cargar la información del usuario
+        var userModal = document.getElementById('userModal');
+        userModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var userId = button.getAttribute('data-id');
+
+            $.ajax({
+                url: '{{ route("getUserDetails") }}',
+                type: 'POST',
+                data: { id: userId, _token: '{{ csrf_token() }}' },
+                dataType: 'json',
+                success: function(user) {
+                    $('#userId').val(user.id);
+                    $('#modalUserName').val(user.name);
+                    $('#modalUserApellidoPaterno').val(user.apellido_paterno);
+                    $('#modalUserApellidoMaterno').val(user.apellido_materno);
+                    $('#modalUserRut').val(user.rut);
+                    $('#modalUserEmail').val(user.email);
+                    $('#modalUserTelefono').val(user.fono);
+                    $('#modalUserZona').val(user.zona);
+                }
+            });
+        });
+
+        // Enviar formulario mediante AJAX
+        $('#userForm').submit(function(event) {
+            event.preventDefault();
+            var userId = $('#userId').val();
+
+            $.ajax({
+                url: `updateUser/${userId}`,
+                type: 'POST',
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        // Éxito, puedes hacer algo como cerrar el modal o mostrar un mensaje
+                        $('#userModal').modal('hide');
+                        $('#statusMessage').removeClass('d-none').text(response.message);
+                        $('#collapseOne').collapse('hide');
+                        $('#userForm')[0].reset();
+                        // Aquí puedes realizar otras acciones según sea necesario
+                    } else {
+                        // Si la respuesta indica que hubo errores de validación, muestras los mensajes de error debajo de los campos correspondientes
+                $.each(response.errors, function(key, value) {
+                    // Encuentra el campo correspondiente al error y muestra el mensaje de error
+                    $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
+                });
+                    }
+                }
+            });
+        });
+});
 
 
 
