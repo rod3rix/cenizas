@@ -23,6 +23,7 @@ class User extends Authenticatable
         'rut',
         'fono',
         'email',
+        'zona',
         'password',
         'type'
     ];

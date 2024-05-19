@@ -55,6 +55,7 @@ class RegisterController extends Controller
             'apellido_materno' => ['required', 'string', 'max:255'],
             'rut' => ['rut','required'],
             'telefono' => ['required', 'string', 'max:12'],
+            'zona' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -75,6 +76,7 @@ class RegisterController extends Controller
             'rut' => $data['rut'],
             'fono' => $data['telefono'],
             'email' => $data['email'],
+            'zona' => $data['zona'],
             'password' => Hash::make($data['password']),
         ]);
     }

@@ -15,17 +15,60 @@ class DatabaseSeeder extends Seeder
     {
         $users = [
             [
-               'name'=>'Admin User',
-               'email'=>'admin@cenizas.cl',
-               'type'=>2,
+               'name'=>'Rod Admin',
+               'type'=>2, // 1 = User, 2 = Admin, 3 = SuperAdmin
                'password'=> bcrypt('123456'),
+               'apellido_paterno'=>'Paterno',
+               'apellido_materno'=>'Marterno',
+               'rut' =>'11.111.111.1',
+               'fono'=>'963548898',
+               'email'=>'rod@zimple.pro',
+               'zona'=>'0',
             ],
             [
-               'name'=>'User',
-               'email'=>'user@cenizas.cl',
-               'type'=>1,
+               'name'=>'Admin Taltal',
+               'type'=>2, // 1 = User, 2 = Admin, 3 = SuperAdmin
                'password'=> bcrypt('123456'),
+               'apellido_paterno'=>'Paterno',
+               'apellido_materno'=>'Marterno',
+               'rut' =>'11.111.111.1',
+               'fono'=>'963548898',
+               'email'=>'adminzonat@cenizas.cl',
+               'zona'=>'1',
             ],
+            [
+               'name'=>'Admin Cabilo',
+               'type'=>2, // 1 = User, 2 = Admin, 3 = SuperAdmin
+               'password'=> bcrypt('123456'),
+               'apellido_paterno'=>'Paterno',
+               'apellido_materno'=>'Marterno',
+               'rut' =>'22.222.222-2',
+               'fono'=>'963548898',
+               'email'=>'adminzonac@cenizas.cl',
+               'zona'=>'2',
+            ],
+            [
+               'name'=>'User Taltal',
+               'type'=>1, // 1 = User, 2 = Admin, 3 = SuperAdmin
+               'password'=> bcrypt('123456'),
+               'apellido_paterno'=>'Paterno',
+               'apellido_materno'=>'Marterno',
+               'rut' =>'22.222.222-2',
+               'fono'=>'963548898',
+               'email'=>'usert@cenizas.cl',
+               'zona'=>'1',
+            ],
+            [
+               'name'=>'User Cabildo',
+               'type'=>1, // 1 = User, 2 = Admin, 3 = SuperAdmin
+               'password'=> bcrypt('123456'),
+               'apellido_paterno'=>'Paterno',
+               'apellido_materno'=>'Marterno',
+               'rut' =>'22.222.222-2',
+               'fono'=>'963548898',
+               'email'=>'userc@cenizas.cl',
+               'zona'=>'2',
+            ]
         ];
     
         foreach ($users as $key => $user) {

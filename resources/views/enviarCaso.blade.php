@@ -56,9 +56,8 @@
                             <div class="col-md-12">
                                 <select id="localidad" name="localidad" type="text" class="form-control @error('localidad') is-invalid @enderror">
                                     <option value="">Seleccione</option>
-                                    <option value="Reclamo">pendiente</option>
-                                    <option value="Reclamo">pendiente</option>
-                                    <option value="Reclamo">pendiente</option>
+                                    <option value="1">Cabildo</option>
+                                    <option value="2">Taltal</option>
                                 </select>
 
                                 @error('localidad')

@@ -80,6 +80,8 @@ Route::get('/ingreso-caso',  [App\Http\Controllers\HomeController::class,'ingres
 // admin routes
 Route::middleware(['auth', 'access-level:admin'])->group(function () {
 
+    Route::post('registrarUsuAdmin', [App\Http\Controllers\AdminController::class, 'registrarUsuAdmin'])->name('registrarUsuAdmin');
+
     Route::get('/detalleProyectoAdmin/{id}',  [App\Http\Controllers\AdminController::class,'detalleProyectoAdmin'])->name('detalleProyectoAdmin');
 
     Route::post('/listarApoyoProyectosAdmin',  [App\Http\Controllers\AdminController::class, 'listarApoyoProyectosAdmin'])->name('listarApoyoProyectosAdmin');
@@ -89,7 +91,7 @@ Route::middleware(['auth', 'access-level:admin'])->group(function () {
 
     Route::post('guardarPuntaje', [App\Http\Controllers\AdminController::class, 'guardarPuntaje'])->name('guardarPuntaje');
 
-    Route::get('/admin/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     Route::get('verPerfil', [App\Http\Controllers\AdminController::class, 'verPerfil'])->name('verPerfil');
 

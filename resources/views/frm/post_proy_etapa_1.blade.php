@@ -62,6 +62,7 @@
                            <option value="">Seleccione</option>
                            <option value="Masculino">Masculino</option>
                            <option value="Femenino">Femenino</option>
+                           <option value="Femenino">Otro</option>
                         </select>
                         @error('genero')
                         <span class="invalid-feedback" role="alert">

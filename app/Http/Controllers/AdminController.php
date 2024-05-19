@@ -8,6 +8,7 @@ use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 use App\Models\Regiones;
 use App\Models\Comunas;
 use App\Models\Casos;
@@ -407,8 +408,65 @@ public function guardarPuntaje(Request $request)
             ], 500); // 500 es el código de estado para errores internos del servidor
         }
     } catch (\Exception $e) {
+        // Manejar la excepción
+        return response()->json([
+            'success' => false,
+            'message' => 'Hubo un error al procesar la solicitud: ' . $e->getMessage()
+        ], 500);
+    }
+}
 
-        dd($e);
+public function registrarUsuAdmin(Request $request)
+    {
+    // Validar la existencia y tipo del archivo
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:2500',
+        'apellido_paterno' => 'required|string|max:2500',
+        'apellido_materno' => 'required|string|max:2500',
+        'rut' => 'required|string|max:255|unique:users,rut',
+        'email' => 'required|string||email||max:2500|unique:users,email',
+        'telefono' => 'required|string|max:2500',
+        'zona' => 'required|string|max:2500',
+        'password' => 'required|string|max:2500|min:8'
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'success' => false,
+            'errors' => $validator->errors()->toArray()
+        ]);
+    }
+
+    try {
+       
+        $user = new user;
+        $user->name =  $request->name;
+        $user->apellido_paterno = $request->apellido_paterno;
+        $user->apellido_materno = $request->apellido_materno;
+        $user->rut = $request->rut;
+        $user->email = $request->email;
+        $user->fono = $request->telefono;
+        $user->zona = $request->zona;
+        $user->password = bcrypt($request->password);
+        $user->created_at = Carbon::now();
+        $user->updated_at = Carbon::now();
+        $user->save();
+
+        // Verificar si la actualización fue exitosa
+        if ($user) {
+            // La actualización fue exitosa
+            return response()->json([
+                'success' => true,
+                'message' => 'Usuario creado con éxito'
+            ]);
+        } else {
+            // La actualización falló
+            return response()->json([
+                'success' => false,
+                'message' => 'Hubo un error al actualizar la respuesta y el archivo.'
+            ], 500); // 500 es el código de estado para errores internos del servidor
+        }
+    } catch (\Exception $e) {
         // Manejar la excepción
         return response()->json([
             'success' => false,
