@@ -208,53 +208,90 @@
                     <div class="mb-3 row">
                         <label for="modalUserName" class="col-sm-4 col-form-label">Nombre</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="modalUserName" name="name">
-                             @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                            <input type="text" class="form-control" id="modalUserName" name="modalUserName">
+                            @error('modalUserName')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="modalUserApellidoPaterno" class="col-sm-4 col-form-label">Apellido Paterno</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="modalUserApellidoPaterno" name="apellido_paterno">
+                            <input type="text" class="form-control" id="modalUserApellidoPaterno" name="modalUserApellidoPaterno">
+                            @error('modalUserApellidoPaterno')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="modalUserApellidoMaterno" class="col-sm-4 col-form-label">Apellido Materno</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="modalUserApellidoMaterno" name="apellido_materno">
+                            <input type="text" class="form-control" id="modalUserApellidoMaterno" name="modalUserApellidoMaterno">
+                            @error('modalUserApellidoMaterno')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="modalUserRut" class="col-sm-4 col-form-label">RUT</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="modalUserRut" name="rut">
+                            <input type="text" class="form-control" id="modalUserRut" name="modalUserRut" onkeyup="formatRut(this)">
+                            @error('modalUserRut')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="modalUserEmail" class="col-sm-4 col-form-label">Email</label>
                         <div class="col-sm-8">
-                            <input type="email" class="form-control" id="modalUserEmail" name="email">
+                            <input type="email" class="form-control" id="modalUserEmail" name="modalUserEmail">
+                            @error('modalUserEmail')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="modalUserTelefono" class="col-sm-4 col-form-label">Teléfono</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="modalUserTelefono" name="telefono">
+                            <input type="text" class="form-control" id="modalUserTelefono" name="modalUserTelefono" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12">
+                            @error('modalUserTelefono')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="modalUserZona" class="col-sm-4 col-form-label">Zona</label>
                         <div class="col-sm-8">
-                         <select class="form-select" id="modalUserZona" name="zona">
+                         <select class="form-select" id="modalUserZona" name="modalUserZona">
                             <option value="1">Taltal</option>
                             <option value="2">Cabildo</option>
                         </select>
                         </div>
                     </div>
+                    <div class="mb-3 row">
+                        <label for="modalUserPassword" class="col-sm-4 col-form-label">Contraseña</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modalUserPassword" name="modalUserPassword">
+                            @error('modalUserPassword')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn btn-primary">Guardar cambios</button>
                 </form>
             </div>
@@ -271,7 +308,6 @@ function formatRut(cliente) {
     .replace(/[^0-9kK]/g, '') // Elimina todo excepto números y la letra 'k' o 'K'
     .replace(/^(\d{1,2})(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4'); // Agrega puntos y guión en el formato estándar
 }
-
 
 function enviarFormulario(idFrm) {
 
@@ -292,11 +328,10 @@ function enviarFormulario(idFrm) {
             if (response.success) {
                 // Si la respuesta indica éxito, puedes realizar alguna acción, como redireccionar a otra página
                 $('#statusMessage').removeClass('d-none').text(response.message);
-                
-                 $('#collapseTwo').collapse('toggle');  // Cerrar el acordeón
                 setTimeout(function() {
-                    $('#userModal').modal('hide');
-                   
+                    listarUsuariosAdmin();
+                    $('#collapseOne').collapse('toggle');
+                    $('#frm1')[0].reset();
                 }, 2000);
 
             } else {
@@ -317,17 +352,85 @@ function enviarFormulario(idFrm) {
     });
 }
 
-
-
-
-    
 $(document).ready(function() {
+
+listarUsuariosAdmin();
+
+
+// Cuando se abra el modal, cargar la información del usuario
+        var userModal = document.getElementById('userModal');
+        userModal.addEventListener('show.bs.modal', function (event) {
+            $('form :input').removeClass('is-invalid');
+            $('.invalid-feedback').remove();
+            var button = event.relatedTarget;
+            var userId = button.getAttribute('data-id');
+
+            $.ajax({
+                url: '{{ route("getUserDetails") }}',
+                type: 'POST',
+                data: { id: userId, _token: '{{ csrf_token() }}' },
+                dataType: 'json',
+                success: function(user) {
+                    $('#userId').val(user.id);
+                    $('#modalUserName').val(user.name);
+                    $('#modalUserApellidoPaterno').val(user.apellido_paterno);
+                    $('#modalUserApellidoMaterno').val(user.apellido_materno);
+                    $('#modalUserRut').val(user.rut);
+                    $('#modalUserEmail').val(user.email);
+                    $('#modalUserTelefono').val(user.fono);
+                    $('#modalUserZona').val(user.zona);
+                }
+            });
+        });
+
+        // Enviar formulario mediante AJAX
+        $('#userForm').submit(function(event) {
+            event.preventDefault();
+
+            $('form :input').removeClass('is-invalid');
+            $('.invalid-feedback').remove();
+
+            var userId = $('#userId').val();
+
+            $.ajax({
+                url: `updateUser/${userId}`,
+                type: 'POST',
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        // Éxito, puedes hacer algo como cerrar el modal o mostrar un mensaje
+                        listarUsuariosAdmin();
+                        $('#userModal').modal('hide');
+                        $('#statusMessage').removeClass('d-none').text(response.message);
+                        $('#collapseTwo').collapse('hide');
+                        $('#userForm')[0].reset();
+                        // Aquí puedes realizar otras acciones según sea necesario
+                    } else {
+                        // Si la respuesta indica que hubo errores de validación, muestras los mensajes de error debajo de los campos correspondientes
+                $.each(response.errors, function(key, value) {
+                    // Encuentra el campo correspondiente al error y muestra el mensaje de error
+                    $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
+                });
+                    }
+                }
+            });
+        });
+
+});
+
+function listarUsuariosAdmin(){
     $.ajax({
         url: '{{ route("listarUsuariosAdmin") }}',
         type: 'POST',
         dataType: 'json',
         data: {_token: '{{ csrf_token() }}'},
         success: function(response) {
+             // Destruir la instancia existente de DataTable si ya está inicializada
+            if ($.fn.DataTable.isDataTable('#registros')) {
+                $('#registros').DataTable().clear().destroy();
+            }
+
              $('#registros').DataTable({
                 language: {
                     url: "{{ asset('lang/datatables/Spanish.json') }}"
@@ -378,59 +481,9 @@ $(document).ready(function() {
             console.error('Error al cargar los datos:', error);
         }
     });
-        // Cuando se abra el modal, cargar la información del usuario
-        var userModal = document.getElementById('userModal');
-        userModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget;
-            var userId = button.getAttribute('data-id');
 
-            $.ajax({
-                url: '{{ route("getUserDetails") }}',
-                type: 'POST',
-                data: { id: userId, _token: '{{ csrf_token() }}' },
-                dataType: 'json',
-                success: function(user) {
-                    $('#userId').val(user.id);
-                    $('#modalUserName').val(user.name);
-                    $('#modalUserApellidoPaterno').val(user.apellido_paterno);
-                    $('#modalUserApellidoMaterno').val(user.apellido_materno);
-                    $('#modalUserRut').val(user.rut);
-                    $('#modalUserEmail').val(user.email);
-                    $('#modalUserTelefono').val(user.fono);
-                    $('#modalUserZona').val(user.zona);
-                }
-            });
-        });
-
-        // Enviar formulario mediante AJAX
-        $('#userForm').submit(function(event) {
-            event.preventDefault();
-            var userId = $('#userId').val();
-
-            $.ajax({
-                url: `updateUser/${userId}`,
-                type: 'POST',
-                data: $(this).serialize(),
-                dataType: 'json',
-                success: function(response) {
-                    if (response.success) {
-                        // Éxito, puedes hacer algo como cerrar el modal o mostrar un mensaje
-                        $('#userModal').modal('hide');
-                        $('#statusMessage').removeClass('d-none').text(response.message);
-                        $('#collapseOne').collapse('hide');
-                        $('#userForm')[0].reset();
-                        // Aquí puedes realizar otras acciones según sea necesario
-                    } else {
-                        // Si la respuesta indica que hubo errores de validación, muestras los mensajes de error debajo de los campos correspondientes
-                $.each(response.errors, function(key, value) {
-                    // Encuentra el campo correspondiente al error y muestra el mensaje de error
-                    $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
-                });
-                    }
-                }
-            });
-        });
-});
+}
+        
 
 
 

@@ -503,18 +503,24 @@ public function registrarUsuAdmin(Request $request)
 
     public function updateUser(Request $request, $id)
     {
+        // Validar la existencia y tipo del archivo
+            $rules = [
+                'modalUserName' => 'required|string|max:2500',
+                'modalUserApellidoPaterno' => 'required|string|max:2500',
+                'modalUserApellidoMaterno' => 'required|string|max:2500',
+                'modalUserRut' => 'required|string|max:255|unique:users,rut,' . $id,
+                'modalUserEmail' => 'required|string|email|max:2500|unique:users,email,'. $id,
+                'modalUserTelefono' => 'required|string|max:2500',
+                'modalUserZona' => 'required|string|max:2500',
+            ];
 
-     // Validar la existencia y tipo del archivo
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:2500',
-            'apellido_paterno' => 'required|string|max:2500',
-            'apellido_materno' => 'required|string|max:2500',
-            'rut' => 'required|string|max:255|unique:users,rut',
-            'email' => 'required|string||email||max:2500|unique:users,email',
-            'telefono' => 'required|string|max:2500',
-            'zona' => 'required|string|max:2500',
-            'password' => 'required|string|max:2500|min:8'
-        ]);
+        // Agregar regla de validación para la contraseña si está presente
+        if ($request->filled('modalUserPassword')) {
+            $rules['modalUserPassword'] = 'required|string|min:8|max:15';
+        }
+
+        // Validar la solicitud
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return response()->json([
@@ -525,17 +531,16 @@ public function registrarUsuAdmin(Request $request)
 
         $user = User::findOrFail($id);
         // Actualizar los datos del usuario
-        $user->name = $request->name;
-        $user->apellido_paterno = $request->apellido_paterno;
-        $user->apellido_materno = $request->apellido_materno;
-        $user->rut = $request->rut;
-        $user->email = $request->email;
-        $user->fono = $request->telefono;
-        $user->zona = $request->zona;
+        $user->name = $request->modalUserName;
+        $user->apellido_paterno = $request->modalUserApellidoPaterno;
+        $user->apellido_materno = $request->modalUserApellidoMaterno;
+        $user->rut = $request->modalUserRut;
+        $user->email = $request->modalUserEmail;
+        $user->fono = $request->modalUserTelefono;
+        $user->zona = $request->modalUserZona;
 
-        //Actualizar la contraseña solo si se proporciona
-        if ($request->password) {
-            $user->password = Hash::make($request->password);
+        if ($request->modalUserPassword) {
+            $user->password = Hash::make($request->modalUserPassword);
         }
 
         $user->save();

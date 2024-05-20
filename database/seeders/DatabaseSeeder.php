@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
                'fono'=>'963548898',
                'email'=>'rod@zimple.pro',
                'zona'=>'0',
+               'rol'=>'1',
             ],
             [
                'name'=>'Admin Taltal',
