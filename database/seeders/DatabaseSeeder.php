@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
                'rut' =>'11.111.111.1',
                'fono'=>'963548898',
                'email'=>'rod@zimple.pro',
-               'zona'=>'0',
+               'zona'=>'1',
                'rol'=>'1',
             ],
             [

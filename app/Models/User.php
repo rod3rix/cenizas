@@ -24,6 +24,7 @@ class User extends Authenticatable
         'fono',
         'email',
         'zona',
+        'rol',
         'password',
         'type'
     ];

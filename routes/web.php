@@ -35,6 +35,8 @@ Route::get('confirmacionPersonaJuridica', [App\Http\Controllers\HomeController::
 
 Route::get('confirmacionProyecto', [App\Http\Controllers\HomeController::class, 'confirmacionProyecto'])->name('confirmacionProyecto');
 
+Route::get('confirmacionFondos', [App\Http\Controllers\HomeController::class, 'confirmacionFondos'])->name('confirmacionFondos');
+
 Route::get('confirmacionEditarPersonaJuridica', [App\Http\Controllers\HomeController::class, 'confirmacionEditarPersonaJuridica'])->name('confirmacionEditarPersonaJuridica');
 
 Route::get('personaJuridica', [App\Http\Controllers\HomeController::class, 'personaJuridica'])->name('personaJuridica');
@@ -59,6 +61,8 @@ Route::post('getComunas',
 Route::post('guardar-formulario', [App\Http\Controllers\HomeController::class, 'guardarFrm'])->name('guardar-formulario');
 
 Route::post('validarFrmProy', [App\Http\Controllers\HomeController::class, 'validarFrmProy'])->name('validarFrmProy');
+
+Route::post('validarFrmFondos', [App\Http\Controllers\HomeController::class, 'validarFrmFondos'])->name('validarFrmFondos');
 
 Route::get('/ingreso-caso',  [App\Http\Controllers\HomeController::class,'ingresoCaso'])->name('ingreso-caso');
 // ************************************************************************

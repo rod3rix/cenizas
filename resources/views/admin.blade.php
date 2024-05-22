@@ -13,7 +13,7 @@
             <a href="#" class="btn btn-secondary my-3">VER CASOS</a>
           </p>
         </div>
-        @if(auth::user()->id=="1")
+        @if(auth::user()->rol=="1")
 
         <div class="container mt-5">
         <!-- Div para mostrar el mensaje de estado -->

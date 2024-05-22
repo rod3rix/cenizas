@@ -26,74 +26,29 @@
     </div>
 
     <div class="container">
+    <form method="POST" id="frm_fondos" name="frm_fondos" enctype="multipart/form-data">
+        <input id="frm"  name="frm" type="hidden"  value="1" >
+        @csrf
+        <div class="bt_et1">
         @include('frm.post_fond_etapa_1')
+        </div>
+        <div class="bt_et2">
         @include('frm.post_fond_etapa_2')
+        </div>
+        <div class="bt_et3">        
         @include('frm.post_fond_etapa_3')
+        </div>
+        <div class="bt_et4">
         @include('frm.post_fond_etapa_4')
+        </div>
+      <form>  
     </div>
 
 </div>
-
+<script src="{{ asset('js/frm_fondos.js') }}"></script>
 <script>
-    $(document).ready(function(){
-        // $("#mostrar").on( "click", function() {
-        //     $('#target').show(); //muestro mediante id
-        //     $('.target').show(); //muestro mediante clase
-        //  });
-        // $("#ocultar").on( "click", function() {
-        //     $('#target').hide(); //oculto mediante id
-        //     $('.target').hide(); //muestro mediante clase
-        // });
-
-        var op=1;
-
-        if(op==1){
-            $('#etapa_1').show();
-        }
-        if(op==2){
-            $('#etapa_2').show();
-        }
-        if(op==3){
-            $('#etapa_3').show();
-        }
-        if(op==4){
-            $('#etapa_4').show();
-        }
-
-        //alert(op);
-        // switch(op) { 
-        //     case '1':
-        //         $('#etapa_1').show();
-        //     break;
-        //     case '2':
-        //         $('#etapa_2').show();
-        //     break;
-        //     case '3':
-        //         alert(op);
-        //         $('#etapa_3').show();
-        //     break;
-        //     case '4':
-        //         $('#etapa_4').show();
-        //     break; 
-        // }
-
+    $(document).ready(function(){ 
+        $('#etapa_3').show();
     });
-</script>    
-
-      
-<!-- <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-
-
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                   
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
+</script>
 @endsection

@@ -66,7 +66,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                         </div>
                         <div class="form-group row">
                             <label for="name" class="col-md-12 col-form-label text-md-left">{{ __('3. Nombre*') }}</label>
                             <div class="col-md-12">

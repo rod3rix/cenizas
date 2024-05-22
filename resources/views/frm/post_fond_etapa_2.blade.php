@@ -4,13 +4,11 @@
          <div class="card">
             <div class="card-header"><b><u>{{ __('  DATOS ORGANIZACIÓN') }}</b></u></div>
             <div class="card-body">
-               <form method="POST" action="{{ route('register') }}">
-                  @csrf
-                  <div class="form-group row">
-                     <label for="nombres" class="col-md-12 col-form-label text-md-left">{{ __('1. Nombre Organización*') }}</label>
+                 <div class="form-group row">
+                     <label for="nombre_organizacion" class="col-md-12 col-form-label text-md-left">{{ __('1. Nombre Organización *') }}</label>
                      <div class="col-md-12">
-                        <input id="nombres" type="text" class="form-control @error('nombres') is-invalid @enderror" name="nombres" value="{{ old('nombres') }}" required autocomplete="nombres" autofocus>
-                        @error('name')
+                        <input id="nombre_organizacion" type="text" class="form-control @error('nombre_organizacion') is-invalid @enderror" name="nombre_organizacion" id="nombre_organizacion" value="{{ old('nombre_organizacion') }}" required autocomplete="nombre_organizacion" autofocus>
+                        @error('nombre_organizacion')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                         </span>
@@ -18,10 +16,10 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="apellidos" class="col-md-12 col-form-label text-md-left">{{ __('2. Rut Organización *') }}</label>
+                     <label for="rut_organizacion" class="col-md-12 col-form-label text-md-left">{{ __('2. Rut Organización *') }}</label>
                      <div class="col-md-12">
-                        <input id="apellidos" type="text" class="form-control @error('apellidos') is-invalid @enderror" name="apellidos" value="{{ old('apellidos') }}" required autocomplete="apellidos" autofocus>
-                        @error('name')
+                        <input id="rut_organizacion" type="text" class="form-control @error('rut_organizacion') is-invalid @enderror" name="rut_organizacion" value="{{ old('rut_organizacion') }}" required autocomplete="rut_organizacion"  maxlength="12" onkeyup="formatRut(this)">
+                        @error('rut_organizacion')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                         </span>
@@ -29,10 +27,10 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="telefono" class="col-md-12 col-form-label text-md-left">{{ __('3. Domicilio Organización *') }}</label>
+                     <label for="domicilio_organizacion" class="col-md-12 col-form-label text-md-left">{{ __('3. Domicilio Organización *') }}</label>
                      <div class="col-md-12">
-                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus>
-                        @error('name')
+                        <input id="domicilio_organizacion" name="domicilio_organizacion" type="text" class="form-control @error('domicilio_organizacion') is-invalid @enderror" name="domicilio_organizacion" value="{{ old('domicilio_organizacion') }}" required autocomplete="domicilio_organizacion" >
+                        @error('domicilio_organizacion')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                         </span>
@@ -40,10 +38,21 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="rut" class="col-md-12 col-form-label text-md-left">{{ __('4. Personalidad Jurídica') }}</label>
+                     <label for="personalidad_juridica" class="col-md-12 col-form-label text-md-left">{{ __('4. Personalidad Jurídica *') }}</label>
                      <div class="col-md-12">
-                        <input id="rut" type="text" class="form-control @error('rut') is-invalid @enderror" name="rut" value="{{ old('rut') }}" required autocomplete="rut" autofocus>
-                        @error('name')
+                        <input id="personalidad_juridica" name="personalidad_juridica" type="text" class="form-control @error('personalidad_juridica') is-invalid @enderror" name="personalidad_juridica" value="{{ old('personalidad_juridica') }}" required autocomplete="rut" >
+                        @error('personalidad_juridica')
+                        <span class="invalid-feedback" role="alert">
+                           <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label for="antiguedad_anos" class="col-md-12 col-form-label text-md-left">{{ __('5. Antiguedad de años *') }}</label>
+                     <div class="col-md-12">
+                        <input id="antiguedad_anos" type="text" class="form-control @error('antiguedad_anos') is-invalid @enderror" id="antiguedad_anos" name="antiguedad_anos" value="{{ old('antiguedad_anos') }}" required autocomplete="antiguedad_anos" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12">
+                        @error('antiguedad_anos')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                         </span>
@@ -51,21 +60,10 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="email" class="col-md-12 col-form-label text-md-left">{{ __('5. Antiguedad de años *') }}</label>
+                     <label for="numero_socios" class="col-md-12 col-form-label text-md-left">{{ __('6. Número de socios *') }}</label>
                      <div class="col-md-12">
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-                        @error('email')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>
-                  </div>
-                  <div class="form-group row">
-                     <label for="telefono" class="col-md-12 col-form-label text-md-left">{{ __('6. Número de socios *') }}</label>
-                     <div class="col-md-12">
-                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus>
-                        @error('name')
+                        <input id="numero_socios"  name="numero_socios" type="text" class="form-control @error('numero_socios') is-invalid @enderror" name="numero_socios" value="{{ old('numero_socios') }}" required autocomplete="numero_socios"  onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12">
+                        @error('numero_socios')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                         </span>
@@ -74,16 +72,14 @@
                   </div>
                    <div class="form-group row">
                      <div class="col-md-12  text-md-right">
-                        <button type="submit" class="btn btn-primary">
+                         <button type="button" onclick="btn_volver(1)" class="btn btn-primary">
                         {{ __('Anterior') }}
                         </button>
-
-                         <button type="submit" class="btn btn-primary">
-                        {{ __('Siguiente') }}
+                        <button type="button" onclick="validarFrmFondos(2)" class="btn btn-primary">
+                           {{ __('Siguiente') }}
                         </button>
                      </div>
                   </div>
-               </form>
             </div>
          </div>
       </div>

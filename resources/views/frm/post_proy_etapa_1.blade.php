@@ -7,25 +7,25 @@
                   <div class="form-group row">
                      <label for="nombres" class="col-md-12 col-form-label text-md-left">{{ __('1. Nombre *') }}</label>
                      <div class="col-md-12">
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}" required autocomplete="name" autofocus disabled>
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}" required autocomplete="name"  disabled>
                      </div>
                   </div>
                   <div class="form-group row">
                      <label for="apellido_paterno" class="col-md-12 col-form-label text-md-left">{{ __('2. Apellido Paterno *') }}</label>
                      <div class="col-md-12">
-                        <input id="apellido_paterno" type="text" class="form-control @error('apellido_paterno') is-invalid @enderror" name="apellido_paterno" value="{{ $user->apellido_paterno }}" required autocomplete="apellido_paterno" autofocus disabled>
+                        <input id="apellido_paterno" type="text" class="form-control @error('apellido_paterno') is-invalid @enderror" name="apellido_paterno" value="{{ $user->apellido_paterno }}" required autocomplete="apellido_paterno"  disabled>
                      </div>
                   </div>
                   <div class="form-group row">
                      <label for="apellido_materno" class="col-md-12 col-form-label text-md-left">{{ __('3. Apellido Materno *') }}</label>
                      <div class="col-md-12">
-                        <input id="apellido_materno" type="text" class="form-control @error('apellido_materno') is-invalid @enderror" name="apellido_materno" value="{{ $user->apellido_materno }}" required autocomplete="apellido_materno" autofocus disabled>
+                        <input id="apellido_materno" type="text" class="form-control @error('apellido_materno') is-invalid @enderror" name="apellido_materno" value="{{ $user->apellido_materno }}" required autocomplete="apellido_materno"  disabled>
                      </div>
                   </div>
                   <div class="form-group row">
                      <label for="rut" class="col-md-12 col-form-label text-md-left">{{ __('4. RUT*') }}</label>
                      <div class="col-md-12">
-                        <input id="rut" type="text" class="form-control @error('rut') is-invalid @enderror" name="rut" value="{{ $user->rut }}" required autocomplete="rut" autofocus disabled>
+                        <input id="rut" type="text" class="form-control @error('rut') is-invalid @enderror" name="rut" value="{{ $user->rut }}" required autocomplete="rut"  disabled>
                      </div>
                   </div>
                   <div class="form-group row">
@@ -37,13 +37,13 @@
                   <div class="form-group row">
                      <label for="fono" class="col-md-12 col-form-label text-md-left">{{ __('6. Teléfono *') }}</label>
                      <div class="col-md-12">
-                        <input id="fono" type="text" class="form-control @error('fono') is-invalid @enderror" name="fono" value="{{ $user->fono }}" required autocomplete="fono" autofocus disabled>
+                        <input id="fono" type="text" class="form-control @error('fono') is-invalid @enderror" name="fono" value="{{ $user->fono }}" required autocomplete="fono"  disabled>
                      </div>
                   </div>
                   <div class="form-group row">
                      <label for="nacionalidad" class="col-md-12 col-form-label text-md-left">{{ __('7. Nacionalidad *') }}</label>
                      <div class="col-md-12">
-                        <select id="nacionalidad" name="nacionalidad" type="text" class="form-control @error('nacionalidad') is-invalid @enderror">
+                        <select id="nacionalidad" name="nacionalidad" type="text" class="form-control @error('nacionalidad') is-invalid @enderror" autofocus>
                            <option value="">Seleccione</option>
                            <option value="Chilena">Chilena</option>
                            <option value="Extranjera">Extranjera</option>
@@ -110,7 +110,7 @@
                   <div class="form-group row">
                      <label for="fecha_nacimiento" class="col-md-12 col-form-label text-md-left">{{ __('11. Fecha nacimiento *') }}</label>
                      <div class="col-md-6">
-                        <input id="fecha_nacimiento" type="text" class="form-control @error('fecha_nacimiento') is-invalid @enderror" name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}" required autocomplete="fecha_nacimiento" autofocus readonly>
+                        <input id="fecha_nacimiento" type="text" class="form-control @error('fecha_nacimiento') is-invalid @enderror" name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}" required autocomplete="fecha_nacimiento"  readonly>
                            @error('fecha_nacimiento')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -121,7 +121,7 @@
                   <div class="form-group row">
                      <label for="actividad_economica" class="col-md-12 col-form-label text-md-left">{{ __('12. Actividad económica *') }}</label>
                      <div class="col-md-12">
-                        <input id="actividad_economica" type="text" class="form-control @error('actividad_economica') is-invalid @enderror" name="actividad_economica" value="{{ old('actividad_economica') }}" required autocomplete="actividad_economica" autofocus>
+                        <input id="actividad_economica" type="text" class="form-control @error('actividad_economica') is-invalid @enderror" name="actividad_economica" value="{{ old('actividad_economica') }}" required autocomplete="actividad_economica" >
                         @error('actividad_economica')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -132,7 +132,7 @@
                   <div class="form-group row">
                      <label for="direccion" class="col-md-12 col-form-label text-md-left">{{ __('13. Dirección *') }}</label>
                      <div class="col-md-12">
-                        <input id="direccion" type="text" class="form-control @error('direccion') is-invalid @enderror" name="direccion" value="{{ old('direccion') }}" required autocomplete="direccion" autofocus>
+                        <input id="direccion" type="text" class="form-control @error('direccion') is-invalid @enderror" name="direccion" value="{{ old('direccion') }}" required autocomplete="direccion" >
                         @error('direccion')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -143,7 +143,7 @@
                   <div class="form-group row">
                      <label for="formacion_formal" class="col-md-12 col-form-label text-md-left">{{ __('14. Posee formación formal *') }}</label>
                      <div class="col-md-12">
-                        <input id="formacion_formal" type="text" class="form-control @error('formacion_formal') is-invalid @enderror"name="formacion_formal" value="{{ old('formacion_formal') }}" required autocomplete="formacion_formal" autofocus>
+                        <input id="formacion_formal" type="text" class="form-control @error('formacion_formal') is-invalid @enderror"name="formacion_formal" value="{{ old('formacion_formal') }}" required autocomplete="formacion_formal" >
                         @error('formacion_formal')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -154,7 +154,7 @@
                   <div class="form-group row">
                      <label for="profesion" class="col-md-12 col-form-label text-md-left">{{ __('15. Profesión *') }}</label>
                      <div class="col-md-12">
-                        <input id="profesion" type="text" class="form-control @error('profesion') is-invalid @enderror" name="profesion" value="{{ old('profesion') }}" required autocomplete="profesion" autofocus>
+                        <input id="profesion" type="text" class="form-control @error('profesion') is-invalid @enderror" name="profesion" value="{{ old('profesion') }}" required autocomplete="profesion" >
                         @error('profesion')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -189,18 +189,7 @@
       </div>
    </div>
 </div>
-
-<script>
-     $(document).ready(function() {
-        // Inicializar DatePicker
-        $('#fecha_nacimiento').datepicker({
-            format: 'dd/mm/yyyy', // Formato de fecha
-            autoclose: true // Cerrar automáticamente después de seleccionar la fecha
-        });
-
-        // Abrir ventana emergente al hacer clic en el botón
-        $('#seleccionarFecha').click(function() {
-            $('#fecha_nacimiento').datepicker('show');
-        });
-    });
-</script>
+<!-- Scripts -->
+<script src="{{ asset('js/calendario.js') }}"></script>
+</body>
+</html>

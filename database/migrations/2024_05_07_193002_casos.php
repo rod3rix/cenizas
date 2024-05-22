@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('casos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('idUser')->unsigned();
-            $table->foreign('idUser')->references('id')->on('users');
+            $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
             $table->string('tipo');
             $table->integer('localidad');
             $table->unsignedBigInteger('region_id');

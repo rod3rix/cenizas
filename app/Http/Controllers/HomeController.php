@@ -13,6 +13,7 @@ use App\Models\Comunas;
 use App\Models\Casos;
 use App\Models\PersonaJuridicas;
 use App\Models\PostulacionProyectos;
+use App\Models\DatosOrganizaciones;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 
@@ -41,7 +42,13 @@ class HomeController extends Controller
   
     public function postularFondos()
     {
-        return view('postularFondos');      
+        $user = DB::table('users')
+                ->where('id', '=', auth()->id())
+                ->get();
+
+                $user=$user[0];
+
+        return view('postularFondos',['user' => $user]);
     }
 
     public function postularProyectos()
@@ -409,6 +416,12 @@ $postulacion = $postulacion->transform(function ($postulacion) {
         return view('confirmacionPersonaJuridica');
     }
 
+     public function confirmacionFondos()
+    {
+    
+        return view('confirmacionFondos');
+    }
+
      public function confirmacionEditarPersonaJuridica()
     {
     
@@ -616,9 +629,128 @@ public function actualizarPersonaJuridica(Request $request)
             'success' => true,
             ]);
         }
-
-
-
     }
 
+    public function validarFrmFondos(Request $request)
+    {
+        $id_val=$request->id;
+
+         if($id_val==4){
+             try {
+
+        $validator = Validator::make($request->all(), [
+            'nombre_organizacion' => 'required',
+            'rut_organizacion' => 'required',
+            'domicilio_organizacion' => 'required',
+            'personalidad_juridica' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+            'success' => false,
+            'errors' => $validator->errors()->toArray()
+            ]);
+        }    
+
+
+        // Insertar el registro y obtener el ID del nuevo registro insertado
+        $insertedId = DatosOrganizaciones::insertGetId([
+            'user_id' => auth()->id(),
+            'nombre_organizacion' => $request->nombre_organizacion,
+            'domicilio_organizacion' => $request->domicilio_organizacion,
+            'rut_organizacion' => $request->rut_organizacion,            
+            'personalidad_juridica' => $request->personalidad_juridica,
+            'antiguedad_anos' => $request->antiguedad_anos,
+            'numero_socios' => $request->numero_socios,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+
+         // Insertar el registro y obtener el ID del nuevo registro insertado
+        $insertedId = PersonaJuridicas::insertGetId([
+            'user_id' => auth()->id(),
+            'rut' => $request->rut,
+            'razon_social' => $request->razon_social,
+            'relacion' => $request->relacion,
+            'estado' => $request->estado,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+
+        ]);
+
+            // Verificar si se obtuvo un ID válido
+            if ($insertedId) {
+                // El insert fue exitoso
+                return response()->json([
+                    'status' => true,
+                    'success' => true,
+                    'message' => 'El registro se ha insertado correctamente con el ID: ' . $insertedId
+                ]);
+            } else {
+                // El insert falló
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Hubo un error al guardar el formulario en la base de datos.'
+                ], 500); // 500 es el código de estado para errores internos del servidor
+            }
+        } catch (\Exception $e) {
+            // Capturar y manejar cualquier excepción
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al crear persona jurídica: ' . $e->getMessage()
+            ], 500);
+        }
+
+        }   
+
+        if($id_val==1){
+            $validator = Validator::make($request->all(), [
+            'nacionalidad' => 'required',
+            'genero' => 'required',
+            'pueblo_originario' => 'required',
+            'discapacidad' => 'required',
+            'fecha_nacimiento' => 'required',
+            'actividad_economica' => 'required',
+            'direccion' => 'required',
+            'formacion_formal' => 'required',  
+            'profesion' => 'required', 
+            'acepto_clausula' => 'required',
+            ]);
+        }
+
+        if($id_val==2){
+            $validator = Validator::make($request->all(), [
+            'nombre_organizacion' => 'required',
+            'rut_organizacion' => 'required',
+            'domicilio_organizacion' => 'required',
+            'personalidad_juridica' => 'required',
+            'antiguedad_anos' => 'required',
+            'numero_socios' => 'required',
+            ]);
+        }
+
+        if($id_val==3){
+            $validator = Validator::make($request->all(), [
+            'nombre_proyecto' => 'required',
+            // 'tipo_proyecto' => 'required',
+            // 'lugar_proyecto' => 'required',
+            // 'directos' => 'required',
+            // 'indirectos' => 'required',
+            // 'aporte_solicitado' => 'required',
+            // 'acepto_clausula_proy' => 'required',
+            ]);
+        }
+            
+        if ($validator->fails()) {
+            return response()->json([
+            'success' => false,
+            'errors' => $validator->errors()->toArray()
+            ]);
+        }else{
+            return response()->json([
+            'success' => true,
+            ]);
+        }
+    }
 }

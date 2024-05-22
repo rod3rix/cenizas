@@ -15,7 +15,8 @@ class CreatePostulacionProyectosTable extends Migration
     {
         Schema::create('postulacion_proyectos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->unsignedBigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('nacionalidad')->nullable();
             $table->string('genero')->nullable();
             $table->integer('pueblo_originario')->nullable();
