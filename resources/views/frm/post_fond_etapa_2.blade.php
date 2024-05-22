@@ -1,9 +1,46 @@
 <div id="etapa_2" style="display:none">
    <div class="row justify-content-center">
       <div class="col-md-12">
-         <div class="card">
-            <div class="card-header"><b><u>{{ __('  DATOS ORGANIZACIÓN') }}</b></u></div>
-            <div class="card-body">
+             <div class="container mt-5">
+        <div class="accordion" id="accordionExample">
+            <!-- Crear nuevo registro persona Jurídica -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        Mis organizaciones asociadas
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <!-- Contenido del formulario para crear nuevo registro -->
+                    <div class="form-group row">
+                     <div class="col-md-12  text-md-right">
+                        <button type="button" onclick="btn_volver(3)" class="btn btn-primary">
+                        {{ __('Anterior') }}
+                        </button>
+
+                        <button type="button" onclick="validarFrmFondos(4)" class="btn btn-primary">
+                           {{ __('Finalizar') }}
+                        </button>
+                     </div>
+                  </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Listar personas Jurídicas -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Crear nuevo registro organización.
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <!-- Contenido para listar personas jurídicas -->
+                           <div class="card">
+                                         <div class="card-header"><b><u>{{ __(' Nueva Organización') }}</b></u></div>
+                <div class="card-body">
+           
                  <div class="form-group row">
                      <label for="nombre_organizacion" class="col-md-12 col-form-label text-md-left">{{ __('1. Nombre Organización *') }}</label>
                      <div class="col-md-12">
@@ -70,6 +107,7 @@
                         @enderror
                      </div>
                   </div>
+                  <br>
                    <div class="form-group row">
                      <div class="col-md-12  text-md-right">
                          <button type="button" onclick="btn_volver(1)" class="btn btn-primary">
@@ -80,8 +118,14 @@
                         </button>
                      </div>
                   </div>
+               </div>   
+ </div>
+
+                    </div>
+                </div>
             </div>
-         </div>
+        </div>
+    </div>
       </div>
    </div>
 </div>

@@ -40,7 +40,7 @@
                   <div class="form-group row">
                      <label for="descripcion_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('4. Descripción del proyecto / Qué se va hacer*') }}</label>
                      <div class="col-md-12">
-                        <textarea id="descripcion_proyecto" type="text" class="form-control @error('descripcion_proyecto') is-invalid @enderror" name="telefono" value="{{ old('descripcion_proyecto') }}" required autocomplete="descripcion_proyecto" ></textarea>
+                        <textarea id="descripcion_proyecto" type="text" class="form-control @error('descripcion_proyecto') is-invalid @enderror" name="descripcion_proyecto" value="{{ old('descripcion_proyecto') }}" required autocomplete="descripcion_proyecto" ></textarea>
                         @error('descripcion_proyecto')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -122,7 +122,7 @@
                         @enderror
                      </div>
                      <div class="col-md-4">
-                        <input id="cantidad_dias" type="text" class="form-control @error('cantidad_dias') is-invalid @enderror" name="cantidad_dias" value="{{ old('cantidad_dias') }}" required autocomplete="cantidad_dias" >
+                        <input id="cantidad_dias" type="text" class="form-control @error('cantidad_dias') is-invalid @enderror" name="cantidad_dias" value="{{ old('cantidad_dias') }}" required autocomplete="cantidad_dias" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" >
                         @error('cantidad_dias')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -143,7 +143,7 @@
                      </div>
                      <label for="monto" class="col-md-1 col-form-label text-md-left">{{ __('Monto') }}</label>
                       <div class="col-md-4">
-                        <input id="monto" type="text" class="form-control @error('monto') is-invalid @enderror" name="monto" value="{{ old('monto') }}" required autocomplete="monto"  placeholder="$">
+                        <input id="monto" type="text" class="form-control @error('monto') is-invalid @enderror" name="monto" value="{{ old('monto') }}" required autocomplete="monto"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12">
                         @error('monto')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -160,14 +160,14 @@
                   <div class="form-group row">
                      <label for="telefono" class="col-md-2 col-form-label text-md-left">{{ __('Total') }}</label>
                      <div class="col-md-10">
-                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono"  placeholder="$">
+                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12">
                      </div>
                   </div>
                   <div class="form-group row">
                       <label for="telefono" class="col-md-12 col-form-label text-md-left">{{ __('11. Montos solicitados') }}</label>  
                       <label for="telefono" class="col-md-2 col-form-label text-md-left">{{ __('Aporte solicitado') }}</label>
                       <div class="col-md-10">
-                        <input id="aporte_solicitado" type="text" class="form-control @error('aporte_solicitado') is-invalid @enderror" name="aporte_solicitado" value="{{ old('aporte_solicitado') }}" required autocomplete="aporte_solicitado"  placeholder="$">
+                        <input id="aporte_solicitado" type="text" class="form-control @error('aporte_solicitado') is-invalid @enderror" name="aporte_solicitado" value="{{ old('aporte_solicitado') }}" required autocomplete="aporte_solicitado"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12">
                         @error('aporte_solicitado')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -179,7 +179,7 @@
                   <div class="form-group row">
                       <label for="aporte_terceros" class="col-md-2 col-form-label text-md-left">{{ __('Aporte de terceros') }}</label>
                       <div class="col-md-10">
-                        <input id="aporte_terceros" type="text" class="form-control @error('aporte_terceros') is-invalid @enderror" name="aporte_terceros" value="{{ old('aporte_terceros') }}" required autocomplete="aporte_terceros"  placeholder="$">
+                        <input id="aporte_terceros" type="text" class="form-control @error('aporte_terceros') is-invalid @enderror" name="aporte_terceros" value="{{ old('aporte_terceros') }}" required autocomplete="aporte_terceros"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12">
                         @error('aporte_terceros')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -191,7 +191,7 @@
                   <div class="form-group row">
                       <label for="aporte_propio" class="col-md-2 col-form-label text-md-left">{{ __('Aporte propio') }}</label>
                       <div class="col-md-10">
-                        <input id="aporte_propio" type="text" class="form-control @error('aporte_propio') is-invalid @enderror" name="aporte_propio" value="{{ old('aporte_propio') }}" required autocomplete="aporte_propio"  placeholder="$">
+                        <input id="aporte_propio" type="text" class="form-control @error('aporte_propio') is-invalid @enderror" name="aporte_propio" value="{{ old('aporte_propio') }}" required autocomplete="aporte_propio"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12">
                         @error('aporte_propio')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -203,7 +203,7 @@
                   <div class="form-group row">
                      <label for="total" class="col-md-2 col-form-label text-md-left">{{ __('Total') }}</label>
                      <div class="col-md-10">
-                        <input id="total" type="text" class="form-control @error('total') is-invalid @enderror" name="total" value="{{ old('total') }}" required autocomplete="total"  placeholder="$">
+                        <input id="total" type="text" class="form-control @error('total') is-invalid @enderror" name="total" value="{{ old('total') }}" required autocomplete="total"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12">
                      </div>
                   </div>
 
@@ -218,12 +218,12 @@
                   </div>
 
                   <div class="form-group row">
-                      <label for="archivo_anexo" class="col-md-12 col-form-label text-md-left">13. Adjuntar certificado de iniciación de actividades y presentar la ficha de registro social de hogares* <br> (Formatos .pdf, .zip, .rar. Tamaño máximo 20 mb.)</label>
+                      <label for="archivo_certificado" class="col-md-12 col-form-label text-md-left">13. Adjuntar certificado de iniciación de actividades y presentar la ficha de registro social de hogares* <br> (Formatos .pdf, .zip, .rar. Tamaño máximo 20 mb.)</label>
                   </div>
 
                   <div class="form-group row">
                      <div class="col-md-12">
-                        <input id="archivo_certificado" type="file" class="form-control @error('archivo_certificado') is-invalid @enderror" name="archivo_anexo" value="{{ old('archivo_certificado') }}" required autocomplete="archivo_certificado">
+                        <input id="archivo_certificado" type="file" class="form-control @error('archivo_certificado') is-invalid @enderror" name="archivo_certificado" value="{{ old('archivo_certificado') }}" required autocomplete="archivo_certificado">
                      </div>
                   </div>
  
@@ -242,3 +242,5 @@
       </div>
    </div>
 </div>
+<!-- Scripts -->
+<script src="{{ asset('js/calendario.js') }}"></script>

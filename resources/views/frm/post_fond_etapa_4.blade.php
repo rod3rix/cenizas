@@ -42,10 +42,10 @@
             <div class="card-header"><b><u>{{ __(' Relaciones Jurídicas ') }}</b></u></div>
                 <div class="card-body">
                     <div class="form-group row mb-4"> <!-- Agrega la clase "mb-4" para un margen inferior de 4 -->
-                        <label for="rut" class="col-sm-2 col-form-label">RUT:</label>
+                        <label for="rut_juridico" class="col-sm-2 col-form-label">RUT:</label>
                             <div class="col-sm-10">
-                            <input type="text" class="form-control" id="rut" name="rut" maxlength="12" onkeyup="formatRut(this)">
-                            @error('rut')
+                            <input type="text" class="form-control" id="rut_juridico" name="rut_juridico" maxlength="12" onkeyup="formatRut(this)">
+                            @error('rut_juridico')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                             </div>

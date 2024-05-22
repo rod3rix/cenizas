@@ -48,7 +48,7 @@
 <script src="{{ asset('js/frm_fondos.js') }}"></script>
 <script>
     $(document).ready(function(){ 
-        $('#etapa_3').show();
+        $('#etapa_1').show();
     });
 </script>
 @endsection

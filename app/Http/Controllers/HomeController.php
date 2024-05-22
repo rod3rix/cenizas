@@ -14,6 +14,7 @@ use App\Models\Casos;
 use App\Models\PersonaJuridicas;
 use App\Models\PostulacionProyectos;
 use App\Models\DatosOrganizaciones;
+use App\Models\PostulacionFondos;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 
@@ -639,10 +640,10 @@ public function actualizarPersonaJuridica(Request $request)
              try {
 
         $validator = Validator::make($request->all(), [
-            'nombre_organizacion' => 'required',
-            'rut_organizacion' => 'required',
-            'domicilio_organizacion' => 'required',
-            'personalidad_juridica' => 'required'
+            'rut_juridico' => 'required',
+            'razon_social' => 'required',
+            'relacion' => 'required',
+            'estado' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -654,7 +655,7 @@ public function actualizarPersonaJuridica(Request $request)
 
 
         // Insertar el registro y obtener el ID del nuevo registro insertado
-        $insertedId = DatosOrganizaciones::insertGetId([
+        $datosOrgId = DatosOrganizaciones::insertGetId([
             'user_id' => auth()->id(),
             'nombre_organizacion' => $request->nombre_organizacion,
             'domicilio_organizacion' => $request->domicilio_organizacion,
@@ -666,11 +667,10 @@ public function actualizarPersonaJuridica(Request $request)
             'updated_at' => Carbon::now()
         ]);
 
-
          // Insertar el registro y obtener el ID del nuevo registro insertado
-        $insertedId = PersonaJuridicas::insertGetId([
+        $personaJurId = PersonaJuridicas::insertGetId([
             'user_id' => auth()->id(),
-            'rut' => $request->rut,
+            'rut' => $request->rut_juridico,
             'razon_social' => $request->razon_social,
             'relacion' => $request->relacion,
             'estado' => $request->estado,
@@ -679,6 +679,58 @@ public function actualizarPersonaJuridica(Request $request)
 
         ]);
 
+        $archivo_anexo = $request->file('archivo_anexo');
+        // Guardar el archivo en el directorio deseado
+        $nombreArchivoAnexo = 'Fondo_anexo_' . auth()->id() . "_" . date('Ymd_His') . "." . $archivo_anexo->getClientOriginalExtension();
+        $archivo_anexo->storeAs('archivos', $nombreArchivoAnexo);
+
+        $archivo_certificado = $request->file('archivo_certificado');
+        // Guardar el archivo en el directorio deseado
+        $nombreArchivoCert = 'Fondo_certificado_' . auth()->id() . "_" . date('Ymd_His') . "." . $archivo_certificado->getClientOriginalExtension();
+        $archivo_certificado->storeAs('archivos', $nombreArchivoCert);
+
+        // Insertar el registro y obtener el ID del nuevo registro insertado
+        $insertedId = PostulacionFondos::insertGetId([
+            'user_id' => auth()->id(),
+            'id_fondo_concursable' => 1, 
+            'nacionalidad' => $request->nacionalidad,
+            'genero' => $request->genero,
+            'pueblo_originario' => $request->pueblo_originario, 
+            'discapacidad' => $request->discapacidad,
+            'fecha_nacimiento' => $fecha_nacimiento_formatted = date('Y-m-d', strtotime($request->fecha_nacimiento)),
+            'actividad_economica' => $request->actividad_economica,
+            'direccion' => $request->direccion,
+            'formacion_formal' => $request->formacion_formal,
+            'profesion' => $request->profesion,
+            'acepto_clausula' => $request->acepto_clausula,
+            'id_dato_organizacion' => $datosOrgId,
+            'nombre_proyecto' => $request->nombre_proyecto,
+            'equipamiento' => $request->equipamiento,
+            'fundamentacion' => $request->fundamentacion,
+            'descripcion_proyecto' => $request->descripcion_proyecto,
+            'objetivo_general' => $request->objetivo_general,
+            'objetivos_especificos' => $request->objetivos_especificos,
+            'cierre_proyecto' => $request->cierre_proyecto,
+            'directos' => $request->directos,
+            'indirectos' => $request->indirectos,
+            'fecha_inicio' =>  $fecha_inicio_formatted = date('Y-m-d', strtotime($request->fecha_inicio)),
+            'fecha_termino' => $fecha_termino_formatted = date('Y-m-d', strtotime($request->fecha_termino)),
+            'cantidad_dias' => $request->cantidad_dias,
+            'aporte_solicitado' => $request->aporte_solicitado,
+            'aporte_terceros' => $request->aporte_terceros,
+            'aporte_propio' => $request->aporte_propio,
+            'archivo_anexo' => $archivo_anexo,
+            'archivo_certificado' => $archivo_certificado,
+            'id_persona_juridica' => $personaJurId,
+            'estado' => 1,
+            ///'respuesta' => $request->respuesta,
+            //'archivo_respuesta' => $request->archivo_respuesta,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+
+        
             // Verificar si se obtuvo un ID válido
             if ($insertedId) {
                 // El insert fue exitoso
@@ -733,12 +785,22 @@ public function actualizarPersonaJuridica(Request $request)
         if($id_val==3){
             $validator = Validator::make($request->all(), [
             'nombre_proyecto' => 'required',
-            // 'tipo_proyecto' => 'required',
-            // 'lugar_proyecto' => 'required',
-            // 'directos' => 'required',
-            // 'indirectos' => 'required',
-            // 'aporte_solicitado' => 'required',
-            // 'acepto_clausula_proy' => 'required',
+            'equipamiento' => 'required',
+            'fundamentacion' => 'required',
+            'descripcion_proyecto' => 'required',
+            'objetivo_general' => 'required',
+            'objetivos_especificos' => 'required',
+            'cierre_proyecto' => 'required',
+            'directos' => 'required',
+            'indirectos' => 'required',
+            'fecha_inicio' => 'required',
+            'fecha_termino' => 'required',
+            'cantidad_dias' => 'required',
+            'aporte_solicitado' => 'required',
+            'aporte_terceros' => 'required',
+            'aporte_propio' => 'required',
+            'archivo_anexo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
+            'archivo_certificado' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
             ]);
         }
             
