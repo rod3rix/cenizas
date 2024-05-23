@@ -1,74 +1,91 @@
 @extends('layouts.app')
-
 @section('content')
-
- @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <!-- You are logged in! -->
-
 <div class="jumbotron">
-        <div class="container">
+    <div class="container text-center">
           <h3><b>SEGUIMIENTO POSTULACIONES A FONDOS CONCURSABLES ENVIADAS</b></h3>
           <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique. This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
           <!-- <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p> -->
         </div>
 
-        <hr>
-
-        <div  class="container">
-            
-            <table id="registros" class="table table-striped table-bordered" style="width:100%">
-        <thead>
-            <tr>
-                <th>FOLIO</th>
-                <th>NOMBRE PROYECTO</th>
-                <th>FECHA DE ENVÍO</th>
-                <th>ESTADO</th>
-                <th>RESOLUCIÓN</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>20987</td>
-                <td>NOMBRE PROYECTO XXXX</td>
-                <td>20/03/2024</td>
-                <td>ENVIADO</td>
-                <td>PENDIENTE</td>
-            </tr>
-             <tr>
-                <td>20987</td>
-                <td>NOMBRE PROYECTO XXXX</td>
-                <td>20/03/2024</td>
-                <td>ENVIADO</td>
-                <td>PENDIENTE</td>
-            </tr>
-             <tr>
-                <td>20987</td>
-                <td>NOMBRE PROYECTO XXXX</td>
-                <td>20/03/2024</td>
-                <td>ENVIADO</td>
-                <td><a href="#">VER</a></td>
-            </tr>
-        </tbody>
-        <tfoot>
-           <!--  <tr>
-                <th>FOLIO</th>
-                <th>NOMBRE PROYECTO</th>
-                <th>FECHA DE ENVÍO</th>
-                <th>ESTADO</th>
-                <th>RESOUCIÓN</th>
-            </tr> -->
-        </tfoot>
-    </table>
-
-    </div>
+        <div  class="container">          
+            <h5><b>Mis relaciones jurídicas asociadas</b></h5>
+                  <table id="registros" class="table table-striped table-bordered" style="width:100%">
+                      <thead>
+                          <tr>
+                              <th>FOLIO</th>
+                              <th>NOMBRE PROYECTO</th>
+                              <th>FECHA ENVÍO</th>
+                              <th>ESTADO</th>
+                              <th>RESOLUCION</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <!-- Aquí se agregarán dinámicamente los datos -->
+                      </tbody>
+                  </table>
+        </div>
 </div>
-     
-<!-- Scripts -->
-<script src="{{ asset('js/datatable.js') }}" defer></script>
+<script>
+    
+$(document).ready(function() {
+    $.ajax({
+        url: '{{ route("listarFondos") }}',
+        type: 'POST',
+        dataType: 'json',
+        data: {_token: '{{ csrf_token() }}'},
+        success: function(response) {
+             $('#registros').DataTable({
+                language: {
+                    url: "{{ asset('lang/datatables/Spanish.json') }}"
+                },
+                data: response,
+                columns: [
+                    { data: 'id' },
+                    { data: 'nombre_proyecto' },
+                    { data: 'created_at_formatted' },
+                    { data: 'estado_texto' },
+                    { data: 'resolucion' }
+                ],
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'copy',
+                        exportOptions: {
+                            modifier: {
+                                page: 'all' // Exportar todas las páginas
+                            }
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            modifier: {
+                                page: 'all' // Exportar todas las páginas
+                            }
+                        },
+                        filename: 'Portal Comunidades', // Nombre del archivo Excel
+                        title: 'Portal Comunidades'
+                    },
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            modifier: {
+                                page: 'all' // Exportar todas las páginas
+                            }
+                        },
+                        filename: 'Portal Comunidades', // Nombre del archivo PDF
+                        title: 'Portal Comunidades'
+                    }
+                ],
+                paging: true // Habilitar paginación
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al cargar los datos:', error);
+        }
+    });
+});
+
+</script>
 
 @endsection

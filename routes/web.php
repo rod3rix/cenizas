@@ -18,11 +18,15 @@ Auth::routes();
 //users routes
 Route::middleware(['auth', 'access-level:user'])->group(function () {
 
+Route::get('/seguimientoFondos', [App\Http\Controllers\HomeController::class, 'seguimientoFondos'])->name('seguimientoFondos');
+
 Route::post('/actualizarPersonaJuridica',  [App\Http\Controllers\HomeController::class, 'actualizarPersonaJuridica'])->name('actualizarPersonaJuridica');
 
 Route::get('/editarPersonaJuridica/{id}',  [App\Http\Controllers\HomeController::class, 'editarPersonaJuridica'])->name('editarPersonaJuridica');
 
 Route::post('/listarPersonaJuridicas',  [App\Http\Controllers\HomeController::class, 'listarPersonaJuridicas'])->name('listarPersonaJuridicas');
+
+Route::post('/listarFondos',  [App\Http\Controllers\HomeController::class, 'listarFondos'])->name('listarFondos');
 
 Route::post('/listarApoyoProyectos',  [App\Http\Controllers\HomeController::class, 'listarApoyoProyectos'])->name('listarApoyoProyectos');
 
@@ -94,9 +98,13 @@ Route::middleware(['auth', 'access-level:admin'])->group(function () {
 
     Route::get('/detalleProyectoAdmin/{id}',  [App\Http\Controllers\AdminController::class,'detalleProyectoAdmin'])->name('detalleProyectoAdmin');
 
+    Route::get('/detalleFondoAdmin/{id}',  [App\Http\Controllers\AdminController::class,'detalleFondoAdmin'])->name('detalleFondoAdmin');
+
     Route::post('/listarUsuariosAdmin',  [App\Http\Controllers\AdminController::class, 'listarUsuariosAdmin'])->name('listarUsuariosAdmin');
 
     Route::post('/listarApoyoProyectosAdmin',  [App\Http\Controllers\AdminController::class, 'listarApoyoProyectosAdmin'])->name('listarApoyoProyectosAdmin');
+
+    Route::post('/listarFondosAdmin',  [App\Http\Controllers\AdminController::class, 'listarFondosAdmin'])->name('listarFondosAdmin');
 
     Route::post('/users/data', [App\Http\Controllers\AdminController::class, 'getData'])->name('users.data');
     Route::post('/change-password', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('change.password');
@@ -114,7 +122,7 @@ Route::middleware(['auth', 'access-level:admin'])->group(function () {
     Route::get('cambiarPassAdmin', [App\Http\Controllers\AdminController::class, 'cambiarPassAdmin'])->name('cambiarPassAdmin');
     Route::post('casosUsuarioAdmin', [App\Http\Controllers\AdminController::class, 'casosUsuarioAdmin'])->name('casosUsuarioAdmin');
     Route::get('/usuariosRegistrados', [App\Http\Controllers\AdminController::class, 'usuariosRegistrados'])->name('usuariosRegistrados');
-    Route::get('/seguimientoFondos', [App\Http\Controllers\AdminController::class, 'seguimientoFondos'])->name('seguimientoFondos');
+
     Route::get('/seguimientoCasosAdmin',[App\Http\Controllers\AdminController::class, 'seguimientoCasosAdmin'])->name('seguimientoCasosAdmin');
     Route::get('/verPostulacionesFondos',  [App\Http\Controllers\AdminController::class, 'verPostulacionesFondos'])->name('verPostulacionesFondos');
     Route::get('/verSugerenciaReclamo',  [App\Http\Controllers\AdminController::class, 'verSugerenciaReclamo'])->name('verSugerenciaReclamo');

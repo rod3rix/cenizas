@@ -14,13 +14,14 @@
 
     <!-- Estilos de Bootstrap 5.3.3 -->
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
-    <link href="css/dataTables.bootstrap5.css" rel="stylesheet">
+    <link href="{{ asset('css/dataTables.bootstrap5.css') }}" rel="stylesheet">
 
-    <link href="css/buttons.bootstrap5.css" rel="stylesheet">
+    <link href="{{ asset('css/buttons.bootstrap5.css') }}" rel="stylesheet">
     
-    <link href="css/bootstrap-directional-buttons.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/bootstrap-directional-buttons.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- Scripts -->
     <!-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) -->
@@ -82,7 +83,7 @@
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">FONDOS CONCURSABLES</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{{ route('postularFondos') }}">POSTULAR FONDOS CONCURSABLES.</a></li>
-              <li><a class="dropdown-item" href="#">VER ESTADO POSTULACIONES</a></li>
+              <li><a class="dropdown-item" href="{{ route('seguimientoFondos') }}">VER ESTADO POSTULACIONES</a></li>
             </ul>
           </li>
         <li class="nav-item dropdown">

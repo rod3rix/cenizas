@@ -73,6 +73,11 @@ class HomeController extends Controller
         return view('seguimientoProyectos'); 
     }
 
+    public function seguimientoFondos()
+    {
+        return view('seguimientoFondos');
+    }
+
     public function ingresoCaso()
     {
         return view('ingresoCaso');
@@ -169,12 +174,11 @@ class HomeController extends Controller
         return response()->json($casos);
     }
 
-      public function listarApoyoProyectos()
-    {
-        $postulacion = PostulacionProyectos::where('user_id', auth()->id())->get();
-
+public function listarApoyoProyectos()
+{
+    $postulacion = PostulacionProyectos::where('user_id', auth()->id())->get();
        
-$postulacion = $postulacion->transform(function ($postulacion) {
+    $postulacion = $postulacion->transform(function ($postulacion) {
     switch ($postulacion->estado) {
         case 1:
             $postulacion->estado_texto = 'Enviado';
@@ -194,11 +198,44 @@ $postulacion = $postulacion->transform(function ($postulacion) {
     $postulacion->created_at_formatted = Carbon::parse($postulacion->created_at)->format('d-m-Y');
     
     return $postulacion;
-});
+    
+    });
+
+    return response()->json($postulacion);
+    
+}
+
+    public function listarFondos()
+    {
+        $postulacion = PostulacionFondos::where('user_id', auth()->id())->get();
+
+       
+        $postulacion = $postulacion->transform(function ($postulacion) {
+            switch ($postulacion->estado) {
+                case 1:
+                    $postulacion->estado_texto = 'Enviado';
+                    $postulacion->resolucion = 'En proceso';
+                    break;
+                case 2:
+                    $postulacion->estado_texto = 'Aceptado';
+                    $postulacion->resolucion = '<a href="#">Ver Respuesta</a>';
+                    break;
+                case 3:
+                    $postulacion->estado_texto = 'Rechazado';
+                    $postulacion->resolucion = '<a href="#">Ver Respuesta</a>';
+                    break;
+            } 
+
+            // Formatear la fecha created_at
+            $postulacion->created_at_formatted = Carbon::parse($postulacion->created_at)->format('d-m-Y');
+            
+            return $postulacion;
+        });
 
     return response()->json($postulacion);
     
     }
+
 
      public function listarPersonaJuridicas()
     {

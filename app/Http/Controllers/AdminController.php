@@ -14,6 +14,7 @@ use App\Models\Comunas;
 use App\Models\Casos;
 use App\Models\PuntajeUser;
 use App\Models\PostulacionProyectos;
+use App\Models\PostulacionFondos;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 
@@ -315,6 +316,40 @@ public function guardarPuntaje(Request $request)
         return response()->json(['success' => true, 'message' => 'Puntaje guardado exitosamente']);
     }
 
+       public function listarFondosAdmin()
+    {
+        
+        $postulacion = PostulacionFondos::join('users', 'postulacion_fondos.user_id', '=', 'users.id')->get(['postulacion_fondos.*', 'users.*','postulacion_fondos.id']);
+
+        $postulacion = $postulacion->transform(function ($postulacion) {
+            switch ($postulacion->estado) {
+                case 1:
+                    $postulacion->calificacion = '<a href="#">Calificar</a>';
+                    $postulacion->estado = 'En proceso';
+                    $postulacion->respuesta = '<a href="' . route("detalleFondoAdmin", ["id" => $postulacion->id]) . '">Responder</a>';
+                    break;
+                case 2:
+                    $postulacion->calificacion = '<a href="#">Ver Calificación</a>';
+                    $postulacion->estado = 'Enviado';
+                    $postulacion->respuesta = '<a href="#">Ver Respuesta</a>';
+                    break;
+                case 3:
+                    $postulacion->calificacion = '<a href="#">Ver Calificación</a>';
+                    $postulacion->estado = 'Enviado';
+                    $postulacion->respuesta = '<a href="#">Ver Respuesta</a>';
+                    break;
+            } 
+
+            // Formatear la fecha created_at
+            $postulacion->created_at_formatted = Carbon::parse($postulacion->created_at)->format('d-m-Y');
+            
+            return $postulacion;
+        });
+
+         return response()->json($postulacion);
+    
+    }    
+
        public function listarApoyoProyectosAdmin()
     {
         $postulacion = PostulacionProyectos::join('users', 'postulacion_proyectos.user_id', '=', 'users.id')->get(['postulacion_proyectos.*', 'users.*','postulacion_proyectos.id']);
@@ -346,7 +381,19 @@ public function guardarPuntaje(Request $request)
 
          return response()->json($postulacion);
     
-    }    
+    }   
+
+      public function detalleFondoAdmin($id)
+    {
+
+        $pfondo = DB::table('postulacion_fondos')
+            ->join('users', 'users.id', '=', 'postulacion_fondos.user_id')
+            ->select('users.*','postulacion_fondos.*')
+            ->where('postulacion_fondos.id', $id)
+            ->first();
+
+        return view('detalleFondoAdmin',['pfondo' => $pfondo]);
+    } 
 
      public function detalleProyectoAdmin($id)
     {
