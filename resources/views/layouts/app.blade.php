@@ -22,44 +22,23 @@
     <link href="{{ asset('css/buttons.bootstrap5.css') }}" rel="stylesheet">
     
     <link href="{{ asset('css/bootstrap-directional-buttons.css') }}" rel="stylesheet" type="text/css" />
-
-    <!-- Scripts -->
-    <!-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) -->
-
-    <!-- <script src="https://code.jquery.com/jquery-3.7.1.js"></script> -->
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
 
     <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- jQuery UI -->
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>    
-
-    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>    
-
-    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>    
-    <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
-
-    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.bootstrap5.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-
-    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
-
-    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js
-"></script>
-    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.colVis.min.js
-"></script>
-
+    <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-ui.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>    
+    <script src="{{ asset('js/dataTables.js') }}"></script>    
+    <script src="{{ asset('js/dataTables.bootstrap5.js') }}"></script>    
+    <script src="{{ asset('js/dataTables.buttons.js') }}"></script>
+    <script src="{{ asset('js/buttons.bootstrap5.js') }}"></script>
+    <script src="{{ asset('js/jszip.min.js') }}"></script>
+    <script src="{{ asset('js/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('js/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('js/buttons.colVis.min.js') }}"></script>
 </head>
 <body>
     <div id="app">
