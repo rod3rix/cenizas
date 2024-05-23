@@ -15,6 +15,8 @@ use App\Models\Casos;
 use App\Models\PuntajeUser;
 use App\Models\PostulacionProyectos;
 use App\Models\PostulacionFondos;
+use App\Models\TituloFondos;
+use App\Models\ListadoFondos;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 
@@ -44,6 +46,23 @@ class AdminController extends Controller
     {
         return view('verPostulacionesProyectos');
     }
+
+    public function crearFondoConcursable()
+    {
+        return view('crearFondoConcursable');
+    }
+
+    public function listarFondosConcursables()
+    {
+        // Obtener todos los títulos de fondos
+        $titulos = TituloFondos::all();
+
+        // Obtener todos los listados de fondos
+        $listados = ListadoFondos::all();
+
+    // Pasar los datos a la vista
+    return view('listarFondosConcursables', compact('titulos', 'listados'));
+    } 
 
     public function verSugerenciaReclamo()
     {
@@ -661,4 +680,77 @@ public function registrarUsuAdmin(Request $request)
         ], 500);
     }
 }
+
+ public function frmTituloFondo(Request $request)
+    {
+        if($request->idFrm=="frm1"){
+                $validator = Validator::make($request->all(), [
+                    'titulo_anual' => 'required',
+                ]);
+
+                if ($validator->fails()) {
+                    return response()->json([
+                        'success' => false,
+                        'errors' => $validator->errors()->toArray()
+                    ]);
+                }
+
+                $insertedId = \DB::table('titulo_fondos')->insertGetId([
+                    'titulo_anual' => $request->titulo_anual,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+        }
+        
+        if($request->idFrm=="frm2"){
+                $validator = Validator::make($request->all(), [
+                    'nombre_fondo' => 'required|string|max:255',
+                    'descripcion' => 'required|string|max:255',
+                    'fecha_inicio' => 'required|date',
+                    'fecha_termino' => 'required|date',
+                    'vigencia' => 'required',
+                    'titulo_anual_id' => 'required'
+                ]);
+
+                if ($validator->fails()) {
+                    return response()->json([
+                        'success' => false,
+                        'errors' => $validator->errors()->toArray()
+                    ]);
+                }
+
+                $insertedId = \DB::table('listado_fondos')->insertGetId([
+                    'nombre_fondo' => $request->nombre_fondo,
+                    'descripcion' => $request->descripcion,
+                    'fecha_inicio' =>  $fecha_inicio_formatted = date('Y-m-d', strtotime($request->fecha_inicio)),
+                    'fecha_termino' => $fecha_termino_formatted = date('Y-m-d', strtotime($request->fecha_termino)),
+                    'vigencia' => $request->vigencia,
+                    'titulo_anual_id'  => $request->titulo_anual_id,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+
+        }
+
+
+        if ($insertedId) {
+            // El insert fue exitoso
+            return response()->json([
+                'success' => true,
+                'message' => '¡El formulario se ha enviado correctamente.'
+            ]);
+        } else {
+            // El insert falló
+            return response()->json([
+                'success' => false,
+                'message' => 'Hubo un error al guardar el formulario en la base de datos.'
+            ], 500); // 500 es el código de estado para errores internos del servidor
+        }
+    }
+
+    public function obtenerTitulosFondos()
+    {
+    $titulos = TituloFondos::all();
+    return response()->json($titulos);
+    }
 }

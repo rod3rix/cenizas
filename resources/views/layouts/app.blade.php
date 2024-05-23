@@ -91,8 +91,12 @@
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">FONDOS CONCURSABLES</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{{ route('verPostulacionesFondos') }}">Ver Postulaciones</a></li>
-              <li><a class="dropdown-item" href="{{ route('seguimientoProyectos') }}">Ver fondos concursables</a></li>
-              <li><a class="dropdown-item" href="{{ route('seguimientoProyectos') }}">Crear fondos concursables</a></li>
+              <li><a class="dropdown-item" href="{{ route('listarFondosConcursables') }}">Ver fondos concursables</a></li>
+
+              @if(auth::user()->rol=="1")
+                <li><a class="dropdown-item" href="{{ route('crearFondoConcursable') }}">Crear fondos concursables</a></li>
+              @endif
+
             </ul>
           </li>
           <li class="nav-item">

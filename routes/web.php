@@ -88,6 +88,8 @@ Route::get('/ingreso-caso',  [App\Http\Controllers\HomeController::class,'ingres
 // admin routes
 Route::middleware(['auth', 'access-level:admin'])->group(function () {
 
+     Route::get('/crearFondoConcursable',  [App\Http\Controllers\AdminController::class,'crearFondoConcursable'])->name('crearFondoConcursable');
+
     // Ruta para obtener detalles del usuario
     Route::post('getUserDetails', [App\Http\Controllers\AdminController::class, 'getUserDetails'])->name('getUserDetails');
 
@@ -142,6 +144,12 @@ Route::middleware(['auth', 'access-level:admin'])->group(function () {
 
     Route::get('confirmacionRespuestaCaso',  [App\Http\Controllers\AdminController::class,'confirmacionRespuestaCaso'])->name('confirmacionRespuestaCaso');
     Route::get('confirmacionAsignacion',  [App\Http\Controllers\AdminController::class,'confirmacionAsignacion'])->name('confirmacionAsignacion');
+
+    Route::post('frmTituloFondo', [App\Http\Controllers\AdminController::class, 'frmTituloFondo'])->name('frmTituloFondo');
+
+    Route::get('/obtenerTitulosFondos', [App\Http\Controllers\AdminController::class, 'obtenerTitulosFondos'])->name('obtenerTitulosFondos');
+
+    Route::get('listarFondosConcursables',  [App\Http\Controllers\AdminController::class,'listarFondosConcursables'])->name('listarFondosConcursables');
 });
 
 
