@@ -9,16 +9,10 @@
         <hr>
         <div  class="container">    
             @foreach($titulos as $titulo)
-            <h2>{{ $titulo->nombre }}</h2>
-            <p>{{ $titulo->descripcion }}</p>
-            <p>Fecha de Inicio: {{ $titulo->fecha_inicio }}</p>
-            <p>Fecha de Termino: {{ $titulo->fecha_termino }}</p>
-            <p>Vigencia: {{ $titulo->vigencia }}</p>
-
-            <h3>Listado de Fondos:</h3>
+            <h2>{{ $titulo->titulo_anual }}</h2>
             <ul>
                 @foreach($listados->where('titulo_anual_id', $titulo->id) as $listado)
-                    <li>{{ $listado->nombre_fondo }} - {{ $listado->descripcion }}</li>
+                    <li>{{ $listado->nombre_fondo }} </li>
                 @endforeach
             </ul>
             @endforeach

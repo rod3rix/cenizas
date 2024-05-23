@@ -55,7 +55,7 @@ class AdminController extends Controller
     public function listarFondosConcursables()
     {
         // Obtener todos los títulos de fondos
-        $titulos = TituloFondos::all();
+        $titulos = TituloFondos::orderBy('id', 'desc')->get();
 
         // Obtener todos los listados de fondos
         $listados = ListadoFondos::all();
