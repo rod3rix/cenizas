@@ -205,12 +205,16 @@ public function cerrarCaso(Request $request)
         return view('confirmacionAsignacion');
     }
 
-public function confirmacionProyectoAdmin()
+    public function confirmacionProyectoAdmin()
     {
         return view('confirmacionProyectoAdmin');
     }
-    
 
+    public function confirmacionFondoAdmin()
+    {
+        return view('confirmacionFondoAdmin');
+    }
+    
      public function changePassword(Request $request)
     {
             $validator = Validator::make($request->all(), [
@@ -263,17 +267,23 @@ public function confirmacionProyectoAdmin()
 
 
     public function getData()
-        {
-               $data = DB::table('users')
-                ->leftJoin('puntaje_users', 'users.id', '=', 'puntaje_users.user_id')
-                ->select(
-                    'users.*',
-                    DB::raw('COALESCE(puntaje_users.influencia, 0) as influencia'),
-                    DB::raw('COALESCE(puntaje_users.vecindad, 0) as vecindad'),
-                    DB::raw('COALESCE(puntaje_users.vecindad_mlc, 0) as vecindad_mlc'),
-                    DB::raw('COALESCE(puntaje_users.poder, 0) as poder')
-                )
-                ->get();
+    {
+      $zona = auth()->user()->zona;
+
+    // Realizar la consulta con el filtro por zona
+        $data = DB::table('users')
+            ->leftJoin('puntaje_users', 'users.id', '=', 'puntaje_users.user_id')
+            ->select(
+        'users.*',
+        DB::raw('COALESCE(puntaje_users.influencia, 0) as influencia'),
+        DB::raw('COALESCE(puntaje_users.vecindad, 0) as vecindad'),
+        DB::raw('COALESCE(puntaje_users.vecindad_mlc, 0) as vecindad_mlc'),
+        DB::raw('COALESCE(puntaje_users.poder, 0) as poder')
+    )
+    ->where('users.zona', $zona)  // Filtrar por zona
+    ->where('users.rol', 0)
+    ->where('users.type', 1)
+    ->get();
 
     // Transformar los datos antes de enviarlos
     $data->transform(function ($user) {
@@ -595,4 +605,60 @@ public function registrarUsuAdmin(Request $request)
         return response()->json(['success' => true,
               'message' => 'Usuario actualizado con éxito']);
     }
+
+    public function cerrarFondo(Request $request)
+    {
+    // Validar la existencia y tipo del archivo
+    $validator = Validator::make($request->all(), [
+        'respuesta' => 'required|string|max:2500',
+        'estado_fondo' => 'required',
+        'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'success' => false,
+            'errors' => $validator->errors()->toArray()
+        ]);
+    }
+
+    try {
+        // Obtener el archivo del request
+        $archivo = $request->file('archivo');
+
+        // Guardar el archivo en el directorio deseado
+        $nombreArchivo = 'res_fondo_' . $request->pfondo_id . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
+        $archivo->storeAs('archivos', $nombreArchivo);
+
+        // Actualizar los campos respuesta y archivo_respuesta con el ID proporcionado en el URL usando Eloquent
+
+        $fondo = PostulacionFondos::findOrFail($request->pfondo_id);
+        $fondo->respuesta = $request->input('respuesta');
+        $fondo->archivo_respuesta = $nombreArchivo;
+        $fondo->estado = $request->input('estado_fondo');
+        $fondo->updated_at = Carbon::now();
+        $fondo->save();
+
+        // Verificar si la actualización fue exitosa
+        if ($fondo) {
+            // La actualización fue exitosa
+            return response()->json([
+                'success' => true,
+                'message' => '¡La respuesta y el archivo se han actualizado correctamente!'
+            ]);
+        } else {
+            // La actualización falló
+            return response()->json([
+                'success' => false,
+                'message' => 'Hubo un error al actualizar la respuesta y el archivo.'
+            ], 500); // 500 es el código de estado para errores internos del servidor
+        }
+    } catch (\Exception $e) {
+        // Manejar la excepción
+        return response()->json([
+            'success' => false,
+            'message' => 'Hubo un error al procesar la solicitud: ' . $e->getMessage()
+        ], 500);
+    }
+}
 }

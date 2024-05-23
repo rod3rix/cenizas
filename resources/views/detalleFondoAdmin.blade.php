@@ -218,8 +218,8 @@
     </div>
 </div>
 
-  <form id="cerrarCasoForm">
-      <input type="hidden" id="pproy_id" name="pproy_id" value="{{ $pfondo->id }}">
+  <form id="cerrarFondoForm">
+      <input type="hidden" id="pfondo_id" name="pfondo_id" value="{{ $pfondo->id }}">
       <div class="media text-muted pt-3">
           <p class="media-body pb-3 mb-0 small lh-125">
               <strong class="d-block text-gray-dark">RESPUESTA:</strong>
@@ -232,7 +232,7 @@
       <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 text-md-right">
             <strong class="d-block text-gray-dark">Estado del proyecto:</strong>
-            <select id="estado_proyecto" name="estado_proyecto" class="form-control">
+            <select id="estado_fondo" name="estado_fondo" class="form-control">
                 <option value="">Seleccione</option>
                 <option value="2">Proyecto aceptado</option>
                 <option value="3">Proyecto rechazado</option>
@@ -251,7 +251,7 @@
                       ¡El archivo es obligatorio!
                   </div>
               </div>
-              <button id="cerrarCasoBtn" type="button" class="btn btn-primary btn-block">Guardar ></button>
+              <button id="cerrarFondoBtn" type="button" class="btn btn-primary btn-block">Guardar ></button>
           </p>
       </div>
   </form>
@@ -278,7 +278,7 @@
 <script>
     $(document).ready(function() {
         // Mostrar el modal de confirmación cuando se hace clic en el botón
-        $('#cerrarCasoBtn').click(function(e) {
+        $('#cerrarFondoBtn').click(function(e) {
             e.preventDefault();
             // Mostrar el modal de confirmación
             $('#confirmModal').modal('show');
@@ -293,20 +293,20 @@
             // Obtener los valores de los campos
             var respuesta = $('#respuesta').val();
             var archivo = $('#archivo')[0].files[0];
-            var pproy_id = $('#pproy_id').val();
-            var estado_proyecto = $('#estado_proyecto').val();
+            var pfondo_id = $('#pfondo_id').val();
+            var estado_fondo = $('#estado_fondo').val();
 
             // Validate fields
             var formData = new FormData();
             formData.append('_token', '{{ csrf_token() }}');
-            formData.append('pproy_id', pproy_id);
+            formData.append('pfondo_id', pfondo_id);
             formData.append('respuesta', respuesta);
             formData.append('archivo', archivo);
-            formData.append('estado_proyecto', estado_proyecto);
+            formData.append('estado_fondo', estado_fondo);
 
             // Realizar la solicitud AJAX
             $.ajax({
-                url: "{{ route('cerrarProyecto') }}",
+                url: "{{ route('cerrarFondo') }}",
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -317,7 +317,7 @@
                         if (response.success) {
                             // Si la respuesta indica éxito, cierra el modal y redirecciona a otra página
                             $('#confirmModal').modal('hide');
-                            window.location.href = '../confirmacionProyectoAdmin';
+                            window.location.href = '../confirmacionFondoAdmin';
                         } else {
                             // Si la respuesta indica que hubo errores de validación, muestra los mensajes de error debajo de los campos correspondientes
                             $.each(response.errors, function(key, value) {
