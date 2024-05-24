@@ -2,14 +2,6 @@
 
 @section('content')
 
- @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <!-- You are logged in! -->
-
 <div class="jumbotron">
         <div class="container">
           <h3><b>POSTULACIÓN APOYO PROYECTO</b></h3>
@@ -46,6 +38,7 @@
 
 </div>
 <script src="{{ asset('js/frm_proy.js') }}"></script>
+<script src="{{ asset('js/frm_proy_postular.js') }}"></script>
 <script>
     $(document).ready(function(){
         $('#etapa_1').show();

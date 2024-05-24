@@ -37,14 +37,12 @@ class PersonaJuridicas extends Model
      */
     static function insertarDatos(array $data)
     {
-        return DatosOrganizaciones::insertGetId([
+        return PersonaJuridicas::insertGetId([
             'user_id' => auth()->id(),
-            'nombre_organizacion' => $data['nombre_organizacion'],
-            'domicilio_organizacion' => $data['domicilio_organizacion'],
-            'rut_organizacion' => $data['rut_organizacion'],
-            'personalidad_juridica' => $data['personalidad_juridica'],
-            'antiguedad_anos' => $data['antiguedad_anos'],
-            'numero_socios' => $data['numero_socios'],
+            'rut' => $data['rut_juridico'],
+            'razon_social' => $data['razon_social'],
+            'relacion' => $data['relacion'],
+            'estado' => $data['estado'],
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
@@ -53,12 +51,10 @@ class PersonaJuridicas extends Model
      static function prepararDatos(Request $request)
     {
         return $request->only([
-            'nombre_organizacion',
-            'domicilio_organizacion',
-            'rut_organizacion',
-            'personalidad_juridica',
-            'antiguedad_anos',
-            'numero_socios'
+            'rut_juridico',
+            'razon_social',
+            'relacion',
+            'estado'
         ]);
     }
 }

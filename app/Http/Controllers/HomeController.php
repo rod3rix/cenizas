@@ -562,48 +562,77 @@ public function actualizarPersonaJuridica(Request $request)
     {
         $id_val=$request->id;
 
-         if($id_val==4){
+        if($id_val==5){
+
+            $validator = Validator::make($request->all(), [
+            'rut_juridico' => 'required|string|max:255|unique:persona_juridicas,rut',
+            'razon_social' => 'required|string|max:255',
+            'relacion' => 'required|string|max:255',
+            'estado' => 'required|string|max:255',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->toArray()
+                ]);
+            }  
+
+            try {
+
+                $dataPerJur = PersonaJuridicas::prepararDatos($request);
+                $personaJurId = PersonaJuridicas::insertarDatos($dataPerJur);
+
+                $dataPostProy = PostulacionProyectos::prepararDatos($request);
+                $insertedId = PostulacionProyectos::crearPostulacionFondos($dataPostProy,$personaJurId);
+
+                if ($insertedId) {
+                    return response()->json([
+                        'status' => true,
+                        'success' => true,
+                        'message' => 'El registro se ha insertado correctamente con el ID: ' . $insertedId
+                    ]);
+                } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Hubo un error al guardar el formulario en la base de datos.'
+                    ], 500); // 500 es el código de estado para errores internos del servidor
+                }
+            } catch (\Exception $e) {
+                // Capturar y manejar cualquier excepción
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al crear persona jurídica: ' . $e->getMessage()
+                ], 500);
+            }
+
+        }    
+
+        if($id_val==4){
              try {
-        // Insertar el registro y obtener el ID del nuevo registro insertado
-        $insertedId = PostulacionProyectos::insertGetId([
-            'user_id' => auth()->id(),
-            'nacionalidad' => $request->nacionalidad,
-            'genero' => $request->genero,
-            'pueblo_originario' => $request->pueblo_originario,
-            'discapacidad' => $request->discapacidad,
-            'fecha_nacimiento' => $fecha_nacimiento_formatted = date('Y-m-d', strtotime($request->fecha_nacimiento)),
-            'actividad_economica' => $request->actividad_economica,
-            'direccion' => $request->direccion,
-            'formacion_formal' => $request->formacion_formal,  
-            'profesion' => $request->profesion, 
-            'acepto_clausula' => $request->acepto_clausula,
-            'nombre_organizacion' => $request->nombre_organizacion,
-            'rut_organizacion' => $request->rut_organizacion,
-            'domicilio_organizacion' => $request->domicilio_organizacion,
-            'personalidad_juridica' => $request->personalidad_juridica,
-            'antiguedad_anos' => $request->antiguedad_anos,
-            'numero_socios' => $request->numero_socios,
-            'nombre_proyecto' => $request->nombre_proyecto,
-            'tipo_proyecto' => $request->tipo_proyecto,
-            'lugar_proyecto' => $request->lugar_proyecto,
-            'directos' => $request->directos,
-            'indirectos' => $request->indirectos,
-            'aporte_solicitado' => $request->aporte_solicitado,
-            'acepto_clausula_proy' => $request->acepto_clausula_proy,
-            'estado' => 1,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-            // Verificar si se obtuvo un ID válido
+
+                $validator = Validator::make($request->all(), [
+                        'persona_juridica_id' => 'required',
+                ]);
+
+                if ($validator->fails()) {
+                    return response()->json([
+                    'success' => false,
+                    'errors' => $validator->errors()->toArray()
+                    ]);
+                }
+
+                $personaJurId = $request->persona_juridica_id;    
+                $dataPostProy = PostulacionProyectos::prepararDatos($request);
+                $insertedId = PostulacionProyectos::crearPostulacionFondos($dataPostProy,$personaJurId);
+
             if ($insertedId) {
-                // El insert fue exitoso
                 return response()->json([
                     'status' => true,
                     'success' => true,
                     'message' => 'El registro se ha insertado correctamente con el ID: ' . $insertedId
                 ]);
             } else {
-                // El insert falló
                 return response()->json([
                     'success' => false,
                     'message' => 'Hubo un error al guardar el formulario en la base de datos.'
@@ -620,41 +649,15 @@ public function actualizarPersonaJuridica(Request $request)
         }   
 
         if($id_val==1){
-            $validator = Validator::make($request->all(), [
-            'nacionalidad' => 'required',
-            'genero' => 'required',
-            'pueblo_originario' => 'required',
-            'discapacidad' => 'required',
-            'fecha_nacimiento' => 'required',
-            'actividad_economica' => 'required',
-            'direccion' => 'required',
-            'formacion_formal' => 'required',  
-            'profesion' => 'required', 
-            'acepto_clausula' => 'required',
-            ]);
+            $validator = PostulacionProyectos::validarEtapa1($request->all());
         }
 
         if($id_val==2){
-            $validator = Validator::make($request->all(), [
-            'nombre_organizacion' => 'required',
-            'rut_organizacion' => 'required',
-            'domicilio_organizacion' => 'required',
-            'personalidad_juridica' => 'required',
-            'antiguedad_anos' => 'required',
-            'numero_socios' => 'required',
-            ]);
+            $validator = PostulacionProyectos::validarEtapa2($request->all());
         }
 
         if($id_val==3){
-            $validator = Validator::make($request->all(), [
-            'nombre_proyecto' => 'required',
-            'tipo_proyecto' => 'required',
-            'lugar_proyecto' => 'required',
-            'directos' => 'required',
-            'indirectos' => 'required',
-            'aporte_solicitado' => 'required',
-            'acepto_clausula_proy' => 'required',
-            ]);
+            $validator = PostulacionProyectos::validarEtapa3($request->all());
         }
             
         if ($validator->fails()) {

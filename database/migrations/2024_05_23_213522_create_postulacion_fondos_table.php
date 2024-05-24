@@ -50,8 +50,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('id_dato_organizacion')->references('id')->on('datos_organizaciones')->onDelete('cascade');
-            $table->foreign('id_persona_juridica')->references('id')->on('persona_juridicas')->onDelete('cascade');
+            // $table->foreign('id_dato_organizacion')->references('id')->on('datos_organizaciones')->onDelete('cascade');
+            // $table->foreign('id_persona_juridica')->references('id')->on('persona_juridicas')->onDelete('cascade');
         });
     }
 

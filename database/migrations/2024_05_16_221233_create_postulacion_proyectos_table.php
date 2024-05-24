@@ -17,6 +17,7 @@ class CreatePostulacionProyectosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('persona_juridica_id')->nullable();
             $table->string('nacionalidad')->nullable();
             $table->string('genero')->nullable();
             $table->integer('pueblo_originario')->nullable();
@@ -45,6 +46,8 @@ class CreatePostulacionProyectosTable extends Migration
             $table->string('respuesta', 2500)->nullable();
             $table->string('archivo_respuesta')->nullable();
             $table->timestamps();
+
+            // $table->foreign('id_persona_juridica')->references('id')->on('persona_juridicas')->onDelete('cascade');
         });
     }
 
