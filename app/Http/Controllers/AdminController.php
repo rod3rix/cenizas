@@ -407,12 +407,12 @@ public function guardarPuntaje(Request $request)
                 case 2:
                     $postulacion->calificacion = '<a href="#">Ver Calificación</a>';
                     $postulacion->estado = 'Enviado';
-                    $postulacion->respuesta = '<a href="#">Ver Respuesta</a>';
+                    $postulacion->respuesta = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
                     break;
                 case 3:
                     $postulacion->calificacion = '<a href="#">Ver Calificación</a>';
                     $postulacion->estado = 'Enviado';
-                    $postulacion->respuesta = '<a href="#">Ver Respuesta</a>';
+                    $postulacion->respuesta = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
                     break;
             } 
 
@@ -450,6 +450,18 @@ public function guardarPuntaje(Request $request)
             ->first();
 
         return view('detalleProyectoAdmin',['pproy' => $pproy]);
+    }
+
+     public function respuestaProyectoAdmin($id)
+    {
+
+        $pproy = DB::table('postulacion_proyectos')
+            ->join('users', 'users.id', '=', 'postulacion_proyectos.user_id')
+            ->select('users.*','postulacion_proyectos.*')
+            ->where('postulacion_proyectos.id', $id)
+            ->first();
+
+        return view('respuestaProyectoAdmin',['pproy' => $pproy]);
     }
 
     public function cerrarProyecto(Request $request)
