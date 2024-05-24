@@ -13,7 +13,19 @@
                 </h2>
                 <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <!-- Contenido del formulario para crear nuevo registro -->
+                        <div class="row mb-3">
+                <label for="persona_juridica_id" class="col-md-4 col-form-label text-md-end">{{ __('Asociar Persona Jurídica:') }}</label>
+                <div class="col-md-6">
+                    <select id="persona_juridica_id" name="persona_juridica_id" class="form-control @error('persona_juridica_id') is-invalid @enderror">
+                       
+                    </select>
+                    @error('persona_juridica_id')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
                     <div class="form-group row">
                      <div class="col-md-12  text-md-right">
                         <button type="button" onclick="btn_volver(3)" class="btn btn-primary">

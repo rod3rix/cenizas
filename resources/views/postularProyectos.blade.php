@@ -48,11 +48,7 @@
 <script src="{{ asset('js/frm_proy.js') }}"></script>
 <script>
     $(document).ready(function(){
-        var op=1;
-
-        if(op==1){
-            $('#etapa_1').show();
-        }
+        $('#etapa_1').show();
     });
 </script>
 @endsection

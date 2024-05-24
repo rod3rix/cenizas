@@ -83,6 +83,8 @@ Route::get('/ingreso-caso',  [App\Http\Controllers\HomeController::class,'ingres
     Route::get('/respuestaProyecto',  [App\Http\Controllers\HomeController::class,'respuestaProyecto'])->name('respuestaProyecto');
     Route::get('/agradecimiento',  [App\Http\Controllers\HomeController::class,'agradecimiento'])->name('agradecimiento');
     Route::get('respuestaCaso/{id}', [App\Http\Controllers\HomeController::class, 'respuestaCaso'])->name('respuestaCaso');
+    Route::get('/obtenerPersonasJuridicas', [App\Http\Controllers\HomeController::class, 'obtenerPersonasJuridicas'])->name('obtenerPersonasJuridicas');
+     Route::get('/obtenerOrganizaciones', [App\Http\Controllers\HomeController::class, 'obtenerOrganizaciones'])->name('obtenerOrganizaciones');
 });
 
 // admin routes

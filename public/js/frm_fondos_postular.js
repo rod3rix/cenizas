@@ -1,3 +1,67 @@
+$(document).ready(function() {
+    obtenerOrganizaciones();
+    obtenerPersonasJuridicas(); 
+});
+
+function obtenerOrganizaciones() {
+        $.ajax({
+            url: 'obtenerOrganizaciones',
+            type: 'GET',
+            success: function(response) {
+                // Limpiar opciones actuales del select
+                $('#organizacion_id').empty();
+
+                // Agregar opciones estáticas
+                $('#organizacion_id').append($('<option>', {
+                    value: '',
+                    text: 'Selecciona un título'
+                }));
+
+                // Agregar nuevas opciones basadas en los datos recibidos
+                $.each(response, function(index, res) {
+                    $('#organizacion_id').append($('<option>', {
+                        value: res.id,
+                        text: res.nombre_organizacion
+                    }));
+                });
+            },
+            error: function() {
+                console.log('Error al obtener las organizaciones.');
+            }
+        });
+    }
+
+ function obtenerPersonasJuridicas() {
+        $.ajax({
+            url: 'obtenerPersonasJuridicas',
+            type: 'GET',
+            success: function(response) {
+                // Limpiar opciones actuales del select
+                $('#persona_juridica_id').empty();
+
+                // Agregar opciones estáticas
+                $('#persona_juridica_id').append($('<option>', {
+                    value: '',
+                    text: 'Selecciona un título'
+                }));
+
+                // Agregar nuevas opciones basadas en los datos recibidos
+                $.each(response, function(index, res) {
+                    $('#persona_juridica_id').append($('<option>', {
+                        value: res.id,
+                        text: res.razon_social
+                    }));
+                });
+            },
+            error: function() {
+                console.log('Error al obtener las personas jurídicas.');
+            }
+        });
+    }
+
+
+
+
 
 function formatRut(cliente) {
   cliente.value = cliente.value
@@ -95,6 +159,17 @@ function btn_volver(id) {
                     $("#bt_et3").removeClass("btn-info");    
                     $("#bt_et4").addClass("btn-info");
                     $('#etapa_4').show();
+                }
+
+                if(id==5){
+                    $('#etapa_1').hide();
+                    $('#etapa_2').hide();
+                    $('#etapa_4').hide();
+                    $("#bt_et1").removeClass("btn-info");
+                    $("#bt_et2").removeClass("btn-info");
+                    $("#bt_et4").removeClass("btn-info");    
+                    $("#bt_et3").addClass("btn-info");
+                    $('#etapa_3').show();
                 }
                 if (response.status) {
                     window.location.href = 'confirmacionFondos';

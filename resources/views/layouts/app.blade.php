@@ -24,6 +24,8 @@
     <link href="{{ asset('css/bootstrap-directional-buttons.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+
     <!-- jQuery -->
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('js/jquery-ui.js') }}"></script>

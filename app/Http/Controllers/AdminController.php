@@ -17,6 +17,7 @@ use App\Models\PostulacionProyectos;
 use App\Models\PostulacionFondos;
 use App\Models\TituloFondos;
 use App\Models\ListadoFondos;
+use App\Models\PersonaJuridicas;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 
@@ -152,7 +153,7 @@ public function cerrarCaso(Request $request)
 
         // Guardar el archivo en el directorio deseado
         $nombreArchivo = 'res_caso_' . auth()->id() . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
-        $archivo->storeAs('archivos', $nombreArchivo);
+        $archivo->storeAs('public/archivos', $nombreArchivo);
 
         // Actualizar los campos respuesta y archivo_respuesta con el ID proporcionado en el URL usando Eloquent
         $caso = Casos::findOrFail($request->casoId);
@@ -417,7 +418,9 @@ public function guardarPuntaje(Request $request)
 
         $pfondo = DB::table('postulacion_fondos')
             ->join('users', 'users.id', '=', 'postulacion_fondos.user_id')
-            ->select('users.*','postulacion_fondos.*')
+            ->join('datos_organizaciones', 'datos_organizaciones.id', '=', 'postulacion_fondos.id_dato_organizacion')
+             ->join('persona_juridicas', 'persona_juridicas.id', '=', 'postulacion_fondos.id_persona_juridica')
+            ->select('users.*', 'postulacion_fondos.*', 'datos_organizaciones.*','persona_juridicas.*', 'datos_organizaciones.domicilio_organizacion','postulacion_fondos.id as post_fondo_id')
             ->where('postulacion_fondos.id', $id)
             ->first();
 
@@ -458,7 +461,7 @@ public function guardarPuntaje(Request $request)
 
         // Guardar el archivo en el directorio deseado
         $nombreArchivo = 'res_proy_' . auth()->id() . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
-        $archivo->storeAs('archivos', $nombreArchivo);
+        $archivo->storeAs('public/archivos', $nombreArchivo);
 
         // Actualizar los campos respuesta y archivo_respuesta con el ID proporcionado en el URL usando Eloquent
 
@@ -647,9 +650,7 @@ public function registrarUsuAdmin(Request $request)
 
         // Guardar el archivo en el directorio deseado
         $nombreArchivo = 'res_fondo_' . $request->pfondo_id . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
-        $archivo->storeAs('archivos', $nombreArchivo);
-
-        // Actualizar los campos respuesta y archivo_respuesta con el ID proporcionado en el URL usando Eloquent
+        $archivo->storeAs('public/archivos', $nombreArchivo);
 
         $fondo = PostulacionFondos::findOrFail($request->pfondo_id);
         $fondo->respuesta = $request->input('respuesta');
@@ -753,4 +754,5 @@ public function registrarUsuAdmin(Request $request)
     $titulos = TituloFondos::all();
     return response()->json($titulos);
     }
+
 }

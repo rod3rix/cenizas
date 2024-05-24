@@ -1,11 +1,13 @@
 <?php
   
 namespace App\Models;
-  
-// use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Illuminate\Notifications\Notifiable;
-// use Illuminate\Database\Eloquent\Casts\Attribute;
+
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Auth;
 
 class PostulacionFondos extends Model
 {
@@ -15,7 +17,6 @@ class PostulacionFondos extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
          'user_id',
          'id_fondo_concursable',
          'nacionalidad',
@@ -53,4 +54,163 @@ class PostulacionFondos extends Model
         'created_at',
         'updated_at'
     ];
+
+     
+    public static function prepararDatos(Request $request)
+    {
+        return $request->only([
+         'user_id',
+         'id_fondo_concursable',
+         'nacionalidad',
+         'genero',
+         'pueblo_originario',
+         'discapacidad',
+         'fecha_nacimiento',
+         'actividad_economica',
+         'direccion',
+         'formacion_formal',
+         'profesion',
+         'acepto_clausula',
+         'id_dato_organizacion',
+         'nombre_proyecto',
+         'equipamiento',
+         'fundamentacion',
+         'descripcion_proyecto',
+         'objetivo_general',
+         'objetivos_especificos',
+         'cierre_proyecto',
+         'directos',
+         'indirectos',
+         'fecha_inicio',
+         'fecha_termino',
+         'cantidad_dias',
+         'aporte_solicitado',
+         'aporte_terceros',
+         'aporte_propio',
+         'archivo_anexo',
+         'archivo_certificado',
+         'id_persona_juridica',
+         'estado',
+         'respuesta',
+         'archivo_respuesta',
+        'created_at',
+        'updated_at'
+        ]);
+    }
+
+    public static function crearPostulacionFondos(array $data, $datosOrgId, $personaJurId, $request)
+    {
+        // Manejo de archivos anexos
+        $nombreArchivoAnexo = 'Fondo_anexo_' . auth()->id() . "_" . date('Ymd_His') . "." . $request->file('archivo_anexo')->getClientOriginalExtension();
+        $archivo_anexo = $request->file('archivo_anexo')->storeAs('public/archivos', $nombreArchivoAnexo);
+
+        $nombreArchivoCert = 'Fondo_certificado_' . auth()->id() . "_" . date('Ymd_His') . "." . $request->file('archivo_certificado')->getClientOriginalExtension();
+        $archivo_certificado = $request->file('archivo_certificado')->storeAs('public/archivos', $nombreArchivoCert);
+
+        // Insertar el registro y obtener el ID del nuevo registro insertado
+        $insertedId = self::insertGetId([
+            'user_id' => auth()->id(),
+            'id_fondo_concursable' => 1, // Ejemplo de valor fijo
+            'nacionalidad' => $data['nacionalidad'],
+            'genero' => $data['genero'],
+            'pueblo_originario' => $data['pueblo_originario'],
+            'discapacidad' => $data['discapacidad'],
+            'fecha_nacimiento' => date('Y-m-d', strtotime($data['fecha_nacimiento'])),
+            'actividad_economica' => $data['actividad_economica'],
+            'direccion' => $data['direccion'],
+            'formacion_formal' => $data['formacion_formal'],
+            'profesion' => $data['profesion'],
+            'acepto_clausula' => $data['acepto_clausula'],
+            'id_dato_organizacion' => $datosOrgId,
+            'nombre_proyecto' => $data['nombre_proyecto'],
+            'equipamiento' => $data['equipamiento'],
+            'fundamentacion' => $data['fundamentacion'],
+            'descripcion_proyecto' => $data['descripcion_proyecto'],
+            'objetivo_general' => $data['objetivo_general'],
+            'objetivos_especificos' => $data['objetivos_especificos'],
+            'cierre_proyecto' => $data['cierre_proyecto'],
+            'directos' => $data['directos'],
+            'indirectos' => $data['indirectos'],
+            'fecha_inicio' => date('Y-m-d', strtotime($data['fecha_inicio'])),
+            'fecha_termino' => date('Y-m-d', strtotime($data['fecha_termino'])),
+            'cantidad_dias' => $data['cantidad_dias'],
+            'aporte_solicitado' => $data['aporte_solicitado'],
+            'aporte_terceros' => $data['aporte_terceros'],
+            'aporte_propio' => $data['aporte_propio'],
+            'archivo_anexo' => $archivo_anexo,
+            'archivo_certificado' => $archivo_certificado,
+            'id_persona_juridica' => $personaJurId,
+            'estado' => 1,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        return $insertedId;
+    }
+
+    public static function validarEtapa1(array $data)
+    {
+         $validator = Validator::make( $data,[
+            'nacionalidad' => 'required',
+            'genero' => 'required',
+            'pueblo_originario' => 'required',
+            'discapacidad' => 'required',
+            'fecha_nacimiento' => 'required',
+            'actividad_economica' => 'required',
+            'direccion' => 'required',
+            'formacion_formal' => 'required',  
+            'profesion' => 'required', 
+            'acepto_clausula' => 'required',
+            ]);
+
+        return $validator;
+    }
+
+    public static function validarEtapa2(array $data)
+    {
+        $validator = Validator::make($data, [
+            'nombre_organizacion' => 'required',
+            'rut_organizacion' => 'required',
+            'domicilio_organizacion' => 'required',
+            'personalidad_juridica' => 'required',
+            'antiguedad_anos' => 'required',
+            'numero_socios' => 'required',
+        ]);
+
+        return $validator;
+    }
+
+    public static function validarEtapa3(array $data)
+    {
+        $validator = Validator::make($data, [
+            'nombre_proyecto' => 'required',
+            'equipamiento' => 'required',
+            'fundamentacion' => 'required',
+            'descripcion_proyecto' => 'required',
+            'objetivo_general' => 'required',
+            'objetivos_especificos' => 'required',
+            'cierre_proyecto' => 'required',
+            'directos' => 'required',
+            'indirectos' => 'required',
+            'fecha_inicio' => 'required',
+            'fecha_termino' => 'required',
+            'cantidad_dias' => 'required',
+            'aporte_solicitado' => 'required',
+            'aporte_terceros' => 'required',
+            'aporte_propio' => 'required',
+            'archivo_anexo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
+            'archivo_certificado' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
+            ]);
+
+        return $validator;
+    }
+
+    public static function validarEtapa5(array $data)
+    {
+        $validator = Validator::make($data, [
+            'organizacion_id' => 'required'
+        ]);
+
+        return $validator;
+    }
 }

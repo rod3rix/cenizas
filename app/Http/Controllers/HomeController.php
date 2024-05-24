@@ -276,7 +276,7 @@ public function listarApoyoProyectos()
 
         // Guardar el archivo en el directorio deseado
         $nombreArchivo = 'caso_' . auth()->id() . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
-        $archivo->storeAs('archivos', $nombreArchivo);
+        $archivo->storeAs('public/archivos', $nombreArchivo);
 
         $insertedId = \DB::table('casos')->insertGetId([
             'idUser' => auth()->id(),
@@ -671,175 +671,85 @@ public function actualizarPersonaJuridica(Request $request)
 
     public function validarFrmFondos(Request $request)
     {
-        $id_val=$request->id;
-
-         if($id_val==4){
-             try {
-
-        $validator = Validator::make($request->all(), [
-            'rut_juridico' => 'required',
-            'razon_social' => 'required',
-            'relacion' => 'required',
-            'estado' => 'required'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-            'success' => false,
-            'errors' => $validator->errors()->toArray()
-            ]);
-        }    
-
-
-        // Insertar el registro y obtener el ID del nuevo registro insertado
-        $datosOrgId = DatosOrganizaciones::insertGetId([
-            'user_id' => auth()->id(),
-            'nombre_organizacion' => $request->nombre_organizacion,
-            'domicilio_organizacion' => $request->domicilio_organizacion,
-            'rut_organizacion' => $request->rut_organizacion,            
-            'personalidad_juridica' => $request->personalidad_juridica,
-            'antiguedad_anos' => $request->antiguedad_anos,
-            'numero_socios' => $request->numero_socios,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-
-         // Insertar el registro y obtener el ID del nuevo registro insertado
-        $personaJurId = PersonaJuridicas::insertGetId([
-            'user_id' => auth()->id(),
-            'rut' => $request->rut_juridico,
-            'razon_social' => $request->razon_social,
-            'relacion' => $request->relacion,
-            'estado' => $request->estado,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-
-        ]);
-
-        $archivo_anexo = $request->file('archivo_anexo');
-        // Guardar el archivo en el directorio deseado
-        $nombreArchivoAnexo = 'Fondo_anexo_' . auth()->id() . "_" . date('Ymd_His') . "." . $archivo_anexo->getClientOriginalExtension();
-        $archivo_anexo->storeAs('archivos', $nombreArchivoAnexo);
-
-        $archivo_certificado = $request->file('archivo_certificado');
-        // Guardar el archivo en el directorio deseado
-        $nombreArchivoCert = 'Fondo_certificado_' . auth()->id() . "_" . date('Ymd_His') . "." . $archivo_certificado->getClientOriginalExtension();
-        $archivo_certificado->storeAs('archivos', $nombreArchivoCert);
-
-        // Insertar el registro y obtener el ID del nuevo registro insertado
-        $insertedId = PostulacionFondos::insertGetId([
-            'user_id' => auth()->id(),
-            'id_fondo_concursable' => 1, 
-            'nacionalidad' => $request->nacionalidad,
-            'genero' => $request->genero,
-            'pueblo_originario' => $request->pueblo_originario, 
-            'discapacidad' => $request->discapacidad,
-            'fecha_nacimiento' => $fecha_nacimiento_formatted = date('Y-m-d', strtotime($request->fecha_nacimiento)),
-            'actividad_economica' => $request->actividad_economica,
-            'direccion' => $request->direccion,
-            'formacion_formal' => $request->formacion_formal,
-            'profesion' => $request->profesion,
-            'acepto_clausula' => $request->acepto_clausula,
-            'id_dato_organizacion' => $datosOrgId,
-            'nombre_proyecto' => $request->nombre_proyecto,
-            'equipamiento' => $request->equipamiento,
-            'fundamentacion' => $request->fundamentacion,
-            'descripcion_proyecto' => $request->descripcion_proyecto,
-            'objetivo_general' => $request->objetivo_general,
-            'objetivos_especificos' => $request->objetivos_especificos,
-            'cierre_proyecto' => $request->cierre_proyecto,
-            'directos' => $request->directos,
-            'indirectos' => $request->indirectos,
-            'fecha_inicio' =>  $fecha_inicio_formatted = date('Y-m-d', strtotime($request->fecha_inicio)),
-            'fecha_termino' => $fecha_termino_formatted = date('Y-m-d', strtotime($request->fecha_termino)),
-            'cantidad_dias' => $request->cantidad_dias,
-            'aporte_solicitado' => $request->aporte_solicitado,
-            'aporte_terceros' => $request->aporte_terceros,
-            'aporte_propio' => $request->aporte_propio,
-            'archivo_anexo' => $archivo_anexo,
-            'archivo_certificado' => $archivo_certificado,
-            'id_persona_juridica' => $personaJurId,
-            'estado' => 1,
-            ///'respuesta' => $request->respuesta,
-            //'archivo_respuesta' => $request->archivo_respuesta,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-
-
-        
-            // Verificar si se obtuvo un ID válido
-            if ($insertedId) {
-                // El insert fue exitoso
-                return response()->json([
-                    'status' => true,
-                    'success' => true,
-                    'message' => 'El registro se ha insertado correctamente con el ID: ' . $insertedId
-                ]);
-            } else {
-                // El insert falló
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Hubo un error al guardar el formulario en la base de datos.'
-                ], 500); // 500 es el código de estado para errores internos del servidor
-            }
-        } catch (\Exception $e) {
-            // Capturar y manejar cualquier excepción
-            return response()->json([
-                'success' => false,
-                'message' => 'Error al crear persona jurídica: ' . $e->getMessage()
-            ], 500);
-        }
-
-        }   
+        $id_val=$request->id;  
 
         if($id_val==1){
-            $validator = Validator::make($request->all(), [
-            'nacionalidad' => 'required',
-            'genero' => 'required',
-            'pueblo_originario' => 'required',
-            'discapacidad' => 'required',
-            'fecha_nacimiento' => 'required',
-            'actividad_economica' => 'required',
-            'direccion' => 'required',
-            'formacion_formal' => 'required',  
-            'profesion' => 'required', 
-            'acepto_clausula' => 'required',
-            ]);
+            $validator = PostulacionFondos::validarEtapa1($request->all());
         }
 
         if($id_val==2){
-            $validator = Validator::make($request->all(), [
-            'nombre_organizacion' => 'required',
-            'rut_organizacion' => 'required',
-            'domicilio_organizacion' => 'required',
-            'personalidad_juridica' => 'required',
-            'antiguedad_anos' => 'required',
-            'numero_socios' => 'required',
-            ]);
+            $validator = PostulacionFondos::validarEtapa2($request->all());
         }
 
         if($id_val==3){
-            $validator = Validator::make($request->all(), [
-            'nombre_proyecto' => 'required',
-            'equipamiento' => 'required',
-            'fundamentacion' => 'required',
-            'descripcion_proyecto' => 'required',
-            'objetivo_general' => 'required',
-            'objetivos_especificos' => 'required',
-            'cierre_proyecto' => 'required',
-            'directos' => 'required',
-            'indirectos' => 'required',
-            'fecha_inicio' => 'required',
-            'fecha_termino' => 'required',
-            'cantidad_dias' => 'required',
-            'aporte_solicitado' => 'required',
-            'aporte_terceros' => 'required',
-            'aporte_propio' => 'required',
-            'archivo_anexo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
-            'archivo_certificado' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
-            ]);
+            $validator = PostulacionFondos::validarEtapa3($request->all());
         }
+
+        if($id_val==5){
+            $validator = PostulacionFondos::validarEtapa5($request->all());
+        }
+
+        if($id_val==4){
+            try {
+                // Iniciar una transacción de base de datos
+                DB::beginTransaction();
+                
+                // Verificar si se proporcionó organizacion_id
+                if ($request->has('organizacion_id')) {
+                    $datosOrgId = $request->organizacion_id;
+                } else {
+
+                     // Validar los campos de DatosOrganizaciones
+                    $validator = DatosOrganizaciones::validarCampos($request->all());
+                    if ($validator->fails()) {
+                            return response()->json([
+                            'success' => false,
+                            'errors' => $validator->errors()->toArray()
+                            ]);
+                    }
+                    $dataOrg = DatosOrganizaciones::prepararDatos($request);
+                    $datosOrgId = DatosOrganizaciones::insertarDatos($dataOrg);
+                }
+
+                // Verificar si se proporcionó persona_juridica_id
+                if ($request->has('persona_juridica_id')) {
+                    $personaJurId = $request->persona_juridica_id;
+                } else {
+                    $dataPerJur = PersonaJuridicas::prepararDatos($request);
+                    $personaJurId = PersonaJuridicas::insertarDatos($dataPerJur);
+                }
+
+                // Preparar y guardar datos de PostulacionFondos
+                $dataPosFon = PostulacionFondos::prepararDatos($request);
+                $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId, $personaJurId, $request);
+
+                // Si todos los inserts fueron exitosos, hacer commit de la transacción
+                DB::commit();
+
+                // Devolver una respuesta JSON indicando el éxito
+                return response()->json([
+                    'status' => true,
+                    'success' => true,
+                    // 'message' => 'El registro se ha insertado correctamente con el ID: ' . $postulacionId
+                ]);
+            } catch (\Exception $e) {
+                // En caso de error, hacer rollback de la transacción
+                DB::rollBack();
+
+                // Capturar y manejar cualquier excepción
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al crear persona jurídica: ' . $e->getMessage()
+                ], 500); // 500 es el código de estado para errores internos del servidor
+            } catch (ValidationException $e) {
+                // En caso de error de validación, devolver los errores de validación
+                return response()->json([
+                    'success' => false,
+                    'errors' => $e->validator->errors()->toArray()
+                ]);
+            }             
+
+        } 
             
         if ($validator->fails()) {
             return response()->json([
@@ -852,4 +762,30 @@ public function actualizarPersonaJuridica(Request $request)
             ]);
         }
     }
+
+
+    public function obtenerPersonasJuridicas()
+    {
+        $user = Auth::user();
+           $pjuridicas = PersonaJuridicas::where('user_id', $user->id)
+                ->select('id', 'razon_social')
+                ->get();
+
+                // dd($pjuridicas);
+        return response()->json($pjuridicas);
+    }
+
+    public function obtenerOrganizaciones()
+    {
+        $user = Auth::user();
+        $organizaciones = DatosOrganizaciones::where('user_id', $user->id)
+                ->select('id', 'nombre_organizacion')
+                ->get();
+
+                // dd($pjuridicas);
+        return response()->json($organizaciones);
+    }
+
+
+    
 }
