@@ -138,6 +138,9 @@ Route::middleware(['auth', 'access-level:admin'])->group(function () {
 
      Route::get('responderCaso/{id}', [App\Http\Controllers\AdminController::class, 'responderCaso'])->name('responderCaso');
     Route::get('respuestaCasoAdmin/{id}', [App\Http\Controllers\AdminController::class, 'respuestaCasoAdmin'])->name('respuestaCasoAdmin');
+
+    Route::get('respuestaFondoAdmin/{id}', [App\Http\Controllers\AdminController::class, 'respuestaFondoAdmin'])->name('respuestaFondoAdmin');
+
     Route::post('cerrarCaso', [App\Http\Controllers\AdminController::class, 'cerrarCaso'])->name('cerrarCaso');
 
     Route::post('cerrarProyecto', [App\Http\Controllers\AdminController::class, 'cerrarProyecto'])->name('cerrarProyecto');

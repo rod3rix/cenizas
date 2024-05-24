@@ -103,6 +103,19 @@ class AdminController extends Controller
         return view('respuestaCasoAdmin', compact('caso'));
     }
 
+     public function respuestaFondoAdmin($id)
+    {
+      $pfondo = DB::table('postulacion_fondos')
+            ->join('users', 'users.id', '=', 'postulacion_fondos.user_id')
+            ->join('datos_organizaciones', 'datos_organizaciones.id', '=', 'postulacion_fondos.id_dato_organizacion')
+             ->join('persona_juridicas', 'persona_juridicas.id', '=', 'postulacion_fondos.id_persona_juridica')
+            ->select('users.*', 'postulacion_fondos.*', 'datos_organizaciones.*','persona_juridicas.*', 'datos_organizaciones.domicilio_organizacion','postulacion_fondos.id as post_fondo_id')
+            ->where('postulacion_fondos.id', $id)
+            ->first();
+
+        return view('respuestaFondoAdmin',['pfondo' => $pfondo]);
+    }
+
       public function responderCaso($id)
     {
         // Obtener el caso específico según el ID proporcionado en la URL
@@ -361,10 +374,10 @@ public function guardarPuntaje(Request $request)
                 case 2:
                     $postulacion->calificacion = '<a href="#">Ver Calificación</a>';
                     $postulacion->estado = 'Enviado';
-                    $postulacion->respuesta = '<a href="#">Ver Respuesta</a>';
+                    $postulacion->respuesta = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
                     break;
                 case 3:
-                    $postulacion->calificacion = '<a href="#">Ver Calificación</a>';
+                    $postulacion->calificacion = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '">Ver Calificación</a>';
                     $postulacion->estado = 'Enviado';
                     $postulacion->respuesta = '<a href="#">Ver Respuesta</a>';
                     break;
