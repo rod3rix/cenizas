@@ -42,7 +42,17 @@
     <script src="{{ asset('js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('js/buttons.colVis.min.js') }}"></script>
 </head>
-<body>
+@guest
+    @php
+    $class = "";
+    @endphp
+@else
+    @php
+    $class = auth()->user()->type == "admin" ? "admin" : "user";
+    @endphp
+@endguest
+
+<body class="{{ $class }}">
     <div id="app">
         <div class="container">
              
