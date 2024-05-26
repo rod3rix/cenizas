@@ -57,4 +57,21 @@ class PersonaJuridicas extends Model
             'estado'
         ]);
     }
+
+      static function validarCampos(array $data)
+    {
+        $validator = Validator::make($data, [
+            'rut_juridico' => 'required|string|max:255',
+            'razon_social' => 'required|string|max:255',
+            'relacion' => 'required|string|max:255',
+            'estado' => 'required|string|max:255'
+        ], [
+            'rut_juridico.required' => 'El RUT jurídico es obligatorio.',
+            'razon_social.required' => 'La razón social es obligatoria.',
+            'relacion.required' => 'La relación es obligatoria.',
+            'estado.required' => 'El estado es obligatorio.'
+        ]);
+
+        return $validator;
+    }
 }

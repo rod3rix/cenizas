@@ -9,17 +9,17 @@ function obtenerOrganizaciones() {
             type: 'GET',
             success: function(response) {
                 // Limpiar opciones actuales del select
-                $('#organizacion_id').empty();
+                $('#id_dato_organizacion').empty();
 
                 // Agregar opciones estáticas
-                $('#organizacion_id').append($('<option>', {
+                $('#id_dato_organizacion').append($('<option>', {
                     value: '',
                     text: 'Selecciona un título'
                 }));
 
                 // Agregar nuevas opciones basadas en los datos recibidos
                 $.each(response, function(index, res) {
-                    $('#organizacion_id').append($('<option>', {
+                    $('#id_dato_organizacion').append($('<option>', {
                         value: res.id,
                         text: res.nombre_organizacion
                     }));

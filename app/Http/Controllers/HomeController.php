@@ -697,31 +697,29 @@ public function actualizarPersonaJuridica(Request $request)
                 // Iniciar una transacción de base de datos
                 DB::beginTransaction();
                 
-                // Verificar si se proporcionó organizacion_id
-                if ($request->has('organizacion_id')) {
-                    $datosOrgId = $request->organizacion_id;
-                } else {
-
-                     // Validar los campos de DatosOrganizaciones
-                    $validator = DatosOrganizaciones::validarCampos($request->all());
+                    // Validar los campos de DatosOrganizaciones
+                    $validator = PersonaJuridicas::validarCampos($request->all());
                     if ($validator->fails()) {
                             return response()->json([
                             'success' => false,
                             'errors' => $validator->errors()->toArray()
                             ]);
                     }
-                    $dataOrg = DatosOrganizaciones::prepararDatos($request);
-                    $datosOrgId = DatosOrganizaciones::insertarDatos($dataOrg);
-                }
 
-                // Verificar si se proporcionó persona_juridica_id
-                if ($request->has('persona_juridica_id')) {
-                    $personaJurId = $request->persona_juridica_id;
-                } else {
-                    $dataPerJur = PersonaJuridicas::prepararDatos($request);
-                    $personaJurId = PersonaJuridicas::insertarDatos($dataPerJur);
-                }
+                    if($request->id_dato_organizacion){
+                        $datosOrgId=$request->id_dato_organizacion;
+                    }else{
+                        $dataOrg = DatosOrganizaciones::prepararDatos($request);
+                        $datosOrgId = DatosOrganizaciones::insertarDatos($dataOrg);
+                    }
 
+                    if($request->persona_juridica_id){
+                        $personaJurId=$request->persona_juridica_id;
+                    }else{
+                        $dataPerJur = PersonaJuridicas::prepararDatos($request);
+                        $personaJurId = PersonaJuridicas::insertarDatos($dataPerJur);
+                    }
+                 
                 // Preparar y guardar datos de PostulacionFondos
                 $dataPosFon = PostulacionFondos::prepararDatos($request);
                 $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId, $personaJurId, $request);
@@ -753,7 +751,67 @@ public function actualizarPersonaJuridica(Request $request)
             }             
 
         } 
-            
+        
+         if($id_val==5){
+            try {
+                // Iniciar una transacción de base de datos
+                DB::beginTransaction();
+                
+                    // Validar los campos de DatosOrganizaciones
+                    $validator = Validator::make($request->all(), [
+                        'persona_juridica_id' => 'required',
+                        ]);
+
+                    if ($validator->fails()) {
+                            return response()->json([
+                            'success' => false,
+                            'errors' => $validator->errors()->toArray()
+                            ]);
+                    }
+
+                    if($request->id_dato_organizacion){
+                        $datosOrgId=$request->id_dato_organizacion;
+                    }else{
+                        $dataOrg = DatosOrganizaciones::prepararDatos($request);
+                        $datosOrgId = DatosOrganizaciones::insertarDatos($dataOrg);
+                    }
+
+                    if($request->persona_juridica_id){
+                        $personaJurId=$request->persona_juridica_id;
+                    }
+                 
+                // Preparar y guardar datos de PostulacionFondos
+                $dataPosFon = PostulacionFondos::prepararDatos($request);
+                $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId, $personaJurId, $request);
+
+                // Si todos los inserts fueron exitosos, hacer commit de la transacción
+                DB::commit();
+
+                // Devolver una respuesta JSON indicando el éxito
+                return response()->json([
+                    'status' => true,
+                    'success' => true,
+                    // 'message' => 'El registro se ha insertado correctamente con el ID: ' . $postulacionId
+                ]);
+            } catch (\Exception $e) {
+                // En caso de error, hacer rollback de la transacción
+                DB::rollBack();
+
+                // Capturar y manejar cualquier excepción
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al crear persona jurídica: ' . $e->getMessage()
+                ], 500); // 500 es el código de estado para errores internos del servidor
+            } catch (ValidationException $e) {
+                // En caso de error de validación, devolver los errores de validación
+                return response()->json([
+                    'success' => false,
+                    'errors' => $e->validator->errors()->toArray()
+                ]);
+            }             
+
+        } 
+
         if ($validator->fails()) {
             return response()->json([
             'success' => false,

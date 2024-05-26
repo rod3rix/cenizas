@@ -208,7 +208,7 @@ class PostulacionFondos extends Model
     public static function validarEtapa5(array $data)
     {
         $validator = Validator::make($data, [
-            'organizacion_id' => 'required'
+            'id_dato_organizacion' => 'required'
         ]);
 
         return $validator;

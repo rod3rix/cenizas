@@ -84,7 +84,7 @@
                   <div class="form-group row">
                      <label for="numero_beneficiarios" class="col-md-12 col-form-label text-md-left">{{ __('8. Número de beneficiarios directos e indirectos *') }}</label>
                      <div class="col-md-6">
-                        <input id="directos" type="text" class="form-control @error('directos') is-invalid @enderror" name="directos" value="{{ old('directos') }}" required autocomplete="directos" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                        <input id="directos" type="text" class="form-control @error('directos') is-invalid @enderror" name="directos" value="{{ old('directos') }}" required autocomplete="directos" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3">
                         @error('directos')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -92,7 +92,7 @@
                         @enderror
                      </div>
                      <div class="col-md-6">
-                        <input id="indirectos" type="text" class="form-control @error('indirectos') is-invalid @enderror" name="indirectos" value="{{ old('indirectos') }}" required autocomplete="indirectos" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                        <input id="indirectos" type="text" class="form-control @error('indirectos') is-invalid @enderror" name="indirectos" value="{{ old('indirectos') }}" required autocomplete="indirectos" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3">
                         @error('indirectos')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -122,7 +122,7 @@
                         @enderror
                      </div>
                      <div class="col-md-4">
-                        <input id="cantidad_dias" type="text" class="form-control @error('cantidad_dias') is-invalid @enderror" name="cantidad_dias" value="{{ old('cantidad_dias') }}" required autocomplete="cantidad_dias" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" >
+                        <input id="cantidad_dias" type="text" class="form-control @error('cantidad_dias') is-invalid @enderror" name="cantidad_dias" value="{{ old('cantidad_dias') }}" required autocomplete="cantidad_dias" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3" >
                         @error('cantidad_dias')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

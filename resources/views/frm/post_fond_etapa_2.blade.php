@@ -13,12 +13,12 @@
                 <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                          <div class="row mb-3">
-                <label for="organizacion_id" class="col-md-4 col-form-label text-md-end">{{ __('Asociar Organización:') }}</label>
+                <label for="id_dato_organizacion" class="col-md-4 col-form-label text-md-end">{{ __('Asociar Organización:') }}</label>
                 <div class="col-md-6">
-                    <select id="organizacion_id" name="organizacion_id" class="form-control @error('organizacion_id') is-invalid @enderror">
+                    <select id="id_dato_organizacion" name="id_dato_organizacion" class="form-control @error('id_dato_organizacion') is-invalid @enderror">
                        
                     </select>
-                    @error('organizacion_id')
+                    @error('id_dato_organizacion')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -101,7 +101,7 @@
                   <div class="form-group row">
                      <label for="antiguedad_anos" class="col-md-12 col-form-label text-md-left">{{ __('5. Antiguedad de años *') }}</label>
                      <div class="col-md-12">
-                        <input id="antiguedad_anos" type="text" class="form-control @error('antiguedad_anos') is-invalid @enderror" id="antiguedad_anos" name="antiguedad_anos" value="{{ old('antiguedad_anos') }}" required autocomplete="antiguedad_anos" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12">
+                        <input id="antiguedad_anos" type="text" class="form-control @error('antiguedad_anos') is-invalid @enderror" id="antiguedad_anos" name="antiguedad_anos" value="{{ old('antiguedad_anos') }}" required autocomplete="antiguedad_anos" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3">
                         @error('antiguedad_anos')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -112,7 +112,7 @@
                   <div class="form-group row">
                      <label for="numero_socios" class="col-md-12 col-form-label text-md-left">{{ __('6. Número de socios *') }}</label>
                      <div class="col-md-12">
-                        <input id="numero_socios"  name="numero_socios" type="text" class="form-control @error('numero_socios') is-invalid @enderror" name="numero_socios" value="{{ old('numero_socios') }}" required autocomplete="numero_socios"  onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12">
+                        <input id="numero_socios"  name="numero_socios" type="text" class="form-control @error('numero_socios') is-invalid @enderror" name="numero_socios" value="{{ old('numero_socios') }}" required autocomplete="numero_socios"  onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="4">
                         @error('numero_socios')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

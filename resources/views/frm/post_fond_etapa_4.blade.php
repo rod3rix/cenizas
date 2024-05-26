@@ -7,11 +7,11 @@
             <!-- Crear nuevo registro persona Jurídica -->
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsethree" aria-expanded="false" aria-controls="collapsethree">
                         Mis organizaciones jurídicas asociadas
                     </button>
                 </h2>
-                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div id="collapsethree" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <div class="row mb-3">
                 <label for="persona_juridica_id" class="col-md-4 col-form-label text-md-end">{{ __('Asociar Persona Jurídica:') }}</label>
@@ -42,12 +42,12 @@
             </div>
             <!-- Listar personas Jurídicas -->
             <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                         Crear nuevo registro persona Jurídica.
                     </button>
                 </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <!-- Contenido para listar personas jurídicas -->
                            <div class="card">
