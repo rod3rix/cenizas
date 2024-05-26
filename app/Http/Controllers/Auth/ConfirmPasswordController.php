@@ -35,5 +35,7 @@ class ConfirmPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware(\App\Http\Middleware\BodyClassMiddleware::class);
+
     }
 }

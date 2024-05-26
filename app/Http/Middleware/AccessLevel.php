@@ -15,6 +15,8 @@ class AccessLevel
      */
     public function handle(Request $request, Closure $next, $userType): Response
     {
+        \Log::info('AccessLevel: handling request.');
+
         if(auth()->user()->type == $userType){
             return $next($request);
         }

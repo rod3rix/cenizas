@@ -16,7 +16,7 @@ Route::get('/', function () {
 
 Auth::routes();
 //users routes
-Route::middleware(['auth', 'access-level:user'])->group(function () {
+Route::middleware(['class','auth', 'access-level:user'])->group(function () {
 
 Route::get('/seguimientoFondos', [App\Http\Controllers\HomeController::class, 'seguimientoFondos'])->name('seguimientoFondos');
 
@@ -88,7 +88,7 @@ Route::get('/ingreso-caso',  [App\Http\Controllers\HomeController::class,'ingres
 });
 
 // admin routes
-Route::middleware(['auth', 'access-level:admin'])->group(function () {
+Route::middleware(['class','auth', 'access-level:admin'])->group(function () {
 
      Route::get('/crearFondoConcursable',  [App\Http\Controllers\AdminController::class,'crearFondoConcursable'])->name('crearFondoConcursable');
 

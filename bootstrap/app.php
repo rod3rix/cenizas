@@ -13,6 +13,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
          $middleware->alias([
             'access-level' => \App\Http\Middleware\AccessLevel::class,
+            'class' => \App\Http\Middleware\BodyClassMiddleware::class,
+
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
