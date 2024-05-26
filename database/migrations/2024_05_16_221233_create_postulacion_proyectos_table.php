@@ -47,7 +47,7 @@ class CreatePostulacionProyectosTable extends Migration
             $table->string('archivo_respuesta')->nullable();
             $table->timestamps();
 
-            // $table->foreign('id_persona_juridica')->references('id')->on('persona_juridicas')->onDelete('cascade');
+            $table->foreign('persona_juridica_id')->references('id')->on('persona_juridicas')->onDelete('cascade');
         });
     }
 
