@@ -1,7 +1,21 @@
 $(document).ready(function() {
+    $('#etapa_1').show();
     obtenerOrganizaciones();
     obtenerPersonasJuridicas(); 
 });
+
+function handlePaste(e) {
+    var clipboardData, pastedData;
+
+    // Access the clipboard data
+    clipboardData = e.clipboardData || window.clipboardData;
+    pastedData = clipboardData.getData('Text');
+
+    // If the pasted data is not a number, prevent the paste action
+    if (isNaN(pastedData)) {
+        e.preventDefault();
+    }
+}
 
 function obtenerOrganizaciones() {
         $.ajax({

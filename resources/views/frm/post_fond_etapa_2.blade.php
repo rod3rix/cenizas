@@ -101,7 +101,7 @@
                   <div class="form-group row">
                      <label for="antiguedad_anos" class="col-md-12 col-form-label text-md-left">{{ __('5. Antiguedad de años *') }}</label>
                      <div class="col-md-12">
-                        <input id="antiguedad_anos" type="text" class="form-control @error('antiguedad_anos') is-invalid @enderror" id="antiguedad_anos" name="antiguedad_anos" value="{{ old('antiguedad_anos') }}" required autocomplete="antiguedad_anos" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3">
+                        <input id="antiguedad_anos" type="text" class="form-control @error('antiguedad_anos') is-invalid @enderror" id="antiguedad_anos" name="antiguedad_anos" value="{{ old('antiguedad_anos') }}" required autocomplete="antiguedad_anos" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3" onpaste="handlePaste(event)">
                         @error('antiguedad_anos')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -112,7 +112,7 @@
                   <div class="form-group row">
                      <label for="numero_socios" class="col-md-12 col-form-label text-md-left">{{ __('6. Número de socios *') }}</label>
                      <div class="col-md-12">
-                        <input id="numero_socios"  name="numero_socios" type="text" class="form-control @error('numero_socios') is-invalid @enderror" name="numero_socios" value="{{ old('numero_socios') }}" required autocomplete="numero_socios"  onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="4">
+                        <input id="numero_socios"  name="numero_socios" type="text" class="form-control @error('numero_socios') is-invalid @enderror" name="numero_socios" value="{{ old('numero_socios') }}" required autocomplete="numero_socios"  onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="4" onpaste="handlePaste(event)">
                         @error('numero_socios')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

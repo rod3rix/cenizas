@@ -37,11 +37,5 @@
     </div>
 
 </div>
-<script src="{{ asset('js/frm_proy.js') }}"></script>
 <script src="{{ asset('js/frm_proy_postular.js') }}"></script>
-<script>
-    $(document).ready(function(){
-        $('#etapa_1').show();
-    });
-</script>
 @endsection

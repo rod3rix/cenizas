@@ -752,7 +752,7 @@ public function actualizarPersonaJuridica(Request $request)
 
         } 
         
-         if($id_val==5){
+         if($id_val==6){
             try {
                 // Iniciar una transacción de base de datos
                 DB::beginTransaction();

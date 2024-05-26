@@ -2,14 +2,6 @@
 
 @section('content')
 
- @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <!-- You are logged in! -->
-
 <div class="jumbotron">
         <div class="container">
           <h3><b>POSTULAR FONDOS CONCURSABLES</b></h3>
@@ -46,9 +38,4 @@
 
 </div>
 <script src="{{ asset('js/frm_fondos_postular.js') }}"></script>
-<script>
-    $(document).ready(function(){ 
-        $('#etapa_1').show();
-    });
-</script>
 @endsection

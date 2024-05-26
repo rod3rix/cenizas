@@ -32,7 +32,7 @@
                         {{ __('Anterior') }}
                         </button>
 
-                        <button type="button" onclick="validarFrmFondos(4)" class="btn btn-primary">
+                        <button type="button" onclick="validarFrmFondos(6)" class="btn btn-primary">
                            {{ __('Finalizar') }}
                         </button>
                      </div>
