@@ -2,8 +2,6 @@
 
 @section('content')
 
- @if (session('status'))
-
 <section class="jumbotron text-center">
     <div class="container">
       <h1 class="jumbotron-heading"><b>Gracias por postular a<br> Fondos Concursables</b><br>Pronto te daremos una respuesta</h1>

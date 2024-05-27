@@ -359,10 +359,12 @@ public function guardarPuntaje(Request $request)
         return response()->json(['success' => true, 'message' => 'Puntaje guardado exitosamente']);
     }
 
-       public function listarFondosAdmin()
+    public function listarFondosAdmin()
     {
-        
-        $postulacion = PostulacionFondos::join('users', 'postulacion_fondos.user_id', '=', 'users.id')->get(['postulacion_fondos.*', 'users.*','postulacion_fondos.id']);
+        $zona = Auth::user()->zona;
+        $postulacion = PostulacionFondos::join('users', 'postulacion_fondos.user_id', '=', 'users.id')
+            ->where('users.zona',$zona)
+            ->get(['postulacion_fondos.*', 'users.*','postulacion_fondos.id']);
 
         $postulacion = $postulacion->transform(function ($postulacion) {
             switch ($postulacion->estado) {
@@ -393,9 +395,13 @@ public function guardarPuntaje(Request $request)
     
     }    
 
-       public function listarApoyoProyectosAdmin()
+    public function listarApoyoProyectosAdmin()
     {
-        $postulacion = PostulacionProyectos::join('users', 'postulacion_proyectos.user_id', '=', 'users.id')->get(['postulacion_proyectos.*', 'users.*','postulacion_proyectos.id']);
+        $zona = Auth::user()->zona;
+
+        $postulacion = PostulacionProyectos::join('users', 'postulacion_proyectos.user_id', '=', 'users.id')
+        ->where('users.zona',$zona)
+        ->get(['postulacion_proyectos.*', 'users.*','postulacion_proyectos.id']);
 
         $postulacion = $postulacion->transform(function ($postulacion) {
             switch ($postulacion->estado) {
@@ -437,7 +443,13 @@ public function guardarPuntaje(Request $request)
             ->where('postulacion_fondos.id', $id)
             ->first();
 
-        return view('detalleFondoAdmin',['pfondo' => $pfondo]);
+            $acceso=true;
+
+            if(Auth::user()->zona!=$pfondo->zona){
+                $acceso=false;
+            }
+
+        return view('detalleFondoAdmin',['pfondo' => $pfondo,'acceso' => $acceso]);
     } 
 
      public function detalleProyectoAdmin($id)
@@ -449,7 +461,13 @@ public function guardarPuntaje(Request $request)
             ->where('postulacion_proyectos.id', $id)
             ->first();
 
-        return view('detalleProyectoAdmin',['pproy' => $pproy]);
+             $acceso=true;
+
+            if(Auth::user()->zona!=$pproy->zona){
+                $acceso=false;
+            }
+
+        return view('detalleProyectoAdmin',['pproy' => $pproy,'acceso' => $acceso]);
     }
 
      public function respuestaProyectoAdmin($id)

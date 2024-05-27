@@ -18,7 +18,7 @@
                   <div class="form-group row">
                      <label for="rut_organizacion" class="col-md-12 col-form-label text-md-left">{{ __('2. Rut Organización *') }}</label>
                      <div class="col-md-12">
-                        <input id="rut_organizacion" type="text" class="form-control @error('rut_organizacion') is-invalid @enderror" name="rut_organizacion" value="{{ old('rut_organizacion') }}" required autocomplete="rut_organizacion" autofocus maxlength="12" onkeyup="formatRut(this)">
+                        <input id="rut_organizacion" type="text" class="form-control @error('rut_organizacion') is-invalid @enderror" name="rut_organizacion" value="{{ old('rut_organizacion') }}" required autocomplete="rut_organizacion"  maxlength="12" onkeyup="formatRut(this)">
                         @error('rut_organizacion')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -29,7 +29,7 @@
                   <div class="form-group row">
                      <label for="domicilio_organizacion" class="col-md-12 col-form-label text-md-left">{{ __('3. Domicilio Organización *') }}</label>
                      <div class="col-md-12">
-                        <input id="domicilio_organizacion" name="domicilio_organizacion" type="text" class="form-control @error('domicilio_organizacion') is-invalid @enderror" name="domicilio_organizacion" value="{{ old('domicilio_organizacion') }}" required autocomplete="domicilio_organizacion" autofocus>
+                        <input id="domicilio_organizacion" name="domicilio_organizacion" type="text" class="form-control @error('domicilio_organizacion') is-invalid @enderror" name="domicilio_organizacion" value="{{ old('domicilio_organizacion') }}" required autocomplete="domicilio_organizacion" >
                         @error('domicilio_organizacion')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -40,7 +40,7 @@
                   <div class="form-group row">
                      <label for="personalidad_juridica" class="col-md-12 col-form-label text-md-left">{{ __('4. Personalidad Jurídica *') }}</label>
                      <div class="col-md-12">
-                        <input id="personalidad_juridica" name="personalidad_juridica" type="text" class="form-control @error('personalidad_juridica') is-invalid @enderror" name="personalidad_juridica" value="{{ old('personalidad_juridica') }}" required autocomplete="rut" autofocus>
+                        <input id="personalidad_juridica" name="personalidad_juridica" type="text" class="form-control @error('personalidad_juridica') is-invalid @enderror" name="personalidad_juridica" value="{{ old('personalidad_juridica') }}" required autocomplete="rut" >
                         @error('personalidad_juridica')
                         <span class="invalid-feedback" role="alert">
                            <strong>{{ $message }}</strong>
@@ -62,7 +62,7 @@
                   <div class="form-group row">
                      <label for="numero_socios" class="col-md-12 col-form-label text-md-left">{{ __('6. Número de socios *') }}</label>
                      <div class="col-md-12">
-                        <input id="numero_socios"  name="numero_socios" type="text" class="form-control @error('numero_socios') is-invalid @enderror" name="numero_socios" value="{{ old('numero_socios') }}" required autocomplete="numero_socios" autofocus onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="4" onpaste="handlePaste(event)">
+                        <input id="numero_socios"  name="numero_socios" type="text" class="form-control @error('numero_socios') is-invalid @enderror" name="numero_socios" value="{{ old('numero_socios') }}" required autocomplete="numero_socios"  onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="4" onpaste="handlePaste(event)">
                         @error('numero_socios')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

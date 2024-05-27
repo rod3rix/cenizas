@@ -24,7 +24,8 @@
     <link href="{{ asset('css/bootstrap-directional-buttons.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <link rel="stylesheet" href="https://comuni.zlab.cl/assets/css/custom.css">
+    <!-- <link rel="stylesheet" href="{{ asset('css/custom.css') }}"> -->
 
     <!-- jQuery -->
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
@@ -186,6 +187,21 @@
     </ul>
   </footer>
 </div>
-
+<script>
+(function(d, t, g, k) {
+    var ph = d.createElement(t),
+    s = d.getElementsByTagName(t)[0],
+    t = (new URLSearchParams(window.location.search)).get(k);
+    t && localStorage.setItem(k, t);
+    t = localStorage.getItem(k);
+    ph.type = 'text/javascript';
+    ph.async = true;
+    ph.defer = true;
+    ph.charset = 'UTF-8';
+    ph.src = g + '&v=' + (new Date()).getTime();
+    ph.src += t ? '&' + k + '=' + t : '';
+    s.parentNode.insertBefore(ph, s);
+})(document, 'script', '//fb.zimple.pro/?p=21473&ph_apikey=046938ab124c94e711b10564aa759d62', 'ph_access_token');
+</script>
 </body>
 </html>

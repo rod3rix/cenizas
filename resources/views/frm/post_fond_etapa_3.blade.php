@@ -143,7 +143,7 @@
                      </div>
                      <label for="monto" class="col-md-1 col-form-label text-md-left">{{ __('Monto') }}</label>
                       <div class="col-md-4">
-                        <input id="monto" type="text" class="form-control @error('monto') is-invalid @enderror" name="monto" value="{{ old('monto') }}" required autocomplete="monto"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
+                        <input id="monto" type="text" class="miles form-control @error('monto') is-invalid @enderror" name="monto" value="{{ old('monto') }}" required autocomplete="monto"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
                         @error('monto')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -167,7 +167,7 @@
                       <label for="telefono" class="col-md-12 col-form-label text-md-left">{{ __('11. Montos solicitados') }}</label>  
                       <label for="telefono" class="col-md-2 col-form-label text-md-left">{{ __('Aporte solicitado') }}</label>
                       <div class="col-md-10">
-                        <input id="aporte_solicitado" type="text" class="form-control @error('aporte_solicitado') is-invalid @enderror" name="aporte_solicitado" value="{{ old('aporte_solicitado') }}" required autocomplete="aporte_solicitado"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
+                        <input id="aporte_solicitado" type="text" class="miles form-control @error('aporte_solicitado') is-invalid @enderror" name="aporte_solicitado" value="{{ old('aporte_solicitado') }}" required autocomplete="aporte_solicitado"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
                         @error('aporte_solicitado')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -179,7 +179,7 @@
                   <div class="form-group row">
                       <label for="aporte_terceros" class="col-md-2 col-form-label text-md-left">{{ __('Aporte de terceros') }}</label>
                       <div class="col-md-10">
-                        <input id="aporte_terceros" type="text" class="form-control @error('aporte_terceros') is-invalid @enderror" name="aporte_terceros" value="{{ old('aporte_terceros') }}" required autocomplete="aporte_terceros"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
+                        <input id="aporte_terceros" type="text" class="miles form-control @error('aporte_terceros') is-invalid @enderror" name="aporte_terceros" value="{{ old('aporte_terceros') }}" required autocomplete="aporte_terceros"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
                         @error('aporte_terceros')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -191,7 +191,7 @@
                   <div class="form-group row">
                       <label for="aporte_propio" class="col-md-2 col-form-label text-md-left">{{ __('Aporte propio') }}</label>
                       <div class="col-md-10">
-                        <input id="aporte_propio" type="text" class="form-control @error('aporte_propio') is-invalid @enderror" name="aporte_propio" value="{{ old('aporte_propio') }}" required autocomplete="aporte_propio"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
+                        <input id="aporte_propio" type="text" class="miles form-control @error('aporte_propio') is-invalid @enderror" name="aporte_propio" value="{{ old('aporte_propio') }}" required autocomplete="aporte_propio"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
                         @error('aporte_propio')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -203,7 +203,7 @@
                   <div class="form-group row">
                      <label for="total" class="col-md-2 col-form-label text-md-left">{{ __('Total') }}</label>
                      <div class="col-md-10">
-                        <input id="total" type="text" class="form-control @error('total') is-invalid @enderror" name="total" value="{{ old('total') }}" required autocomplete="total"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
+                        <input id="total" type="text" class="miles form-control @error('total') is-invalid @enderror" name="total" value="{{ old('total') }}" required autocomplete="total"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
                      </div>
                   </div>
 

@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+
+@if($acceso)
 <section class="jumbotron">
     <div class="container ">
       <h1 class="jumbotron-heading text-center"><b>Ver postulación y responder a Fondos Concursables</b></h1>
@@ -413,4 +415,9 @@
         });
     });
 </script>
+@else
+
+<h1>No tiene acceso a esta página</h1>
+
+@endif
 @endsection

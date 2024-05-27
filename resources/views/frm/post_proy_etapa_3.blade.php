@@ -18,7 +18,7 @@
                   <div class="form-group row">
                      <label for="tipo_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('2. Tipo de proyecto *') }}</label>
                      <div class="col-md-12">
-                        <select id="tipo_proyecto" class="form-control @error('tipo_proyecto') is-invalid @enderror" name="tipo_proyecto" required autocomplete="tipo_proyecto" autofocus>
+                        <select id="tipo_proyecto" class="form-control @error('tipo_proyecto') is-invalid @enderror" name="tipo_proyecto" required autocomplete="tipo_proyecto" >
                            <option value="">Seleccione</option>
                            <option value="Apoyo a emprendimientos y oficios en vías de formalización">Apoyo a emprendimientos y oficios en vías de formalización</option>
                            <option value="Equipamiento para organizaciones">Equipamiento para organizaciones</option>
@@ -35,7 +35,7 @@
                   <div class="form-group row">
                      <label for="lugar_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('3. Lugar de ejeccución del proyecto*') }}</label>
                      <div class="col-md-12">
-                        <textarea id="lugar_proyecto" name="lugar_proyecto" type="text" class="form-control @error('lugar_proyecto') is-invalid @enderror" name="lugar_proyecto" value="{{ old('lugar_proyecto') }}" required autocomplete="lugar_proyecto" autofocus></textarea>
+                        <textarea id="lugar_proyecto" name="lugar_proyecto" type="text" class="form-control @error('lugar_proyecto') is-invalid @enderror" name="lugar_proyecto" value="{{ old('lugar_proyecto') }}" required autocomplete="lugar_proyecto" ></textarea>
                         @error('lugar_proyecto')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -47,7 +47,7 @@
                      <label for="telefono" class="col-md-12 col-form-label text-md-left">{{ __('4. Número beneficiarios directos e indirectos *') }}</label>
                       <label for="directos" class="col-md-2 col-form-label text-md-left">{{ __('Directos') }}</label>
                       <div class="col-md-2">
-                        <input id="directos" type="text" class="form-control @error('directos') is-invalid @enderror" name="directos" value="{{ old('directos') }}" required autocomplete="directos" autofocus onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3" onpaste="handlePaste(event)">
+                        <input id="directos" type="text" class="form-control @error('directos') is-invalid @enderror" name="directos" value="{{ old('directos') }}" required autocomplete="directos"  onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3" onpaste="handlePaste(event)">
                         @error('directos')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -56,7 +56,7 @@
                      </div>
                       <label for="indirectos" class="col-md-2 col-form-label text-md-left">{{ __('Indirectos') }}</label>
                      <div class="col-md-2">
-                        <input id="indirectos" type="text" class="form-control @error('indirectos') is-invalid @enderror" name="indirectos" value="{{ old('indirectos') }}" required autocomplete="indirectos" autofocus onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3" onpaste="handlePaste(event)">
+                        <input id="indirectos" type="text" class="form-control @error('indirectos') is-invalid @enderror" name="indirectos" value="{{ old('indirectos') }}" required autocomplete="indirectos"  onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3" onpaste="handlePaste(event)">
                         @error('indirectos')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -69,7 +69,7 @@
                      <label for="aporte_solicitado" class="col-md-12 col-form-label text-md-left">{{ __('5.  Montos del proyecto *') }}</label>
                      <label for="aporte_solicitado" class="col-md-2 col-form-label text-md-left">{{ __('Aporte solicitado') }}</label>
                       <div class="col-md-4">
-                        <input id="aporte_solicitado" type="text" class="form-control @error('aporte_solicitado') is-invalid @enderror" name="aporte_solicitado" value="{{ old('aporte_solicitado') }}" required autocomplete="aporte_solicitado" autofocus placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
+                        <input id="aporte_solicitado" type="text" class="miles form-control @error('aporte_solicitado') is-invalid @enderror" name="aporte_solicitado" value="{{ old('aporte_solicitado') }}" required autocomplete="aporte_solicitado"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
                         @error('aporte_solicitado')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

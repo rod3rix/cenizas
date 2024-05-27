@@ -35,7 +35,7 @@
                             <label for="tipo" class="col-md-12 col-form-label text-md-left">{{ __('1. Reclamo Sugerencias u Otros*') }}</label>
 
                             <div class="col-md-12">
-                                <select id="tipo" name="tipo" type="text" class="form-control @error('tipo') is-invalid @enderror">
+                                <select id="tipo" name="tipo" type="text" class="form-control @error('tipo') is-invalid @enderror" autofocus>
                                     <option value="">Seleccione</option>
                                     <option value="Reclamo">Reclamo</option>
                                     <option value="Sugerencia">Sugerencia</option>
@@ -77,7 +77,7 @@
                             <label for="apellidop" class="col-md-12 col-form-label text-md-left">{{ __('4. Apellido Paterno*') }}</label>
 
                             <div class="col-md-12">
-                                <input id="apellido_paterno" type="text" class="form-control @error('apellido_paterno') is-invalid @enderror" name="apellido_paterno" value="{{ $user->apellido_paterno }}" required autocomplete="apellido_paterno" autofocus disabled>
+                                <input id="apellido_paterno" type="text" class="form-control @error('apellido_paterno') is-invalid @enderror" name="apellido_paterno" value="{{ $user->apellido_paterno }}" required autocomplete="apellido_paterno"  disabled>
 
                                 @error('apellidop')
                                     <span class="invalid-feedback" role="alert">
@@ -90,7 +90,7 @@
                             <label for="apellido_materno" class="col-md-12 col-form-label text-md-left">{{ __('5. Apellido Materno*') }}</label>
 
                             <div class="col-md-12">
-                                <input id="apellido_materno" type="text" class="form-control @error('apellido_materno') is-invalid @enderror" name="apellido_materno" value="{{ $user->apellido_materno }}" required autocomplete="apellido_materno" autofocus disabled>
+                                <input id="apellido_materno" type="text" class="form-control @error('apellido_materno') is-invalid @enderror" name="apellido_materno" value="{{ $user->apellido_materno }}" required autocomplete="apellido_materno"  disabled>
 
                                 @error('apellidom')
                                     <span class="invalid-feedback" role="alert">
@@ -103,7 +103,7 @@
                             <label for="rut" class="col-md-12 col-form-label text-md-left">{{ __('6. RUT*') }}</label>
 
                             <div class="col-md-12">
-                                <input id="rut" type="text" class="form-control @error('rut') is-invalid @enderror" name="rut" value="{{ $user->rut }}" required autocomplete="rut" autofocus disabled>
+                                <input id="rut" type="text" class="form-control @error('rut') is-invalid @enderror" name="rut" value="{{ $user->rut }}" required autocomplete="rut"  disabled>
 
                                 @error('rut')
                                     <span class="invalid-feedback" role="alert">
@@ -171,7 +171,7 @@
                             <label for="direccion" class="col-md-12 col-form-label text-md-left">{{ __('11. Dirección*') }}</label>
 
                             <div class="col-md-12">
-                                <input id="direccion" name="direccion" type="text" class="form-control @error('direccion') is-invalid @enderror" name="direccion" value="{{ old('direccion') }}" required autocomplete="direccion" autofocus>
+                                <input id="direccion" name="direccion" type="text" class="form-control @error('direccion') is-invalid @enderror" name="direccion" value="{{ old('direccion') }}" required autocomplete="direccion">
 
                                 @error('direccion')
                                     <span class="invalid-feedback" role="alert">
@@ -184,7 +184,7 @@
                             <label for="asunto" class="col-md-12 col-form-label text-md-left">{{ __('12. Asunto*') }}</label>
 
                             <div class="col-md-12">
-                                <input id="asunto" name="asunto" type="text" class="form-control @error('asunto') is-invalid @enderror" name="asunto" value="{{ old('asunto') }}" required autocomplete="asunto" autofocus>
+                                <input id="asunto" name="asunto" type="text" class="form-control @error('asunto') is-invalid @enderror" name="asunto" value="{{ old('asunto') }}" required autocomplete="asunto" >
 
                                 @error('asunto')
                                     <span class="invalid-feedback" role="alert">
@@ -197,7 +197,7 @@
                             <label for="descripcion" class="col-md-12 col-form-label text-md-left">{{ __('13. Descripción*') }}</label>
 
                             <div class="col-md-12">
-                                <textarea id="descripcion" name="descripcion" type="text" class="form-control @error('descripcion') is-invalid @enderror" name="descripcion" value="{{ old('descripcion') }}" required autocomplete="descripcion" autofocus></textarea>
+                                <textarea id="descripcion" name="descripcion" type="text" class="form-control @error('descripcion') is-invalid @enderror" name="descripcion" value="{{ old('descripcion') }}" required autocomplete="descripcion" ></textarea>
 
                                 @error('descripcion')
                                     <span class="invalid-feedback" role="alert">
