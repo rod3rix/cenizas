@@ -2,6 +2,20 @@
 
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Mail;
+
+Route::get('/send-test-email', function () {
+
+    $details = [
+        'title' => 'Mail from Laravel',
+        'body' => 'This is for testing SMTP mail from Gmail'
+    ];
+
+    Mail::to('sebas_cris@yahoo.com')->send(new \App\Mail\TestMail($details));
+
+    return 'Email Sent';
+});
+
 Route::get('/', function () {  
     if(auth()->user()){
          if (auth()->user()->type == 'admin') {
