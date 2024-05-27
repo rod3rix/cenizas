@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('#etapa_1').show();
-      function formatNumberWithDots(number) {
+    function formatNumberWithDots(number) {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
