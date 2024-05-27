@@ -524,13 +524,13 @@ public function registrarUsuAdmin(Request $request)
     {
     // Validar la existencia y tipo del archivo
     $validator = Validator::make($request->all(), [
-        'name' => 'required|string|max:2500',
-        'apellido_paterno' => 'required|string|max:2500',
-        'apellido_materno' => 'required|string|max:2500',
+        'name' => 'required|string|max:255',
+        'apellido_paterno' => 'required|string|max:255',
+        'apellido_materno' => 'required|string|max:255',
         'rut' => 'required|string|max:255|unique:users,rut',
-        'email' => 'required|string||email||max:2500|unique:users,email',
-        'telefono' => 'required|string|max:2500',
-        'zona' => 'required|string|max:2500',
+        'email' => 'required|string||email||max:255|unique:users,email',
+        'telefono' => 'required|string|max:255',
+        'zona' => 'required|string|max:255',
         'password' => 'required|string|max:2500|min:8'
     ]);
 
@@ -609,13 +609,13 @@ public function registrarUsuAdmin(Request $request)
     {
         // Validar la existencia y tipo del archivo
             $rules = [
-                'modalUserName' => 'required|string|max:2500',
-                'modalUserApellidoPaterno' => 'required|string|max:2500',
-                'modalUserApellidoMaterno' => 'required|string|max:2500',
+                'modalUserName' => 'required|string|max:255',
+                'modalUserApellidoPaterno' => 'required|string|max:255',
+                'modalUserApellidoMaterno' => 'required|string|max:255',
                 'modalUserRut' => 'required|string|max:255|unique:users,rut,' . $id,
-                'modalUserEmail' => 'required|string|email|max:2500|unique:users,email,'. $id,
-                'modalUserTelefono' => 'required|string|max:2500',
-                'modalUserZona' => 'required|string|max:2500',
+                'modalUserEmail' => 'required|string|email|max:255|unique:users,email,'. $id,
+                'modalUserTelefono' => 'required|string|max:255',
+                'modalUserZona' => 'required|string|max:255',
             ];
 
         // Agregar regla de validación para la contraseña si está presente

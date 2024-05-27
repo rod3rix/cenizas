@@ -167,7 +167,7 @@
                         <div class="form-check form-check-inline">
                           <input class="form-check-input" type="checkbox" id="acepto_clausula" name="acepto_clausula" value="1">
                         </div>
-                          <label class="form-check-label" for="acepto_clausula">Acepto cláusula de tratamiento de información personal * <br> Marcar casilla para aceptar cláusula..</label>
+                          <label class="form-check-label" for="acepto_clausula"><a href="{{ route('clausulaFondo') }}">Acepto cláusula de tratamiento de información personal *</a> <br> Marcar casilla para aceptar cláusula..</label>
                         
                         @error('acepto_clausula')
                         <span class="invalid-feedback" role="alert">

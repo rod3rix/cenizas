@@ -336,6 +336,16 @@ public function listarApoyoProyectos()
         return view('cambiarPass');
     } 
 
+    public function clausulaProyecto()
+    {
+        return view('clausulaProyecto');
+    } 
+
+    public function clausulaFondo()
+    {
+        return view('clausulaFondo');
+    } 
+
     public function confirmacionPass()
     {
         return view('confirmacionPass');

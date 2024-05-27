@@ -16,11 +16,7 @@
       </p>
     </div>
     <br>
-      <br>
-      
-<hr>
-
-
-  </section>
-
+    <br>  
+    <hr>
+</section>
 @endsection

@@ -32,6 +32,10 @@ Auth::routes();
 //users routes
 Route::middleware(['class','auth', 'access-level:user'])->group(function () {
 
+Route::get('/clausulaProyecto', [App\Http\Controllers\HomeController::class, 'clausulaProyecto'])->name('clausulaProyecto');
+
+Route::get('/clausulaFondo', [App\Http\Controllers\HomeController::class, 'clausulaFondo'])->name('clausulaFondo');
+
 Route::get('/seguimientoFondos', [App\Http\Controllers\HomeController::class, 'seguimientoFondos'])->name('seguimientoFondos');
 
 Route::post('/actualizarPersonaJuridica',  [App\Http\Controllers\HomeController::class, 'actualizarPersonaJuridica'])->name('actualizarPersonaJuridica');

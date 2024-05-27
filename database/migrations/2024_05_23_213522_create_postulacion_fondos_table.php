@@ -45,7 +45,7 @@ return new class extends Migration
             $table->string('archivo_certificado')->nullable();
             $table->unsignedBigInteger('id_persona_juridica');
             $table->string('estado', 255)->nullable();
-            $table->text('respuesta')->nullable();
+            $table->string('respuesta', 2500)->nullable();
             $table->string('archivo_respuesta')->nullable();
             $table->timestamps();
 

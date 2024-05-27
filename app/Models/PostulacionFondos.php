@@ -151,15 +151,15 @@ class PostulacionFondos extends Model
     public static function validarEtapa1(array $data)
     {
          $validator = Validator::make( $data,[
-            'nacionalidad' => 'required',
-            'genero' => 'required',
-            'pueblo_originario' => 'required',
+            'nacionalidad' => 'required|string|max:255',
+            'genero' => 'required|string|max:255',
+            'pueblo_originario' => 'required|string|max:255',
             'discapacidad' => 'required',
             'fecha_nacimiento' => 'required',
-            'actividad_economica' => 'required',
-            'direccion' => 'required',
-            'formacion_formal' => 'required',  
-            'profesion' => 'required', 
+            'actividad_economica' => 'required|string|max:255',
+            'direccion' => 'required|string|max:255',
+            'formacion_formal' => 'required|string|max:255',  
+            'profesion' => 'required|string|max:255', 
             'acepto_clausula' => 'required',
             ]);
 
@@ -169,10 +169,10 @@ class PostulacionFondos extends Model
     public static function validarEtapa2(array $data)
     {
         $validator = Validator::make($data, [
-            'nombre_organizacion' => 'required',
+            'nombre_organizacion' => 'required|string|max:255',
             'rut_organizacion' => 'required',
-            'domicilio_organizacion' => 'required',
-            'personalidad_juridica' => 'required',
+            'domicilio_organizacion' => 'required|string|max:255',
+            'personalidad_juridica' => 'required|string|max:255',
             'antiguedad_anos' => 'required',
             'numero_socios' => 'required',
         ]);
@@ -183,13 +183,13 @@ class PostulacionFondos extends Model
     public static function validarEtapa3(array $data)
     {
         $validator = Validator::make($data, [
-            'nombre_proyecto' => 'required',
-            'equipamiento' => 'required',
-            'fundamentacion' => 'required',
-            'descripcion_proyecto' => 'required',
-            'objetivo_general' => 'required',
-            'objetivos_especificos' => 'required',
-            'cierre_proyecto' => 'required',
+            'nombre_proyecto' => 'required|string|max:255',
+            'equipamiento' => 'required|string|max:255',
+            'fundamentacion' => 'required|string|max:255',
+            'descripcion_proyecto' => 'required|string|max:255',
+            'objetivo_general' => 'required|string|max:255',
+            'objetivos_especificos' => 'required|string|max:255',
+            'cierre_proyecto' => 'required|string|max:255',
             'directos' => 'required',
             'indirectos' => 'required',
             'fecha_inicio' => 'required',
