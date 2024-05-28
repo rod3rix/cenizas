@@ -130,33 +130,37 @@
                         @enderror
                      </div>            
                   </div>
-                  <div class="form-group row">
-                     <label for="presupuesto" class="col-md-12 col-form-label text-md-left">{{ __('10. Presupuesto: Agregar: Recursos Humanos, Materiales e insumos') }}</label>
-                      <label for="telefono" class="col-md-2 col-form-label text-md-left">{{ __('Detalle') }}</label>
-                      <div class="col-md-5">
-                        <input id="detalle" type="text" class="form-control @error('detalle') is-invalid @enderror" name="detalle" value="{{ old('detalle') }}" required autocomplete="detalle" >
-                        @error('detalle')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>
-                     <label for="monto" class="col-md-1 col-form-label text-md-left">{{ __('Monto') }}</label>
-                      <div class="col-md-4">
-                        <input id="monto" type="text" class="miles form-control @error('monto') is-invalid @enderror" name="monto" value="{{ old('monto') }}" required autocomplete="monto"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
-                        @error('monto')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>
-                  </div>
-                  <div class="form-group row">
-                     <div class="col-md-2"></div>
-                     <div class="col-md-10">
-                        <button type="button" class="btn btn-primary btn-block">{{ __('Agregar otro') }}</button>
-                     </div>
-                  </div>
+<div id="presupuesto-container">
+    <div class="form-group row">
+        <label for="presupuesto" class="col-md-12 col-form-label text-md-left">{{ __('10. Presupuesto: Agregar: Recursos Humanos, Materiales e insumos') }}</label>
+        <label for="telefono" class="col-md-2 col-form-label text-md-left">{{ __('Detalle') }}</label>
+        <div class="col-md-5">
+            <input id="detalle" type="text" class="form-control @error('detalle') is-invalid @enderror" name="detalle[]" value="{{ old('detalle.0') }}" required autocomplete="detalle">
+            @error('detalle.0')
+            <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+        <label for="monto" class="col-md-1 col-form-label text-md-left">{{ __('Monto') }}</label>
+        <div class="col-md-4">
+            <input id="monto" type="text" class="miles form-control @error('monto') is-invalid @enderror" name="monto[]" value="{{ old('monto.0') }}" required autocomplete="monto" placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
+            @error('monto.0')
+            <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+    </div>
+</div>
+<br>
+<div class="form-group row">
+    <div class="col-md-2"></div>
+    <div class="col-md-10">
+        <button type="button" id="addPresupuesto" class="btn btn-primary btn-block">{{ __('Agregar otro') }}</button>
+    </div>
+</div>
+<br>
                   <div class="form-group row">
                      <label for="telefono" class="col-md-2 col-form-label text-md-left">{{ __('Total') }}</label>
                      <div class="col-md-10">

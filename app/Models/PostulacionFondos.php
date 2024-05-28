@@ -182,6 +182,8 @@ class PostulacionFondos extends Model
 
     public static function validarEtapa3(array $data)
     {
+        ///dd($data);
+
         $validator = Validator::make($data, [
             'nombre_proyecto' => 'required|string|max:255',
             'equipamiento' => 'required|string|max:255',
@@ -201,6 +203,20 @@ class PostulacionFondos extends Model
             'archivo_anexo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
             'archivo_certificado' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
             ]);
+
+         // Validar los campos de detalle y monto dinámicos
+            foreach ($data['detalle'] as $key => $value) {
+                $validator->after(function ($validator) use ($data, $key) {
+                    if (empty($data['detalle'][$key])) {
+                        $validator->errors()->add('detalle.' . $key, 'El campo detalle es obligatorio.');
+                    }
+                    if (empty($data['monto'][$key])) {
+                        $validator->errors()->add('monto.' . $key, 'El campo monto es obligatorio.');
+                    } elseif (!is_numeric(str_replace('.', '', $data['monto'][$key]))) {
+                        $validator->errors()->add('monto.' . $key, 'El campo monto debe ser un número.');
+                    }
+                });
+            }
 
         return $validator;
     }

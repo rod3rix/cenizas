@@ -12,7 +12,8 @@ $(document).ready(function() {
     
     $('.miles').on('input', formatInputField);
     obtenerOrganizaciones();
-    obtenerPersonasJuridicas(); 
+    obtenerPersonasJuridicas();
+    agregarMontos();
 });
 
 function handlePaste(e) {
@@ -218,4 +219,35 @@ function btn_volver(id) {
         console.error('Hubo un problema al enviar el formulario:', error);
     }
     });
+
+}
+
+function agregarMontos() {
+
+        var maxFields = 10;
+        var container = $("#presupuesto-container");
+        var addButton = $("#addPresupuesto");
+        var fieldCount = 1;
+
+        $(addButton).click(function(e) {
+            e.preventDefault();
+            if (fieldCount < maxFields) {
+                fieldCount++;
+                var newFieldHTML = `
+                    <br>
+                    <div class="form-group row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="detalle[]" name="detalle[]" required>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4">
+                            <input type="text" class="miles form-control" id="monto[]" name="monto[]" required placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
+                        </div>
+                    </div>`;
+                $(container).append(newFieldHTML);
+            } else {
+                alert('Has alcanzado el límite de 10 campos.');
+            }
+        });
 }
