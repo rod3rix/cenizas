@@ -172,11 +172,25 @@
         {{ $pfondo->equipamiento }}
       </p>
     </div>
+    <form id="cerrarFondoForm">
      <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">3. Fundamentación – Razones que motivan la calidad del proyecto</strong>
         {{ $pfondo->fundamentacion }}
       </p>
+      <div class="col col-sm-4">
+            <label for="calificacion" class="col-sm-2 col-form-label  border-bottom border-gray">Calificación:</label>
+            <select class="form-control" id="calificar" name="calificar">
+                <option value="">Seleccione</option>
+                @for ($i = 0; $i <= 10; $i++)
+                            <option value="{{ $i }}">{{ $i }}</option>
+
+                @endfor
+            </select>
+            @error('calificar')
+              <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
     </div>
      <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
@@ -294,16 +308,14 @@
       </p>
     </div>
 </div>
-
-  <form id="cerrarFondoForm">
       <input type="hidden" id="pfondo_id" name="pfondo_id" value="{{ $pfondo->post_fondo_id }}">
       <div class="media text-muted pt-3">
           <p class="media-body pb-3 mb-0 small lh-125">
               <strong class="d-block text-gray-dark">RESPUESTA:</strong>
-              <textarea id="respuesta" class="form-control" rows="3" placeholder="Escribir respuesta"></textarea>
-              <div id="respuestaAlert" class="alert alert-danger d-none" role="alert">
-                  ¡La respuesta es obligatoria!
-              </div>
+              <textarea id="respuesta" name="respuesta" class="form-control" rows="3" placeholder="Escribir respuesta"></textarea>
+            @error('respuesta')
+              <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
           </p>
       </div>
       <div class="media text-muted pt-3">
@@ -314,19 +326,19 @@
                 <option value="2">Proyecto aceptado</option>
                 <option value="3">Proyecto rechazado</option>
             </select>
+            @error('estado_fondo')
+              <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </p>
       </div>
       <div class="media text-muted pt-3">
           <p class="media-body pb-3 mb-0 small lh-125 text-md-right">
               <strong class="d-block text-gray-dark">Adjuntar archivo (Formatos .pdf, .zip, .rar. Tamaño máximo 20 mb.):</strong>
               <div class="mb-3">
-                  <input class="form-control @error('archivo') is-invalid @enderror" type="file" id="archivo" accept=".pdf,.zip,.rar">
+                  <input class="form-control" type="file" id="archivo" name="archivo" accept=".pdf,.zip,.rar">
                   @error('archivo')
                       <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
-                  <div id="archivoAlert" class="alert alert-danger d-none" role="alert">
-                      ¡El archivo es obligatorio!
-                  </div>
               </div>
               <button id="cerrarFondoBtn" type="button" class="btn btn-primary btn-block">Guardar ></button>
           </p>
@@ -368,6 +380,7 @@
             $('.invalid-feedback').remove();
 
             // Obtener los valores de los campos
+            var calificar = $('#calificar').val();
             var respuesta = $('#respuesta').val();
             var archivo = $('#archivo')[0].files[0];
             var pfondo_id = $('#pfondo_id').val();
@@ -377,6 +390,7 @@
             var formData = new FormData();
             formData.append('_token', '{{ csrf_token() }}');
             formData.append('pfondo_id', pfondo_id);
+            formData.append('calificar', calificar);
             formData.append('respuesta', respuesta);
             formData.append('archivo', archivo);
             formData.append('estado_fondo', estado_fondo);

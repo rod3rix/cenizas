@@ -42,6 +42,7 @@ class CreatePostulacionProyectosTable extends Migration
             $table->string('aporte_solicitado')->nullable();
             $table->integer('acepto_clausula_proy')->nullable();
             $table->integer('estado')->nullable();
+            $table->integer('calificar_pregunta')->nullable();
             $table->integer('calificar')->nullable();
             $table->string('respuesta', 2500)->nullable();
             $table->string('archivo_respuesta')->nullable();

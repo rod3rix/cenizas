@@ -171,11 +171,12 @@ Fondos Concursables</b></h1>
         {{ $pfondo->equipamiento }}
       </p>
     </div>
-     <div class="media text-muted pt-3">
+     <div class="media text-muted pt-3" id="calificacion">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">3. Fundamentación – Razones que motivan la calidad del proyecto</strong>
         {{ $pfondo->fundamentacion }}
       </p>
+      <p>Calificación: {{ $pfondo->calificar }}</p>
     </div>
      <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">

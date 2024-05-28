@@ -374,14 +374,13 @@ public function guardarPuntaje(Request $request)
                     $postulacion->respuesta = '<a href="' . route("detalleFondoAdmin", ["id" => $postulacion->id]) . '">Responder</a>';
                     break;
                 case 2:
-                    $postulacion->calificacion = '<a href="#">Ver Calificación</a>';
-                    $postulacion->estado = 'Enviado';
+                    $postulacion->calificacion = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '#calificacion">Ver Calificación</a>';
                     $postulacion->respuesta = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
                     break;
                 case 3:
-                    $postulacion->calificacion = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '">Ver Calificación</a>';
+                    $postulacion->calificacion = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '#calificacion">Ver Calificación</a>';
                     $postulacion->estado = 'Enviado';
-                    $postulacion->respuesta = '<a href="#">Ver Respuesta</a>';
+                    $postulacion->respuesta = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
                     break;
             } 
 
@@ -675,6 +674,7 @@ public function registrarUsuAdmin(Request $request)
     {
     // Validar la existencia y tipo del archivo
     $validator = Validator::make($request->all(), [
+        'calificar' => 'required',
         'respuesta' => 'required|string|max:2500',
         'estado_fondo' => 'required',
         'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
@@ -696,6 +696,7 @@ public function registrarUsuAdmin(Request $request)
         $archivo->storeAs('public/archivos', $nombreArchivo);
 
         $fondo = PostulacionFondos::findOrFail($request->pfondo_id);
+        $fondo->calificar = $request->input('calificar');
         $fondo->respuesta = $request->input('respuesta');
         $fondo->archivo_respuesta = $nombreArchivo;
         $fondo->estado = $request->input('estado_fondo');

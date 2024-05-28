@@ -28,6 +28,11 @@ Route::get('/', function () {
     }
 });
 
+Route::get('terminoCondiciones', function () {
+    return view('terminoCondiciones');
+})->name('terminoCondiciones');
+
+
 Auth::routes();
 //users routes
 Route::middleware(['class','auth', 'access-level:user'])->group(function () {
