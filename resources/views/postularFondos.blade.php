@@ -37,5 +37,6 @@
     </div>
 
 </div>
-<script src="{{ asset('js/frm_fondos_postular.js') }}"></script>
+<script src="{{ asset('js/frm_fondos_postular.js') }}?v={{ time() }}"></script>
+
 @endsection

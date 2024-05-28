@@ -1,20 +1,22 @@
 $(document).ready(function() {
-    $('#etapa_1').show();
+    $('#etapa_3').show();
+    obtenerOrganizaciones();
+    obtenerPersonasJuridicas();
+    agregarMontos();
+    formatMiles();
+});
+
+function formatMiles() {
     function formatNumberWithDots(number) {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
-
     function formatInputField() {
         $(this).val(function(index, value) {
         return formatNumberWithDots(value.replace(/\./g, ''));
         });
     }
-    
     $('.miles').on('input', formatInputField);
-    obtenerOrganizaciones();
-    obtenerPersonasJuridicas();
-    agregarMontos();
-});
+}
 
 function handlePaste(e) {
     var clipboardData, pastedData;
@@ -85,57 +87,46 @@ function obtenerOrganizaciones() {
         });
     }
 
-
-
-
-
 function formatRut(cliente) {
   cliente.value = cliente.value
     .replace(/[^0-9kK]/g, '') // Elimina todo excepto números y la letra 'k' o 'K'
     .replace(/^(\d{1,2})(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4'); // Agrega puntos y guión en el formato estándar
 }
 
-
 function btn_volver(id) {
-
-               if(id==1){
-                    $('#etapa_2').hide();
-                    $('#etapa_3').hide();
-                    $('#etapa_4').hide();
-                    $("#bt_et2").removeClass("btn-info");
-                    $("#bt_et3").removeClass("btn-info");
-                    $("#bt_et4").removeClass("btn-info");    
-                    $("#bt_et1").addClass("btn-info");
-                    $('#etapa_1').show();
-                }
-                if(id==2){
-                    $('#etapa_1').hide();
-                    $('#etapa_3').hide();
-                    $('#etapa_4').hide();
-                    $("#bt_et1").removeClass("btn-info");
-                    $("#bt_et3").removeClass("btn-info");
-                    $("#bt_et4").removeClass("btn-info");    
-                    $("#bt_et2").addClass("btn-info");
-                    $('#etapa_2').show();
-                }
-
-                if(id==3){
-                    $('#etapa_1').hide();
-                    $('#etapa_2').hide();
-                    $('#etapa_4').hide();
-                    $("#bt_et1").removeClass("btn-info");
-                    $("#bt_et2").removeClass("btn-info");
-                    $("#bt_et4").removeClass("btn-info");    
-                    $("#bt_et3").addClass("btn-info");
-                    $('#etapa_3').show();
-                }
-   
+    if(id==1){
+        $('#etapa_2').hide();
+        $('#etapa_3').hide();
+        $('#etapa_4').hide();
+        $("#bt_et2").removeClass("btn-info");
+        $("#bt_et3").removeClass("btn-info");
+        $("#bt_et4").removeClass("btn-info");    
+        $("#bt_et1").addClass("btn-info");
+        $('#etapa_1').show();
+    }
+    if(id==2){
+        $('#etapa_1').hide();
+        $('#etapa_3').hide();
+        $('#etapa_4').hide();
+        $("#bt_et1").removeClass("btn-info");
+        $("#bt_et3").removeClass("btn-info");
+        $("#bt_et4").removeClass("btn-info");    
+        $("#bt_et2").addClass("btn-info");
+        $('#etapa_2').show();
+    }
+    if(id==3){
+        $('#etapa_1').hide();
+        $('#etapa_2').hide();
+        $('#etapa_4').hide();
+        $("#bt_et1").removeClass("btn-info");
+        $("#bt_et2").removeClass("btn-info");
+        $("#bt_et4").removeClass("btn-info");    
+        $("#bt_et3").addClass("btn-info");
+        $('#etapa_3').show();
+    }
 }
-
-
-
     
-  function validarFrmFondos(id) {
+function validarFrmFondos(id) {
 
     var formData = new FormData(document.getElementById("frm_fondos"));
     formData.append("id", id);
@@ -202,12 +193,19 @@ function btn_volver(id) {
                 }
 
             } else {
-
-                //alert(id);
-                // Si la respuesta indica que hubo errores de validación, muestras los mensajes de error debajo de los campos correspondientes
                 $.each(response.errors, function(key, value) {
-                    // Encuentra el campo correspondiente al error y muestra el mensaje de error
-                    $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
+                     if (key.includes('.')) {
+                        var parts = key.split('.');
+                        var fieldName = parts[0];
+                        var index = parts[1];
+                        
+                        var field = $('input[name="' + fieldName + '[]"]').eq(index);
+                        field.addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
+                    } else {
+                        // Para campos normales
+                        $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
+                    }
+
                 });
             }
         } else {
@@ -219,12 +217,10 @@ function btn_volver(id) {
         console.error('Hubo un problema al enviar el formulario:', error);
     }
     });
-
 }
 
 function agregarMontos() {
-
-        var maxFields = 10;
+        var maxFields = 11;
         var container = $("#presupuesto-container");
         var addButton = $("#addPresupuesto");
         var fieldCount = 1;
@@ -234,9 +230,8 @@ function agregarMontos() {
             if (fieldCount < maxFields) {
                 fieldCount++;
                 var newFieldHTML = `
-                    <br>
                     <div class="form-group row">
-                        <div class="col-md-2"></div>
+                        <div class="col-md-2"><button type="button" class="btn btn-danger delete-entry">Eliminar</div>
                         <div class="col-md-5">
                             <input type="text" class="form-control" id="detalle[]" name="detalle[]" required>
                         </div>
@@ -250,4 +245,40 @@ function agregarMontos() {
                 alert('Has alcanzado el límite de 10 campos.');
             }
         });
+
+         // Eliminar entrada de presupuesto
+        $(document).on('click', '.delete-entry', function() {
+        $(this).closest('.form-group.row').remove();
+            fieldCount--; // Restar 1 al contador cuando se elimine una entrada
+        });
 }
+
+function actualizarTotal() {
+    var aporteSolicitado = parseFloat($("#aporte_solicitado").val().replace(/\D/g, '')) || 0;
+    var aporteTerceros = parseFloat($("#aporte_terceros").val().replace(/\D/g, '')) || 0;
+    var aportePropio = parseFloat($("#aporte_propio").val().replace(/\D/g, '')) || 0;
+    
+    // Verificar si los valores son números válidos, si no lo son, establecerlos como cero
+    if (isNaN(aporteSolicitado)) aporteSolicitado = 0;
+    if (isNaN(aporteTerceros)) aporteTerceros = 0;
+    if (isNaN(aportePropio)) aportePropio = 0;
+
+    var total = aporteSolicitado + aporteTerceros + aportePropio;
+
+    // Redondear el total al número entero más cercano
+    total = Math.round(total);
+
+    // Formatear el total con miles
+    var totalFormateado = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    $("#total").val(totalFormateado);
+}
+
+// Detectar cambios en los campos de aporte solicitado, aporte de terceros y aporte propio
+$("#aporte_solicitado, #aporte_terceros, #aporte_propio").on("input", function() {
+    actualizarTotal();
+});
+
+// Inicialmente actualizar el total
+//actualizarTotal();
+
