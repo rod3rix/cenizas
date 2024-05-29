@@ -46,16 +46,16 @@
 
 <body class="">
     <div id="app">
-        <div class="container">
+        <div class="container zheader">
              
-    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4">
       <div class="col-md-3 mb-2 mb-md-0">
-        <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+        <!-- <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none"> -->
           <a class="navbar-brand" href="{{ url('/') }}">
                     <!-- {{ config('app.name', 'GRUPO MINERO LAS CENIZAS') }} 
                      -->GRUPO MINERO LAS CENIZAS
           </a>
-        </a>
+        <!-- </a> -->
       </div>
 
     @guest
@@ -177,8 +177,8 @@
         </main>
     </div>
 
-    <div class="container">
-  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <div class="container zfooter">
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-4">
     <p class="col-md-6 mb-0 text-body-secondary">Para mayor información, consultas o dudas:  +56 9 9159 4961  /  XXXXX@CENIZAS.CL</p>
     <ul class="nav col-md-4 justify-content-end">
         <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Términos y condiciones</a></li>
