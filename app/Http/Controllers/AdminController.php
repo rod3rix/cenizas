@@ -113,7 +113,18 @@ class AdminController extends Controller
             ->where('postulacion_fondos.id', $id)
             ->first();
 
-        return view('respuestaFondoAdmin',['pfondo' => $pfondo]);
+         $fpresupuesto = DB::table('postulacion_presupuestos')
+        ->where('postulacion_fondos_id', $id)
+        ->get();
+
+        $acceso=true;
+
+        if(Auth::user()->zona!=$pfondo->zona){
+            $acceso=false;
+        }
+
+        return view('respuestaFondoAdmin',['pfondo' => $pfondo,'acceso' => $acceso,'fpresupuesto' => $fpresupuesto]);
+
     }
 
       public function responderCaso($id)
@@ -369,7 +380,7 @@ public function guardarPuntaje(Request $request)
         $postulacion = $postulacion->transform(function ($postulacion) {
             switch ($postulacion->estado) {
                 case 1:
-                    $postulacion->calificacion = '<a href="#">Calificar</a>';
+                    $postulacion->calificacion = '<a href="' . route("detalleFondoAdmin", ["id" => $postulacion->id]) . '">Calificar</a>';
                     $postulacion->estado = 'En proceso';
                     $postulacion->respuesta = '<a href="' . route("detalleFondoAdmin", ["id" => $postulacion->id]) . '">Responder</a>';
                     break;
@@ -442,13 +453,17 @@ public function guardarPuntaje(Request $request)
             ->where('postulacion_fondos.id', $id)
             ->first();
 
-            $acceso=true;
+        $fpresupuesto = DB::table('postulacion_presupuestos')
+        ->where('postulacion_fondos_id', $id)
+        ->get();
 
-            if(Auth::user()->zona!=$pfondo->zona){
-                $acceso=false;
-            }
+        $acceso=true;
 
-        return view('detalleFondoAdmin',['pfondo' => $pfondo,'acceso' => $acceso]);
+        if(Auth::user()->zona!=$pfondo->zona){
+            $acceso=false;
+        }
+
+        return view('detalleFondoAdmin',['pfondo' => $pfondo,'acceso' => $acceso,'fpresupuesto' => $fpresupuesto]);
     } 
 
      public function detalleProyectoAdmin($id)
@@ -726,7 +741,7 @@ public function registrarUsuAdmin(Request $request)
     }
 }
 
- public function frmTituloFondo(Request $request)
+    public function frmTituloFondo(Request $request)
     {
         if($request->idFrm=="frm1"){
                 $validator = Validator::make($request->all(), [

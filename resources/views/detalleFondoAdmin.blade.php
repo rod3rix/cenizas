@@ -235,7 +235,37 @@
    <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">10. Presupuesto: Agregar: Recursos Humanos, Materiales e insumos</strong>
-        PENDIENTE*******************************************************************
+ 
+    <h4>Detalles del Presupuesto</h4>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Detalle</th>
+                <th>Monto</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php
+                $totalMonto = 0;
+            @endphp
+            @foreach($fpresupuesto as $presupuesto)
+                @php
+                    // Convertir el monto a un número removiendo los puntos
+                    $monto = (float) str_replace('.', '', $presupuesto->monto);
+                @endphp
+                <tr>
+                    <td>{{ $presupuesto->detalle }}</td>
+                    <td>${{ number_format($monto, 0, ',', '.') }}</td>
+                </tr>
+                @php
+                    $totalMonto += $monto;
+                @endphp
+            @endforeach
+        </tbody>
+    </table>
+
+    <h2>Total: ${{ number_format($totalMonto, 0, ',', '.') }}</h2>
       </p>
     </div>
 

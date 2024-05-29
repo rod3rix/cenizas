@@ -16,6 +16,7 @@ use App\Models\PostulacionProyectos;
 use App\Models\DatosOrganizaciones;
 use App\Models\PostulacionFondos;
 use Illuminate\Support\Facades\Hash;
+use App\Models\PostulacionPresupuestos;
 use Auth;
 
 
@@ -734,6 +735,9 @@ public function actualizarPersonaJuridica(Request $request)
                 $dataPosFon = PostulacionFondos::prepararDatos($request);
                 $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId, $personaJurId, $request);
 
+                $dataPrefon = PostulacionPresupuestos::prepararDatos($request);
+                $postulacionPreId=PostulacionPresupuestos::crearPresupuestos($dataPrefon,$postulacionId);
+
                 // Si todos los inserts fueron exitosos, hacer commit de la transacción
                 DB::commit();
 
@@ -793,6 +797,9 @@ public function actualizarPersonaJuridica(Request $request)
                 // Preparar y guardar datos de PostulacionFondos
                 $dataPosFon = PostulacionFondos::prepararDatos($request);
                 $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId, $personaJurId, $request);
+
+                $dataPrefon = PostulacionPresupuestos::prepararDatos($request);
+                $postulacionPreId=PostulacionPresupuestos::crearPresupuestos($dataPrefon,$postulacionId);
 
                 // Si todos los inserts fueron exitosos, hacer commit de la transacción
                 DB::commit();

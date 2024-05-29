@@ -199,7 +199,7 @@ class PostulacionFondos extends Model
             'aporte_terceros' => 'required',
             'aporte_propio' => 'required',
             'detalle.*' => 'required|string',
-            'monto.*' => 'required|numeric',
+            'monto.*' => 'required|string',
             'archivo_anexo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
             'archivo_certificado' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
             ]);

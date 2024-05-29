@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#etapa_3').show();
+    $('#etapa_1').show();
     obtenerOrganizaciones();
     obtenerPersonasJuridicas();
     agregarMontos();
@@ -16,6 +16,8 @@ function formatMiles() {
         });
     }
     $('.miles').on('input', formatInputField);
+
+    $("#presupuesto-container").on("input", ".monto",formatInputField);
 }
 
 function handlePaste(e) {
@@ -233,11 +235,11 @@ function agregarMontos() {
                     <div class="form-group row">
                         <div class="col-md-2"><button type="button" class="btn btn-danger delete-entry">Eliminar</div>
                         <div class="col-md-5">
-                            <input type="text" class="form-control" id="detalle[]" name="detalle[]" required>
+                            <input type="text" class="form-control" id="detalle" name="detalle[]" required>
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-4">
-                            <input type="text" class="miles form-control" id="monto[]" name="monto[]" required placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
+                            <input type="text" class="miles form-control monto" id="monto" name="monto[]" required placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
                         </div>
                     </div>`;
                 $(container).append(newFieldHTML);
@@ -281,4 +283,30 @@ $("#aporte_solicitado, #aporte_terceros, #aporte_propio").on("input", function()
 
 // Inicialmente actualizar el total
 //actualizarTotal();
+
+function actualizarTotalPresupuesto() {
+    var totalPresupuesto = 0;
+    $(".monto").each(function() {
+        var monto = parseFloat($(this).val().replace(/\D/g, '')) || 0;
+        // Verificar si el valor es un número válido, si no lo es, establecerlo como cero
+        if (isNaN(monto)) monto = 0;
+        totalPresupuesto += monto;
+    });
+
+    // Redondear el total al número entero más cercano
+    totalPresupuesto = Math.round(totalPresupuesto);
+
+    // Formatear el total con miles
+    var totalPresupuestoFormateado = totalPresupuesto.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    
+    $("#total_presupuesto").val(totalPresupuestoFormateado);
+}
+
+// Detectar cambios en los campos de monto del presupuesto
+$("#presupuesto-container").on("input", ".monto", function() {
+    actualizarTotalPresupuesto();
+});
+
+// Inicialmente actualizar el total del presupuesto
+// actualizarTotalPresupuesto();
 

@@ -231,7 +231,7 @@
                         <input id="archivo_certificado" type="file" class="form-control @error('archivo_certificado') is-invalid @enderror" name="archivo_certificado" value="{{ old('archivo_certificado') }}" required autocomplete="archivo_certificado">
                      </div>
                   </div>
- 
+                  <br>
                   <div class="form-group row">
                      <div class="col-md-12  text-md-right">
                          <button type="button" onclick="btn_volver(2)" class="btn btn-primary">
