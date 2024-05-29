@@ -17,21 +17,19 @@
         <br>
         <div class="card-deck mb-3 text-center">
         <div class="row mb-3 text-center">
-      <div class="col-4 themed-grid-col"><div class="card mb-4 shadow-sm">
+      <div class="col-4 themed-grid-col"><div class="card fondos mb-4 shadow-sm">
           <div class="card-header">
                <h4>FONDOS CONCURSABLES</h4>
-               <h6>(solo organizaciones jurídicas)</h6>
           </div>
           <div class="card-body">
             <a href="{{ route('postularFondos') }}" class="btn btn-lg btn-block btn-primary">Postular Fondos Concursables</a>
             <hr>
-            <a href="{{ route('verPostulacionesProyectos') }}" class="btn btn-lg btn-block btn-primary">Ver Estado Postulaciones</a>
+            <a href="{{ route('seguimientoFondos') }}" class="btn btn-lg btn-block btn-primary">Ver Estado Postulaciones</a>
           </div>
         </div></div>
-      <div class="col-4 themed-grid-col"><div class="card mb-4 shadow-sm">
+      <div class="col-4 themed-grid-col"><div class="card proyectos mb-4 shadow-sm">
           <div class="card-header">
                 <h4>Apoyo para proyectos</h4>
-                <br>
           </div>
           <div class="card-body">
             <a href="{{ route('postularProyectos') }}" class="btn btn-lg btn-block btn-primary">Postular Proyectos</a>
@@ -39,10 +37,9 @@
             <a href="{{ route('seguimientoProyectos') }}" class="btn btn-lg btn-block btn-primary">Ver Estado Postulaciones</a>
           </div>
         </div></div>
-      <div class="col-4 themed-grid-col">  <div class="card mb-4 shadow-sm">
+      <div class="col-4 themed-grid-col">  <div class="card sugerencias mb-4 shadow-sm">
           <div class="card-header">
             <h4>sugerencias/RECLAMO</h4>
-            <br>
           </div>
           <div class="card-body">   
             <a href="{{ route('enviarCaso') }}" class="btn btn-lg btn-block btn-primary">Ingresar Casos</a>
