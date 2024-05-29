@@ -191,6 +191,8 @@ function validarFrmFondos(id) {
                     $('#etapa_3').show();
                 }
                 if (response.status) {
+                    $('#frm_fondos')[0].reset();
+                    $('#etapa_1').show();
                     window.location.href = 'confirmacionFondos';
                 }
 

@@ -35,7 +35,6 @@
         </div>
       <form>  
     </div>
-
 </div>
-<script src="{{ asset('js/frm_proy_postular.js') }}"></script>
+<script src="{{ asset('js/frm_proy_postular.js') }}?v={{ time() }}"></script>
 @endsection

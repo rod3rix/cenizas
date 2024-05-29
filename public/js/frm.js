@@ -16,6 +16,7 @@
             // La solicitud fue exitosa, ahora verifica el contenido de la respuesta
             if (response.success) {
                 // Si la respuesta indica éxito, puedes realizar alguna acción, como redireccionar a otra página
+                $('#frm1')[0].reset();
                 window.location.href = 'ingreso-caso';
             } else {
                 // Si la respuesta indica que hubo errores de validación, muestras los mensajes de error debajo de los campos correspondientes

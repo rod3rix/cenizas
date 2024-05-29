@@ -121,6 +121,8 @@ function validarFrmProy(id) {
                     $('#etapa_4').show();
                 }
                 if (response.status) {
+                    $('#frm_proy')[0].reset();
+                    $('#etapa_1').show();
                     window.location.href = 'confirmacionProyecto';
                 }
 
