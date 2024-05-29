@@ -1,0 +1,327 @@
+
+/* elementos comunes ---------------------------------------------------------- */
+
+:root {
+    --yellow-1: #F8EBD0;
+    --yellow-2: #EDBC52;
+    --yellow-3: #D39D28;
+    --brown-1: #B7682C;
+    --brown-2: #8C4A1D;
+    --brown-3: #9C4B1A;
+    --red-1: #D4582C;
+    --txt-1: #333333;
+    --txt-2: #7F7F7F;
+    --bg-1: #FBF6F2;
+    --input-bg: #FBFBFB;
+    --input-bdr: #ADB8C0;
+}
+
+label.col-form-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--brown-1);
+    line-height: 1.3;
+    padding-top: 0;
+    padding-bottom: 5px;
+}
+
+input.form-control,
+textarea.form-control {
+    font-size: 16px;
+     color: var(--txt-1);
+    /* line-height: 1.3;
+    padding: 0 0 0 0; */
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-bdr);
+}
+
+select.form-control {
+    font-size: 16px;
+    color: var(--txt-1);
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-bdr);
+
+    padding-right: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml,<svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m1 1 5 5 5-5" stroke="%23B7682C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 5px center;
+    background-size: 12px 7px;
+}
+
+button.btn {
+    background-color: var(--yellow-3);
+    border: 0px;
+}
+
+button:hover.btn {
+    background-color: var(--brown-1);
+}
+
+.card {
+    border: 0px !important;
+}
+
+.card-header {
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+
+
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+
+
+/* Tablas---------------------------------------------------------- */
+
+table {
+   border: 1px solid var(--input-bdr) !important;
+   background-color: var(--input-bg) !important;
+   border-radius: 6px;
+}
+
+thead {
+    background-color: var(--yellow-1);
+    border-radius: 6px;
+}
+
+thead th {
+    font-size: 1rem;
+    color: var(--brown-1) !important;
+    background-color: var(--yellow-1) !important;
+    border-radius: 6px;
+    /* text-align: center; */
+}
+
+
+
+/* header ---------------------------------------------------------- */
+
+.container.zheader {
+    width: 100%;
+    max-width: 100%;
+    background-image: url('../images/bg-header.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.container.zheader header {
+    max-width: 1320px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+header a.navbar-brand {
+    width: 180px;
+    height: 41px;
+    /* display: block;
+    font-size: 0px;
+    background-image: url('../images/logo-cenizas.svg');
+    background-size: 180px;
+    background-repeat: no-repeat; */
+}
+
+/* footer ---------------------------------------------------------- */
+
+.container.zfooter {
+    width: 100%;
+    max-width: 100%;
+    background-color: var(--brown-3);
+}
+
+.container.zfooter footer {
+    max-width: 1320px;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--yellow-1);
+}
+
+.container.zfooter footer p {
+    color: var(--yellow-1) !important;
+}
+
+.container.zfooter footer li a {
+    color: var(--yellow-2) !important;
+}
+
+/* menu ---------------------------------------------------------- */
+ul.nav a.nav-link,
+ul.navbar-nav a.nav-link {
+    color: var(--yellow-1);
+}
+
+ul.nav a:hover.nav-link,
+ul.navbar-nav a:hover.nav-link {
+    color: var(--yellow-2);
+}
+
+ul.dropdown-menu,
+ul.navbar-nav div.dropdown-menu {
+    background-color: var(--yellow-1);
+}
+
+ul.dropdown-menu a.dropdown-item,
+ul.navbar-nav div.dropdown-menu a.dropdown-item {
+    color: var(--txt-1);
+}
+
+ul.dropdown-menu a:hover.dropdown-item,
+ul.navbar-nav div.dropdown-menu a:hover.dropdown-item {
+    color: var(--txt-1);
+    background-color: transparent;
+}
+
+
+/* login ---------------------------------------------------------- */
+
+body.guest.login {
+    width: 100%;
+    height: 100vh;
+    background-image: url('../images/bg-login.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+body.guest.login #app {
+    width: 100%;
+    height: 100vh;
+}
+
+body.guest.login header,
+body.guest.login footer {
+    display: none !important;
+}
+
+body.login .card {
+    background-color: #E5A925;
+}
+
+body.guest.login .card-header.logo img {
+    /* background-image: url('../images/logo-cenizas-color.png');
+    background-size: 180px;
+    background-repeat: no-repeat; */
+    padding-top: 20px;
+    width: 200px;
+}
+
+body.login .col-form-label {
+    color: #fff;
+    text-align: left;
+}
+
+body.login input.form-control {
+    background-color: #fff;
+}
+
+body.login button.btn {
+    background-color: var(--brown-2);
+}
+
+body.login a.btn {
+    color: var(--brown-3);
+    text-decoration: none;
+}
+
+body.login a.linkcorp {
+    color: var(--yellow-2);
+    text-decoration: none;
+}
+
+body.login a.linktc {
+    color: var(--yellow-3);
+    text-decoration: none;
+}
+
+/* registro ---------------------------------------------------------- */
+
+body.register .card-header {
+    font-size: 22px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--brown-2);
+    border: 0px;
+    background-color: transparent;
+}
+
+body.register .card {
+    border: 0px;
+}
+
+/* home ---------------------------------------------------------- */
+
+h1.jumbotron-heading,
+.jumbotron h3 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--brown-1);
+}
+
+p.lead,
+.jumbotron p {
+    font-size: 1rem;
+    color: var(--txt-2);
+}
+
+.card.fondos {
+    background-color: #F8F0EB;
+}
+
+.card.proyectos {
+    background-color: #FBF5EA;
+}
+
+.card.sugerencias {
+    background-color: #FBEEEA;
+}
+
+.card.fondos h4,
+.card.proyectos h4,
+.card.sugerencias h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.card.fondos h4 {
+    color: var(--brown-3);
+}
+
+.card.proyectos h4 {
+    color: #BC9226;
+}
+
+.card.sugerencias h4 {
+    color: #D4582C;
+}
+
+.card.fondos a.btn {
+    background-color: #EEDCCE;
+    border: 1px solid #BD9376;
+    color: #8C4A1D;
+}
+
+.card.proyectos a.btn {
+    background-color: #F5E8CD;
+    border: 1px solid #E4C37A;
+    color: #BC9226;
+}
+
+.card.sugerencias a.btn {
+    background-color: #F5D8CE;
+    border: 1px solid #E5987D;
+    color: #D4582C;
+}
+
+
+/* postularFondos ---------------------------------------------------------- */
+
+
+
