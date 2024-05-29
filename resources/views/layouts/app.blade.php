@@ -24,8 +24,7 @@
     <link href="{{ asset('css/bootstrap-directional-buttons.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
 
-    <link rel="stylesheet" href="https://comuni.zlab.cl/assets/css/custom.css">
-    <!-- <link rel="stylesheet" href="{{ asset('css/custom.css') }}"> -->
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 
     <!-- jQuery -->
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
@@ -53,7 +52,8 @@
         <!-- <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none"> -->
           <a class="navbar-brand" href="{{ url('/') }}">
                     <!-- {{ config('app.name', 'GRUPO MINERO LAS CENIZAS') }} 
-                     -->GRUPO MINERO LAS CENIZAS
+                     -->
+                     <img src="{{ asset('images/logo-cenizas.svg') }}" alt="GRUPO MINERO LAS CENIZAS">
           </a>
         <!-- </a> -->
       </div>
