@@ -6,7 +6,7 @@
     $('.invalid-feedback').remove();
 
     $.ajax({
-        url: 'guardar-formulario',
+        url: 'crearCaso',
         method: 'POST',
         data: formData,
         contentType: false,

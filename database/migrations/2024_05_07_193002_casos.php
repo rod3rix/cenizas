@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreign('comuna_id')->references('id')->on('comunas');
             $table->string('direccion');
             $table->string('asunto');
-            $table->string('descripcion');
+            $table->string('descripcion', 2500);
             $table->string('archivo');
             $table->integer('estado')->nullable();
             $table->string('respuesta', 2500)->nullable();

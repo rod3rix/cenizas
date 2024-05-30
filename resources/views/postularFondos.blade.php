@@ -3,13 +3,14 @@
 @section('content')
 
 <div class="jumbotron">
-        <div class="container">
+        <div class="container text-center">
           <h3><b>POSTULAR FONDOS CONCURSABLES</b></h3>
           <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique. This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
         </div>
 
         <hr>
 
+    @if ($isVigente)
     <div class="container">
           <button type="button" class="btn btn-info btn-arrow-right btn-lg">ANTECEDENTES GENERALES</button>
           <button type="button" class="btn btn-info btn-arrow-right btn-lg">DATOS ORGANIZACIÓN</button>
@@ -35,6 +36,12 @@
         </div>
       <form>  
     </div>
+     @else
+     <div class="container text-center">
+        <h3><b>MOMENTANEAMENTE NO EXISTEN FONDOS CONCURSABLES</b></h3>
+     </div>
+     @endif
+
 </div>
 <script src="{{ asset('js/frm_fondos_postular.js') }}?v={{ time() }}"></script>
 @endsection

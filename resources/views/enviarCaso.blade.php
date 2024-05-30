@@ -222,11 +222,8 @@
         </div>
     </div>
 <hr>
-</div>
-     
+</div>     
 <!-- Scripts -->
-
-<script src="{{ asset('js/frm.js') }}"></script>
+<script src="{{ asset('js/frm_casos.js') }}?v={{ time() }}"></script>
 <script src="{{ asset('js/regiones_comunas.js') }}"></script>
-
 @endsection

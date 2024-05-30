@@ -15,6 +15,7 @@ use App\Models\PersonaJuridicas;
 use App\Models\PostulacionProyectos;
 use App\Models\DatosOrganizaciones;
 use App\Models\PostulacionFondos;
+use App\Models\ListadoFondos;
 use Illuminate\Support\Facades\Hash;
 use App\Models\PostulacionPresupuestos;
 use Auth;
@@ -43,14 +44,19 @@ class HomeController extends Controller
     } 
   
     public function postularFondos()
-    {
+    {        
+        $currentDate = Carbon::now();
+        $isVigente = ListadoFondos::where('vigencia', 1)
+                              ->where('fecha_termino', '>=', $currentDate)
+                              ->exists();
+
         $user = DB::table('users')
                 ->where('id', '=', auth()->id())
                 ->get();
 
-                $user=$user[0];
+        $user=$user[0];
 
-        return view('postularFondos',['user' => $user]);
+        return view('postularFondos',['user' => $user, 'isVigente' => $isVigente]);
     }
 
     public function postularProyectos()
@@ -203,14 +209,12 @@ public function listarApoyoProyectos()
     });
 
     return response()->json($postulacion);
-    
 }
 
     public function listarFondos()
     {
         $postulacion = PostulacionFondos::where('user_id', auth()->id())->get();
 
-       
         $postulacion = $postulacion->transform(function ($postulacion) {
             switch ($postulacion->estado) {
                 case 1:
@@ -253,18 +257,9 @@ public function listarApoyoProyectos()
     
     }
 
-     public function guardarFrm(Request $request)
+     public function crearCaso(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'tipo' => 'required',
-            'localidad' => 'required',
-            'region' => 'required',
-            'comuna' => 'required',
-            'direccion' => 'required',
-            'asunto' => 'required',
-            'descripcion' => 'required',
-            'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
-        ]);
+        $validator = Casos::validar($request->all());
 
         if ($validator->fails()) {
             return response()->json([
@@ -273,38 +268,18 @@ public function listarApoyoProyectos()
             ]);
         }
 
-        $archivo = $request->file('archivo');
-
-        // Guardar el archivo en el directorio deseado
-        $nombreArchivo = 'caso_' . auth()->id() . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
-        $archivo->storeAs('public/archivos', $nombreArchivo);
-
-        $insertedId = \DB::table('casos')->insertGetId([
-            'idUser' => auth()->id(),
-            'tipo' => $request->tipo,
-            'localidad' => $request->localidad,
-            'region_id' => $request->region,
-            'comuna_id' => $request->comuna,
-            'direccion' => $request->direccion,
-            'asunto' => $request->asunto,
-            'descripcion' => $request->descripcion,
-            'archivo' => $nombreArchivo,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
+        $insertedId = Casos::crearCaso($request);
 
         if ($insertedId) {
-            // El insert fue exitoso
             return response()->json([
                 'success' => true,
                 'message' => '¡El formulario se ha enviado correctamente y el archivo se ha subido!'
             ]);
         } else {
-            // El insert falló
             return response()->json([
                 'success' => false,
                 'message' => 'Hubo un error al guardar el formulario en la base de datos.'
-            ], 500); // 500 es el código de estado para errores internos del servidor
+            ], 500);
         }
     }
 
@@ -732,8 +707,10 @@ public function actualizarPersonaJuridica(Request $request)
                     }
                  
                 // Preparar y guardar datos de PostulacionFondos
+                $fondoVigenteId = PostulacionFondos::fondoVigenteId();     
+
                 $dataPosFon = PostulacionFondos::prepararDatos($request);
-                $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId, $personaJurId, $request);
+                $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId, $personaJurId, $request,$fondoVigenteId);
 
                 $dataPrefon = PostulacionPresupuestos::prepararDatos($request);
                 $postulacionPreId=PostulacionPresupuestos::crearPresupuestos($dataPrefon,$postulacionId);
@@ -795,8 +772,10 @@ public function actualizarPersonaJuridica(Request $request)
                     }
                  
                 // Preparar y guardar datos de PostulacionFondos
+                $fondoVigenteId = PostulacionFondos::fondoVigenteId();    
+
                 $dataPosFon = PostulacionFondos::prepararDatos($request);
-                $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId, $personaJurId, $request);
+                $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId, $personaJurId, $request,$fondoVigenteId);
 
                 $dataPrefon = PostulacionPresupuestos::prepararDatos($request);
                 $postulacionPreId=PostulacionPresupuestos::crearPresupuestos($dataPrefon,$postulacionId);

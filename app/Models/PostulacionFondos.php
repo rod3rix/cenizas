@@ -98,7 +98,7 @@ class PostulacionFondos extends Model
         ]);
     }
 
-    public static function crearPostulacionFondos(array $data, $datosOrgId, $personaJurId, $request)
+    public static function crearPostulacionFondos(array $data, $datosOrgId, $personaJurId, $request,$fondoVigenteId)
     {
         // Manejo de archivos anexos
         $nombreArchivoAnexo = 'Fondo_anexo_' . auth()->id() . "_" . date('Ymd_His') . "." . $request->file('archivo_anexo')->getClientOriginalExtension();
@@ -110,7 +110,7 @@ class PostulacionFondos extends Model
         // Insertar el registro y obtener el ID del nuevo registro insertado
         $insertedId = self::insertGetId([
             'user_id' => auth()->id(),
-            'id_fondo_concursable' => 1, // Ejemplo de valor fijo
+            'id_fondo_concursable' => $fondoVigenteId,
             'nacionalidad' => $data['nacionalidad'],
             'genero' => $data['genero'],
             'pueblo_originario' => $data['pueblo_originario'],
@@ -214,5 +214,18 @@ class PostulacionFondos extends Model
         ]);
 
         return $validator;
+    }
+
+
+    public static function fondoVigenteId()
+    {
+      $currentDate = Carbon::now();
+      $fondoVigente = ListadoFondos::where('vigencia', 1)
+                                 ->where('fecha_termino', '>=', $currentDate)
+                                 ->first();
+
+      $fondoVigenteId = $fondoVigente ? $fondoVigente->id : null;
+
+      return $fondoVigenteId;
     }
 }

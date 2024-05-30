@@ -85,7 +85,7 @@ Route::post('getRegiones',
 Route::post('getComunas', 
     [App\Http\Controllers\HomeController::class, 'getComunas'])->name('getComunas');
     //POST
-Route::post('guardar-formulario', [App\Http\Controllers\HomeController::class, 'guardarFrm'])->name('guardar-formulario');
+Route::post('crearCaso', [App\Http\Controllers\HomeController::class, 'crearCaso'])->name('crearCaso');
 
 Route::post('validarFrmProy', [App\Http\Controllers\HomeController::class, 'validarFrmProy'])->name('validarFrmProy');
 
