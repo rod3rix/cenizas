@@ -77,7 +77,7 @@
             </ul>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">RECLAMOS/SUGERENCIAS</a>
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">SUGERENCIAS/RECLAMOS</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{{ route('enviarCaso') }}">INGRESAR CASO</a></li>
               <li><a class="dropdown-item" href="{{ route('seguimientoCasosUsu') }}">VER ESTADO DEL CASO</a></li>
