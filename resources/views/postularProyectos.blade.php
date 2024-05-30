@@ -5,7 +5,7 @@
 <div class="jumbotron">
         <div class="container">
           <h3><b>POSTULACIÓN APOYO PROYECTO</b></h3>
-          <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique. This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+          <p>Grupo Minera Las Cenizas se encuentra comprometido con el desarrollo social y económico de las comunidades en las cuales se encuentran sus proyectos. En función de lo anterior, dispone de financiamiento para aportar a dicho crecimiento y desarrollo. Por este mecanismo puedes postular tu proyecto el cual se puede enmarcar en las siguientes temáticas: cultura y patrimonio, deporte y recreación, desarrollo económico, educación, infraestructura y equipamiento comunitario, medioambiente, salud, voluntariado, animalismo, inclusión u otra temática relevante.</p>
         </div>
 
         <hr>
