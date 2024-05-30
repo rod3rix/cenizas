@@ -16,7 +16,7 @@
                      </div>
                   </div>
            <div class="form-group row">
-                     <label for="equipamiento" class="col-md-12 col-form-label text-md-left">{{ __('2. Equipamiento comunitario/Mejoramiento infraestuctura/ Calidad de Vida y Desarrollo comunitario*') }}</label>
+                     <label for="equipamiento" class="col-md-12 col-form-label text-md-left">{{ __('2. Tipo de propyecto *') }}</label>
                      <div class="col-md-12">
                         <input id="equipamiento" type="text" class="form-control @error('equipamiento') is-invalid @enderror" name="equipamiento" value="{{ old('equipamiento') }}" required autocomplete="equipamiento" >
                         @error('equipamiento')
