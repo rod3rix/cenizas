@@ -16,14 +16,27 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="tipo_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('2. Tipo de proyecto *') }}</label>
+                     <!-- <label for="tipo_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('2. Tipo de proyecto *') }}</label> -->
+                     <label for="tipo_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('2. Temática *') }}</label>
                      <div class="col-md-12">
                         <select id="tipo_proyecto" class="form-control @error('tipo_proyecto') is-invalid @enderror" name="tipo_proyecto" required autocomplete="tipo_proyecto" >
                            <option value="">Seleccione</option>
-                           <option value="Apoyo a emprendimientos y oficios en vías de formalización">Apoyo a emprendimientos y oficios en vías de formalización</option>
+                           <!-- <option value="Apoyo a emprendimientos y oficios en vías de formalización">Apoyo a emprendimientos y oficios en vías de formalización</option>
                            <option value="Equipamiento para organizaciones">Equipamiento para organizaciones</option>
                            <option value="Mejoramiento infraestructura sedes y entorno comunitario">Mejoramiento infraestructura sedes y entorno comunitario</option>
-                           <option value="Medio ambiente y cultura">Medio ambiente y cultura</option>
+                           <option value="Medio ambiente y cultura">Medio ambiente y cultura</option> -->
+                           <option value="Animalismo">Animalismo</option>
+                           <option value="Cultura y Patrimonio">Cultura y Patrimonio</option>
+                           <option value="Deporte y Recreación">Deporte y Recreación</option>
+                           <option value="Desarrollo Económico">Desarrollo Económico</option>
+                           <option value="Educación">Educación</option>
+                           <option value="Inclusión">Inclusión</option>
+                           <option value="Infra. y Equip. Comunitario">Infra. y Equip. Comunitario</option>
+                           <option value="Medioambiente">Medioambiente</option>
+                           <option value="Salud">Salud</option>
+                           <option value="Voluntariado">Voluntariado</option>
+                           <option value="Otra">Otra</option>
+
                        </select>
                        @error('tipo_proyecto')
                            <span class="invalid-feedback" role="alert">
@@ -33,7 +46,7 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="lugar_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('3. Lugar de ejeccución del proyecto*') }}</label>
+                     <label for="lugar_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('3. Lugar de ejecución del proyecto*') }}</label>
                      <div class="col-md-12">
                         <textarea id="lugar_proyecto" name="lugar_proyecto" type="text" class="form-control @error('lugar_proyecto') is-invalid @enderror" name="lugar_proyecto" value="{{ old('lugar_proyecto') }}" required autocomplete="lugar_proyecto" ></textarea>
                         @error('lugar_proyecto')

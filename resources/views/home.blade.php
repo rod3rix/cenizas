@@ -12,9 +12,8 @@
 
 <section class="jumbotron text-center">
         <div class="container">
-          <h1 class="jumbotron-heading">BIENVENIDO</h1>
-          <p class="lead text-muted">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen.</p>
-        <br>
+          <h1 class="jumbotron-heading">Bienvenido</h1>
+          <p class="mb-3">Acceda al <b>Portal Fondos</b> de Grupo Minera Las Cenizas. Aquí podrá informarse de los fondos concursables con los que contamos, postular tus proyectos y realizar sugerencias o reclamos.</p>
         <div class="card-deck mb-3 text-center">
         <div class="row mb-3 text-center">
       <div class="col-4 themed-grid-col"><div class="card fondos mb-4 shadow-sm">

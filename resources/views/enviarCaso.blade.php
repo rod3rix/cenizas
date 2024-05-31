@@ -24,13 +24,13 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="tipo" class="col-md-12 col-form-label text-md-left">{{ __('1. Reclamo Sugerencias u Otros*') }}</label>
+                            <label for="tipo" class="col-md-12 col-form-label text-md-left">{{ __('1. Sugerencia, Reclamo u Otro*') }}</label>
 
                             <div class="col-md-12">
                                 <select id="tipo" name="tipo" type="text" class="form-control @error('tipo') is-invalid @enderror" autofocus>
                                     <option value="">Seleccione</option>
-                                    <option value="Reclamo">Reclamo</option>
                                     <option value="Sugerencia">Sugerencia</option>
+                                    <option value="Reclamo">Reclamo</option>
                                     <option value="Otro">Otro</option>
                                 </select>
 
