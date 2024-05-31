@@ -16,7 +16,7 @@ class CreateListadoFondosTable extends Migration
         Schema::create('listado_fondos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre_fondo');
-            $table->string('descripcion');
+            $table->string('descripcion',2500)->nullable();
             $table->date('fecha_inicio');
             $table->date('fecha_termino');
             $table->integer('vigencia');

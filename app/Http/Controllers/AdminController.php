@@ -768,7 +768,7 @@ public function registrarUsuAdmin(Request $request)
                     'descripcion' => 'required|string|max:255',
                     'fecha_inicio' => 'required|date',
                     'fecha_termino' => 'required|date',
-                    'vigencia' => 'required',
+                    // 'vigencia' => 'required',
                     'titulo_anual_id' => 'required'
                 ]);
 
@@ -779,16 +779,7 @@ public function registrarUsuAdmin(Request $request)
                     ]);
                 }
 
-                $insertedId = \DB::table('listado_fondos')->insertGetId([
-                    'nombre_fondo' => $request->nombre_fondo,
-                    'descripcion' => $request->descripcion,
-                    'fecha_inicio' =>  $fecha_inicio_formatted = date('Y-m-d', strtotime($request->fecha_inicio)),
-                    'fecha_termino' => $fecha_termino_formatted = date('Y-m-d', strtotime($request->fecha_termino)),
-                    'vigencia' => $request->vigencia,
-                    'titulo_anual_id'  => $request->titulo_anual_id,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ]);
+            $insertedId = listadoFondos::crearFondo($request);
 
         }
 

@@ -167,6 +167,7 @@ function validarFrmFondos(id) {
                     $("#bt_et4").removeClass("btn-info");    
                     $("#bt_et3").addClass("btn-info");
                     $('#etapa_3').show();
+                    obtenerOrganizaciones();
                 }
 
                 if(id==3){

@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('profesion', 255);
             $table->integer('acepto_clausula');
             $table->unsignedBigInteger('id_dato_organizacion'); // Correct column name
-            $table->string('nombre_proyecto')->nullable();
+            $table->string('nombre_proyecto', 255)->nullable();
             $table->text('equipamiento')->nullable();
             $table->text('fundamentacion')->nullable();
             $table->text('descripcion_proyecto')->nullable();
@@ -51,6 +51,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_fondo_concursable')->references('id')->on('listado_fondos')->onDelete('cascade');
             $table->foreign('id_dato_organizacion')->references('id')->on('datos_organizaciones')->onDelete('cascade');
             $table->foreign('id_persona_juridica')->references('id')->on('persona_juridicas')->onDelete('cascade');
         });

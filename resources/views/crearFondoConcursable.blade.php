@@ -118,8 +118,7 @@
                     @enderror
                 </div>
             </div>
-
-            <div class="row mb-3">
+            <!-- <div class="row mb-3">
                 <label for="vigencia" class="col-md-4 col-form-label text-md-end">{{ __('Vigencia:') }}</label>
                 <div class="col-md-6">
                     <select id="vigencia" name="vigencia" class="form-control @error('vigencia') is-invalid @enderror" name="vigencia">
@@ -134,7 +133,7 @@
                     @enderror
                 </div>
             </div>
-
+            -->
             <div class="row mb-3">
                 <label for="titulo_anual_id" class="col-md-4 col-form-label text-md-end">{{ __('Asociar a Título Anual:') }}</label>
                 <div class="col-md-6">
