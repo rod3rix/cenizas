@@ -211,7 +211,7 @@ public function listarApoyoProyectos()
     return response()->json($postulacion);
 }
 
-    public function listarFondos()
+public function listarFondos()
     {
         $postulacion = PostulacionFondos::where('user_id', auth()->id())->get();
 
@@ -239,7 +239,7 @@ public function listarApoyoProyectos()
 
     return response()->json($postulacion);
     
-    }
+}
 
 
      public function listarPersonaJuridicas()
