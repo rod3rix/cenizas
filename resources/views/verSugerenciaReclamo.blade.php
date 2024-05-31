@@ -1,15 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
- @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <!-- You are logged in! -->
-
 <div class="jumbotron">
         <div class="container text-center">
           <h3><b>Ver Sugerencia Reclamo u otros</b></h3>
@@ -31,53 +22,14 @@
         </thead>
         <tbody>
         </tbody>
-        <tfoot>
-           <!--  <tr>
-                <th>FOLIO</th>
-                <th>NOMBRE PROYECTO</th>
-                <th>FECHA DE ENVÍO</th>
-                <th>ESTADO</th>
-                <th>RESOUCIÓN</th>
-            </tr> -->
-        </tfoot>
     </table>
-
     </div>
 </div>
-     
 <!-- Scripts -->
-<script src="{{ asset('js/datatable.js') }}" defer></script>
-<script>    
-    $(document).ready(function() {
-    // Realizar la solicitud AJAX para obtener los datos de los casos
-    $.ajax({
-        url: '{{ route("casosUsuarioAdmin") }}', // Ruta del controlador para obtener los casos
-        type: 'POST', // Cambiamos el método HTTP a POST
-        dataType: 'json', // Esperamos recibir datos en formato JSON
-        data: {_token: '{{ csrf_token() }}'}, // Incluir el token CSRF en los datos de la solicitud
-        success: function(response) {
-            // Limpiar el cuerpo de la tabla
-            $('#registros tbody').empty();
-
-            // Iterar sobre los datos recibidos y agregarlos a la tabla
-            $.each(response, function(index, caso) {
-                $('#registros tbody').append(
-                    '<tr>' +
-                    '<td>' + caso.caso_id + '</td>' +
-                    '<td>' + caso.asunto + '</td>' +
-                    '<td>' + caso.name + '</td>' +
-                    '<td>' + caso.fecha_creacion + '</td>' +
-                    '<td>' + caso.estado + '</td>' +
-                    '<td>' + caso.respuesta + '</td>' +
-                    '</tr>'
-                );
-            });
-        },
-        error: function(xhr, status, error) {
-            console.error('Error al cargar los casos:', error);
-        }
-    });
-});
+<script>
+    const appConfig = {dataTablesLangUrl:
+    "{{ asset('lang/datatables/Spanish.json') }}"};
 </script>
-
+<script src="{{ asset('js/datatable.js') }}" defer></script>
+<script src="{{ asset('js/listar_sug_rec.js') }}?v={{ time() }}"></script>
 @endsection

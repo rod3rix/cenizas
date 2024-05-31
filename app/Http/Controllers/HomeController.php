@@ -45,7 +45,8 @@ class HomeController extends Controller
   
     public function postularFondos()
     {        
-        $currentDate = Carbon::now();
+        $currentDate = Carbon::now()->endOfDay(); // Ajusta para incluir todo el día
+
         $isVigente = ListadoFondos::where('vigencia', 1)
                               ->where('fecha_termino', '>=', $currentDate)
                               ->exists();

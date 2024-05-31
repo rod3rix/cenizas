@@ -216,7 +216,6 @@ class PostulacionFondos extends Model
         return $validator;
     }
 
-
     public static function fondoVigenteId()
     {
       $currentDate = Carbon::now();
@@ -227,5 +226,22 @@ class PostulacionFondos extends Model
       $fondoVigenteId = $fondoVigente ? $fondoVigente->id : null;
 
       return $fondoVigenteId;
+    }
+
+     public static function cerrarFondo($request)
+    {
+        $archivo = $request->file('archivo');
+        $nombreArchivo = 'res_fondo_' . $request->pfondo_id . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
+        $archivo->storeAs('public/archivos', $nombreArchivo);
+
+        $fondo = PostulacionFondos::findOrFail($request->pfondo_id);
+        $fondo->calificar = $request->input('calificar');
+        $fondo->respuesta = $request->input('respuesta');
+        $fondo->archivo_respuesta = $nombreArchivo;
+        $fondo->estado = $request->input('estado_fondo');
+        $fondo->updated_at = Carbon::now();
+        $fondo->save();
+
+        return $fondo;
     }
 }

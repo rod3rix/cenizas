@@ -1,6 +1,6 @@
 @extends('layouts.app')
-
 @section('content')
+@if($acceso)
 <section class="jumbotron">
     <div class="container ">
       <h1 class="jumbotron-heading text-center"><b>Usuario Registrado</b></h1>
@@ -167,5 +167,9 @@
         });
     });
 </script>
-
+@else
+<div class="container text-center">
+  <h1>No tiene acceso a esta página</h1>
+<div>
+@endif
 @endsection

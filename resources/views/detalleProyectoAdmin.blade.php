@@ -205,29 +205,29 @@
     <h6 class="border-bottom border-gray pb-2 mb-0">Relaciones jurÍdicas</h6>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 ">
-        <strong class="d-block text-gray-dark">RUT: 76.980.567-7</strong>
+        <strong class="d-block text-gray-dark">RUT: {{ $pproy->rut_juridico }}</strong>
       </p>
 
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">RAZÓN SOCIAL: Nombre razón social XXXX</strong>
+        <strong class="d-block text-gray-dark">RAZÓN SOCIAL: {{ $pproy->razon_social }}</strong>
       </p>
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">RELACIÓN: Socio</strong>
+        <strong class="d-block text-gray-dark">RELACIÓN: {{ $pproy->relacion }}</strong>
       </p>
     </div>
         <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">ESTADO: Estado?</strong>
+        <strong class="d-block text-gray-dark">ESTADO: {{ $pproy->estado }}</strong>
       </p>
     </div>
 </div>
 
   <form id="cerrarCasoForm">
-      <input type="hidden" id="pproy_id" name="pproy_id" value="{{ $pproy->id }}">
+      <input type="hidden" id="pproy_id" name="pproy_id" value="{{ $pproy->id_proy }}">
       <div class="media text-muted pt-3">
           <p class="media-body pb-3 mb-0 small lh-125">
               <strong class="d-block text-gray-dark">RESPUESTA:</strong>
@@ -259,7 +259,7 @@
                       ¡El archivo es obligatorio!
                   </div>
               </div>
-              <button id="cerrarCasoBtn" type="button" class="btn btn-primary btn-block">Guardar ></button>
+              <button id="cerrarProyBtn" type="button" class="btn btn-primary btn-block">Guardar ></button>
           </p>
       </div>
   </form>
@@ -274,7 +274,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ¿Está seguro de que desea cerrar el caso?
+        ¿Está seguro de que desea cerrar la postulación?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -283,73 +283,11 @@
     </div>
   </div>
 </div>
-<script>
-    $(document).ready(function() {
-        // Mostrar el modal de confirmación cuando se hace clic en el botón
-        $('#cerrarCasoBtn').click(function(e) {
-            e.preventDefault();
-            // Mostrar el modal de confirmación
-            $('#confirmModal').modal('show');
-        });
-
-        // Realizar la solicitud AJAX para cerrar el caso cuando se da confirmación
-        $('#confirmCierreBtn').click(function() {
-
-            $('form :input').removeClass('is-invalid');
-            $('.invalid-feedback').remove();
-
-            // Obtener los valores de los campos
-            var respuesta = $('#respuesta').val();
-            var archivo = $('#archivo')[0].files[0];
-            var pproy_id = $('#pproy_id').val();
-            var estado_proyecto = $('#estado_proyecto').val();
-
-            // Validate fields
-            var formData = new FormData();
-            formData.append('_token', '{{ csrf_token() }}');
-            formData.append('pproy_id', pproy_id);
-            formData.append('respuesta', respuesta);
-            formData.append('archivo', archivo);
-            formData.append('estado_proyecto', estado_proyecto);
-
-            // Realizar la solicitud AJAX
-            $.ajax({
-                url: "{{ route('cerrarProyecto') }}",
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response, textStatus, xhr) {
-                    if (xhr.status === 200) {
-                        // La solicitud fue exitosa, ahora verifica el contenido de la respuesta
-                        if (response.success) {
-                            // Si la respuesta indica éxito, cierra el modal y redirecciona a otra página
-                            $('#confirmModal').modal('hide');
-                            window.location.href = '../confirmacionProyectoAdmin';
-                        } else {
-                            // Si la respuesta indica que hubo errores de validación, muestra los mensajes de error debajo de los campos correspondientes
-                            $.each(response.errors, function(key, value) {
-                                // Encuentra el campo correspondiente al error y muestra el mensaje de error
-                                $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
-                            });
-                        }
-                    } else {
-                        console.error('Error en la solicitud:', xhr.status);
-                        // Aquí puedes manejar otros tipos de errores de solicitud si es necesario
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Hubo un problema al enviar el formulario:', error);
-                }
-            });
-             $('#confirmModal').modal('hide');
-        });
-    });
-</script>
+<script src="{{ asset('js/frm_cerrar_proy.js') }}?v={{ time() }}"></script>
 @else
-
-<h1>No tiene acceso a esta página</h1>
-
+<div class="container text-center">
+  <h1>No tiene acceso a esta página</h1>
+<div>
 @endif
 @endsection
 

@@ -168,9 +168,9 @@ Route::middleware(['class','auth', 'access-level:admin'])->group(function () {
 
     Route::post('cerrarCaso', [App\Http\Controllers\AdminController::class, 'cerrarCaso'])->name('cerrarCaso');
 
-    Route::post('cerrarProyecto', [App\Http\Controllers\AdminController::class, 'cerrarProyecto'])->name('cerrarProyecto');
+    Route::post('detalleProyectoAdmin/cerrarProyecto', [App\Http\Controllers\AdminController::class, 'cerrarProyecto'])->name('cerrarProyecto');
 
-    Route::post('cerrarFondo', [App\Http\Controllers\AdminController::class, 'cerrarFondo'])->name('cerrarFondo');
+    Route::post('detalleFondoAdmin/cerrarFondo', [App\Http\Controllers\AdminController::class, 'cerrarFondo'])->name('cerrarFondo');
 
     Route::get('confirmacionRespuestaCaso',  [App\Http\Controllers\AdminController::class,'confirmacionRespuestaCaso'])->name('confirmacionRespuestaCaso');
     Route::get('confirmacionAsignacion',  [App\Http\Controllers\AdminController::class,'confirmacionAsignacion'])->name('confirmacionAsignacion');

@@ -92,18 +92,22 @@ class AdminController extends Controller
      
      public function respuestaCasoAdmin($id)
     {
-        // Obtener el caso específico según el ID proporcionado en la URL
-    $caso = Casos::join('users', 'casos.idUser', '=', 'users.id')
+        $caso = Casos::join('users', 'casos.idUser', '=', 'users.id')
                  ->join('regiones', 'casos.region_id', '=', 'regiones.id')
                  ->join('comunas', 'casos.comuna_id', '=', 'comunas.id')
                  ->select('casos.*', 'users.*', 'regiones.nombre as region', 'comunas.nombre as comuna','casos.id as casoid')
                  ->findOrFail($id);
 
-        // Pasar el caso a la vista 'responderCaso'
-        return view('respuestaCasoAdmin', compact('caso'));
+       $acceso=true;
+
+        if(Auth::user()->zona!=$caso->zona){
+            $acceso=false;
+        }
+ 
+        return view('respuestaCasoAdmin', compact('caso','acceso'));
     }
 
-     public function respuestaFondoAdmin($id)
+    public function respuestaFondoAdmin($id)
     {
       $pfondo = DB::table('postulacion_fondos')
             ->join('users', 'users.id', '=', 'postulacion_fondos.user_id')
@@ -127,24 +131,30 @@ class AdminController extends Controller
 
     }
 
-      public function responderCaso($id)
+    public function responderCaso($id)
     {
-        // Obtener el caso específico según el ID proporcionado en la URL
-    $caso = Casos::join('users', 'casos.idUser', '=', 'users.id')
+        $caso = Casos::join('users', 'casos.idUser', '=', 'users.id')
                  ->join('regiones', 'casos.region_id', '=', 'regiones.id')
                  ->join('comunas', 'casos.comuna_id', '=', 'comunas.id')
                  ->select('casos.*', 'users.*', 'regiones.nombre as region', 'comunas.nombre as comuna','casos.id as casoid')
                  ->findOrFail($id);
+        
+        $acceso=true;
 
-        // Pasar el caso a la vista 'responderCaso'
-        return view('responderCaso', compact('caso'));
+        if(Auth::user()->zona!=$caso->zona){
+            $acceso=false;
+        }
+
+        return view('responderCaso', compact('caso','acceso'));
     }
     
      public function casosUsuarioAdmin()
     {
+        $zona = auth()->user()->zona;
    
         $casos = Casos::join('users', 'casos.idUser', '=', 'users.id')
                         ->select('casos.*', 'users.name as nombre_usuario','casos.id as caso_id')
+                        ->where('users.zona',$zona)
                         ->get();
 
         $casos->transform(function ($caso) {
@@ -153,6 +163,7 @@ class AdminController extends Controller
             $caso->respuesta = $caso->respuesta === null ? '<a href="' . route("responderCaso", ['id' => $caso->caso_id]) . '">RESPONDER</a>' : '<a href="' . route("respuestaCasoAdmin", ['id' => $caso->caso_id]) . '">VER RESPUESTA</a>';
             return $caso;
         });
+
         return response()->json($casos);
     }
 
@@ -223,14 +234,19 @@ public function cerrarCaso(Request $request)
 
     public function detalleUser($id)
     {
-
         $user = DB::table('users')
             ->leftJoin('puntaje_users', 'users.id', '=', 'puntaje_users.user_id')
             ->select('users.*', 'puntaje_users.influencia', 'puntaje_users.vecindad', 'puntaje_users.vecindad_mlc', 'puntaje_users.poder')
             ->where('users.id', $id)
             ->first();
 
-        return view('detalleUsuario',['user' => $user]);
+        $acceso=true;
+
+        if(Auth::user()->zona!=$user->zona){
+            $acceso=false;
+        }
+
+        return view('detalleUsuario',['user' => $user, 'acceso' => $acceso]);
     }
 
 
@@ -259,6 +275,11 @@ public function cerrarCaso(Request $request)
         return view('confirmacionFondoAdmin');
     }
     
+    public function confirmacionRespuestaCaso()
+    {
+        return view('confirmacionRespuestaCaso');
+    }
+
      public function changePassword(Request $request)
     {
             $validator = Validator::make($request->all(), [
@@ -416,17 +437,17 @@ public function guardarPuntaje(Request $request)
         $postulacion = $postulacion->transform(function ($postulacion) {
             switch ($postulacion->estado) {
                 case 1:
-                    $postulacion->calificacion = '<a href="#">Calificar</a>';
+                    $postulacion->calificacion = '<a href="' . route("detalleProyectoAdmin", ["id" => $postulacion->id]) . '">Responder</a>';
                     $postulacion->estado = 'En proceso';
                     $postulacion->respuesta = '<a href="' . route("detalleProyectoAdmin", ["id" => $postulacion->id]) . '">Responder</a>';
                     break;
                 case 2:
-                    $postulacion->calificacion = '<a href="#">Ver Calificación</a>';
+                    $postulacion->calificacion = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Calificación</a>';
                     $postulacion->estado = 'Enviado';
                     $postulacion->respuesta = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
                     break;
                 case 3:
-                    $postulacion->calificacion = '<a href="#">Ver Calificación</a>';
+                    $postulacion->calificacion = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Calificación</a>';
                     $postulacion->estado = 'Enviado';
                     $postulacion->respuesta = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
                     break;
@@ -468,10 +489,10 @@ public function guardarPuntaje(Request $request)
 
      public function detalleProyectoAdmin($id)
     {
-
         $pproy = DB::table('postulacion_proyectos')
             ->join('users', 'users.id', '=', 'postulacion_proyectos.user_id')
-            ->select('users.*','postulacion_proyectos.*')
+            ->join('persona_juridicas', 'persona_juridicas.id', '=', 'postulacion_proyectos.persona_juridica_id')
+            ->select('users.*', 'postulacion_proyectos.*', 'persona_juridicas.*','persona_juridicas.rut as rut_juridico','postulacion_proyectos.id as id_proy')
             ->where('postulacion_proyectos.id', $id)
             ->first();
 
@@ -489,11 +510,18 @@ public function guardarPuntaje(Request $request)
 
         $pproy = DB::table('postulacion_proyectos')
             ->join('users', 'users.id', '=', 'postulacion_proyectos.user_id')
-            ->select('users.*','postulacion_proyectos.*')
+            ->join('persona_juridicas', 'persona_juridicas.id', '=', 'postulacion_proyectos.persona_juridica_id')
+            ->select('users.*', 'postulacion_proyectos.*', 'persona_juridicas.*','persona_juridicas.rut as rut_juridico','postulacion_proyectos.id as id_proy')
             ->where('postulacion_proyectos.id', $id)
             ->first();
 
-        return view('respuestaProyectoAdmin',['pproy' => $pproy]);
+        $acceso=true;
+
+        if(Auth::user()->zona!=$pproy->zona){
+                $acceso=false;
+        }
+
+        return view('respuestaProyectoAdmin',['pproy' => $pproy,'acceso' => $acceso]);
     }
 
     public function cerrarProyecto(Request $request)
@@ -513,24 +541,11 @@ public function guardarPuntaje(Request $request)
     }
 
     try {
-        // Obtener el archivo del request
-        $archivo = $request->file('archivo');
-
-        // Guardar el archivo en el directorio deseado
-        $nombreArchivo = 'res_proy_' . auth()->id() . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
-        $archivo->storeAs('public/archivos', $nombreArchivo);
-
-        // Actualizar los campos respuesta y archivo_respuesta con el ID proporcionado en el URL usando Eloquent
-
-        $caso = PostulacionProyectos::findOrFail($request->pproy_id);
-        $caso->respuesta = $request->input('respuesta');
-        $caso->archivo_respuesta = $nombreArchivo;
-        $caso->estado = $request->input('estado_proyecto');
-        $caso->updated_at = Carbon::now();
-        $caso->save();
+       
+        $updateId= PostulacionProyectos::cerrarPostulacion($request);
 
         // Verificar si la actualización fue exitosa
-        if ($caso) {
+        if ($updateId) {
             // La actualización fue exitosa
             return response()->json([
                 'success' => true,
@@ -703,30 +718,15 @@ public function registrarUsuAdmin(Request $request)
     }
 
     try {
-        // Obtener el archivo del request
-        $archivo = $request->file('archivo');
 
-        // Guardar el archivo en el directorio deseado
-        $nombreArchivo = 'res_fondo_' . $request->pfondo_id . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
-        $archivo->storeAs('public/archivos', $nombreArchivo);
+        $fondo = PostulacionFondos::cerrarFondo($request);
 
-        $fondo = PostulacionFondos::findOrFail($request->pfondo_id);
-        $fondo->calificar = $request->input('calificar');
-        $fondo->respuesta = $request->input('respuesta');
-        $fondo->archivo_respuesta = $nombreArchivo;
-        $fondo->estado = $request->input('estado_fondo');
-        $fondo->updated_at = Carbon::now();
-        $fondo->save();
-
-        // Verificar si la actualización fue exitosa
         if ($fondo) {
-            // La actualización fue exitosa
             return response()->json([
                 'success' => true,
                 'message' => '¡La respuesta y el archivo se han actualizado correctamente!'
             ]);
         } else {
-            // La actualización falló
             return response()->json([
                 'success' => false,
                 'message' => 'Hubo un error al actualizar la respuesta y el archivo.'

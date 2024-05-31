@@ -1,7 +1,6 @@
 @extends('layouts.app')
-
 @section('content')
-
+@if($acceso)
 <section class="jumbotron">
     <div class="container ">
       <h1 class="jumbotron-heading text-center"><b>Responder Caso</b></h1>
@@ -89,13 +88,11 @@
     </div>
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">Adjuntar foto y/o video:</strong>
+            <strong class="d-block text-gray-dark">Adjunto foto y/o video:</strong>
             Descargar archivo:
         <a href="{{ asset('storage/archivos/' . $caso->archivo) }}" download>{{ $caso->archivo }}</a>
         </p>
     </div>
-<form id="cerrarCasoForm">
-    <input type="hidden" id="casoId" value="{{ $caso->casoid }}">
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125">
             <strong class="d-block text-gray-dark">RESPUESTA:</strong>
@@ -104,14 +101,18 @@
     </div>
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 text-md-right">
-            <strong class="d-block text-gray-dark">Adjuntar archivo (Formatos .pdf, .zip, .rar. Tamaño máximo 20 mb.):</strong>
+            <strong class="d-block text-gray-dark">Archivo Adjunto:</strong>
             <div class="mb-3">
           Descargar archivo:
-            <a href="{{ asset('storage/archivos/' . $caso->archivo) }}" download>{{ $caso->archivo_respuesta }}</a>
+            <a href="{{ asset('storage/archivos/' . $caso->archivo_respuesta) }}" download>{{ $caso->archivo_respuesta }}</a>
             </div>
         </p>
     </div>
-</form>
 </div>
+@else
+<div class="container text-center">
+    <h1>No tiene acceso a esta página</h1>
+</div>
+@endif
 </section>
 @endsection

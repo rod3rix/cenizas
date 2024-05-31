@@ -42,11 +42,11 @@ protected $fillable = [
     'aporte_solicitado',
     'acepto_clausula_proy',
     'estado',
-    'calificar',
+    // 'calificar',
     'respuesta',
     'archivo_respuesta',
-     'created_at',
-        'updated_at'
+    'created_at',
+    'updated_at'
 ];
 
 
@@ -167,5 +167,20 @@ protected $fillable = [
         return $validator;
     }
 
+    public static function cerrarPostulacion($request)
+    {
+        $archivo = $request->file('archivo');
+        $nombreArchivo = 'res_proy_' . auth()->id() . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
+        $archivo->storeAs('public/archivos', $nombreArchivo);
+        
+        $post = PostulacionProyectos::findOrFail($request->pproy_id);
+        $post->respuesta = $request->input('respuesta');
+        $post->archivo_respuesta = $nombreArchivo;
+        $post->estado = $request->input('estado_proyecto');
+        $post->updated_at = Carbon::now();
+        $post->save();
+
+        return $post;
+    }
 }
             

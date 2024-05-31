@@ -1,6 +1,6 @@
 @extends('layouts.app')
-
 @section('content')
+@if($acceso)
 <section class="jumbotron">
     <div class="container ">
       <h1 class="jumbotron-heading text-center"><b>Ver respuesta Apoyo Proyectos</b></h1>
@@ -205,23 +205,23 @@
     <h6 class="border-bottom border-gray pb-2 mb-0">Relaciones jurÍdicas</h6>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 ">
-        <strong class="d-block text-gray-dark">RUT: 76.980.567-7</strong>
+        <strong class="d-block text-gray-dark">RUT: {{ $pproy->rut_juridico }}</strong>
       </p>
 
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">RAZÓN SOCIAL: Nombre razón social XXXX</strong>
+        <strong class="d-block text-gray-dark">RAZÓN SOCIAL: {{ $pproy->razon_social }}</strong>
       </p>
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">RELACIÓN: Socio</strong>
+        <strong class="d-block text-gray-dark">RELACIÓN: {{ $pproy->relacion }}</strong>
       </p>
     </div>
         <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">ESTADO: Estado?</strong>
+        <strong class="d-block text-gray-dark">ESTADO: {{ $pproy->estado }}</strong>
       </p>
     </div>
 </div>
@@ -239,8 +239,11 @@
       <a href="{{ asset('storage/archivos/' . $pproy->archivo_respuesta ) }}" download="Fondo_anexo.pdf">Descargar Adjunto</a>
     </div>
 </div>
-
-
 </div>
 </section>
+@else
+<div class="container text-center">
+  <h1>No tiene acceso a esta página</h1>
+<div>
+@endif
 @endsection
