@@ -27,69 +27,10 @@
                   </table>
         </div>
 </div>
+<!-- Scripts -->
 <script>
-    
-$(document).ready(function() {
-    $.ajax({
-        url: '{{ route("listarFondosAdmin") }}',
-        type: 'POST',
-        dataType: 'json',
-        data: {_token: '{{ csrf_token() }}'},
-        success: function(response) {
-             $('#registros').DataTable({
-                language: {
-                    url: "{{ asset('lang/datatables/Spanish.json') }}"
-                },
-                data: response,
-                columns: [
-                    { data: 'id' },
-                    { data: 'nombre_proyecto' },
-                    { data: 'created_at_formatted' },
-                    { data: 'estado' },
-                    { data: 'name' },
-                    { data: 'calificacion' },
-                    { data: 'respuesta' }
-                ],
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'copy',
-                        exportOptions: {
-                            modifier: {
-                                page: 'all' // Exportar todas las páginas
-                            }
-                        }
-                    },
-                    {
-                        extend: 'excel',
-                        exportOptions: {
-                            modifier: {
-                                page: 'all' // Exportar todas las páginas
-                            }
-                        },
-                        filename: 'Portal Comunidades', // Nombre del archivo Excel
-                        title: 'Portal Comunidades'
-                    },
-                    {
-                        extend: 'pdf',
-                        exportOptions: {
-                            modifier: {
-                                page: 'all' // Exportar todas las páginas
-                            }
-                        },
-                        filename: 'Portal Comunidades', // Nombre del archivo PDF
-                        title: 'Portal Comunidades'
-                    }
-                ],
-                paging: true // Habilitar paginación
-            });
-        },
-        error: function(xhr, status, error) {
-            console.error('Error al cargar los datos:', error);
-        }
-    });
-});
-
+    const appConfig = {dataTablesLangUrl:
+    "{{ asset('lang/datatables/Spanish.json') }}"};
 </script>
-
+<script src="{{ asset('js/listar_fondos_admin.js') }}?v={{ time() }}"></script>
 @endsection

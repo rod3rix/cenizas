@@ -91,6 +91,7 @@ class PostulacionFondos extends Model
          'archivo_certificado',
          'id_persona_juridica',
          'estado',
+         'calificar',
          'respuesta',
          'archivo_respuesta',
         'created_at',

@@ -109,11 +109,7 @@
         {{ $pfondo->profesion }}
       </p>
     </div>
-<!--     <small class="d-block text-right mt-3">
-      <a href="#">All updates</a>
-    </small>
- -->  </div>
-
+</div>
 
  <div class="my-3 p-3 bg-white rounded shadow-sm">
     <h6 class="border-bottom border-gray pb-2 mb-0">DATOS ORGANIZACIÓN</h6>
@@ -172,7 +168,8 @@
         {{ $pfondo->equipamiento }}
       </p>
     </div>
-    <form id="cerrarFondoForm">
+    <form method="POST" id="frmCerrarFondo" name="frmCerrarFondo" enctype="multipart/form-data">
+      @csrf
      <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">3. Fundamentación – Razones que motivan la calidad del proyecto</strong>
@@ -180,7 +177,7 @@
       </p>
       <div class="col col-sm-4">
             <label for="calificacion" class="col-sm-2 col-form-label  border-bottom border-gray">Calificación:</label>
-            <select class="form-control" id="calificar" name="calificar">
+            <select class="form-control @error('calificar') is-invalid @enderror" id="calificar" name="calificar">
                 <option value="">Seleccione</option>
                 @for ($i = 0; $i <= 10; $i++)
                             <option value="{{ $i }}">{{ $i }}</option>
@@ -342,7 +339,8 @@
       <div class="media text-muted pt-3">
           <p class="media-body pb-3 mb-0 small lh-125">
               <strong class="d-block text-gray-dark">RESPUESTA:</strong>
-              <textarea id="respuesta" name="respuesta" class="form-control" rows="3" placeholder="Escribir respuesta"></textarea>
+               <label for="respuesta" class="col-sm-2 col-form-label  border-bottom border-gray">RESPUESTA:</label>
+              <textarea id="respuesta" name="respuesta" class="form-control @error('respuesta') is-invalid @enderror" rows="3" placeholder="Escribir respuesta"></textarea>
             @error('respuesta')
               <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -351,7 +349,7 @@
       <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 text-md-right">
             <strong class="d-block text-gray-dark">Estado del proyecto:</strong>
-            <select id="estado_fondo" name="estado_fondo" class="form-control">
+            <select id="estado_fondo" name="estado_fondo" class="form-control @error('estado_fondo') is-invalid @enderror">
                 <option value="">Seleccione</option>
                 <option value="2">Proyecto aceptado</option>
                 <option value="3">Proyecto rechazado</option>
@@ -365,7 +363,7 @@
           <p class="media-body pb-3 mb-0 small lh-125 text-md-right">
               <strong class="d-block text-gray-dark">Adjuntar archivo (Formatos .pdf, .zip, .rar. Tamaño máximo 20 mb.):</strong>
               <div class="mb-3">
-                  <input class="form-control" type="file" id="archivo" name="archivo" accept=".pdf,.zip,.rar">
+                  <input class="form-control @error('archivo') is-invalid @enderror" type="file" id="archivo" name="archivo" accept=".pdf,.zip,.rar">
                   @error('archivo')
                       <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
@@ -385,7 +383,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ¿Está seguro de que desea cerrar el caso?
+        ¿Está seguro de que desea cerrar la postulación?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
