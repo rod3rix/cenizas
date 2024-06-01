@@ -4,9 +4,7 @@
     <div class="container">
           <h3><b>RELACIONES JURÍDICAS</b></h3>
           <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique. This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-          <!-- <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p> -->
         </div>
-
         <div class="container">
             <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
             Ingresar otra relación jurídica
@@ -82,114 +80,15 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <!-- Aquí se agregarán dinámicamente los datos -->
                       </tbody>
-                        <tfoot>
-                        <tr>
-                              <th>RUT</th>
-                              <th>RAZÓN SOCIAL</th>
-                              <th>RELACIÓN</th>
-                              <th>ESTADO</th>
-                        </tr>
-                    </tfoot>
                   </table>
         </div>
 </div>
 <script>
-function formatRut(cliente) {
-  cliente.value = cliente.value
-    .replace(/[^0-9kK]/g, '') // Elimina todo excepto números y la letra 'k' o 'K'
-    .replace(/^(\d{1,2})(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4'); // Agrega puntos y guión en el formato estándar
-}
-    
-$(document).ready(function() {
-    $.ajax({
-        url: '{{ route("listarPersonaJuridicas") }}',
-        type: 'POST',
-        dataType: 'json',
-        data: {_token: '{{ csrf_token() }}'},
-        success: function(response) {
-             $('#registros').DataTable({
-                language: {
-                    url: "{{ asset('lang/datatables/Spanish.json') }}"
-                },
-                data: response,
-                columns: [
-                    { data: 'rut_link' },
-                    { data: 'razon_social' },
-                    { data: 'relacion' },
-                    { data: 'estado' }
-                ],
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'copy',
-                        exportOptions: {
-                            modifier: {
-                                page: 'all' // Exportar todas las páginas
-                            }
-                        }
-                    },
-                    {
-                        extend: 'excel',
-                        exportOptions: {
-                            modifier: {
-                                page: 'all' // Exportar todas las páginas
-                            }
-                        },
-                        filename: 'Portal Comunidades', // Nombre del archivo Excel
-                        title: 'Portal Comunidades'
-                    },
-                    {
-                        extend: 'pdf',
-                        exportOptions: {
-                            modifier: {
-                                page: 'all' // Exportar todas las páginas
-                            }
-                        },
-                        filename: 'Portal Comunidades', // Nombre del archivo PDF
-                        title: 'Portal Comunidades'
-                    }
-                ],
-                paging: true // Habilitar paginación
-            });
-        },
-        error: function(xhr, status, error) {
-            console.error('Error al cargar los datos:', error);
-        }
-    });
-
-    $('#formData').submit(function(e) {
-        e.preventDefault();
-        var formData = $(this).serialize();
-
-        $('form :input').removeClass('is-invalid');
-        $('.invalid-feedback').remove();
-
-        $.ajax({
-            url: '{{ route("crearPersonaJuridica") }}',
-            type: 'POST',
-            data: formData,
-            success: function(response, textStatus, xhr) {
-                if (xhr.status === 200) {
-                    if (response.success) {
-                        window.location.href = 'confirmacionPersonaJuridica';
-                    } else {
-                        $.each(response.errors, function(key, value) {
-                            $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
-                        });
-                    }
-                } else {
-                    console.error('Error en la solicitud:', xhr.status);
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Hubo un problema al enviar el formulario:', error);
-            }
-        });
-    });
-});
-
+    const appConfig = {dataTablesLangUrl:
+    "{{ asset('lang/datatables/Spanish.json') }}"};
 </script>
+<script src="{{ asset('js/format_rut.js') }}?v={{ time() }}"></script>
+<script src="{{ asset('js/persona_juridicas_usu.js') }}?v={{ time() }}"></script>
 
 @endsection

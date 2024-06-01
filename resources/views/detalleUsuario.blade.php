@@ -69,7 +69,8 @@
 <div class="my-3 p-3 bg-white rounded shadow-sm">
     <h6 class="border-bottom border-gray pb-2 mb-0 text-center">ASIGNAR INFLUENCIA, VECINDAD, AFINIDAD MLC</h6>
 
-<form id="formData">
+<form method="POST" id="frmGuardarPuntaje" name="frmGuardarPuntaje">
+@csrf
 <input type="hidden" id="user_id" name="user_id" value="{{ $user->id }}">
     @csrf
     <div class="row">
@@ -118,55 +119,10 @@
     </div>
     </div>
 </form>
-
 </div>
 </div>
 </section>
-<script>
-    $(document).ready(function() {
-        $('#formData').submit(function(e) {
-            e.preventDefault(); // Evitar que el formulario se envíe normalmente
-
-            // Obtener los datos del formulario
-            var formData = {
-                '_token': '{{ csrf_token() }}',
-                'user_id': $('#user_id').val(),
-                'influencia': $('#influencia').val(),
-                'vecindad': $('#vecindad').val(),
-                'vecindad_mlc': $('#vecindad_mlc').val(),
-                'poder': $('#poder').val()
-            };
-
-            // Realizar la solicitud AJAX
-            $.ajax({
-                type: 'POST',
-                url: '{{ route("guardarPuntaje") }}',
-                data: formData,
-                dataType: 'json',
-                success: function(response, textStatus, xhr) {
-                    if (xhr.status === 200) {
-                        // La solicitud fue exitosa, ahora verifica el contenido de la respuesta
-                        if (response.success) {
-                            window.location.href = '../confirmacionAsignacion';
-                        } else {
-                            // Si la respuesta indica que hubo errores de validación, muestra los mensajes de error debajo de los campos correspondientes
-                            $.each(response.errors, function(key, value) {
-                                // Encuentra el campo correspondiente al error y muestra el mensaje de error
-                                // $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
-                            });
-                        }
-                    } else {
-                        console.error('Error en la solicitud:', xhr.status);
-                        // Aquí puedes manejar otros tipos de errores de solicitud si es necesario
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Hubo un problema al enviar el formulario:', error);
-                }
-            });
-        });
-    });
-</script>
+<script src="{{ asset('js/frm_guardar_puntaje.js') }}?v={{ time() }}"></script>
 @else
 <div class="container text-center">
   <h1>No tiene acceso a esta página</h1>

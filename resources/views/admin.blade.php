@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
 @section('content')
-
 <section class="jumbotron text-center">
         <div class="container">
           <h3>PANEL DE ADMINISTRACIÓN</h3>
@@ -13,9 +11,8 @@
             <a href="#" class="btn btn-secondary my-3">VER CASOS</a>
           </p>
         </div>
-        @if(auth::user()->rol=="1")
-
-        <div class="container mt-5">
+@if(auth::user()->rol=="1")
+<div class="container mt-5">
         <!-- Div para mostrar el mensaje de estado -->
         <div id="statusMessage" class="alert alert-success d-none" role="alert"></div>
         <!-- Primer acordeón -->
@@ -190,10 +187,7 @@
                 </div>
             </div>
         </div>
-    </div>
-@endif
-
-<!-- Modal -->
+</div>
 <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -298,195 +292,12 @@
         </div>
     </div>
 </div>
-</section>
-
-
 <script>
-
-function formatRut(cliente) {
-  cliente.value = cliente.value
-    .replace(/[^0-9kK]/g, '') // Elimina todo excepto números y la letra 'k' o 'K'
-    .replace(/^(\d{1,2})(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4'); // Agrega puntos y guión en el formato estándar
-}
-
-function enviarFormulario(idFrm) {
-
-    var formData = new FormData(document.getElementById(idFrm));
-
-    $('form :input').removeClass('is-invalid');
-    $('.invalid-feedback').remove();
-
-    $.ajax({
-        url: 'registrarUsuAdmin',
-        method: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-   success: function(response, textStatus, xhr) {
-        if (xhr.status === 200) {
-            // La solicitud fue exitosa, ahora verifica el contenido de la respuesta
-            if (response.success) {
-                // Si la respuesta indica éxito, puedes realizar alguna acción, como redireccionar a otra página
-                $('#statusMessage').removeClass('d-none').text(response.message);
-                setTimeout(function() {
-                    listarUsuariosAdmin();
-                    $('#collapseOne').collapse('toggle');
-                    $('#frm1')[0].reset();
-                }, 2000);
-
-            } else {
-                // Si la respuesta indica que hubo errores de validación, muestras los mensajes de error debajo de los campos correspondientes
-                $.each(response.errors, function(key, value) {
-                    // Encuentra el campo correspondiente al error y muestra el mensaje de error
-                    $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
-                });
-            }
-        } else {
-            console.error('Error en la solicitud:', xhr.status);
-            // Aquí puedes manejar otros tipos de errores de solicitud si es necesario
-        }
-    },
-    error: function(xhr, status, error) {
-        console.error('Hubo un problema al enviar el formulario:', error);
-    }
-    });
-}
-
-$(document).ready(function() {
-
-listarUsuariosAdmin();
-
-
-// Cuando se abra el modal, cargar la información del usuario
-        var userModal = document.getElementById('userModal');
-        userModal.addEventListener('show.bs.modal', function (event) {
-            $('form :input').removeClass('is-invalid');
-            $('.invalid-feedback').remove();
-            var button = event.relatedTarget;
-            var userId = button.getAttribute('data-id');
-
-            $.ajax({
-                url: '{{ route("getUserDetails") }}',
-                type: 'POST',
-                data: { id: userId, _token: '{{ csrf_token() }}' },
-                dataType: 'json',
-                success: function(user) {
-                    $('#userId').val(user.id);
-                    $('#modalUserName').val(user.name);
-                    $('#modalUserApellidoPaterno').val(user.apellido_paterno);
-                    $('#modalUserApellidoMaterno').val(user.apellido_materno);
-                    $('#modalUserRut').val(user.rut);
-                    $('#modalUserEmail').val(user.email);
-                    $('#modalUserTelefono').val(user.fono);
-                    $('#modalUserZona').val(user.zona);
-                }
-            });
-        });
-
-        // Enviar formulario mediante AJAX
-        $('#userForm').submit(function(event) {
-            event.preventDefault();
-
-            $('form :input').removeClass('is-invalid');
-            $('.invalid-feedback').remove();
-
-            var userId = $('#userId').val();
-
-            $.ajax({
-                url: `updateUser/${userId}`,
-                type: 'POST',
-                data: $(this).serialize(),
-                dataType: 'json',
-                success: function(response) {
-                    if (response.success) {
-                        // Éxito, puedes hacer algo como cerrar el modal o mostrar un mensaje
-                        listarUsuariosAdmin();
-                        $('#userModal').modal('hide');
-                        $('#statusMessage').removeClass('d-none').text(response.message);
-                        $('#collapseTwo').collapse('hide');
-                        $('#userForm')[0].reset();
-                        // Aquí puedes realizar otras acciones según sea necesario
-                    } else {
-                        // Si la respuesta indica que hubo errores de validación, muestras los mensajes de error debajo de los campos correspondientes
-                $.each(response.errors, function(key, value) {
-                    // Encuentra el campo correspondiente al error y muestra el mensaje de error
-                    $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
-                });
-                    }
-                }
-            });
-        });
-
-});
-
-function listarUsuariosAdmin(){
-    $.ajax({
-        url: '{{ route("listarUsuariosAdmin") }}',
-        type: 'POST',
-        dataType: 'json',
-        data: {_token: '{{ csrf_token() }}'},
-        success: function(response) {
-             // Destruir la instancia existente de DataTable si ya está inicializada
-            if ($.fn.DataTable.isDataTable('#registros')) {
-                $('#registros').DataTable().clear().destroy();
-            }
-
-             $('#registros').DataTable({
-                language: {
-                    url: "{{ asset('lang/datatables/Spanish.json') }}"
-                },
-                data: response,
-                columns: [
-                    { data: 'id' },
-                    { data: 'name' },
-                    { data: 'apellido_paterno' },
-                    { data: 'rut' },
-                    { data: 'link_editar' }
-                ],
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'copy',
-                        exportOptions: {
-                            modifier: {
-                                page: 'all' // Exportar todas las páginas
-                            }
-                        }
-                    },
-                    {
-                        extend: 'excel',
-                        exportOptions: {
-                            modifier: {
-                                page: 'all' // Exportar todas las páginas
-                            }
-                        },
-                        filename: 'Portal Comunidades', // Nombre del archivo Excel
-                        title: 'Portal Comunidades'
-                    },
-                    {
-                        extend: 'pdf',
-                        exportOptions: {
-                            modifier: {
-                                page: 'all' // Exportar todas las páginas
-                            }
-                        },
-                        filename: 'Portal Comunidades', // Nombre del archivo PDF
-                        title: 'Portal Comunidades'
-                    }
-                ],
-                paging: true // Habilitar paginación
-            });
-        },
-        error: function(xhr, status, error) {
-            console.error('Error al cargar los datos:', error);
-        }
-    });
-
-}
-        
-
-
-
-</script> 
-
+    const appConfig = {dataTablesLangUrl:
+    "{{ asset('lang/datatables/Spanish.json') }}"};
+</script>
+<script src="{{ asset('js/format_rut.js') }}?v={{ time() }}"></script>
+<script src="{{ asset('js/frm_sadmin.js') }}?v={{ time() }}"></script>
+@endif
+</section>
 @endsection

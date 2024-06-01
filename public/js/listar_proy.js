@@ -1,6 +1,7 @@
+    
 $(document).ready(function() {
     $.ajax({
-        url: 'casosUsuarioAdmin', 
+        url: 'listarApoyoProyectos',
         type: 'POST',
         dataType: 'json',
         data: {_token: $('meta[name="csrf-token"]').attr('content')},
@@ -12,11 +13,10 @@ $(document).ready(function() {
                 data: response,
                 columns: [
                     { data: 'id' },
-                    { data: 'asunto' },
-                    { data: 'nombre_usuario' },
-                    { data: 'fecha_creacion' },
-                    { data: 'estado' },
-                    { data: 'respuesta' }
+                    { data: 'nombre_proyecto' },
+                    { data: 'created_at_formatted' },
+                    { data: 'estado_texto' },
+                    { data: 'resolucion' }
                 ],
                 dom: 'Bfrtip',
                 buttons: [
@@ -45,15 +45,14 @@ $(document).ready(function() {
                                 page: 'all'
                             }
                         },
-                        filename: 'Portal Comunidades',
-                        title: 'Portal Comunidades'
+                        filename: 'Portal Comunidades',                         title: 'Portal Comunidades'
                     }
                 ],
                 paging: true
             });
         },
         error: function(xhr, status, error) {
-            console.error('Error al cargar los casos:', error);
+            console.error('Error al cargar los datos:', error);
         }
     });
 });

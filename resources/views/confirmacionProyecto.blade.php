@@ -1,13 +1,5 @@
 @extends('layouts.app')
-
 @section('content')
-
- @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
 <section class="jumbotron text-center">
     <div class="container">
       <h1 class="jumbotron-heading"><b>Gracias por postular a<br> Apoyo Proyecto</b></h1>

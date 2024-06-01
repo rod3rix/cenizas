@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
 @section('content')
-
 <section class="jumbotron text-center">
     <div class="container">
       <h1 class="jumbotron-heading"><b>Gracias por postular a<br> Fondos Concursables</b><br>Pronto te daremos una respuesta</h1>
@@ -9,12 +7,8 @@
         <a href="{{ route('seguimientoFondos') }}" class="btn btn-primary my-2">Seguimiento de postulación</a>
       </p>
     </div>
-    <br>
-      <br>
-      
+  <br>
+  <br>
 <hr>
-
-
-  </section>
-
+</section>
 @endsection

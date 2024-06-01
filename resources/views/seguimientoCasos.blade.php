@@ -1,20 +1,9 @@
 @extends('layouts.app')
-
 @section('content')
-
- @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <!-- You are logged in! -->
-
 <div class="jumbotron">
         <div class="container">
           <h3><b>SEGUIMIENTO DE CASOS, SUGERENCIA U OTROS</b></h3>
           <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique. This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-          <!-- <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p> -->
         </div>
 
         <hr>
@@ -75,20 +64,9 @@
             </tr>
         </tbody>
         <tfoot>
-           <!--  <tr>
-                <th>FOLIO</th>
-                <th>NOMBRE PROYECTO</th>
-                <th>FECHA DE ENVÍO</th>
-                <th>ESTADO</th>
-                <th>RESOUCIÓN</th>
-            </tr> -->
         </tfoot>
     </table>
 
     </div>
 </div>
-     
-<!-- Scripts -->
-<script src="{{ asset('js/datatable.js') }}" defer></script>
-
 @endsection

@@ -1,13 +1,5 @@
 @extends('layouts.app')
-
 @section('content')
-
- @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
 <section class="jumbotron text-center">
     <div class="container">
       <h1 class="jumbotron-heading"><b>La contraseña ha sido cambiada correctamente<br></b></h1>
@@ -15,11 +7,7 @@
       </p>
     </div>
     <br>
-      <br>
-      
+  <br>
 <hr>
-
-
-  </section>
-
+</section>
 @endsection

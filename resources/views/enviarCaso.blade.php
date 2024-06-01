@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
 @section('content')
-
 <div class="jumbotron">
         <div class="container">
           <h3><b>INGRESO DE CASOS, SUGERENCIA U OTROS</b></h3>
@@ -222,7 +220,6 @@
     </div>
 <hr>
 </div>     
-<!-- Scripts -->
 <script src="{{ asset('js/frm_casos.js') }}?v={{ time() }}"></script>
 <script src="{{ asset('js/regiones_comunas.js') }}"></script>
 @endsection

@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
 @section('content')
-
 <section class="jumbotron text-center">
     <div class="container">
       <h1 class="jumbotron-heading"><b>Respuesta a Apoyo Proyecto<br>guardada con éxito</b></h1>
@@ -10,11 +8,7 @@
       </p>
     </div>
     <br>
-      <br>
-      
+  <br>
 <hr>
-
-
-  </section>
-
+</section>
 @endsection

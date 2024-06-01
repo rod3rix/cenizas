@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <section class="jumbotron">
     <div class="container ">
@@ -190,10 +189,6 @@
       </p>
     </div>
 </div>
-
-
-    </div>
-
-
-  </section>
+</div>
+</section>
 @endsection

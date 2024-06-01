@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
 @section('content')
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -9,9 +7,8 @@
                 <div class="card-header">Cambiar Contraseña</div>
 
                 <div class="card-body">
-                    <form id="changePasswordForm">
+    <form id="changePasswordForm">
     @csrf
-
     <div class="form-group row mb-3">
         <label for="current_password" class="col-md-4 col-form-label text-md-right">Contraseña Actual</label>
 
@@ -53,50 +50,10 @@
         </div>
     </div>
 </form>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-        $('#changePasswordForm').submit(function(e) {
-            e.preventDefault();
-
-            $('form :input').removeClass('is-invalid');
-            $('.invalid-feedback').remove();
-
-            var formData = $(this).serialize();
-
-            $.ajax({
-                type: 'POST',
-                url: '{{ route("change.password") }}',
-                data: formData,
-                success: function(response, textStatus, xhr) {
-                    if (xhr.status === 200) {
-                        // La solicitud fue exitosa, ahora verifica el contenido de la respuesta
-                        if (response.success) {
-                            window.location.href = 'confirmacionPassAdmin';
-                        } else {
-                            // Si la respuesta indica que hubo errores de validación, muestra los mensajes de error debajo de los campos correspondientes
-                            $.each(response.errors, function(key, value) {
-                                // Encuentra el campo correspondiente al error y muestra el mensaje de error
-                                $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
-                            });
-                        }
-                    } else {
-                        console.error('Error en la solicitud:', xhr.status);
-                        // Aquí puedes manejar otros tipos de errores de solicitud si es necesario
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Hubo un problema al enviar el formulario:', error);
-                }
-            });
-        });
-    });
-</script>
-
+<script src="{{ asset('js/frm_cambiar_pass_admin.js') }}?v={{ time() }}"></script>
 @endsection

@@ -1,11 +1,9 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="jumbotron">
         <div class="container text-center">
           <h3><b>Ver Sugerencia Reclamo u otros</b></h3>
           <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique. This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-          <!-- <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p> -->
         </div>
         <hr>
         <div  class="container">    
@@ -30,6 +28,5 @@
     const appConfig = {dataTablesLangUrl:
     "{{ asset('lang/datatables/Spanish.json') }}"};
 </script>
-<script src="{{ asset('js/datatable.js') }}" defer></script>
 <script src="{{ asset('js/listar_sug_rec.js') }}?v={{ time() }}"></script>
 @endsection

@@ -30,6 +30,5 @@
     const appConfig = {dataTablesLangUrl:
     "{{ asset('lang/datatables/Spanish.json') }}"};
 </script>
-<script src="{{ asset('js/datatable.js') }}" defer></script>
 <script src="{{ asset('js/listar_proy_admin.js') }}?v={{ time() }}"></script>
 @endsection

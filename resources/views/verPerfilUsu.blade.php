@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
 @section('content')
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -109,45 +107,6 @@
         </div>
     </div>
 </div>
-
-<script>
-  $(document).ready(function() {
-        $('#updateProfileForm').submit(function(e) {
-            e.preventDefault();
-
-            $('form :input').removeClass('is-invalid');
-            $('.invalid-feedback').remove();
-
-            var formData = $(this).serialize();
-
-            $.ajax({
-                type: 'POST',
-                url: '{{ route("updateProfile") }}',
-                data: formData,
-                success: function(response, textStatus, xhr) {
-                    if (xhr.status === 200) {
-                        // La solicitud fue exitosa, ahora verifica el contenido de la respuesta
-                        if (response.success) {
-                            window.location.href = 'confirmacionUsuario';
-                        } else {
-                            // Si la respuesta indica que hubo errores de validación, muestra los mensajes de error debajo de los campos correspondientes
-                            $.each(response.errors, function(key, value) {
-                                // Encuentra el campo correspondiente al error y muestra el mensaje de error
-                                $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
-                            });
-                        }
-                    } else {
-                        console.error('Error en la solicitud:', xhr.status);
-                        // Aquí puedes manejar otros tipos de errores de solicitud si es necesario
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Hubo un problema al enviar el formulario:', error);
-                }
-            });
-        });
-    });
-</script>
-
+<script src="{{ asset('js/update_perfil.js') }}?v={{ time() }}"></script>
 @endsection
 

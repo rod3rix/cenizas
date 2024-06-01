@@ -1,22 +1,25 @@
 $(document).ready(function() {
     $.ajax({
-        url: 'casosUsuarioAdmin', 
+        url: 'listarUsers',
         type: 'POST',
-        dataType: 'json',
+        dataType: 'json', 
         data: {_token: $('meta[name="csrf-token"]').attr('content')},
         success: function(response) {
-             $('#registros').DataTable({
+            $('#registros').DataTable({
                 language: {
                     url: appConfig.dataTablesLangUrl
                 },
                 data: response,
                 columns: [
-                    { data: 'id' },
-                    { data: 'asunto' },
-                    { data: 'nombre_usuario' },
-                    { data: 'fecha_creacion' },
-                    { data: 'estado' },
-                    { data: 'respuesta' }
+                    { data: 'user_id_link' },
+                    { data: 'name' },
+                    { data: 'apellido_paterno' },
+                    { data: 'rut' },
+                    { data: 'email' },
+                    { data: 'influencia' },
+                    { data: 'vecindad' },
+                    { data: 'vecindad_mlc' },
+                    { data: 'poder' }
                 ],
                 dom: 'Bfrtip',
                 buttons: [
@@ -45,7 +48,7 @@ $(document).ready(function() {
                                 page: 'all'
                             }
                         },
-                        filename: 'Portal Comunidades',
+                        filename: 'Portal Comunidades', 
                         title: 'Portal Comunidades'
                     }
                 ],
@@ -53,7 +56,7 @@ $(document).ready(function() {
             });
         },
         error: function(xhr, status, error) {
-            console.error('Error al cargar los casos:', error);
+            console.error('Error al cargar los usuarios:', error);
         }
     });
 });

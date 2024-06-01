@@ -44,7 +44,7 @@ Route::get('/clausulaFondo', [App\Http\Controllers\HomeController::class, 'claus
 
 Route::get('/seguimientoFondos', [App\Http\Controllers\HomeController::class, 'seguimientoFondos'])->name('seguimientoFondos');
 
-Route::post('/actualizarPersonaJuridica',  [App\Http\Controllers\HomeController::class, 'actualizarPersonaJuridica'])->name('actualizarPersonaJuridica');
+Route::post('editarPersonaJuridica/actualizarPersonaJuridica',  [App\Http\Controllers\HomeController::class, 'actualizarPersonaJuridica'])->name('actualizarPersonaJuridica');
 
 Route::get('/editarPersonaJuridica/{id}',  [App\Http\Controllers\HomeController::class, 'editarPersonaJuridica'])->name('editarPersonaJuridica');
 
@@ -71,7 +71,7 @@ Route::get('personaJuridica', [App\Http\Controllers\HomeController::class, 'pers
 
 Route::get('/verPerfilUsu', [App\Http\Controllers\HomeController::class, 'verPerfilUsu'])->name('verPerfilUsu');
 
-Route::post('cambiar-pass', [App\Http\Controllers\HomeController::class, 'changePasswordUsu'])->name('cambiar.pass');
+Route::post('cambiarPass', [App\Http\Controllers\HomeController::class, 'changePasswordUsu'])->name('cambiarPass');
 
  Route::get('cambiarPass', [App\Http\Controllers\HomeController::class, 'cambiarPass'])->name('cambiarPass');
 
@@ -136,10 +136,10 @@ Route::middleware(['class','auth', 'access-level:admin'])->group(function () {
 
     Route::post('/listarFondosAdmin',  [App\Http\Controllers\AdminController::class, 'listarFondosAdmin'])->name('listarFondosAdmin');
 
-    Route::post('/users/data', [App\Http\Controllers\AdminController::class, 'getData'])->name('users.data');
-    Route::post('/change-password', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('change.password');
+    Route::post('listarUsers', [App\Http\Controllers\AdminController::class, 'getData'])->name('listarUsers');
+    Route::post('/cambiarPassAd', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('cambiarPassAd');
 
-    Route::post('guardarPuntaje', [App\Http\Controllers\AdminController::class, 'guardarPuntaje'])->name('guardarPuntaje');
+    Route::post('detalleUser/guardarPuntaje', [App\Http\Controllers\AdminController::class, 'guardarPuntaje'])->name('guardarPuntaje');
 
     Route::get('/admin', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
 
