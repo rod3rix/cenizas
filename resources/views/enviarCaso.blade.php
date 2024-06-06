@@ -43,11 +43,14 @@
                             <label for="localidad" class="col-md-12 col-form-label text-md-left">{{ __('2. Localidad*') }}</label>
 
                             <div class="col-md-12">
-                                <select id="localidad" name="localidad" type="text" class="form-control @error('localidad') is-invalid @enderror">
+                                <select id="localidad" name="localidad" type="text" class="form-control @error('localidad') is-invalid @enderror" {{ in_array($user->zona, [1, 2]) ? 'disabled' : '' }}>
                                     <option value="">Seleccione</option>
-                                    <option value="1">Cabildo</option>
-                                    <option value="2">Taltal</option>
+                                    <option value="1" {{ $user->zona == 1 ? 'selected' : '' }}>Taltal</option>
+                                    <option value="2" {{ $user->zona == 2 ? 'selected' : '' }}>Cabildo</option>
                                 </select>
+                                @if(in_array($user->zona, [1, 2]))
+                                    <input type="hidden" name="localidad" value="{{ $user->zona }}">
+                                @endif
 
                                 @error('localidad')
                                     <span class="invalid-feedback" role="alert">

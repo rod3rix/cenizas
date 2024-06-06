@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('direccion');
             $table->string('asunto');
             $table->string('descripcion', 2500);
-            $table->string('archivo');
+            $table->string('archivo')->nullable();
             $table->integer('estado')->nullable();
             $table->string('respuesta', 2500)->nullable();
             $table->string('archivo_respuesta')->nullable();

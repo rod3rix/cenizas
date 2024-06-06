@@ -95,7 +95,11 @@
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">Adjuntar foto y/o video:</strong>
             Descargar archivo:
+        @if ($caso->archivo)
         <a href="{{ asset('storage/archivos/' . $caso->archivo) }}" download>{{ $caso->archivo }}</a>
+        @else
+            Sin archivo adjunto
+        @endif
         </p>
     </div>
 <form id="cerrarCasoForm">

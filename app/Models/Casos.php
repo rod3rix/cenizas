@@ -43,7 +43,7 @@ class Casos extends Model
             'direccion' => 'required|string|max:255',
             'asunto' => 'required|string|max:255',  
             'descripcion' => 'required|string|max:2500', 
-            'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480',
+            // 'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480',
             ]);
 
         return $validator;
@@ -51,9 +51,13 @@ class Casos extends Model
 
      public static function crearCaso($request)
     {
-        $archivo = $request->file('archivo');
-        $nombreArchivo = 'caso_' . auth()->id() . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
-        $archivo->storeAs('public/archivos', $nombreArchivo);
+        if ($request->hasFile('archivo')) {
+            $archivo = $request->file('archivo');
+            $nombreArchivo = 'caso_' . auth()->id() . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
+            $archivo->storeAs('public/archivos', $nombreArchivo);
+        } else {
+            $nombreArchivo = null;
+        }
 
         $insertedId = \DB::table('casos')->insertGetId([
             'idUser' => auth()->id(),
@@ -68,7 +72,19 @@ class Casos extends Model
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
-
+        
         return $insertedId;
     }
+
+
+    public static function respuestaCaso($id)
+    {
+        $caso = Casos::join('users', 'casos.idUser', '=', 'users.id')
+                 ->join('regiones', 'casos.region_id', '=', 'regiones.id')
+                 ->join('comunas', 'casos.comuna_id', '=', 'comunas.id')
+                 ->select('casos.*', 'users.*', 'regiones.nombre as region', 'comunas.nombre as comuna','casos.id as casoid')
+                 ->findOrFail($id);
+  
+        return $caso;
+    }          
 }

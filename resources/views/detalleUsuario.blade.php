@@ -78,7 +78,7 @@
             <label for="influencia" class="col-sm-2 col-form-label">Influencia:</label>
             <select class="form-control" id="influencia" name="influencia">
                 <option value="">Seleccione</option>
-                @for ($i = 0; $i <= 10; $i++)
+                @for ($i = 0; $i <= 5; $i++)
                             <option value="{{ $i }}" {{ $user->influencia == $i ? 'selected' : '' }}>{{ $i }}</option>
 
                 @endfor
@@ -88,7 +88,7 @@
             <label for="vecindad" class="col-sm-2 col-form-label">Vecindad:</label>
             <select class="form-control" id="vecindad" name="vecindad">
                 <option value="">Seleccione</option>
-                @for ($i = 0; $i <= 10; $i++)
+                @for ($i = 0; $i <= 5; $i++)
                             <option value="{{ $i }}" {{ $user->vecindad == $i ? 'selected' : '' }}>{{ $i }}</option>
 
                 @endfor
@@ -98,7 +98,7 @@
             <label for="vecindad_mlc" class="col-sm-6 col-form-label">Afinidad MLC:</label>
             <select class="form-control" id="vecindad_mlc" name="vecindad_mlc">
                 <option value="">Seleccione</option>
-                @for ($i = 0; $i <= 10; $i++)
+                @for ($i = 0; $i <= 5; $i++)
               <option value="{{ $i }}" {{ $user->vecindad_mlc == $i ? 'selected' : '' }}>{{ $i }}</option>
                 @endfor
             </select>
@@ -107,7 +107,7 @@
             <label for="poder" class="col-sm-2 col-form-label">Poder:</label>
             <select class="form-control" id="poder" name="poder">
                 <option value="">Seleccione</option>
-                @for ($i = 0; $i <= 10; $i++)
+                @for ($i = 0; $i <= 5; $i++)
                     <option value="{{ $i }}" {{ $user->poder == $i ? 'selected' : '' }}>{{ $i }}</option>
                 @endfor
             </select>

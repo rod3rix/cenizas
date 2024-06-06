@@ -16,6 +16,7 @@ use App\Models\PostulacionProyectos;
 use App\Models\DatosOrganizaciones;
 use App\Models\PostulacionFondos;
 use App\Models\ListadoFondos;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\PostulacionPresupuestos;
 use Auth;
@@ -130,10 +131,34 @@ class HomeController extends Controller
 
                 $user=$user[0];
 
-                //dd($user);
-
         return view('enviarCaso',['user' => $user]);
     } 
+
+    public function crearCaso(Request $request)
+    {
+        $validator = Casos::validar($request->all());
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->toArray()
+            ]);
+        }
+
+        $insertedId = Casos::crearCaso($request);
+
+        if ($insertedId) {
+            return response()->json([
+                'success' => true,
+                'message' => '¡El formulario se ha enviado correctamente y el archivo se ha subido!'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Hubo un error al guardar el formulario en la base de datos.'
+            ], 500);
+        }
+    }
 
      public function getComunas(Request $request)
     {
@@ -258,43 +283,13 @@ public function listarFondos()
     
     }
 
-     public function crearCaso(Request $request)
-    {
-        $validator = Casos::validar($request->all());
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'errors' => $validator->errors()->toArray()
-            ]);
-        }
-
-        $insertedId = Casos::crearCaso($request);
-
-        if ($insertedId) {
-            return response()->json([
-                'success' => true,
-                'message' => '¡El formulario se ha enviado correctamente y el archivo se ha subido!'
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Hubo un error al guardar el formulario en la base de datos.'
-            ], 500);
-        }
-    }
-
     public function respuestaCaso($id)
     {
-        // Obtener el caso específico según el ID proporcionado en la URL
-    $caso = Casos::join('users', 'casos.idUser', '=', 'users.id')
-                 ->join('regiones', 'casos.region_id', '=', 'regiones.id')
-                 ->join('comunas', 'casos.comuna_id', '=', 'comunas.id')
-                 ->select('casos.*', 'users.*', 'regiones.nombre as region', 'comunas.nombre as comuna','casos.id as casoid')
-                 ->findOrFail($id);
-
-        // Pasar el caso a la vista 'responderCaso'
-        return view('respuestaCaso', compact('caso'));
+        $caso = casos::respuestaCaso($id);
+        
+        $acceso = User::acceso($caso);
+        
+        return view('respuestaCaso', compact('caso','acceso'));
     }
 
     public function editarPersonaJuridica($id)

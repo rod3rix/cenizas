@@ -98,11 +98,7 @@ class AdminController extends Controller
                  ->select('casos.*', 'users.*', 'regiones.nombre as region', 'comunas.nombre as comuna','casos.id as casoid')
                  ->findOrFail($id);
 
-       $acceso=true;
-
-        if(Auth::user()->zona!=$caso->zona){
-            $acceso=false;
-        }
+       $acceso = User::acceso($caso);
  
         return view('respuestaCasoAdmin', compact('caso','acceso'));
     }
@@ -121,11 +117,7 @@ class AdminController extends Controller
         ->where('postulacion_fondos_id', $id)
         ->get();
 
-        $acceso=true;
-
-        if(Auth::user()->zona!=$pfondo->zona){
-            $acceso=false;
-        }
+        $acceso = User::acceso($pfondo);
 
         return view('respuestaFondoAdmin',['pfondo' => $pfondo,'acceso' => $acceso,'fpresupuesto' => $fpresupuesto]);
 
@@ -139,11 +131,7 @@ class AdminController extends Controller
                  ->select('casos.*', 'users.*', 'regiones.nombre as region', 'comunas.nombre as comuna','casos.id as casoid')
                  ->findOrFail($id);
         
-        $acceso=true;
-
-        if(Auth::user()->zona!=$caso->zona){
-            $acceso=false;
-        }
+        $acceso = User::acceso($caso);
 
         return view('responderCaso', compact('caso','acceso'));
     }
@@ -240,11 +228,7 @@ public function cerrarCaso(Request $request)
             ->where('users.id', $id)
             ->first();
 
-        $acceso=true;
-
-        if(Auth::user()->zona!=$user->zona){
-            $acceso=false;
-        }
+        $acceso = User::acceso($user);
 
         return view('detalleUsuario',['user' => $user, 'acceso' => $acceso]);
     }
@@ -479,11 +463,7 @@ public function guardarPuntaje(Request $request)
         ->where('postulacion_fondos_id', $id)
         ->get();
 
-        $acceso=true;
-
-        if(Auth::user()->zona!=$pfondo->zona){
-            $acceso=false;
-        }
+        $acceso = User::acceso($pfondo);
 
         return view('detalleFondoAdmin',['pfondo' => $pfondo,'acceso' => $acceso,'fpresupuesto' => $fpresupuesto]);
     } 
@@ -497,11 +477,7 @@ public function guardarPuntaje(Request $request)
             ->where('postulacion_proyectos.id', $id)
             ->first();
 
-             $acceso=true;
-
-            if(Auth::user()->zona!=$pproy->zona){
-                $acceso=false;
-            }
+            $acceso = User::acceso($pproy);
 
         return view('detalleProyectoAdmin',['pproy' => $pproy,'acceso' => $acceso]);
     }
@@ -516,11 +492,7 @@ public function guardarPuntaje(Request $request)
             ->where('postulacion_proyectos.id', $id)
             ->first();
 
-        $acceso=true;
-
-        if(Auth::user()->zona!=$pproy->zona){
-                $acceso=false;
-        }
+        $acceso = User::acceso($pproy);
 
         return view('respuestaProyectoAdmin',['pproy' => $pproy,'acceso' => $acceso]);
     }

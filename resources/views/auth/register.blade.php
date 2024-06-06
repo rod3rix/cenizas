@@ -96,10 +96,9 @@
                             <div class="col-md-12">
                                 <select id="zona" class="form-control @error('zona') is-invalid @enderror" name="zona" >
                                     <option value="">{{ __('Seleccione') }}</option>
-                                    <option value="1">{{ __('Cabildo') }}</option>
-                                    <option value="2">{{ __('Taltal') }}</option>
+                                    <option value="1">{{ __('Taltal') }}</option>
+                                    <option value="2">{{ __('Cabildo') }}</option>
                                 </select>
-
                                 @error('zona')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
