@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Auth;
+use DB;
 
 class PostulacionFondos extends Model
 {
@@ -244,5 +245,29 @@ class PostulacionFondos extends Model
         $fondo->save();
 
         return $fondo;
+    }
+
+    public static function getPostFondos($id)
+    {
+        $postulaciones = DB::table('listado_fondos')
+        ->join('postulacion_fondos', 'listado_fondos.id', '=', 'postulacion_fondos.id_fondo_concursable')
+        ->where('postulacion_fondos.user_id', $id)
+        ->select(
+            'postulacion_fondos.id AS id_postulacion', 
+            'listado_fondos.nombre_fondo', 
+            'postulacion_fondos.created_at', 
+            DB::raw("CASE 
+                        WHEN postulacion_fondos.estado = 1 THEN 'Enviado'
+                        WHEN postulacion_fondos.estado = 2 THEN 'Aprobado'
+                        WHEN postulacion_fondos.estado = 3 THEN 'Rechazado'
+                     END AS estado")
+        )
+        ->get();
+
+        foreach ($postulaciones as $postulacion) {
+            $postulacion->created_at = Carbon::parse($postulacion->created_at)->format('d/m/Y');
+        }
+
+        return $postulaciones;
     }
 }

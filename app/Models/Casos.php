@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Auth;
+use DB;
 
 class Casos extends Model
 {
@@ -86,5 +87,27 @@ class Casos extends Model
                  ->findOrFail($id);
   
         return $caso;
-    }          
+    }  
+
+    public static function getCasosUsu($id)
+    {
+         $casos = DB::table('casos')
+        ->where('casos.idUser', $id)
+        ->select(
+            'casos.id AS id_caso', 
+            'casos.tipo', 
+            DB::raw("CASE 
+                        WHEN estado = 1 THEN 'Pendiente'
+                        WHEN estado = 2 THEN 'Resuelto'
+                     END AS estado"),
+            'created_at'
+        )
+        ->get();
+
+        foreach ($casos as $caso) {
+            $caso->created_at = Carbon::parse($caso->created_at)->format('d/m/Y');
+        }
+
+        return $casos;
+    }        
 }

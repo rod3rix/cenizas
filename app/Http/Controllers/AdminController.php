@@ -222,17 +222,19 @@ public function cerrarCaso(Request $request)
 
     public function detalleUser($id)
     {
-        $user = DB::table('users')
-            ->leftJoin('puntaje_users', 'users.id', '=', 'puntaje_users.user_id')
-            ->select('users.*', 'puntaje_users.influencia', 'puntaje_users.vecindad', 'puntaje_users.vecindad_mlc', 'puntaje_users.poder')
-            ->where('users.id', $id)
-            ->first();
-
+        $user = User::detalleUser($id);
+        $pfondos = PostulacionFondos::getPostFondos($id);
+        $pproy = PostulacionProyectos::getPostProy($id);
+        $casos = Casos::getCasosUsu($id);
         $acceso = User::acceso($user);
-
-        return view('detalleUsuario',['user' => $user, 'acceso' => $acceso]);
+        return view('detalleUsuario',[
+            'user' => $user, 
+            'pfondos' => $pfondos,
+            'pproy' => $pproy,
+            'casos' => $casos,
+            'acceso' => $acceso
+        ]);
     }
-
 
     public function cambiarPassAdmin()
     {

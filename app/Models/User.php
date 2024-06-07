@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
+use DB;
 
 class User extends Authenticatable
 {
@@ -76,6 +77,17 @@ class User extends Authenticatable
         }
 
         return $acceso;
+    }
+
+    public static function detalleUser($id)
+    {
+        $user = DB::table('users')
+            ->leftJoin('puntaje_users', 'users.id', '=', 'puntaje_users.user_id')
+            ->select('users.*', 'puntaje_users.influencia', 'puntaje_users.vecindad', 'puntaje_users.vecindad_mlc', 'puntaje_users.poder')
+            ->where('users.id', $id)
+            ->first();
+
+        return $user;
     }
 
 }

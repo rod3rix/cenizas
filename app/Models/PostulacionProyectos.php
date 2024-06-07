@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Auth;
+use DB;
 
 class PostulacionProyectos extends Model
 {
@@ -181,6 +182,30 @@ protected $fillable = [
         $post->save();
 
         return $post;
+    }
+
+    public static function getPostProy($id)
+    {
+        $postulaciones = DB::table('postulacion_proyectos')
+            ->where('postulacion_proyectos.user_id', $id)
+            ->select(
+            'postulacion_proyectos.id AS id_postulacion', 
+            'postulacion_proyectos.nombre_proyecto', 
+            'postulacion_proyectos.created_at', 
+            DB::raw("CASE 
+                        WHEN estado = 1 THEN 'Enviado'
+                        WHEN estado = 2 THEN 'Aprobado'
+                        WHEN estado = 3 THEN 'Rechazado'
+                     END AS estado"),
+            'created_at'
+        )
+        ->get();
+
+        foreach ($postulaciones as $postulacion) {
+            $postulacion->created_at = Carbon::parse($postulacion->created_at)->format('d/m/Y');
+        }
+
+        return $postulaciones;
     }
 }
             
