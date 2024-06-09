@@ -133,7 +133,7 @@ class Casos extends Model
         return $caso;
     }
 
-    public static function casosUsuarioAdmin($id)
+    public static function casosUsuarioAdmin()
     {
         $zona = auth()->user()->zona;
    

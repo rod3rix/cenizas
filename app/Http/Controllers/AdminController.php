@@ -91,7 +91,7 @@ class AdminController extends Controller
     {
         $caso = Casos::respuestaCasoAdmin($id);
 
-       $acceso = User::acceso($caso);
+        $acceso = User::acceso($caso);
  
         return view('respuestaCasoAdmin', compact('caso','acceso'));
     }
@@ -263,11 +263,6 @@ class AdminController extends Controller
         return response()->json($data);
     }
 
-    private function formatRut($rut)
-    {
-        return substr($rut, 0, -1).substr($rut, -1);
-    }
-
     public function guardarPuntaje(Request $request)
     {
         $userId = $request->user_id;
@@ -299,11 +294,9 @@ class AdminController extends Controller
     {
         $pfondo = PostulacionFondos::detalleFondoAdmin($id);
 
-        $fpresupuesto = PostulacionPresupuestos::fpresupuesto($id);
-
         $acceso = User::acceso($pfondo);
 
-        return view('detalleFondoAdmin',['pfondo' => $pfondo,'acceso' => $acceso,'fpresupuesto' => $fpresupuesto]);
+        return view('detalleFondoAdmin',['pfondo' => $pfondo,'acceso' => $acceso]);
     }
 
     public function detalleProyectoAdmin($id)

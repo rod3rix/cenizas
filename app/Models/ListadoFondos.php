@@ -42,7 +42,7 @@ class ListadoFondos extends Model
         return $insertedId;
     }    
 
-   public static function listarFondosAdmin($request)       
+   public static function listarFondosAdmin()       
    {
       $zona = Auth::user()->zona;
       $postulacion = PostulacionFondos::join('users', 'postulacion_fondos.user_id', '=', 'users.id')

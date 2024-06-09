@@ -120,7 +120,7 @@ class User extends Authenticatable
         ->get();
 
         $data->transform(function ($user) {
-            $user->rut = $this->formatRut($user->rut);
+            $user->rut = User::formatRut($user->rut);
             $user->user_id_link = '<a href="' . route("detalleUser", ["id" => $user->id]) . '">' . $user->id . '</a>';
             return $user;
         });
@@ -183,5 +183,10 @@ class User extends Authenticatable
 
         $user->save();
         return $user;
+    }
+
+    private static function formatRut($rut)
+    {
+        return substr($rut, 0, -1).substr($rut, -1);
     }
 }
