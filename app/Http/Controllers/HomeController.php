@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\PostulacionPresupuestos;
 use Auth;
 
-
 class HomeController extends Controller
 {
     /**
@@ -666,21 +665,21 @@ public function actualizarPersonaJuridica(Request $request)
             $validator = PostulacionFondos::validarEtapa2($request->all());
         }
 
-        if($id_val==3){
-            $validator = PostulacionFondos::validarEtapa3($request->all());
-        }
-
-        if($id_val==5){
-            $validator = PostulacionFondos::validarEtapa5($request->all());
-        }
+        // if($id_val==3){
+        //     $validator = PostulacionFondos::validarEtapa3($request->all());
+        // }
 
         if($id_val==4){
+            $validator = PostulacionFondos::validarEtapa4($request->all());
+        }
+
+        if($id_val==3){
             try {
                 // Iniciar una transacción de base de datos
                 DB::beginTransaction();
                 
-                    // Validar los campos de DatosOrganizaciones
-                    $validator = PersonaJuridicas::validarCampos($request->all());
+                    $validator = PostulacionFondos::validarEtapa3($request->all());
+
                     if ($validator->fails()) {
                             return response()->json([
                             'success' => false,
@@ -692,24 +691,14 @@ public function actualizarPersonaJuridica(Request $request)
                         $datosOrgId=$request->id_dato_organizacion;
                     }else{
                         $dataOrg = DatosOrganizaciones::prepararDatos($request);
-                        $datosOrgId = DatosOrganizaciones::insertarDatos($dataOrg);
-                    }
-
-                    if($request->persona_juridica_id){
-                        $personaJurId=$request->persona_juridica_id;
-                    }else{
-                        $dataPerJur = PersonaJuridicas::prepararDatos($request);
-                        $personaJurId = PersonaJuridicas::insertarDatos($dataPerJur);
+                        $datosOrgId = DatosOrganizaciones::insertarDatos($dataOrg,$request);
                     }
                  
                 // Preparar y guardar datos de PostulacionFondos
                 $fondoVigenteId = PostulacionFondos::fondoVigenteId();     
 
                 $dataPosFon = PostulacionFondos::prepararDatos($request);
-                $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId, $personaJurId, $request,$fondoVigenteId);
-
-                $dataPrefon = PostulacionPresupuestos::prepararDatos($request);
-                $postulacionPreId=PostulacionPresupuestos::crearPresupuestos($dataPrefon,$postulacionId);
+                $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId,$request,$fondoVigenteId);
 
                 // Si todos los inserts fueron exitosos, hacer commit de la transacción
                 DB::commit();

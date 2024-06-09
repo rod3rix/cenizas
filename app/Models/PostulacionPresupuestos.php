@@ -57,4 +57,13 @@ class PostulacionPresupuestos extends Model
 
     self::insert($presupuestos);
     }
+
+    public static function fpresupuesto($id)
+    {
+        $fpresupuesto = DB::table('postulacion_presupuestos')
+        ->where('postulacion_fondos_id', $id)
+        ->get();
+
+        return $fpresupuesto;    
+    }
 }

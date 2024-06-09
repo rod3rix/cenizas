@@ -32,7 +32,7 @@ class PostulacionFondos extends Model
          'acepto_clausula',
          'id_dato_organizacion',
          'nombre_proyecto',
-         'equipamiento',
+         'tipo_proyecto',
          'fundamentacion',
          'descripcion_proyecto',
          'objetivo_general',
@@ -48,7 +48,7 @@ class PostulacionFondos extends Model
          'aporte_propio',
          'archivo_anexo',
          'archivo_certificado',
-         'id_persona_juridica',
+         // 'id_persona_juridica',
          'estado',
          'respuesta',
          'archivo_respuesta',
@@ -74,7 +74,7 @@ class PostulacionFondos extends Model
          'acepto_clausula',
          'id_dato_organizacion',
          'nombre_proyecto',
-         'equipamiento',
+         'tipo_proyecto',
          'fundamentacion',
          'descripcion_proyecto',
          'objetivo_general',
@@ -90,7 +90,7 @@ class PostulacionFondos extends Model
          'aporte_propio',
          'archivo_anexo',
          'archivo_certificado',
-         'id_persona_juridica',
+         // 'id_persona_juridica',
          'estado',
          'calificar',
          'respuesta',
@@ -100,14 +100,14 @@ class PostulacionFondos extends Model
         ]);
     }
 
-    public static function crearPostulacionFondos(array $data, $datosOrgId, $personaJurId, $request,$fondoVigenteId)
+    public static function crearPostulacionFondos(array $data, $datosOrgId, $request,$fondoVigenteId)
     {
         // Manejo de archivos anexos
         $nombreArchivoAnexo = 'Fondo_anexo_' . auth()->id() . "_" . date('Ymd_His') . "." . $request->file('archivo_anexo')->getClientOriginalExtension();
         $archivo_anexo = $request->file('archivo_anexo')->storeAs('public/archivos', $nombreArchivoAnexo);
 
-        $nombreArchivoCert = 'Fondo_certificado_' . auth()->id() . "_" . date('Ymd_His') . "." . $request->file('archivo_certificado')->getClientOriginalExtension();
-        $archivo_certificado = $request->file('archivo_certificado')->storeAs('public/archivos', $nombreArchivoCert);
+        // $nombreArchivoCert = 'Fondo_certificado_' . auth()->id() . "_" . date('Ymd_His') . "." . $request->file('archivo_certificado')->getClientOriginalExtension();
+        // $archivo_certificado = $request->file('archivo_certificado')->storeAs('public/archivos', $nombreArchivoCert);
 
         // Insertar el registro y obtener el ID del nuevo registro insertado
         $insertedId = self::insertGetId([
@@ -125,7 +125,7 @@ class PostulacionFondos extends Model
             'acepto_clausula' => $data['acepto_clausula'],
             'id_dato_organizacion' => $datosOrgId,
             'nombre_proyecto' => $data['nombre_proyecto'],
-            'equipamiento' => $data['equipamiento'],
+            'tipo_proyecto' => $data['tipo_proyecto'],
             'fundamentacion' => $data['fundamentacion'],
             'descripcion_proyecto' => $data['descripcion_proyecto'],
             'objetivo_general' => $data['objetivo_general'],
@@ -139,9 +139,9 @@ class PostulacionFondos extends Model
             'aporte_solicitado' => $data['aporte_solicitado'],
             'aporte_terceros' => $data['aporte_terceros'],
             'aporte_propio' => $data['aporte_propio'],
-            'archivo_anexo' => $nombreArchivoAnexo,
-            'archivo_certificado' => $nombreArchivoCert,
-            'id_persona_juridica' => $personaJurId,
+            // 'archivo_anexo' => $nombreArchivoAnexo,
+            // 'archivo_certificado' => $nombreArchivoCert,
+            // 'id_persona_juridica' => 33,
             'estado' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
@@ -177,6 +177,7 @@ class PostulacionFondos extends Model
             'personalidad_juridica' => 'required|string|max:255',
             'antiguedad_anos' => 'required',
             'numero_socios' => 'required',
+            'certificado_pj' => 'required|file|mimes:pdf,zip,rar|max:20480',
         ]);
 
         return $validator;
@@ -186,7 +187,7 @@ class PostulacionFondos extends Model
     {
         $validator = Validator::make($data, [
             'nombre_proyecto' => 'required|string|max:255',
-            'equipamiento' => 'required|string|max:255',
+            'tipo_proyecto' => 'required|string|max:255',
             'fundamentacion' => 'required|string|max:255',
             'descripcion_proyecto' => 'required|string|max:255',
             'objetivo_general' => 'required|string|max:255',
@@ -197,13 +198,28 @@ class PostulacionFondos extends Model
             'fecha_inicio' => 'required',
             'fecha_termino' => 'required',
             'cantidad_dias' => 'required',
+            'rec_humanos' => 'required',
+            'mat_insumos' => 'required',
+            'otros' => 'required',
             'aporte_solicitado' => 'required',
             'aporte_terceros' => 'required',
             'aporte_propio' => 'required',
-            'detalle.*' => 'required|string',
-            'monto.*' => 'required|string',
-            'archivo_anexo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
-            'archivo_certificado' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
+            // 'detalle.*' => 'required|string',
+            // 'monto.*' => 'required|string',
+            'archivo_anexo' => 'required|file|mimes:pdf,zip,rar|max:20480',
+            ]);
+
+        return $validator;
+    }
+
+    public static function validarEtapa4(array $data)
+    {
+         $validator = Validator::make( $data,[
+            'razons_pyme' => 'required|string|max:255',
+            'rut_pyme' => 'required',
+            'domicilio_pyme' => 'required|string|max:255',
+            'certificado_sii' => 'required|file|mimes:pdf,zip,rar|max:20480',
+            'archivo_rsh' => 'required|file|mimes:pdf,zip,rar|max:20480',
             ]);
 
         return $validator;
@@ -269,5 +285,31 @@ class PostulacionFondos extends Model
         }
 
         return $postulaciones;
+    }
+
+    public static function respuestaFondoAdmin($id)
+    {
+        $pfondo = DB::table('postulacion_fondos')
+            ->join('users', 'users.id', '=', 'postulacion_fondos.user_id')
+            ->join('datos_organizaciones', 'datos_organizaciones.id', '=', 'postulacion_fondos.id_dato_organizacion')
+             ->join('persona_juridicas', 'persona_juridicas.id', '=', 'postulacion_fondos.id_persona_juridica')
+            ->select('users.*', 'postulacion_fondos.*', 'datos_organizaciones.*','persona_juridicas.*', 'datos_organizaciones.domicilio_organizacion','postulacion_fondos.id as post_fondo_id')
+            ->where('postulacion_fondos.id', $id)
+            ->first();
+    
+        return $pfondo;
+    }
+
+    public static function detalleFondoAdmin($id)
+    {
+        $pfondo = DB::table('postulacion_fondos')
+            ->join('users', 'users.id', '=', 'postulacion_fondos.user_id')
+            ->join('datos_organizaciones', 'datos_organizaciones.id', '=', 'postulacion_fondos.id_dato_organizacion')
+             ->join('persona_juridicas', 'persona_juridicas.id', '=', 'postulacion_fondos.id_persona_juridica')
+            ->select('users.*', 'postulacion_fondos.*', 'datos_organizaciones.*','persona_juridicas.*', 'datos_organizaciones.domicilio_organizacion','postulacion_fondos.id as post_fondo_id')
+            ->where('postulacion_fondos.id', $id)
+            ->first();
+
+        return $pfondo;
     }
 }

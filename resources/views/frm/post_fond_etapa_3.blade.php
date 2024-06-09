@@ -2,7 +2,7 @@
    <div class="row justify-content-center">
       <div class="col-md-12">
          <div class="card">
-            <div class="card-header"><b><u>{{ __('  TIPO PROYECTO') }}</b></u></div>
+            <div class="card-header"><b><u>{{ __('  TIPO DE PROYECTO') }}</b></u></div>
             <div class="card-body">
                   <div class="form-group row">
                      <label for="nombres" class="col-md-12 col-form-label text-md-left">{{ __('1. Nombre Proyecto*') }}</label>
@@ -16,9 +16,18 @@
                      </div>
                   </div>
            <div class="form-group row">
-                     <label for="equipamiento" class="col-md-12 col-form-label text-md-left">{{ __('2. Tipo de propyecto *') }}</label>
+                     <label for="equipamiento" class="col-md-12 col-form-label text-md-left">{{ __('2. Tipo de proyecto *') }}
+                        <span data-bs-toggle="tooltip" title="Seleccione el tipo de proyecto que desea realizar.">
+                           <i class="bi bi-info-circle"></i>
+                        </span>
+                     </label>
                      <div class="col-md-12">
-                        <input id="equipamiento" type="text" class="form-control @error('equipamiento') is-invalid @enderror" name="equipamiento" value="{{ old('equipamiento') }}" required autocomplete="equipamiento" >
+                        <select class="form-select" id="tipo_proyecto" name="tipo_proyecto">
+                            <option value="">Seleccione una opción</option>
+                            <option value="Equipamiento para organizaciones">Equipamiento para organizaciones</option>
+                            <option value="Mejoramiento infraestructura sedes y entorno comunitario">Mejoramiento infraestructura sedes y entorno comunitario</option>
+                            <option value="Medio ambiente y cultura">Medio ambiente y cultura</option>
+                        </select>
                         @error('equipamiento')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -106,23 +115,23 @@
                       <label for="telefono" class="col-md-4 col-form-label text-md-left">{{ __('Fecha Término') }}</label>
                       <label for="telefono" class="col-md-4 col-form-label text-md-left">{{ __('Cantidad de días') }}</label>
                      <div class="col-md-4">
-                        <input id="fecha_inicio" type="text" class="form-control @error('fecha_inicio') is-invalid @enderror" name="fecha_inicio" value="{{ old('fecha_inicio') }}" required autocomplete="fecha_inicio"readonly >
+                        <input id="fecha_inicio" type="text" class="form-control @error('fecha_inicio') is-invalid @enderror" name="fecha_inicio" value="{{ old('fecha_inicio') }}" readonly >
                         @error('fecha_inicio')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                         </span>
-                        @enderror
+                        @enderror 
                      </div>
                      <div class="col-md-4">
-                        <input id="fecha_termino" type="text" class="form-control @error('fecha_termino') is-invalid @enderror" name="fecha_termino" value="{{ old('fecha_termino') }}" required autocomplete="fecha_termino" readonly>
+                        <input id="fecha_termino" type="text" class="form-control @error('fecha_termino') is-invalid @enderror" name="fecha_termino" value="{{ old('fecha_termino') }}" readonly>
                         @error('fecha_termino')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                         </span>
-                        @enderror
+                        @enderror 
                      </div>
                      <div class="col-md-4">
-                        <input id="cantidad_dias" type="text" class="form-control @error('cantidad_dias') is-invalid @enderror" name="cantidad_dias" value="{{ old('cantidad_dias') }}" required autocomplete="cantidad_dias" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3" onpaste="handlePaste(event)">
+                        <input id="cantidad_dias" type="text" class="form-control @error('cantidad_dias') is-invalid @enderror" name="cantidad_dias" value="{{ old('cantidad_dias') }}" required autocomplete="cantidad_dias" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3" onpaste="handlePaste(event)" readonly>
                         @error('cantidad_dias')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -130,44 +139,51 @@
                         @enderror
                      </div>            
                   </div>
-<div id="presupuesto-container">
-    <div class="form-group row">
-        <label for="presupuesto" class="col-md-12 col-form-label text-md-left">{{ __('10. Presupuesto: Agregar: Recursos Humanos, Materiales e insumos') }}</label>
-        <label for="detalle" class="col-md-2 col-form-label text-md-left">{{ __('Detalle') }}</label>
-        <div class="col-md-5">
-            <input id="detalle" type="text" class="form-control detalle @error('detalle.0') is-invalid @enderror" name="detalle[]" value="{{ old('detalle.0') }}" required autocomplete="detalle">
-            @error('detalle.0')
-            <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
-        <label for="monto" class="col-md-1 col-form-label text-md-left">{{ __('Monto') }}</label>
-        <div class="col-md-4">
-            <input id="monto" type="text" class="miles form-control monto @error('monto.0') is-invalid @enderror" name="monto[]" value="{{ old('monto.0') }}" required autocomplete="monto" placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
-            @error('monto.0')
-            <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
-    </div>
-</div>
-<br>
-<div class="form-group row">
-    <div class="col-md-2"></div>
-    <div class="col-md-10">
-        <button type="button" id="addPresupuesto" class="btn btn-primary btn-block">{{ __('Agregar otro') }}</button>
-    </div>
-</div>
-<br>
-
                   <div class="form-group row">
-                     <label for="total_presupuesto" class="col-md-2 col-form-label text-md-left">{{ __('Total') }}</label>
-                     <div class="col-md-10">
-                        <input id="total_presupuesto" type="text" class="miles form-control @error('total_presupuesto') is-invalid @enderror" name="total_presupuesto" value="{{ old('total_presupuesto') }}" required autocomplete="total_presupuesto"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)" readonly>
+                      <label for="presupuesto" class="col-md-12 col-form-label text-md-left">{{ __('10. Presupuesto:') }}</label>  
+                      <label for="rec_humanos" class="col-md-2 col-form-label text-md-left">{{ __('Recursos Humanos') }}</label>
+                      <div class="col-md-10">
+                        <input id="rec_humanos" type="text" class="miles form-control @error('rec_humanos') is-invalid @enderror" name="rec_humanos" value="{{ old('rec_humanos') }}" required autocomplete="rec_humanos"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
+                        @error('rec_humanos')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                      </div>
                   </div>
+
+                  <div class="form-group row">
+                      <label for="mat_insumos" class="col-md-2 col-form-label text-md-left">{{ __('Materiales e Insumos') }}</label>
+                      <div class="col-md-10">
+                        <input id="mat_insumos" type="text" class="miles form-control @error('mat_insumos') is-invalid @enderror" name="mat_insumos" value="{{ old('mat_insumos') }}" required autocomplete="mat_insumos"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
+                        @error('mat_insumos')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                      <label for="otros" class="col-md-2 col-form-label text-md-left">{{ __('Otros') }}</label>
+                      <div class="col-md-10">
+                        <input id="otros" type="text" class="miles form-control @error('otros') is-invalid @enderror" name="otros" value="{{ old('otros') }}" required autocomplete="otros"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
+                        @error('otros')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                     </div>
+                  </div>
+                  
+                  <div class="form-group row">
+                     <label for="tot_presupuesto" class="col-md-2 col-form-label text-md-left">{{ __('Total') }}</label>
+                     <div class="col-md-10">
+                        <input id="tot_presupuesto" type="text" class="miles form-control @error('tot_presupuesto') is-invalid @enderror" name="tot_presupuesto" value="{{ old('tot_presupuesto') }}" autocomplete="tot_presupuesto"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)" readonly>
+                     </div>
+                  </div>
+                  <br>
+
+                  
                   <div class="form-group row">
                       <label for="telefono" class="col-md-12 col-form-label text-md-left">{{ __('11. Montos solicitados') }}</label>  
                       <label for="telefono" class="col-md-2 col-form-label text-md-left">{{ __('Aporte solicitado') }}</label>
@@ -221,16 +237,6 @@
                         <input id="archivo_anexo" type="file" class="form-control @error('archivo_anexo') is-invalid @enderror" name="archivo_anexo" value="{{ old('archivo_anexo') }}" required autocomplete="archivo_anexo">
                      </div>
                   </div>
-
-                  <div class="form-group row">
-                      <label for="archivo_certificado" class="col-md-12 col-form-label text-md-left">13. Adjuntar certificado de iniciación de actividades y presentar la ficha de registro social de hogares* <br> (Formatos .pdf, .zip, .rar. Tamaño máximo 20 mb.)</label>
-                  </div>
-
-                  <div class="form-group row">
-                     <div class="col-md-12">
-                        <input id="archivo_certificado" type="file" class="form-control @error('archivo_certificado') is-invalid @enderror" name="archivo_certificado" value="{{ old('archivo_certificado') }}" required autocomplete="archivo_certificado">
-                     </div>
-                  </div>
                   <br>
                   <div class="form-group row">
                      <div class="col-md-12  text-md-right">
@@ -248,4 +254,4 @@
    </div>
 </div>
 <!-- Scripts -->
-<script src="{{ asset('js/calendario.js') }}"></script>
+<script src="{{ asset('js/calendario.js') }}?v={{ time() }}"></script>

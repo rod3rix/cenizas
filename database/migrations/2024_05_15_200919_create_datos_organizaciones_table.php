@@ -22,6 +22,13 @@ class CreateDatosOrganizacionesTable extends Migration
             $table->string('personalidad_juridica')->nullable();
             $table->string('antiguedad_anos')->nullable();
             $table->string('numero_socios')->nullable();
+            $table->string('certificado_pj')->nullable();
+            $table->string('razons_pyme')->nullable();
+            $table->string('rut_pyme')->nullable();
+            $table->string('domicilio_pyme')->nullable();
+            $table->string('certificado_sii')->nullable();
+            $table->string('archivo_rsh')->nullable();
+            $table->string('tipo');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

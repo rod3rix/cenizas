@@ -109,5 +109,63 @@ class Casos extends Model
         }
 
         return $casos;
-    }        
+    }      
+
+    public static function respuestaCasoAdmin($id)
+    {
+        $caso = Casos::join('users', 'casos.idUser', '=', 'users.id')
+                 ->join('regiones', 'casos.region_id', '=', 'regiones.id')
+                 ->join('comunas', 'casos.comuna_id', '=', 'comunas.id')
+                 ->select('casos.*', 'users.*', 'regiones.nombre as region', 'comunas.nombre as comuna','casos.id as casoid')
+                 ->findOrFail($id);
+
+        return $caso;
+    }
+
+    public static function responderCaso($id)
+    {
+        $caso = Casos::join('users', 'casos.idUser', '=', 'users.id')
+                 ->join('regiones', 'casos.region_id', '=', 'regiones.id')
+                 ->join('comunas', 'casos.comuna_id', '=', 'comunas.id')
+                 ->select('casos.*', 'users.*', 'regiones.nombre as region', 'comunas.nombre as comuna','casos.id as casoid')
+                 ->findOrFail($id);
+        
+        return $caso;
+    }
+
+    public static function casosUsuarioAdmin($id)
+    {
+        $zona = auth()->user()->zona;
+   
+        $casos = Casos::join('users', 'casos.idUser', '=', 'users.id')
+                        ->select('casos.*', 'users.name as nombre_usuario','casos.id as caso_id')
+                        ->where('users.zona',$zona)
+                        ->get();
+
+        $casos->transform(function ($caso) {
+            $caso->fecha_creacion = Carbon::parse($caso->created_at)->format('d-m-Y');
+            $caso->estado = $caso->estado === null || $caso->estado == 0 ? 'ABIERTO' : 'CERRADO';
+            $caso->respuesta = $caso->respuesta === null ? '<a href="' . route("responderCaso", ['id' => $caso->caso_id]) . '">RESPONDER</a>' : '<a href="' . route("respuestaCasoAdmin", ['id' => $caso->caso_id]) . '">VER RESPUESTA</a>';
+            return $caso;
+        });
+
+        return $casos;
+    }
+
+    public static function cerrarCaso($request)
+    {
+        $archivo = $request->file('archivo');
+
+        $nombreArchivo = 'res_caso_' . auth()->id() . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
+        $archivo->storeAs('public/archivos', $nombreArchivo);
+
+        $caso = Casos::findOrFail($request->casoId);
+        $caso->respuesta = $request->input('respuesta');
+        $caso->archivo_respuesta = $nombreArchivo;
+        $caso->estado = 1;
+        $caso->updated_at = Carbon::now();
+        $caso->save();
+
+        return $caso;
+    }
 }

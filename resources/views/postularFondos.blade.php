@@ -10,11 +10,11 @@
         </div>
     <hr>
     @if ($isVigente)
-    <div class="container">
+    <div class="container text-center">
           <button type="button" class="btn btn-info btn-arrow-right btn-lg">ANTECEDENTES GENERALES</button>
-          <button type="button" class="btn btn-info btn-arrow-right btn-lg">DATOS ORGANIZACIÓN</button>
-          <button type="button" class="btn btn-info btn-arrow-right btn-lg">TIPO PROYECTO</button>
-          <button type="button" class="btn btn-info btn-arrow-right btn-lg">RELACIONES JURÍDICAS</button>
+          <button type="button" class="btn btn-info btn-arrow-right btn-lg">DATOS ORGANIZACIÓN/MIPYM</button>
+          <button type="button" class="btn btn-info btn-arrow-right btn-lg">POSTULACIÓN</button>
+          <!-- <button type="button" class="btn btn-info btn-arrow-right btn-lg">RELACIONES JURÍDICAS</button> -->
     </div>
 
     <div class="container">

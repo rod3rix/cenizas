@@ -55,14 +55,11 @@ class AdminController extends Controller
 
     public function listarFondosConcursables()
     {
-        // Obtener todos los títulos de fondos
         $titulos = TituloFondos::orderBy('id', 'desc')->get();
 
-        // Obtener todos los listados de fondos
         $listados = ListadoFondos::all();
 
-    // Pasar los datos a la vista
-    return view('listarFondosConcursables', compact('titulos', 'listados'));
+        return view('listarFondosConcursables', compact('titulos', 'listados'));
     } 
 
     public function verSugerenciaReclamo()
@@ -92,11 +89,7 @@ class AdminController extends Controller
      
      public function respuestaCasoAdmin($id)
     {
-        $caso = Casos::join('users', 'casos.idUser', '=', 'users.id')
-                 ->join('regiones', 'casos.region_id', '=', 'regiones.id')
-                 ->join('comunas', 'casos.comuna_id', '=', 'comunas.id')
-                 ->select('casos.*', 'users.*', 'regiones.nombre as region', 'comunas.nombre as comuna','casos.id as casoid')
-                 ->findOrFail($id);
+        $caso = Casos::respuestaCasoAdmin($id);
 
        $acceso = User::acceso($caso);
  
@@ -105,118 +98,73 @@ class AdminController extends Controller
 
     public function respuestaFondoAdmin($id)
     {
-      $pfondo = DB::table('postulacion_fondos')
-            ->join('users', 'users.id', '=', 'postulacion_fondos.user_id')
-            ->join('datos_organizaciones', 'datos_organizaciones.id', '=', 'postulacion_fondos.id_dato_organizacion')
-             ->join('persona_juridicas', 'persona_juridicas.id', '=', 'postulacion_fondos.id_persona_juridica')
-            ->select('users.*', 'postulacion_fondos.*', 'datos_organizaciones.*','persona_juridicas.*', 'datos_organizaciones.domicilio_organizacion','postulacion_fondos.id as post_fondo_id')
-            ->where('postulacion_fondos.id', $id)
-            ->first();
+        $pfondo = PostulacionFondos::respuestaFondoAdmin($id); 
 
-         $fpresupuesto = DB::table('postulacion_presupuestos')
-        ->where('postulacion_fondos_id', $id)
-        ->get();
+        $fpresupuesto = PostulacionPresupuestos::fpresupuesto($id);
 
-        $acceso = User::acceso($pfondo);
+        $acceso = PostulacionPresupuestos::acceso($pfondo);
 
         return view('respuestaFondoAdmin',['pfondo' => $pfondo,'acceso' => $acceso,'fpresupuesto' => $fpresupuesto]);
-
     }
 
     public function responderCaso($id)
     {
-        $caso = Casos::join('users', 'casos.idUser', '=', 'users.id')
-                 ->join('regiones', 'casos.region_id', '=', 'regiones.id')
-                 ->join('comunas', 'casos.comuna_id', '=', 'comunas.id')
-                 ->select('casos.*', 'users.*', 'regiones.nombre as region', 'comunas.nombre as comuna','casos.id as casoid')
-                 ->findOrFail($id);
+        $caso = Casos::responderCaso($id);
         
         $acceso = User::acceso($caso);
 
         return view('responderCaso', compact('caso','acceso'));
     }
     
-     public function casosUsuarioAdmin()
+    public function casosUsuarioAdmin()
     {
-        $zona = auth()->user()->zona;
-   
-        $casos = Casos::join('users', 'casos.idUser', '=', 'users.id')
-                        ->select('casos.*', 'users.name as nombre_usuario','casos.id as caso_id')
-                        ->where('users.zona',$zona)
-                        ->get();
-
-        $casos->transform(function ($caso) {
-            $caso->fecha_creacion = Carbon::parse($caso->created_at)->format('d-m-Y');
-            $caso->estado = $caso->estado === null || $caso->estado == 0 ? 'ABIERTO' : 'CERRADO';
-            $caso->respuesta = $caso->respuesta === null ? '<a href="' . route("responderCaso", ['id' => $caso->caso_id]) . '">RESPONDER</a>' : '<a href="' . route("respuestaCasoAdmin", ['id' => $caso->caso_id]) . '">VER RESPUESTA</a>';
-            return $caso;
-        });
+        $casos = Casos::casosUsuarioAdmin();
 
         return response()->json($casos);
     }
 
-public function cerrarCaso(Request $request)
-{
-    // Validar la existencia y tipo del archivo
-    $validator = Validator::make($request->all(), [
-        'respuesta' => 'required|string|max:2500',
-        'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json([
-            'success' => false,
-            'errors' => $validator->errors()->toArray()
+    public function cerrarCaso(Request $request)
+    {
+    
+        $validator = Validator::make($request->all(), [
+            'respuesta' => 'required|string|max:2500',
+            'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480',
         ]);
-    }
 
-    try {
-        // Obtener el archivo del request
-        $archivo = $request->file('archivo');
-
-        // Guardar el archivo en el directorio deseado
-        $nombreArchivo = 'res_caso_' . auth()->id() . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
-        $archivo->storeAs('public/archivos', $nombreArchivo);
-
-        // Actualizar los campos respuesta y archivo_respuesta con el ID proporcionado en el URL usando Eloquent
-        $caso = Casos::findOrFail($request->casoId);
-        $caso->respuesta = $request->input('respuesta');
-        $caso->archivo_respuesta = $nombreArchivo;
-        $caso->estado = 1;
-        $caso->updated_at = Carbon::now();
-        $caso->save();
-
-        // Verificar si la actualización fue exitosa
-        if ($caso) {
-            // La actualización fue exitosa
-            return response()->json([
-                'success' => true,
-                'message' => '¡La respuesta y el archivo se han actualizado correctamente!'
-            ]);
-        } else {
-            // La actualización falló
+        if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Hubo un error al actualizar la respuesta y el archivo.'
-            ], 500); // 500 es el código de estado para errores internos del servidor
+                'errors' => $validator->errors()->toArray()
+            ]);
         }
-    } catch (\Exception $e) {
-        // Manejar la excepción
-        return response()->json([
-            'success' => false,
-            'message' => 'Hubo un error al procesar la solicitud: ' . $e->getMessage()
-        ], 500);
+
+        try {
+
+            $caso = Casos::cerrarCaso($request);          
+
+            if ($caso) {
+                return response()->json([
+                    'success' => true,
+                    'message' => '¡La respuesta y el archivo se han actualizado correctamente'
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Hubo un error al actualizar la respuesta y el archivo.'
+                ], 500);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Hubo un error al procesar la solicitud: ' . $e->getMessage()
+            ], 500);
+        }
     }
-}
 
     public function verPerfil()
     {
-       $user = DB::table('users')
-                ->where('id', '=', auth()->id())
-                ->get();
-
-                $user=$user[0];
-
+        $user = User::verPerfil();
+        
         return view('verPerfil',['user' => $user]);
     }
 
@@ -268,7 +216,7 @@ public function cerrarCaso(Request $request)
 
      public function changePassword(Request $request)
     {
-            $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
         'current_password' => [
             'required',
             function ($attribute, $value, $fail) {
@@ -294,206 +242,81 @@ public function cerrarCaso(Request $request)
 
 
         if ($validator->fails()) {
-        return response()->json([
-            'success' => false,
-            'errors' => $validator->errors()->toArray()
-        ]);
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->toArray()
+            ]);
         }   
 
-        // // Obtener el usuario autenticado
         $user = auth()->user();
 
-        // // Verificar si la contraseña actual es válida
-        // if (!Hash::check($request->current_password, $user->password)) {
-        //     return response()->json(['success' => false, 'message' => 'La contraseña actual no es válida.']);
-        // }
-
-        // Cambiar la contraseña del usuario
         $user->password = Hash::make($request->new_password);
         $user->save();
 
-        // Devolver una respuesta de éxito
         return response()->json(['success' => true, 'message' => '¡La contraseña ha sido cambiada correctamente!']);
     }
 
-
     public function getData()
     {
-      $zona = auth()->user()->zona;
+        $data = User::getData();
+        
+        return response()->json($data);
+    }
 
-    // Realizar la consulta con el filtro por zona
-        $data = DB::table('users')
-            ->leftJoin('puntaje_users', 'users.id', '=', 'puntaje_users.user_id')
-            ->select(
-        'users.*',
-        DB::raw('COALESCE(puntaje_users.influencia, 0) as influencia'),
-        DB::raw('COALESCE(puntaje_users.vecindad, 0) as vecindad'),
-        DB::raw('COALESCE(puntaje_users.vecindad_mlc, 0) as vecindad_mlc'),
-        DB::raw('COALESCE(puntaje_users.poder, 0) as poder')
-    )
-    ->where('users.zona', $zona)  // Filtrar por zona
-    ->where('users.rol', 0)
-    ->where('users.type', 1)
-    ->get();
-
-    // Transformar los datos antes de enviarlos
-    $data->transform(function ($user) {
-        // Aplicar formato al campo 'rut'
-        $user->rut = $this->formatRut($user->rut);
-        // Agregar el enlace con el ID del usuario
-        $user->user_id_link = '<a href="' . route("detalleUser", ["id" => $user->id]) . '">' . $user->id . '</a>';
-        return $user;
-    }); 
-
-
-            return response()->json($data);
-}
-
-    // Función para dar formato al rut
-private function formatRut($rut)
-{
-    // Implementa aquí tu lógica para formatear el rut, por ejemplo, agregando los puntos y el guión
-    // Aquí hay un ejemplo básico de formateo:
-    return substr($rut, 0, -1).substr($rut, -1);
-}
-
-public function guardarPuntaje(Request $request)
+    private function formatRut($rut)
     {
-        // Obtener el usuario actual autenticado (o el usuario que corresponda)
+        return substr($rut, 0, -1).substr($rut, -1);
+    }
+
+    public function guardarPuntaje(Request $request)
+    {
         $userId = $request->user_id;
 
-        // Buscar si el usuario ya tiene un registro en la tabla puntaje_user
         $puntajeUser = PuntajeUser::where('user_id', $userId)->first();
 
-        // Si el usuario ya tiene un registro, actualizarlo; de lo contrario, crear uno nuevo
         if ($puntajeUser) {
             $puntajeUser->update($request->all());
         } else {
-            //$request->merge(['user_id' => $userId]);
             PuntajeUser::create($request->all());
         }
 
-        // Devolver una respuesta de éxito
         return response()->json(['success' => true, 'message' => 'Puntaje guardado exitosamente']);
     }
 
     public function listarFondosAdmin()
     {
-        $zona = Auth::user()->zona;
-        $postulacion = PostulacionFondos::join('users', 'postulacion_fondos.user_id', '=', 'users.id')
-            ->where('users.zona',$zona)
-            ->get(['postulacion_fondos.*', 'users.*','postulacion_fondos.id']);
-
-        $postulacion = $postulacion->transform(function ($postulacion) {
-            switch ($postulacion->estado) {
-                case 1:
-                    $postulacion->calificacion = '<a href="' . route("detalleFondoAdmin", ["id" => $postulacion->id]) . '">Calificar</a>';
-                    $postulacion->estado = 'Enviado';
-                    $postulacion->respuesta = '<a href="' . route("detalleFondoAdmin", ["id" => $postulacion->id]) . '">Responder</a>';
-                    break;
-                case 2:
-                    $postulacion->calificacion = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '#calificacion">Ver Calificación</a>';
-                    $postulacion->estado = 'En proceso';
-                    $postulacion->respuesta = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
-                    break;
-                case 3:
-                    $postulacion->calificacion = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '#calificacion">Ver Calificación</a>';
-                    $postulacion->estado = 'En proceso';
-                    $postulacion->respuesta = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
-                    break;
-            } 
-
-            // Formatear la fecha created_at
-            $postulacion->created_at_formatted = Carbon::parse($postulacion->created_at)->format('d-m-Y');
-            
-            return $postulacion;
-        });
-
-         return response()->json($postulacion);
-    
+        $postulacion = ListadoFondos::listarFondosAdmin();
+        return response()->json($postulacion);
     }    
 
     public function listarApoyoProyectosAdmin()
     {
-        $zona = Auth::user()->zona;
-
-        $postulacion = PostulacionProyectos::join('users', 'postulacion_proyectos.user_id', '=', 'users.id')
-        ->where('users.zona',$zona)
-        ->get(['postulacion_proyectos.*', 'users.*','postulacion_proyectos.id']);
-
-        $postulacion = $postulacion->transform(function ($postulacion) {
-            switch ($postulacion->estado) {
-                case 1:
-                    $postulacion->calificacion = '<a href="' . route("detalleProyectoAdmin", ["id" => $postulacion->id]) . '">Responder</a>';
-                    $postulacion->estado = 'En proceso';
-                    $postulacion->respuesta = '<a href="' . route("detalleProyectoAdmin", ["id" => $postulacion->id]) . '">Responder</a>';
-                    break;
-                case 2:
-                    $postulacion->calificacion = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Calificación</a>';
-                    $postulacion->estado = 'Enviado';
-                    $postulacion->respuesta = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
-                    break;
-                case 3:
-                    $postulacion->calificacion = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Calificación</a>';
-                    $postulacion->estado = 'Enviado';
-                    $postulacion->respuesta = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
-                    break;
-            } 
-
-            // Formatear la fecha created_at
-            $postulacion->created_at_formatted = Carbon::parse($postulacion->created_at)->format('d-m-Y');
-            
-            return $postulacion;
-        });
-
-         return response()->json($postulacion);
-    
+        $postulacion = PostulacionProyectos::listarApoyoProyectosAdmin();
+        return response()->json($postulacion);
     }   
 
-      public function detalleFondoAdmin($id)
+    public function detalleFondoAdmin($id)
     {
+        $pfondo = PostulacionFondos::detalleFondoAdmin($id);
 
-        $pfondo = DB::table('postulacion_fondos')
-            ->join('users', 'users.id', '=', 'postulacion_fondos.user_id')
-            ->join('datos_organizaciones', 'datos_organizaciones.id', '=', 'postulacion_fondos.id_dato_organizacion')
-             ->join('persona_juridicas', 'persona_juridicas.id', '=', 'postulacion_fondos.id_persona_juridica')
-            ->select('users.*', 'postulacion_fondos.*', 'datos_organizaciones.*','persona_juridicas.*', 'datos_organizaciones.domicilio_organizacion','postulacion_fondos.id as post_fondo_id')
-            ->where('postulacion_fondos.id', $id)
-            ->first();
-
-        $fpresupuesto = DB::table('postulacion_presupuestos')
-        ->where('postulacion_fondos_id', $id)
-        ->get();
+        $fpresupuesto = PostulacionPresupuestos::fpresupuesto($id);
 
         $acceso = User::acceso($pfondo);
 
         return view('detalleFondoAdmin',['pfondo' => $pfondo,'acceso' => $acceso,'fpresupuesto' => $fpresupuesto]);
-    } 
+    }
 
-     public function detalleProyectoAdmin($id)
+    public function detalleProyectoAdmin($id)
     {
-        $pproy = DB::table('postulacion_proyectos')
-            ->join('users', 'users.id', '=', 'postulacion_proyectos.user_id')
-            ->join('persona_juridicas', 'persona_juridicas.id', '=', 'postulacion_proyectos.persona_juridica_id')
-            ->select('users.*', 'postulacion_proyectos.*', 'persona_juridicas.*','persona_juridicas.rut as rut_juridico','postulacion_proyectos.id as id_proy')
-            ->where('postulacion_proyectos.id', $id)
-            ->first();
-
-            $acceso = User::acceso($pproy);
+        $pproy = PostulacionProyectos::detalleProyectoAdmin($id);
+        $acceso = User::acceso($pproy);
 
         return view('detalleProyectoAdmin',['pproy' => $pproy,'acceso' => $acceso]);
     }
 
      public function respuestaProyectoAdmin($id)
     {
-
-        $pproy = DB::table('postulacion_proyectos')
-            ->join('users', 'users.id', '=', 'postulacion_proyectos.user_id')
-            ->join('persona_juridicas', 'persona_juridicas.id', '=', 'postulacion_proyectos.persona_juridica_id')
-            ->select('users.*', 'postulacion_proyectos.*', 'persona_juridicas.*','persona_juridicas.rut as rut_juridico','postulacion_proyectos.id as id_proy')
-            ->where('postulacion_proyectos.id', $id)
-            ->first();
-
+        $pproy = PostulacionProyectos::respuestaProyectoAdmin($id);
         $acceso = User::acceso($pproy);
 
         return view('respuestaProyectoAdmin',['pproy' => $pproy,'acceso' => $acceso]);
@@ -501,124 +324,91 @@ public function guardarPuntaje(Request $request)
 
     public function cerrarProyecto(Request $request)
     {
-    // Validar la existencia y tipo del archivo
-    $validator = Validator::make($request->all(), [
-        'respuesta' => 'required|string|max:2500',
-        'estado_proyecto' => 'required',
-        'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json([
-            'success' => false,
-            'errors' => $validator->errors()->toArray()
+        $validator = Validator::make($request->all(), [
+            'respuesta' => 'required|string|max:2500',
+            'estado_proyecto' => 'required',
+            'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480', 
         ]);
-    }
 
-    try {
-       
-        $updateId= PostulacionProyectos::cerrarPostulacion($request);
-
-        // Verificar si la actualización fue exitosa
-        if ($updateId) {
-            // La actualización fue exitosa
-            return response()->json([
-                'success' => true,
-                'message' => '¡La respuesta y el archivo se han actualizado correctamente!'
-            ]);
-        } else {
-            // La actualización falló
+        if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Hubo un error al actualizar la respuesta y el archivo.'
-            ], 500); // 500 es el código de estado para errores internos del servidor
+                'errors' => $validator->errors()->toArray()
+            ]);
         }
-    } catch (\Exception $e) {
-        // Manejar la excepción
-        return response()->json([
-            'success' => false,
-            'message' => 'Hubo un error al procesar la solicitud: ' . $e->getMessage()
-        ], 500);
-    }
-}
 
-public function registrarUsuAdmin(Request $request)
+        try {
+           
+            $updateId= PostulacionProyectos::cerrarPostulacion($request);
+
+            if ($updateId) {
+                return response()->json([
+                    'success' => true,
+                    'message' => '¡La respuesta y el archivo se han actualizado correctamente!'
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Hubo un error al actualizar la respuesta y el archivo.'
+                ], 500); 
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Hubo un error al procesar la solicitud: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function registrarUsuAdmin(Request $request)
     {
-    // Validar la existencia y tipo del archivo
-    $validator = Validator::make($request->all(), [
-        'name' => 'required|string|max:255',
-        'apellido_paterno' => 'required|string|max:255',
-        'apellido_materno' => 'required|string|max:255',
-        'rut' => 'required|string|max:255|unique:users,rut',
-        'email' => 'required|string||email||max:255|unique:users,email',
-        'telefono' => 'required|string|max:255',
-        'zona' => 'required|string|max:255',
-        'password' => 'required|string|max:2500|min:8'
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json([
-            'success' => false,
-            'errors' => $validator->errors()->toArray()
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'apellido_paterno' => 'required|string|max:255',
+            'apellido_materno' => 'required|string|max:255',
+            'rut' => 'required|string|max:255|unique:users,rut',
+            'email' => 'required|string||email||max:255|unique:users,email',
+            'telefono' => 'required|string|max:255',
+            'zona' => 'required|string|max:255',
+            'password' => 'required|string|max:2500|min:8'
         ]);
-    }
 
-    try {
-       
-        $user = new user;
-        $user->name =  $request->name;
-        $user->apellido_paterno = $request->apellido_paterno;
-        $user->apellido_materno = $request->apellido_materno;
-        $user->rut = $request->rut;
-        $user->email = $request->email;
-        $user->fono = $request->telefono;
-        $user->zona = $request->zona;
-        $user->type = 2;
-        $user->password = bcrypt($request->password);
-        $user->created_at = Carbon::now();
-        $user->updated_at = Carbon::now();
-        $user->save();
-
-        // Verificar si la actualización fue exitosa
-        if ($user) {
-            // La actualización fue exitosa
-            return response()->json([
-                'success' => true,
-                'message' => 'Usuario creado con éxito'
-            ]);
-        } else {
-            // La actualización falló
+        if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Hubo un error al actualizar la respuesta y el archivo.'
-            ], 500); // 500 es el código de estado para errores internos del servidor
+                'errors' => $validator->errors()->toArray()
+            ]);
         }
-    } catch (\Exception $e) {
-        // Manejar la excepción
-        return response()->json([
-            'success' => false,
-            'message' => 'Hubo un error al procesar la solicitud: ' . $e->getMessage()
-        ], 500);
-    }
+
+        try {
+       
+            $user = User::registrarUsuAdmin();
+
+            if ($user) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Usuario creado con éxito'
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Hubo un error al actualizar la respuesta y el archivo.'
+                ], 500); 
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Hubo un error al procesar la solicitud: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     public function listarUsuariosAdmin()
     {
-        $users = User::where('type', 2)
-            ->select('users.*')
-            ->get();
+        $users = User::listarUsuariosAdmin();
 
-        $users = $users->transform(function ($user) {
-        return [
-            'id' => $user->id,
-            'name' => $user->name,
-            'apellido_paterno' => $user->apellido_paterno,
-            'rut' => $user->rut,
-            'link_editar' => '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal" data-id="'.$user->id.'">Ver Detalles</button>'
-            ];
-        });
-
-         return response()->json($users);
+        return response()->json($users);
     }
 
     public function getUserDetails(Request $request)
@@ -629,23 +419,20 @@ public function registrarUsuAdmin(Request $request)
 
     public function updateUser(Request $request, $id)
     {
-        // Validar la existencia y tipo del archivo
-            $rules = [
-                'modalUserName' => 'required|string|max:255',
-                'modalUserApellidoPaterno' => 'required|string|max:255',
-                'modalUserApellidoMaterno' => 'required|string|max:255',
-                'modalUserRut' => 'required|string|max:255|unique:users,rut,' . $id,
-                'modalUserEmail' => 'required|string|email|max:255|unique:users,email,'. $id,
-                'modalUserTelefono' => 'required|string|max:255',
-                'modalUserZona' => 'required|string|max:255',
-            ];
+        $rules = [
+            'modalUserName' => 'required|string|max:255',
+            'modalUserApellidoPaterno' => 'required|string|max:255',
+            'modalUserApellidoMaterno' => 'required|string|max:255',
+            'modalUserRut' => 'required|string|max:255|unique:users,rut,' . $id,
+            'modalUserEmail' => 'required|string|email|max:255|unique:users,email,'. $id,
+            'modalUserTelefono' => 'required|string|max:255',
+            'modalUserZona' => 'required|string|max:255',
+        ];
 
-        // Agregar regla de validación para la contraseña si está presente
         if ($request->filled('modalUserPassword')) {
             $rules['modalUserPassword'] = 'required|string|min:8|max:15';
         }
 
-        // Validar la solicitud
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
@@ -655,66 +442,68 @@ public function registrarUsuAdmin(Request $request)
             ]);
         }
 
-        $user = User::findOrFail($id);
-        // Actualizar los datos del usuario
-        $user->name = $request->modalUserName;
-        $user->apellido_paterno = $request->modalUserApellidoPaterno;
-        $user->apellido_materno = $request->modalUserApellidoMaterno;
-        $user->rut = $request->modalUserRut;
-        $user->email = $request->modalUserEmail;
-        $user->fono = $request->modalUserTelefono;
-        $user->zona = $request->modalUserZona;
+        try {
+       
+            $user = User::updateUser($id,$request);
 
-        if ($request->modalUserPassword) {
-            $user->password = Hash::make($request->modalUserPassword);
+            if ($user) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Usuario actualizado con éxito'
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Hubo un error al actualizar la respuesta y el archivo.'
+                ], 500); 
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Hubo un error al procesar la solicitud: ' . $e->getMessage()
+            ], 500);
         }
-
-        $user->save();
-
-        return response()->json(['success' => true,
-              'message' => 'Usuario actualizado con éxito']);
     }
 
     public function cerrarFondo(Request $request)
     {
-    // Validar la existencia y tipo del archivo
-    $validator = Validator::make($request->all(), [
-        'calificar' => 'required',
-        'respuesta' => 'required|string|max:2500',
-        'estado_fondo' => 'required',
-        'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json([
-            'success' => false,
-            'errors' => $validator->errors()->toArray()
+        $validator = Validator::make($request->all(), [
+            'calificar' => 'required',
+            'respuesta' => 'required|string|max:2500',
+            'estado_fondo' => 'required',
+            'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
         ]);
-    }
 
-    try {
-
-        $fondo = PostulacionFondos::cerrarFondo($request);
-
-        if ($fondo) {
-            return response()->json([
-                'success' => true,
-                'message' => '¡La respuesta y el archivo se han actualizado correctamente!'
-            ]);
-        } else {
+        if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Hubo un error al actualizar la respuesta y el archivo.'
-            ], 500); // 500 es el código de estado para errores internos del servidor
+                'errors' => $validator->errors()->toArray()
+            ]);
         }
-    } catch (\Exception $e) {
-        // Manejar la excepción
-        return response()->json([
-            'success' => false,
-            'message' => 'Hubo un error al procesar la solicitud: ' . $e->getMessage()
-        ], 500);
+
+        try {
+
+            $fondo = PostulacionFondos::cerrarFondo($request);
+
+            if ($fondo) {
+                return response()->json([
+                    'success' => true,
+                    'message' => '¡La respuesta y el archivo se han actualizado correctamente!'
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Hubo un error al actualizar la respuesta y el archivo.'
+                ], 500);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Hubo un error al procesar la solicitud: ' . $e->getMessage()
+            ], 500);
+        }
     }
-}
 
     public function frmTituloFondo(Request $request)
     {
@@ -758,26 +547,24 @@ public function registrarUsuAdmin(Request $request)
 
         }
 
-
         if ($insertedId) {
-            // El insert fue exitoso
             return response()->json([
                 'success' => true,
                 'message' => '¡El formulario se ha enviado correctamente.'
             ]);
         } else {
-            // El insert falló
             return response()->json([
                 'success' => false,
                 'message' => 'Hubo un error al guardar el formulario en la base de datos.'
-            ], 500); // 500 es el código de estado para errores internos del servidor
+            ], 500);
         }
     }
 
     public function obtenerTitulosFondos()
     {
-    $titulos = TituloFondos::all();
-    return response()->json($titulos);
+        $titulos = TituloFondos::all();
+        
+        return response()->json($titulos);
     }
 
 }

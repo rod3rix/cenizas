@@ -40,5 +40,40 @@ class ListadoFondos extends Model
                 ->update(['vigencia' => 0]);
 
         return $insertedId;
-    }            
+    }    
+
+   public static function listarFondosAdmin($request)       
+   {
+      $zona = Auth::user()->zona;
+      $postulacion = PostulacionFondos::join('users', 'postulacion_fondos.user_id', '=', 'users.id')
+            ->where('users.zona',$zona)
+            ->get(['postulacion_fondos.*', 'users.*','postulacion_fondos.id']);
+
+      $postulacion = $postulacion->transform(function ($postulacion) {
+            switch ($postulacion->estado) {
+                case 1:
+                    $postulacion->calificacion = '<a href="' . route("detalleFondoAdmin", ["id" => $postulacion->id]) . '">Calificar</a>';
+                    $postulacion->estado = 'Enviado';
+                    $postulacion->respuesta = '<a href="' . route("detalleFondoAdmin", ["id" => $postulacion->id]) . '">Responder</a>';
+                    break;
+                case 2:
+                    $postulacion->calificacion = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '#calificacion">Ver Calificación</a>';
+                    $postulacion->estado = 'En proceso';
+                    $postulacion->respuesta = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
+                    break;
+                case 3:
+                    $postulacion->calificacion = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '#calificacion">Ver Calificación</a>';
+                    $postulacion->estado = 'En proceso';
+                    $postulacion->respuesta = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
+                    break;
+            } 
+
+            $postulacion->created_at_formatted = Carbon::parse($postulacion->created_at)->format('d-m-Y');
+            
+            return $postulacion;
+      });
+
+      return $postulacion;
+
+    }        
 }

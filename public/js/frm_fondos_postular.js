@@ -167,7 +167,7 @@ function validarFrmFondos(id) {
                     $("#bt_et4").removeClass("btn-info");    
                     $("#bt_et3").addClass("btn-info");
                     $('#etapa_3').show();
-                    obtenerOrganizaciones();
+                    // obtenerOrganizaciones();
                 }
 
                 if(id==3){
@@ -181,8 +181,8 @@ function validarFrmFondos(id) {
                     $('#etapa_4').show();
                 }
 
-                if(id==5){
-                    $('#etapa_1').hide();
+                if(id==4){
+                   $('#etapa_1').hide();
                     $('#etapa_2').hide();
                     $('#etapa_4').hide();
                     $("#bt_et1").removeClass("btn-info");
@@ -191,6 +191,18 @@ function validarFrmFondos(id) {
                     $("#bt_et3").addClass("btn-info");
                     $('#etapa_3').show();
                 }
+
+
+                // if(id==5){
+                //     $('#etapa_1').hide();
+                //     $('#etapa_2').hide();
+                //     $('#etapa_4').hide();
+                //     $("#bt_et1").removeClass("btn-info");
+                //     $("#bt_et2").removeClass("btn-info");
+                //     $("#bt_et4").removeClass("btn-info");    
+                //     $("#bt_et3").addClass("btn-info");
+                //     $('#etapa_3').show();
+                // }
                 if (response.status) {
                     $('#frm_fondos')[0].reset();
                     $('#etapa_1').show();
@@ -284,32 +296,52 @@ $("#aporte_solicitado, #aporte_terceros, #aporte_propio").on("input", function()
     actualizarTotal();
 });
 
-// Inicialmente actualizar el total
-//actualizarTotal();
+function actualizarTotalPres() {
+                var recHumanos = parseFloat($("#rec_humanos").val().replace(/\D/g, '')) || 0;
+                var matInsumos = parseFloat($("#mat_insumos").val().replace(/\D/g, '')) || 0;
+                var otros = parseFloat($("#otros").val().replace(/\D/g, '')) || 0;
+                
+                if (isNaN(recHumanos)) recHumanos = 0;
+                if (isNaN(matInsumos)) matInsumos = 0;
+                if (isNaN(otros)) otros = 0;
 
-function actualizarTotalPresupuesto() {
-    var totalPresupuesto = 0;
-    $(".monto").each(function() {
-        var monto = parseFloat($(this).val().replace(/\D/g, '')) || 0;
-        // Verificar si el valor es un número válido, si no lo es, establecerlo como cero
-        if (isNaN(monto)) monto = 0;
-        totalPresupuesto += monto;
-    });
+                var total = recHumanos + matInsumos + otros;
+                total = Math.round(total);
+                var totalFormateado = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                $("#tot_presupuesto").val(totalFormateado);
+            }
 
-    // Redondear el total al número entero más cercano
-    totalPresupuesto = Math.round(totalPresupuesto);
-
-    // Formatear el total con miles
-    var totalPresupuestoFormateado = totalPresupuesto.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    
-    $("#total_presupuesto").val(totalPresupuestoFormateado);
-}
-
-// Detectar cambios en los campos de monto del presupuesto
-$("#presupuesto-container").on("input", ".monto", function() {
-    actualizarTotalPresupuesto();
+$("#rec_humanos, #mat_insumos, #otros").on("input", function() {
+    actualizarTotalPres();
 });
 
-// Inicialmente actualizar el total del presupuesto
-// actualizarTotalPresupuesto();
+function calculateDays() {
+    var fechaInicio = $("#fecha_inicio").val();
+    var fechaTermino = $("#fecha_termino").val();
+
+    if (!fechaInicio || !fechaTermino) return;
+
+    // Convertir fechas al formato dd/mm/yyyy
+    var startDate = fechaInicio.split("/");
+    var endDate = fechaTermino.split("/");
+
+    var start = new Date(startDate[2], startDate[1] - 1, startDate[0]);
+    var end = new Date(endDate[2], endDate[1] - 1, endDate[0]);
+
+    var timeDiff = Math.abs(end.getTime() - start.getTime());
+    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    $("#cantidad_dias").val(diffDays);
+}
+
+$("#fecha_inicio, #fecha_termino").on("change", function() {
+    calculateDays();
+});
+
+// Trigger the calculation on page load in case the fields are already filled
+$(document).ready(function() {
+    calculateDays();
+});
+
+
 

@@ -207,5 +207,64 @@ protected $fillable = [
 
         return $postulaciones;
     }
+
+    public static function listarApoyoProyectosAdmin()
+    {
+        $zona = Auth::user()->zona;
+
+        $postulacion = PostulacionProyectos::join('users', 'postulacion_proyectos.user_id', '=', 'users.id')
+        ->where('users.zona',$zona)
+        ->get(['postulacion_proyectos.*', 'users.*','postulacion_proyectos.id']);
+
+        $postulacion = $postulacion->transform(function ($postulacion) {
+            switch ($postulacion->estado) {
+                case 1:
+                    $postulacion->calificacion = '<a href="' . route("detalleProyectoAdmin", ["id" => $postulacion->id]) . '">Responder</a>';
+                    $postulacion->estado = 'En proceso';
+                    $postulacion->respuesta = '<a href="' . route("detalleProyectoAdmin", ["id" => $postulacion->id]) . '">Responder</a>';
+                    break;
+                case 2:
+                    $postulacion->calificacion = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Calificación</a>';
+                    $postulacion->estado = 'Enviado';
+                    $postulacion->respuesta = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
+                    break;
+                case 3:
+                    $postulacion->calificacion = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Calificación</a>';
+                    $postulacion->estado = 'Enviado';
+                    $postulacion->respuesta = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
+                    break;
+            } 
+
+            $postulacion->created_at_formatted = Carbon::parse($postulacion->created_at)->format('d-m-Y');
+            
+            return $postulacion;
+        });
+
+        return $postulacion;
+    }
+
+    public static function detalleProyectoAdmin($id)
+    {
+        $pproy = DB::table('postulacion_proyectos')
+            ->join('users', 'users.id', '=', 'postulacion_proyectos.user_id')
+            ->join('persona_juridicas', 'persona_juridicas.id', '=', 'postulacion_proyectos.persona_juridica_id')
+            ->select('users.*', 'postulacion_proyectos.*', 'persona_juridicas.*','persona_juridicas.rut as rut_juridico','postulacion_proyectos.id as id_proy')
+            ->where('postulacion_proyectos.id', $id)
+            ->first();
+
+        return $pproy;
+    }
+
+    public static function respuestaProyectoAdmin($id)
+    {
+        $pproy = DB::table('postulacion_proyectos')
+            ->join('users', 'users.id', '=', 'postulacion_proyectos.user_id')
+            ->join('persona_juridicas', 'persona_juridicas.id', '=', 'postulacion_proyectos.persona_juridica_id')
+            ->select('users.*', 'postulacion_proyectos.*', 'persona_juridicas.*','persona_juridicas.rut as rut_juridico','postulacion_proyectos.id as id_proy')
+            ->where('postulacion_proyectos.id', $id)
+            ->first();
+
+        return $pproy;
+    }
 }
             
