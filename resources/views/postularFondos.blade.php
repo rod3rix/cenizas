@@ -14,7 +14,6 @@
           <button type="button" class="btn btn-info btn-arrow-right btn-lg">ANTECEDENTES GENERALES</button>
           <button type="button" class="btn btn-info btn-arrow-right btn-lg">DATOS ORGANIZACIÓN/MIPYM</button>
           <button type="button" class="btn btn-info btn-arrow-right btn-lg">POSTULACIÓN</button>
-          <!-- <button type="button" class="btn btn-info btn-arrow-right btn-lg">RELACIONES JURÍDICAS</button> -->
     </div>
 
     <div class="container">
@@ -29,9 +28,6 @@
         </div>
         <div class="bt_et3">        
         @include('frm.post_fond_etapa_3')
-        </div>
-        <div class="bt_et4">
-        @include('frm.post_fond_etapa_4')
         </div>
       <form>  
     </div>

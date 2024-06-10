@@ -108,12 +108,10 @@ Fondos Concursables</b></h1>
         {{ $pfondo->profesion }}
       </p>
     </div>
-<!--     <small class="d-block text-right mt-3">
-      <a href="#">All updates</a>
-    </small>
- -->  </div>
+</div>
 
 
+ @if($pfondo->tipo=="organizacion")
  <div class="my-3 p-3 bg-white rounded shadow-sm">
     <h6 class="border-bottom border-gray pb-2 mb-0">DATOS ORGANIZACIÓN</h6>
     <div class="media text-muted pt-3">
@@ -154,8 +152,59 @@ Fondos Concursables</b></h1>
       </p>
     </div>
 
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 ">
+        <strong class="d-block text-gray-dark">7. Certificado de personalidad jurídica:</strong>
+        <div class="mb-3">
+          Descargar archivo:
+            <a href="{{ asset('storage/archivos/' . $pfondo->certificado_pj) }}" download>{{ $pfondo->certificado_pj }}</a>
+            </div>
+      </p>
+    </div>
 </div>
+@endif
+@if($pfondo->tipo=="mipyme")
+<div class="my-3 p-3 bg-white rounded shadow-sm">
+    <h6 class="border-bottom border-gray pb-2 mb-0">DATOS MIPYME (Micro, pequeña y mediana empresa)</h6>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">1. Razón social MIPYME</strong>
+        {{ $pfondo->razons_pyme }}
+      </p>
+    </div>
+     <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">2. RUT MIPYME</strong>
+        {{ $pfondo->rut_pyme }}
+      </p>
+    </div>
+     <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">3. Domicilio MIPYME</strong>
+        {{ $pfondo->domicilio_pyme }}
+      </p>
+    </div>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 ">
+        <strong class="d-block text-gray-dark">4. Certificado iniciación actividades (SII)</strong>
+        <div class="mb-3">
+          Descargar archivo:
+            <a href="{{ asset('storage/archivos/' . $pfondo->certificado_sii) }}" download>{{ $pfondo->certificado_sii }}</a>
+        </div>
+      </p>
+    </div>
 
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 ">
+        <strong class="d-block text-gray-dark">5. Ficha de registro social de hogares del representante legal de MIPYME</strong>
+        <div class="mb-3">
+          Descargar archivo:
+            <a href="{{ asset('storage/archivos/' . $pfondo->archivo_rsh) }}" download>{{ $pfondo->archivo_rsh }}</a>
+        </div>
+      </p>
+    </div>
+</div>
+@endif
 <div class="my-3 p-3 bg-white rounded shadow-sm">
     <h6 class="border-bottom border-gray pb-2 mb-0">TIPO DE PROYECTO</h6>
     <div class="media text-muted pt-3">
@@ -168,7 +217,7 @@ Fondos Concursables</b></h1>
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">2. Tipo de proyecto
         </strong>
-        {{ $pfondo->equipamiento }}
+        {{ $pfondo->tipo_proyecto }}
       </p>
     </div>
      <div class="media text-muted pt-3" id="calificacion">
@@ -217,111 +266,6 @@ Fondos Concursables</b></h1>
         <strong class="d-block text-gray-dark">9. Fecha de inicio / Fecha Término</strong>Fecha Termino: {{ $pfondo->directos }} Fecha Inicio:  {{ $pfondo->fecha_termino }} Cantidad de días: {{ $pfondo->cantidad_dias }}
       </p>
     </div>
-
-   <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">10. Presupuesto: Agregar: Recursos Humanos, Materiales e insumos</strong>
-        <table>
-        <thead>
-            <tr>
-                <th>Detalle</th>
-                <th>Monto</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-                $totalMonto = 0;
-            @endphp
-            @foreach($fpresupuesto as $presupuesto)
-                @php
-                    // Convertir el monto a un número removiendo los puntos
-                    $monto = (float) str_replace('.', '', $presupuesto->monto);
-                @endphp
-                <tr>
-                    <td>{{ $presupuesto->detalle }}</td>
-                    <td>${{ number_format($monto, 0, ',', '.') }}</td>
-                </tr>
-                @php
-                    $totalMonto += $monto;
-                @endphp
-            @endforeach
-        </tbody>
-    </table>
-
-    <h2>Total: ${{ number_format($totalMonto, 0, ',', '.') }}</h2>
-      </p>
-    </div>
-
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">11. Montos solicitados</strong>
-      </p>
-    </div>
-    
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125">Aporte solicitado:
-        <strong class="d-block text-gray-dark"> ${{ $pfondo->aporte_solicitado }} </strong>          
-      </p>
-    </div>
-           <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125">Aporte Terceros:
-        <strong class="d-block text-gray-dark"> ${{ $pfondo->aporte_terceros }}</strong>
-      </p>
-    </div>
-
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 ">Aporte Propio:
-        <strong class="d-block text-gray-dark"> ${{ $pfondo->aporte_propio }}</strong>
-      </p>
-    </div>
-
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">12. Cargar anexo – Declaración jurada simple con firma del representante legal</strong>
-      </p>
-    </div>
-
-    <div class="media text-muted pt-3">
-      <a href="{{ asset('storage/archivos/') }}/{{ $pfondo->archivo_anexo }}" download="{{ $pfondo->archivo_anexo }}">Descargar Anexo</a>
-    </div>
-
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">13. Certificado</strong>
-      </p>
-    </div>
-
-    <div class="media text-muted pt-3">
-      <a href="{{ asset('storage/archivos/' . $pfondo->archivo_certificado ) }}" download="Fondo_anexo.pdf">Descargar Certificado</a>
-    </div>
-  
-  </div>
-
-<div class="my-3 p-3 bg-white rounded shadow-sm">
-    <h6 class="border-bottom border-gray pb-2 mb-0">Relaciones jurÍdicas</h6>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 ">
-        <strong class="d-block text-gray-dark">RUT: {{ $pfondo->rut }}</strong>
-      </p>
-
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">RAZÓN SOCIAL: {{ $pfondo->razon_social }}</strong>
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">RELACIÓN: {{ $pfondo->relacion }}</strong>
-      </p>
-    </div>
-        <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">ESTADO: {{ $pfondo->estado }}</strong>
-      </p>
-    </div>
-</div>
-
  <div class="my-3 p-3 bg-white rounded shadow-sm">
     <h6 class="border-bottom border-gray pb-2 mb-0">RESPUESTA:</h6>
     <div class="media text-muted pt-3">

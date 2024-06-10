@@ -113,36 +113,37 @@
  -->  </div>
 
 
+@if($pproy->tipo=="organizacion")
  <div class="my-3 p-3 bg-white rounded shadow-sm">
     <h6 class="border-bottom border-gray pb-2 mb-0">DATOS ORGANIZACIÓN</h6>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">1. Nombre organización</strong>
-          {{ $pproy->nombre_organizacion }}
+        {{ $pproy->nombre_organizacion }}
       </p>
     </div>
      <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">2. RUT organización</strong>
-          {{ $pproy->rut_organizacion }}
+        {{ $pproy->rut_organizacion }}
       </p>
     </div>
      <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">3. Domicilio organización</strong>
-          {{ $pproy->domicilio_organizacion }}
+        {{ $pproy->domicilio_organizacion }}
       </p>
     </div>
      <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">4. Personalidad jurídica</strong>
-          {{ $pproy->personalidad_juridica }}
+        {{ $pproy->personalidad_juridica }}
       </p>
     </div>
      <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">5. Antigüedad años</strong>
-          {{ $pproy->antiguedad_anos }}
+        {{ $pproy->antiguedad_anos }}
       </p>
     </div>
 
@@ -153,7 +154,59 @@
       </p>
     </div>
 
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 ">
+        <strong class="d-block text-gray-dark">7. Certificado de personalidad jurídica:</strong>
+        <div class="mb-3">
+          Descargar archivo:
+            <a href="{{ asset('storage/archivos/' . $pproy->certificado_pj) }}" download>{{ $pproy->certificado_pj }}</a>
+            </div>
+      </p>
+    </div>
 </div>
+@endif
+@if($pproy->tipo=="mipyme")
+<div class="my-3 p-3 bg-white rounded shadow-sm">
+    <h6 class="border-bottom border-gray pb-2 mb-0">DATOS MIPYME (Micro, pequeña y mediana empresa)</h6>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">1. Razón social MIPYME</strong>
+        {{ $pproy->razons_pyme }}
+      </p>
+    </div>
+     <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">2. RUT MIPYME</strong>
+        {{ $pproy->rut_pyme }}
+      </p>
+    </div>
+     <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">3. Domicilio MIPYME</strong>
+        {{ $pproy->domicilio_pyme }}
+      </p>
+    </div>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 ">
+        <strong class="d-block text-gray-dark">4. Certificado iniciación actividades (SII)</strong>
+        <div class="mb-3">
+          Descargar archivo:
+            <a href="{{ asset('storage/archivos/' . $pproy->certificado_sii) }}" download>{{ $pproy->certificado_sii }}</a>
+        </div>
+      </p>
+    </div>
+
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 ">
+        <strong class="d-block text-gray-dark">5. Ficha de registro social de hogares del representante legal de MIPYME</strong>
+        <div class="mb-3">
+          Descargar archivo:
+            <a href="{{ asset('storage/archivos/' . $pproy->archivo_rsh) }}" download>{{ $pproy->archivo_rsh }}</a>
+        </div>
+      </p>
+    </div>
+</div>
+@endif
 
 <div class="my-3 p-3 bg-white rounded shadow-sm">
     <h6 class="border-bottom border-gray pb-2 mb-0">TIPO DE PROYECTO</h6>
@@ -198,31 +251,6 @@
     </div>
     <div class="media text-muted pt-3">
       <a href="{{ asset('storage/archivos') }}/declaracion_jurada.pdf" download="declaracion_jurada.pdf">declaracion_jurada</a>
-    </div>
-</div>
-
-<div class="my-3 p-3 bg-white rounded shadow-sm">
-    <h6 class="border-bottom border-gray pb-2 mb-0">Relaciones jurÍdicas</h6>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 ">
-        <strong class="d-block text-gray-dark">RUT: {{ $pproy->rut_juridico }}</strong>
-      </p>
-
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">RAZÓN SOCIAL: {{ $pproy->razon_social }}</strong>
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">RELACIÓN: {{ $pproy->relacion }}</strong>
-      </p>
-    </div>
-        <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">ESTADO: {{ $pproy->estado }}</strong>
-      </p>
     </div>
 </div>
 

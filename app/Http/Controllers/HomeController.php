@@ -101,9 +101,12 @@ class HomeController extends Controller
         return view('detalleProyecto'); 
     }
   
-    public function respuestaProyecto()
+    public function respuestaProyecto($id)
     {
-        return view('respuestaProyecto'); 
+        $pproy = PostulacionProyectos::respuestaProyectoAdmin($id);
+        $acceso = User::acceso($pproy);
+
+        return view('respuestaProyecto',['pproy' => $pproy,'acceso' => $acceso]);
     }
   
     public function agradecimiento()
@@ -218,11 +221,11 @@ public function listarApoyoProyectos()
             break;
         case 2:
             $postulacion->estado_texto = 'Aceptado';
-            $postulacion->resolucion = '<a href="#">Ver Respuesta</a>';
+            $postulacion->resolucion = '<a href="' . route("respuestaProyecto", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
             break;
         case 3:
             $postulacion->estado_texto = 'Rechazado';
-            $postulacion->resolucion = '<a href="#">Ver Respuesta</a>';
+            $postulacion->resolucion = '<a href="' . route("respuestaProyecto", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
             break;
     } 
 

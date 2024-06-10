@@ -292,8 +292,7 @@ class PostulacionFondos extends Model
         $pfondo = DB::table('postulacion_fondos')
             ->join('users', 'users.id', '=', 'postulacion_fondos.user_id')
             ->join('datos_organizaciones', 'datos_organizaciones.id', '=', 'postulacion_fondos.id_dato_organizacion')
-             ->join('persona_juridicas', 'persona_juridicas.id', '=', 'postulacion_fondos.id_persona_juridica')
-            ->select('users.*', 'postulacion_fondos.*', 'datos_organizaciones.*','persona_juridicas.*', 'datos_organizaciones.domicilio_organizacion','postulacion_fondos.id as post_fondo_id')
+            ->select('users.*', 'postulacion_fondos.*', 'datos_organizaciones.*','datos_organizaciones.domicilio_organizacion','postulacion_fondos.id as post_fondo_id')
             ->where('postulacion_fondos.id', $id)
             ->first();
     

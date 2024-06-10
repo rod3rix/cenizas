@@ -211,12 +211,12 @@ protected $fillable = [
                     $postulacion->respuesta = '<a href="' . route("detalleProyectoAdmin", ["id" => $postulacion->id]) . '">Responder</a>';
                     break;
                 case 2:
-                    $postulacion->calificacion = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Calificación</a>';
+                    $postulacion->calificacion = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '#calificacion">Ver Calificación</a>';
                     $postulacion->estado = 'Enviado';
                     $postulacion->respuesta = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
                     break;
                 case 3:
-                    $postulacion->calificacion = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Calificación</a>';
+                    $postulacion->calificacion = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '#calificacion">Ver Calificación</a>';
                     $postulacion->estado = 'Enviado';
                     $postulacion->respuesta = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
                     break;
@@ -233,9 +233,10 @@ protected $fillable = [
     public static function detalleProyectoAdmin($id)
     {
         $pproy = DB::table('postulacion_proyectos')
-            ->join('users', 'users.id', '=', 'postulacion_proyectos.user_id')
-            ->join('persona_juridicas', 'persona_juridicas.id', '=', 'postulacion_proyectos.persona_juridica_id')
-            ->select('users.*', 'postulacion_proyectos.*', 'persona_juridicas.*','persona_juridicas.rut as rut_juridico','postulacion_proyectos.id as id_proy')
+            ->join('users as users1', 'users1.id', '=', 'postulacion_proyectos.user_id')
+            ->join('datos_organizaciones', 'datos_organizaciones.user_id', '=', 'users1.id')
+            ->join('users as users2', 'users2.id', '=', 'datos_organizaciones.user_id')
+            ->select('users1.*', 'postulacion_proyectos.*', 'postulacion_proyectos.id as id_proy','datos_organizaciones.*')
             ->where('postulacion_proyectos.id', $id)
             ->first();
 
@@ -245,9 +246,10 @@ protected $fillable = [
     public static function respuestaProyectoAdmin($id)
     {
         $pproy = DB::table('postulacion_proyectos')
-            ->join('users', 'users.id', '=', 'postulacion_proyectos.user_id')
-            ->join('persona_juridicas', 'persona_juridicas.id', '=', 'postulacion_proyectos.persona_juridica_id')
-            ->select('users.*', 'postulacion_proyectos.*', 'persona_juridicas.*','persona_juridicas.rut as rut_juridico','postulacion_proyectos.id as id_proy')
+            ->join('users as users1', 'users1.id', '=', 'postulacion_proyectos.user_id')
+            ->join('datos_organizaciones', 'datos_organizaciones.user_id', '=', 'users1.id')
+            ->join('users as users2', 'users2.id', '=', 'datos_organizaciones.user_id')
+            ->select('users1.*', 'postulacion_proyectos.*', 'postulacion_proyectos.id as id_proy','datos_organizaciones.*')
             ->where('postulacion_proyectos.id', $id)
             ->first();
 

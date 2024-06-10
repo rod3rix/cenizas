@@ -100,11 +100,9 @@ class AdminController extends Controller
     {
         $pfondo = PostulacionFondos::respuestaFondoAdmin($id); 
 
-        $fpresupuesto = PostulacionPresupuestos::fpresupuesto($id);
+        $acceso = User::acceso($pfondo);
 
-        $acceso = PostulacionPresupuestos::acceso($pfondo);
-
-        return view('respuestaFondoAdmin',['pfondo' => $pfondo,'acceso' => $acceso,'fpresupuesto' => $fpresupuesto]);
+        return view('respuestaFondoAdmin',['pfondo' => $pfondo,'acceso' => $acceso]);
     }
 
     public function responderCaso($id)
@@ -228,7 +226,7 @@ class AdminController extends Controller
         'new_password' => [
             'required',
             'string',
-            'different:current_password', // Nueva regla: debe ser diferente de la contraseña actual
+            'different:current_password',
             'min:8',
             'confirmed',
         ],

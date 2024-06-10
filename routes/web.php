@@ -104,7 +104,7 @@ Route::get('/ingreso-caso',  [App\Http\Controllers\HomeController::class,'ingres
     Route::get('/enviarCaso', [App\Http\Controllers\HomeController::class,'enviarCaso'])->name('enviarCaso');
     Route::get('/seguimientoCasosUsu', [App\Http\Controllers\HomeController::class,'seguimientoCasosUsu'])->name('seguimientoCasosUsu');
     Route::get('/detalleProyecto',  [App\Http\Controllers\HomeController::class,'detalleProyecto'])->name('detalleProyecto');
-    Route::get('/respuestaProyecto',  [App\Http\Controllers\HomeController::class,'respuestaProyecto'])->name('respuestaProyecto');
+    Route::get('/respuestaProyecto/{id}', [App\Http\Controllers\HomeController::class,'respuestaProyecto'])->name('respuestaProyecto');
     Route::get('/agradecimiento',  [App\Http\Controllers\HomeController::class,'agradecimiento'])->name('agradecimiento');
     Route::get('respuestaCaso/{id}', [App\Http\Controllers\HomeController::class, 'respuestaCaso'])->name('respuestaCaso');
     Route::get('/obtenerPersonasJuridicas', [App\Http\Controllers\HomeController::class, 'obtenerPersonasJuridicas'])->name('obtenerPersonasJuridicas');
