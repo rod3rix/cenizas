@@ -10,11 +10,10 @@
 
         <hr>
 
-    <div class="container">
+    <div class="container text-center">
           <button type="button" id="bt_et1" class="btn btn-info btn-arrow-right btn-lg">ANTECEDENTES GENERALES</button>
-          <button type="button" id="bt_et2" class="btn btn-arrow-right btn-lg">DATOS ORGANIZACIÓN</button>
-          <button type="button" id="bt_et3"class="btn  btn-arrow-right btn-lg">TIPO PROYECTO</button>
-          <button type="button" id="bt_et4" class="btn btn-arrow-right btn-lg">RELACIONES JURÍDICAS</button>
+          <button type="button" id="bt_et2" class="btn btn-arrow-right btn-lg">DATOS ORGANIZACIÓN/MIPYME</button>
+          <button type="button" id="bt_et3"class="btn  btn-arrow-right btn-lg">POSTULACIÓN</button>
     </div>
 
     <div class="container">
@@ -29,9 +28,6 @@
         </div>
         <div class="bt_et3">        
         @include('frm.post_proy_etapa_3')
-        </div>
-        <div class="bt_et4">
-        @include('frm.post_proy_etapa_4')
         </div>
       <form>  
     </div>

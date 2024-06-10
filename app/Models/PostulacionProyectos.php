@@ -55,7 +55,7 @@ protected $fillable = [
     {
         return $request->only([
             'user_id',
-            'persona_juridica_id',
+            'organizacion_id',
             'nacionalidad',
             'genero',
             'pueblo_originario',
@@ -63,15 +63,9 @@ protected $fillable = [
             'fecha_nacimiento',
             'actividad_economica',
             'direccion',
-            'formacion_formal',  
+            'formacion_formal',
             'profesion', 
             'acepto_clausula',
-            'nombre_organizacion',
-            'rut_organizacion',
-            'domicilio_organizacion',
-            'personalidad_juridica',
-            'antiguedad_anos',
-            'numero_socios',
             'nombre_proyecto',
             'tipo_proyecto',
             'lugar_proyecto',
@@ -85,11 +79,11 @@ protected $fillable = [
         ]);
     }
 
-    public static function crearPostulacionFondos(array $data, $personaJurId)
+    public static function crearPostulacionFondos(array $data, $datosOrgId)
     {
         $insertedId = self::insertGetId([
             'user_id' => auth()->id(),
-            'persona_juridica_id' => $personaJurId,
+            'organizacion_id' => $datosOrgId,
             'nacionalidad' => $data['nacionalidad'],
             'genero' => $data['genero'],
             'pueblo_originario' => $data['pueblo_originario'],
@@ -100,12 +94,6 @@ protected $fillable = [
             'formacion_formal' => $data['formacion_formal'],  
             'profesion' => $data['profesion'],
             'acepto_clausula' => $data['acepto_clausula'],
-            'nombre_organizacion' => $data['nombre_organizacion'],
-            'rut_organizacion' => $data['rut_organizacion'],
-            'domicilio_organizacion' => $data['domicilio_organizacion'],
-            'personalidad_juridica' => $data['personalidad_juridica'],
-            'antiguedad_anos' => $data['antiguedad_anos'],
-            'numero_socios' => $data['numero_socios'],
             'nombre_proyecto' => $data['nombre_proyecto'],
             'tipo_proyecto' => $data['tipo_proyecto'],
             'lugar_proyecto' => $data['lugar_proyecto'],
@@ -139,20 +127,6 @@ protected $fillable = [
         return $validator;
     }
 
-    public static function validarEtapa2(array $data)
-    {
-        $validator = Validator::make($data, [
-            'nombre_organizacion' => 'required|string|max:255',
-            'rut_organizacion' => 'required',
-            'domicilio_organizacion' => 'required|string|max:255',
-            'personalidad_juridica' => 'required|string|max:255',
-            'antiguedad_anos' => 'required',
-            'numero_socios' => 'required',
-        ]);
-
-        return $validator;
-    }
-
     public static function validarEtapa3(array $data)
     {
         $validator = Validator::make($data, [
@@ -164,6 +138,19 @@ protected $fillable = [
             'aporte_solicitado' => 'required',
             'acepto_clausula_proy' => 'required',            
         ]);
+
+        return $validator;
+    }
+
+    public static function validarEtapa4(array $data)
+    {
+         $validator = Validator::make( $data,[
+            'razons_pyme' => 'required|string|max:255',
+            'rut_pyme' => 'required',
+            'domicilio_pyme' => 'required|string|max:255',
+            'certificado_sii' => 'required|file|mimes:pdf,zip,rar|max:20480',
+            'archivo_rsh' => 'required|file|mimes:pdf,zip,rar|max:20480',
+            ]);
 
         return $validator;
     }
@@ -265,6 +252,21 @@ protected $fillable = [
             ->first();
 
         return $pproy;
+    }
+
+    public static function validarEtapa2(array $data)
+    {
+        $validator = Validator::make($data, [
+            'nombre_organizacion' => 'required|string|max:255',
+            'rut_organizacion' => 'required',
+            'domicilio_organizacion' => 'required|string|max:255',
+            'personalidad_juridica' => 'required|string|max:255',
+            'antiguedad_anos' => 'required',
+            'numero_socios' => 'required',
+            'certificado_pj' => 'required|file|mimes:pdf,zip,rar|max:20480',
+        ]);
+
+        return $validator;
     }
 }
             

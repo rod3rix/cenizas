@@ -172,16 +172,24 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="profesion" class="col-md-12 col-form-label text-md-left">{{ __('15. Profesión *') }}</label>
-                     <div class="col-md-12">
-                        <input id="profesion" type="text" class="form-control @error('profesion') is-invalid @enderror" name="profesion" value="{{ old('profesion') }}" required autocomplete="profesion" >
-                        @error('profesion')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>
-                  </div>
+                   <label for="profesion" class="col-md-12 col-form-label text-md-left">{{ __('15. Profesión *') }}</label>
+                   <div class="col-md-12">
+                       <select id="profesion" class="form-control @error('profesion') is-invalid @enderror" name="profesion" required>
+                           <option value="">Seleccione una opción</option>
+                           <option value="Educación Básica" {{ old('profesion') == 'Educación Básica' ? 'selected' : '' }}>Educación Básica</option>
+                           <option value="Educación media" {{ old('profesion') == 'Educación media' ? 'selected' : '' }}>Educación media</option>
+                           <option value="Técnico" {{ old('profesion') == 'Técnico' ? 'selected' : '' }}>Técnico</option>
+                           <option value="Universitario" {{ old('profesion') == 'Universitario' ? 'selected' : '' }}>Universitario</option>
+                           <option value="Postgrado" {{ old('profesion') == 'Postgrado' ? 'selected' : '' }}>Postgrado</option>
+                       </select>
+                       @error('profesion')
+                       <span class="invalid-feedback" role="alert">
+                           <strong>{{ $message }}</strong>
+                       </span>
+                       @enderror
+                   </div>
+               </div>
+
                   <div class="form-group row">
                      <div class="col-md-12">
                         <div class="form-check form-check-inline">

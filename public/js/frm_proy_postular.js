@@ -110,16 +110,17 @@ function validarFrmProy(id) {
                     $('#etapa_3').show();
                 }
 
-                if(id==3){
+                 if(id==4){
                     $('#etapa_1').hide();
                     $('#etapa_2').hide();
-                    $('#etapa_3').hide();
+                    $('#etapa_4').hide();
                     $("#bt_et1").removeClass("btn-info");
                     $("#bt_et2").removeClass("btn-info");
-                    $("#bt_et3").removeClass("btn-info");    
-                    $("#bt_et4").addClass("btn-info");
-                    $('#etapa_4').show();
+                    $("#bt_et4").removeClass("btn-info");    
+                    $("#bt_et3").addClass("btn-info");
+                    $('#etapa_3').show();
                 }
+
                 if (response.status) {
                     $('#frm_proy')[0].reset();
                     $('#etapa_1').show();

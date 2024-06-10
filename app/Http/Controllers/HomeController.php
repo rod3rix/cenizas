@@ -543,29 +543,32 @@ public function actualizarPersonaJuridica(Request $request)
     {
         $id_val=$request->id;
 
-        if($id_val==5){
+        if($id_val==1){
+            $validator = PostulacionProyectos::validarEtapa1($request->all());
+        }
 
-            $validator = Validator::make($request->all(), [
-            'rut_juridico' => 'required|string|max:255|unique:persona_juridicas,rut',
-            'razon_social' => 'required|string|max:255',
-            'relacion' => 'required|string|max:255',
-            'estado' => 'required|string|max:255',
-            ]);
+        if($id_val==2){
+            $validator = PostulacionProyectos::validarEtapa2($request->all());
+        }
+
+        if($id_val==3){
+
+            $validator = PostulacionProyectos::validarEtapa3($request->all());
 
             if ($validator->fails()) {
                 return response()->json([
                 'success' => false,
                 'errors' => $validator->errors()->toArray()
                 ]);
-            }  
+            }
 
             try {
 
-                $dataPerJur = PersonaJuridicas::prepararDatos($request);
-                $personaJurId = PersonaJuridicas::insertarDatos($dataPerJur);
+                $dataOrg = DatosOrganizaciones::prepararDatos($request);
+                $datosOrgId = DatosOrganizaciones::insertarDatos($dataOrg,$request);
 
                 $dataPostProy = PostulacionProyectos::prepararDatos($request);
-                $insertedId = PostulacionProyectos::crearPostulacionFondos($dataPostProy,$personaJurId);
+                $insertedId = PostulacionProyectos::crearPostulacionFondos($dataPostProy,$datosOrgId);
 
                 if ($insertedId) {
                     return response()->json([
@@ -577,69 +580,21 @@ public function actualizarPersonaJuridica(Request $request)
                     return response()->json([
                         'success' => false,
                         'message' => 'Hubo un error al guardar el formulario en la base de datos.'
-                    ], 500); // 500 es el código de estado para errores internos del servidor
+                    ], 500);
                 }
             } catch (\Exception $e) {
-                // Capturar y manejar cualquier excepción
                 return response()->json([
                     'success' => false,
                     'message' => 'Error al crear persona jurídica: ' . $e->getMessage()
                 ], 500);
             }
 
-        }    
+        }
 
         if($id_val==4){
-             try {
-
-                $validator = Validator::make($request->all(), [
-                        'persona_juridica_id' => 'required',
-                ]);
-
-                if ($validator->fails()) {
-                    return response()->json([
-                    'success' => false,
-                    'errors' => $validator->errors()->toArray()
-                    ]);
-                }
-
-                $personaJurId = $request->persona_juridica_id;    
-                $dataPostProy = PostulacionProyectos::prepararDatos($request);
-                $insertedId = PostulacionProyectos::crearPostulacionFondos($dataPostProy,$personaJurId);
-
-            if ($insertedId) {
-                return response()->json([
-                    'status' => true,
-                    'success' => true,
-                    'message' => 'El registro se ha insertado correctamente con el ID: ' . $insertedId
-                ]);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Hubo un error al guardar el formulario en la base de datos.'
-                ], 500); // 500 es el código de estado para errores internos del servidor
-            }
-        } catch (\Exception $e) {
-            // Capturar y manejar cualquier excepción
-            return response()->json([
-                'success' => false,
-                'message' => 'Error al crear persona jurídica: ' . $e->getMessage()
-            ], 500);
+            $validator = PostulacionProyectos::validarEtapa4($request->all());
         }
 
-        }   
-
-        if($id_val==1){
-            $validator = PostulacionProyectos::validarEtapa1($request->all());
-        }
-
-        if($id_val==2){
-            $validator = PostulacionProyectos::validarEtapa2($request->all());
-        }
-
-        if($id_val==3){
-            $validator = PostulacionProyectos::validarEtapa3($request->all());
-        }
             
         if ($validator->fails()) {
             return response()->json([
