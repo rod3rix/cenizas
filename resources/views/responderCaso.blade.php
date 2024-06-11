@@ -102,22 +102,25 @@
         @endif
         </p>
     </div>
-<form id="cerrarCasoForm">
-    <input type="hidden" id="casoId" value="{{ $caso->casoid }}">
-    <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125">
-            <strong class="d-block text-gray-dark">RESPUESTA:</strong>
-            <textarea id="respuesta" class="form-control" rows="3" placeholder="Escribir respuesta"></textarea>
-            <div id="respuestaAlert" class="alert alert-danger d-none" role="alert">
-                ¡La respuesta es obligatoria!
-            </div>
-        </p>
-    </div>
+<form method="POST" id="frmInsert" name="frmInsert" enctype="multipart/form-data">
+    @csrf
+    <input id="url" name="url" value="cerrarCaso" type="hidden">
+    <input id="href" name="href" value="../confirmacionRespuestaCaso" type="hidden">
+    <input type="hidden" id="casoId" name="casoId" value="{{ $caso->casoid }}">
+        <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125">
+                <strong class="d-block text-gray-dark">RESPUESTA:</strong>
+                <textarea id="respuesta" name="respuesta" class="form-control" rows="3" placeholder="Escribir respuesta"></textarea>
+               @error('respuesta')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </p>
+        </div>
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 text-md-right">
             <strong class="d-block text-gray-dark">Adjuntar archivo (Formatos .pdf, .zip, .rar. Tamaño máximo 20 mb.):</strong>
             <div class="mb-3">
-                <input class="form-control @error('archivo') is-invalid @enderror" type="file" id="archivo" accept=".pdf,.zip,.rar">
+                <input class="form-control @error('archivo') is-invalid @enderror" type="file" id="archivo" name="archivo" accept=".pdf,.zip,.rar">
                 @error('archivo')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -154,67 +157,5 @@
     </div>
   </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-        // Mostrar el modal de confirmación cuando se hace clic en el botón
-        $('#cerrarCasoBtn').click(function(e) {
-            e.preventDefault();
-            // Mostrar el modal de confirmación
-            $('#confirmModal').modal('show');
-        });
-
-        // Realizar la solicitud AJAX para cerrar el caso cuando se da confirmación
-        $('#confirmCierreBtn').click(function() {
-
-            $('form :input').removeClass('is-invalid');
-            $('.invalid-feedback').remove();
-
-            // Obtener los valores de los campos
-            var respuesta = $('#respuesta').val();
-            var archivo = $('#archivo')[0].files[0];
-            var casoId = $('#casoId').val();
-
-            // Validate fields
-            var formData = new FormData();
-            formData.append('_token', '{{ csrf_token() }}');
-            formData.append('casoId', casoId);
-            formData.append('respuesta', respuesta);
-            formData.append('archivo', archivo);
-
-            // Realizar la solicitud AJAX
-            $.ajax({
-                url: "{{ route('cerrarCaso') }}",
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response, textStatus, xhr) {
-                    if (xhr.status === 200) {
-                        // La solicitud fue exitosa, ahora verifica el contenido de la respuesta
-                        if (response.success) {
-                            // Si la respuesta indica éxito, cierra el modal y redirecciona a otra página
-                            $('#confirmModal').modal('hide');
-                            window.location.href = '../confirmacionRespuestaCaso';
-                        } else {
-                            // Si la respuesta indica que hubo errores de validación, muestra los mensajes de error debajo de los campos correspondientes
-                            $.each(response.errors, function(key, value) {
-                                // Encuentra el campo correspondiente al error y muestra el mensaje de error
-                                $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
-                            });
-                        }
-                    } else {
-                        console.error('Error en la solicitud:', xhr.status);
-                        // Aquí puedes manejar otros tipos de errores de solicitud si es necesario
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Hubo un problema al enviar el formulario:', error);
-                }
-            });
-             $('#confirmModal').modal('hide');
-        });
-    });
-</script>
-
+<script src="{{ asset('js/frm_enviar.js') }}?v={{ time() }}"></script>
 @endsection

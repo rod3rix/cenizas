@@ -3,7 +3,7 @@
 @if($acceso)
 <section class="jumbotron">
     <div class="container ">
-      <h1 class="jumbotron-heading text-center"><b>Responder Caso</b></h1>
+      <h1 class="jumbotron-heading text-center"><b>Respuesta Caso</b></h1>
       <p class="lead text-muted text-center">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una.</p>
  
   <div class="my-3 p-3 bg-white rounded shadow-sm">

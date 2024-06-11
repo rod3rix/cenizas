@@ -142,8 +142,9 @@ class AdminController extends Controller
 
             if ($caso) {
                 return response()->json([
+                    'status' => true,
                     'success' => true,
-                    'message' => '¡La respuesta y el archivo se han actualizado correctamente'
+                    // 'message' => 'El registro se ha insertado correctamente con el ID: ' . $postulacionId
                 ]);
             } else {
                 return response()->json([
@@ -516,14 +517,18 @@ class AdminController extends Controller
                     'updated_at' => Carbon::now()
                 ]);
         }
-        
+
         if($request->idFrm=="frm2"){
+                $request->merge([
+                    'fecha_inicio' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->fecha_inicio)->format('Y-m-d'),
+                    'fecha_termino' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->fecha_termino)->format('Y-m-d'),
+                ]);
+
                 $validator = Validator::make($request->all(), [
                     'nombre_fondo' => 'required|string|max:255',
                     'descripcion' => 'required|string|max:255',
                     'fecha_inicio' => 'required|date',
                     'fecha_termino' => 'required|date',
-                    // 'vigencia' => 'required',
                     'titulo_anual_id' => 'required'
                 ]);
 
