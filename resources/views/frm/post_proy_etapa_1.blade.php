@@ -246,6 +246,6 @@
         </div>
     </div>
 <!-- Scripts -->
-<script src="{{ asset('js/calendario.js') }}"></script>
+<script src="{{ asset('js/calendario.js') }}?v={{ time() }}"></script>
 </body>
 </html>

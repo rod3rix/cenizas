@@ -13,22 +13,17 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,600">
 
     <!-- Estilos de Bootstrap 5.3.3 -->
-
-    <!-- Bootstrap CSS -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-
     <link href="{{ asset('css/dataTables.bootstrap5.css') }}" rel="stylesheet">
-
     <link href="{{ asset('css/buttons.bootstrap5.css') }}" rel="stylesheet">
-    
-    <link href="{{ asset('css/bootstrap-directional-buttons.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/bootstrap-directional-buttons.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
-
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 
     <!-- jQuery -->
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
-    <script src="{{ asset('js/jquery-ui.js') }}"></script>
+    <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('js/datepicker-es.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>    
     <script src="{{ asset('js/dataTables.js') }}"></script>    
