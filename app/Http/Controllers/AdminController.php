@@ -21,6 +21,7 @@ use App\Models\PersonaJuridicas;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 
+
 class AdminController extends Controller
 {
     /**

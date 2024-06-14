@@ -94,10 +94,10 @@
                             <label for="zona" class="col-md-12 col-form-label text-align-left">{{ __('Zona') }}</label>
 
                             <div class="col-md-12">
-                                <select id="zona" class="form-control @error('zona') is-invalid @enderror" name="zona" >
+                                <select id="zona" class="form-control @error('zona') is-invalid @enderror" name="zona">
                                     <option value="">{{ __('Seleccione') }}</option>
-                                    <option value="1">{{ __('Taltal') }}</option>
-                                    <option value="2">{{ __('Cabildo') }}</option>
+                                    <option value="1" @if(old('zona') == '1') selected @endif>{{ __('Cabildo') }}</option>
+                                    <option value="2" @if(old('zona') == '2') selected @endif>{{ __('Taltal') }}</option>
                                 </select>
                                 @error('zona')
                                     <span class="invalid-feedback" role="alert">
@@ -131,6 +131,25 @@
 
                         <div class="row mb-3">
                             <div class="col-md-12">
+                                <div class="captcha">
+                                   <span>{!! captcha_img() !!}</span>
+                                   <button type="button" class="btn btn-success"><i class="fa fa-refresh" id="refresh"></i></button>
+                                   </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha">
+                                </div>
+                                @error('captcha')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary float-end">
                                     {{ __('Registrarme') }}
                                 </button>
@@ -142,5 +161,23 @@
         </div>
     </div>
 </div>
-<script src="{{ asset('js/format_rut.js') }}?v={{ time() }}"></script>
+<script>
+
+function formatRut(cliente) {
+  cliente.value = cliente.value
+    .replace(/[^0-9kK]/g, '') // Elimina todo excepto números y la letra 'k' o 'K'
+    .replace(/^(\d{1,2})(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4'); // Agrega puntos y guión en el formato estándar
+}
+
+document.getElementById('refresh').addEventListener('click', function(){
+    fetch('{{ url('refreshcaptcha') }}')
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector('.captcha span').innerHTML = data.captcha;
+        });
+});
+
+</script>
+
+
 @endsection

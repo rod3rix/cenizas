@@ -1,7 +1,15 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\CaptchaController;
+
+Route::get('refreshcaptcha', [CaptchaController::class, 'refresh']);
+Route::get('captcha/{config?}', function (\Mews\Captcha\Captcha $captcha, $config = 'default') {
+    return $captcha->create($config);
+});
+// Route::get('createcaptcha', [App\Http\Controllers\CaptchaController::class, 'create'])->name("captchacontroller.create");
+Route::post('createcaptcha', [App\Http\Controllers\CaptchaController::class, 'captchaValidate'])->name("captchacontroller.captcha");
+Route::get('refreshcaptcha', [App\Http\Controllers\CaptchaController::class, 'refreshCaptcha'])->name("captchacontroller.refresh");
 
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 

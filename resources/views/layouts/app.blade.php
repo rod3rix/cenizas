@@ -20,6 +20,10 @@
     <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 
+
+    
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", rel="stylesheet", integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN", crossorigin="anonymous">
+
     <!-- jQuery -->
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
@@ -36,6 +40,10 @@
     <script src="{{ asset('js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('js/buttons.colVis.min.js') }}"></script>
+
+
+
+
 </head>
 
 <body class="">
