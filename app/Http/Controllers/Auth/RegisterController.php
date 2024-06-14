@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+// use GuzzleHttp\Client;
+use Mews\Captcha\Facades\Captcha;
 
 class RegisterController extends Controller
 {
@@ -60,6 +62,7 @@ class RegisterController extends Controller
             'zona' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'captcha' => ['required', 'captcha'],
         ]);
     }
 
