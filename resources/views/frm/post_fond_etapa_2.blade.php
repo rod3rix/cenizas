@@ -7,8 +7,8 @@
             <div class="mb-3">
                 <label for="organizationType" class="form-label">
                     Elija tipo de organización o MIPYME
-                    <span data-bs-toggle="tooltip" title="XXXXXXXX">
-                        <i class="bi bi-info-circle"></i>
+                     <span data-bs-toggle="tooltip" title="Aquí puedes elegir el tipo de organización o MIPYME.">
+                    <i class="bi bi-question-circle"></i>
                     </span>
                 </label>
                 <select class="form-select" id="organizationType" name="organizationType">

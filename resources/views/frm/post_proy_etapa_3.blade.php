@@ -17,7 +17,8 @@
                   </div>
                   <div class="form-group row">
                      <!-- <label for="tipo_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('2. Tipo de proyecto *') }}</label> -->
-                     <label for="tipo_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('2. Temática *') }}</label>
+                     <label for="tipo_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('2. Temática *') }}<span data-bs-toggle="tooltip" title="Aquí puedes elegir Temática.">
+                    <i class="bi bi-question-circle"></i></span></label>
                      <div class="col-md-12">
                         <select id="tipo_proyecto" class="form-control @error('tipo_proyecto') is-invalid @enderror" name="tipo_proyecto" required autocomplete="tipo_proyecto" >
                            <option value="">Seleccione</option>
@@ -46,7 +47,8 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="lugar_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('3. Lugar de ejecución del proyecto*') }}</label>
+                     <label for="lugar_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('3. Lugar de ejecución del proyecto*') }}<span data-bs-toggle="tooltip" title="Aquí puedes elegir ....">
+                    <i class="bi bi-question-circle"></i></span></label>
                      <div class="col-md-12">
                         <textarea id="lugar_proyecto" name="lugar_proyecto" type="text" class="form-control @error('lugar_proyecto') is-invalid @enderror" name="lugar_proyecto" value="{{ old('lugar_proyecto') }}" required autocomplete="lugar_proyecto" ></textarea>
                         @error('lugar_proyecto')
@@ -58,7 +60,8 @@
                   </div>
                   <div class="form-group row">
                      <label for="telefono" class="col-md-12 col-form-label text-md-left">{{ __('4. Número beneficiarios directos e indirectos *') }}</label>
-                      <label for="directos" class="col-md-2 col-form-label text-md-left">{{ __('Directos') }}</label>
+                      <label for="directos" class="col-md-2 col-form-label text-md-left">{{ __('Directos') }}<span data-bs-toggle="tooltip" title="Aquí puedes elegir ....">
+                      <i class="bi bi-question-circle"></i></span></label>
                       <div class="col-md-2">
                         <input id="directos" type="text" class="form-control @error('directos') is-invalid @enderror" name="directos" value="{{ old('directos') }}" required autocomplete="directos"  onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3" onpaste="handlePaste(event)">
                         @error('directos')
@@ -67,7 +70,8 @@
                         </span>
                         @enderror
                      </div>
-                      <label for="indirectos" class="col-md-2 col-form-label text-md-left">{{ __('Indirectos') }}</label>
+                      <label for="indirectos" class="col-md-2 col-form-label text-md-left">{{ __('Indirectos') }}<span data-bs-toggle="tooltip" title="Aquí puedes elegir ....">
+                    <i class="bi bi-question-circle"></i></span></label>
                      <div class="col-md-2">
                         <input id="indirectos" type="text" class="form-control @error('indirectos') is-invalid @enderror" name="indirectos" value="{{ old('indirectos') }}" required autocomplete="indirectos"  onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3" onpaste="handlePaste(event)">
                         @error('indirectos')

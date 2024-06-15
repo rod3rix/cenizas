@@ -18,7 +18,7 @@
            <div class="form-group row">
                      <label for="equipamiento" class="col-md-12 col-form-label text-md-left">{{ __('2. Tipo de proyecto *') }}
                         <span data-bs-toggle="tooltip" title="Seleccione el tipo de proyecto que desea realizar.">
-                           <i class="bi bi-info-circle"></i>
+                        <i class="bi bi-question-circle"></i>
                         </span>
                      </label>
                      <div class="col-md-12">
@@ -36,7 +36,11 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="fundamentacion" class="col-md-12 col-form-label text-md-left">{{ __('3. Fundamentación - Razones que motivan lacalidad del proyecto') }}</label>
+                     <label for="fundamentacion" class="col-md-12 col-form-label text-md-left">{{ __('3. Fundamentación - Razones que motivan lacalidad del proyecto') }}
+                        <span data-bs-toggle="tooltip" title="Aquí puedes elegir el tipo ....">
+                       <i class="bi bi-question-circle"></i>
+                       </span>
+                     </label>
                      <div class="col-md-12">
                         <textarea id="fundamentacion" type="text" class="form-control @error('fundamentacion') is-invalid @enderror" name="fundamentacion" value="{{ old('fundamentacion') }}" required autocomplete="fundamentacion" ></textarea>
                         @error('fundamentacion')
@@ -58,7 +62,9 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="objetivo_general" class="col-md-12 col-form-label text-md-left">{{ __('5. Objetivo general*') }}</label>
+                     <label for="objetivo_general" class="col-md-12 col-form-label text-md-left">{{ __('5. Objetivo general*') }}<span data-bs-toggle="tooltip" title="Aquí puedes elegir el tipo ....">
+                       <i class="bi bi-question-circle"></i>
+                       </span></label>
                      <div class="col-md-12">
                         <textarea id="objetivo_general" type="text" class="form-control @error('objetivo_general') is-invalid @enderror" name="objetivo_general" value="{{ old('objetivo_general') }}" required autocomplete="objetivo_general" ></textarea>
                         @error('objetivo_general')
@@ -69,7 +75,9 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="objetivos_especificos" class="col-md-12 col-form-label text-md-left">{{ __('6. Objetivos Especificos*') }}</label>
+                     <label for="objetivos_especificos" class="col-md-12 col-form-label text-md-left">{{ __('6. Objetivos Especificos*') }}<span data-bs-toggle="tooltip" title="Aquí puedes elegir el tipo ....">
+                       <i class="bi bi-question-circle"></i>
+                       </span></label>
                      <div class="col-md-12">
                         <textarea id="objetivos_especificos" type="text" class="form-control @error('objetivos_especificos') is-invalid @enderror" name="objetivos_especificos" value="{{ old('objetivos_especificos') }}" required autocomplete="objetivos_especificos" ></textarea>
                         @error('objetivos_especificos')
@@ -92,15 +100,32 @@
                   </div>
                   <div class="form-group row">
                      <label for="numero_beneficiarios" class="col-md-12 col-form-label text-md-left">{{ __('8. Número de beneficiarios directos e indirectos *') }}</label>
-                     <div class="col-md-6">
-                        <input id="directos" type="text" class="form-control @error('directos') is-invalid @enderror" name="directos" value="{{ old('directos') }}" required autocomplete="directos" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3" onpaste="handlePaste(event)">
+                     <div class="col-md-2">
+                        <label class="col-form-label text-md-left">Directos
+                        <span data-bs-toggle="tooltip" title="Aquí puedes elegir el tipo ....">
+                       <i class="bi bi-question-circle"></i>
+                       </span>
+                        </label>
+                        
+                     </div>
+
+                     <div class="col-md-4">
+                        <input id="directos" type="text" class="form-control @error('directos') is-invalid @enderror" name="directos" value="{{ old('directos') }}" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3" onpaste="handlePaste(event)">
                         @error('directos')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                         </span>
                         @enderror
                      </div>
-                     <div class="col-md-6">
+                     <div class="col-md-2">
+                        <label class="col-form-label text-md-left">Indirectos
+                        <span data-bs-toggle="tooltip" title="Aquí puedes elegir el tipo ....">
+                       <i class="bi bi-question-circle"></i>
+                       </span>
+                        </label>
+                        
+                     </div>
+                     <div class="col-md-4">
                         <input id="indirectos" type="text" class="form-control @error('indirectos') is-invalid @enderror" name="indirectos" value="{{ old('indirectos') }}" required autocomplete="indirectos" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3" onpaste="handlePaste(event)">
                         @error('indirectos')
                         <span class="invalid-feedback" role="alert">

@@ -19,9 +19,10 @@
     <link href="{{ asset('css/bootstrap-directional-buttons.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <!-- <link rel="stylesheet" href="{{ asset('css/bootstrap-icons.css') }}"> -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 
-    
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", rel="stylesheet", integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN", crossorigin="anonymous">
 
     <!-- jQuery -->

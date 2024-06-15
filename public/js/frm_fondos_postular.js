@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('#etapa_1').show();
-    obtenerOrganizaciones();
-    obtenerPersonasJuridicas();
+    // obtenerOrganizaciones();
+    // obtenerPersonasJuridicas();
     agregarMontos();
     formatMiles();
 });

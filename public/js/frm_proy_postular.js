@@ -11,7 +11,7 @@ $(document).ready(function() {
     }
     
     $('.miles').on('input', formatInputField);
-    obtenerPersonasJuridicas(); 
+    // obtenerPersonasJuridicas(); 
 });
 
 function handlePaste(e) {

@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -161,23 +160,6 @@
         </div>
     </div>
 </div>
-<script>
-
-function formatRut(cliente) {
-  cliente.value = cliente.value
-    .replace(/[^0-9kK]/g, '') // Elimina todo excepto números y la letra 'k' o 'K'
-    .replace(/^(\d{1,2})(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4'); // Agrega puntos y guión en el formato estándar
-}
-
-document.getElementById('refresh').addEventListener('click', function(){
-    fetch('{{ url('refreshcaptcha') }}')
-        .then(response => response.json())
-        .then(data => {
-            document.querySelector('.captcha span').innerHTML = data.captcha;
-        });
-});
-
-</script>
-
-
+<script src="{{ asset('js/format_rut.js') }}?v={{ time() }}"></script>
+<script src="{{ asset('js/captcha.js') }}?v={{ time() }}"></script>
 @endsection

@@ -1,7 +1,7 @@
 <?php
-  
+
 namespace App\Http\Controllers;
-  
+
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use DB;
@@ -21,66 +21,48 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\PostulacionPresupuestos;
 use Auth;
 
-
-
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
     }
-  
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+
     public function index(): View
     {
         return view('home');
-    } 
-  
+    }
+
     public function postularFondos()
-    {        
-        $currentDate = Carbon::now()->endOfDay(); // Ajusta para incluir todo el día
-
+    {
+        $currentDate = Carbon::now()->endOfDay()->format('Y-m-d');
         $isVigente = ListadoFondos::where('vigencia', 1)
-                              ->where('fecha_termino', '>=', $currentDate)
-                              ->exists();
-
+            ->whereDate('fecha_termino', '>=', $currentDate)
+            ->exists();
         $user = DB::table('users')
-                ->where('id', '=', auth()->id())
-                ->get();
+            ->where('id', '=', auth()->id())
+            ->first();
 
-        $user=$user[0];
-
-        return view('postularFondos',['user' => $user, 'isVigente' => $isVigente]);
+        return view('postularFondos', ['user' => $user, 'isVigente' => $isVigente]);
     }
 
     public function postularProyectos()
     {
-         $user = DB::table('users')
-                ->where('id', '=', auth()->id())
-                ->get();
+        $user = DB::table('users')
+            ->where('id', '=', auth()->id())
+            ->first();
 
-                $user=$user[0];
-
-        return view('postularProyectos',['user' => $user]);
+        return view('postularProyectos', ['user' => $user]);
     }
 
     public function editarPerfil()
     {
-        return view('editarPerfil'); 
+        return view('editarPerfil');
     }
 
     public function seguimientoProyectos()
     {
-        return view('seguimientoProyectos'); 
+        return view('seguimientoProyectos');
     }
 
     public function seguimientoFondos()
@@ -96,26 +78,25 @@ class HomeController extends Controller
     public function seguimientoCasosUsu()
     {
         return view('seguimientoCasosUsuario');
-    } 
+    }
 
     public function detalleProyecto()
     {
-        return view('detalleProyecto'); 
+        return view('detalleProyecto');
     }
-  
+
     public function respuestaProyecto($id)
     {
         $pproy = PostulacionProyectos::respuestaProyectoAdmin($id);
         $acceso = User::acceso($pproy);
 
-        return view('respuestaProyecto',['pproy' => $pproy,'acceso' => $acceso]);
-    }
-  
-    public function agradecimiento()
-    {
-        return view('agradecimiento'); 
+        return view('respuestaProyecto', ['pproy' => $pproy, 'acceso' => $acceso]);
     }
 
+    public function agradecimiento()
+    {
+        return view('agradecimiento');
+    }
 
     public function verEstadoPostulaciones()
     {
@@ -130,13 +111,11 @@ class HomeController extends Controller
     public function enviarCaso()
     {
         $user = DB::table('users')
-                ->where('id', '=', auth()->id())
-                ->get();
+            ->where('id', '=', auth()->id())
+            ->first();
 
-                $user=$user[0];
-
-        return view('enviarCaso',['user' => $user]);
-    } 
+        return view('enviarCaso', ['user' => $user]);
+    }
 
     public function crearCaso(Request $request)
     {
@@ -164,11 +143,9 @@ class HomeController extends Controller
         }
     }
 
-     public function getComunas(Request $request)
+    public function getComunas(Request $request)
     {
         $regionId = $request->input('region_id');
-
-        // Aquí obtienes las comunas según el ID de la región
         $comunas = Comunas::where('region_id', $regionId)->get();
 
         return response()->json($comunas);
@@ -176,72 +153,66 @@ class HomeController extends Controller
 
     public function getRegiones(Request $request)
     {
-        // Obtener las regiones desde la base de datos
         $regiones = Regiones::all();
 
-        // Devolver las regiones como respuesta JSON
         return response()->json($regiones);
     }
 
-
-     public function confirmacionRespuestaCaso()
+    public function confirmacionRespuestaCaso()
     {
         return view('confirmacionRespuestaCaso');
     }
 
-     public function confirmacionProyecto()
+    public function confirmacionProyecto()
     {
         return view('confirmacionProyecto');
     }
 
-     public function casosUsuario()
+    public function casosUsuario()
     {
         $casos = Casos::where('idUser', '=', auth()->id())
-                        ->join('users', 'casos.idUser', '=', 'users.id')
-                        ->select('casos.*', 'users.name as nombre_usuario','casos.id as caso_id')
-                        ->get();
+            ->join('users', 'casos.idUser', '=', 'users.id')
+            ->select('casos.*', 'users.name as nombre_usuario', 'casos.id as caso_id')
+            ->get();
 
         $casos->transform(function ($caso) {
-        $caso->fecha_creacion = Carbon::parse($caso->created_at)->format('d-m-Y');
-        $caso->estado = $caso->estado === null || $caso->estado == 0 ? 'ABIERTO' : 'CERRADO';
-        $caso->respuesta = $caso->respuesta === null ? 'EN ESPERA' : '<a href="' . route("respuestaCaso", ['id' => $caso->caso_id]) . '">VER RESPUESTA</a>';
+            $caso->fecha_creacion = Carbon::parse($caso->created_at)->format('d-m-Y');
+            $caso->estado = $caso->estado === null || $caso->estado == 0 ? 'ABIERTO' : 'CERRADO';
+            $caso->respuesta = $caso->respuesta === null ? 'EN ESPERA' : '<a href="' . route("respuestaCaso", ['id' => $caso->caso_id]) . '">VER RESPUESTA</a>';
             return $caso;
         });
 
         return response()->json($casos);
     }
 
-public function listarApoyoProyectos()
-{
-    $postulacion = PostulacionProyectos::where('user_id', auth()->id())->get();
-       
-    $postulacion = $postulacion->transform(function ($postulacion) {
-    switch ($postulacion->estado) {
-        case 1:
-            $postulacion->estado_texto = 'Enviado';
-            $postulacion->resolucion = 'En proceso';
-            break;
-        case 2:
-            $postulacion->estado_texto = 'Aceptado';
-            $postulacion->resolucion = '<a href="' . route("respuestaProyecto", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
-            break;
-        case 3:
-            $postulacion->estado_texto = 'Rechazado';
-            $postulacion->resolucion = '<a href="' . route("respuestaProyecto", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
-            break;
-    } 
+    public function listarApoyoProyectos()
+    {
+        $postulacion = PostulacionProyectos::where('user_id', auth()->id())->get();
 
-    // Formatear la fecha created_at
-    $postulacion->created_at_formatted = Carbon::parse($postulacion->created_at)->format('d-m-Y');
-    
-    return $postulacion;
-    
-    });
+        $postulacion = $postulacion->transform(function ($postulacion) {
+            switch ($postulacion->estado) {
+                case 1:
+                    $postulacion->estado_texto = 'Enviado';
+                    $postulacion->resolucion = 'En proceso';
+                    break;
+                case 2:
+                    $postulacion->estado_texto = 'Aceptado';
+                    $postulacion->resolucion = '<a href="' . route("respuestaProyecto", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
+                    break;
+                case 3:
+                    $postulacion->estado_texto = 'Rechazado';
+                    $postulacion->resolucion = '<a href="' . route("respuestaProyecto", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
+                    break;
+            }
+            $postulacion->created_at_formatted = Carbon::parse($postulacion->created_at)->format('d-m-Y');
 
-    return response()->json($postulacion);
-}
+            return $postulacion;
+        });
 
-public function listarFondos()
+        return response()->json($postulacion);
+    }
+
+    public function listarFondos()
     {
         $postulacion = PostulacionFondos::where('user_id', auth()->id())->get();
 
@@ -259,68 +230,58 @@ public function listarFondos()
                     $postulacion->estado_texto = 'Rechazado';
                     $postulacion->resolucion = '<a href="#">Ver Respuesta</a>';
                     break;
-            } 
-
-            // Formatear la fecha created_at
+            }
             $postulacion->created_at_formatted = Carbon::parse($postulacion->created_at)->format('d-m-Y');
-            
+
             return $postulacion;
         });
 
-    return response()->json($postulacion);
-    
-}
+        return response()->json($postulacion);
+    }
 
-
-     public function listarPersonaJuridicas()
+    public function listarPersonaJuridicas()
     {
         $personaJuridicas = PersonaJuridicas::where('user_id', auth()->id())->get();
 
         $personaJuridicas->transform(function ($personaJuridica) {
-            // Transformar los datos según sea necesario
-            // Por ejemplo, puedes formatear la fecha y el estado aquí
-           $personaJuridica->rut_link = '<a href="' . route("editarPersonaJuridica", ["id" => $personaJuridica->id]) . '">' . $personaJuridica->rut . '</a>';
+            $personaJuridica->rut_link = '<a href="' . route("editarPersonaJuridica", ["id" => $personaJuridica->id]) . '">' . $personaJuridica->rut . '</a>';
             return $personaJuridica;
         });
 
-    return response()->json($personaJuridicas);
-    
+        return response()->json($personaJuridicas);
     }
 
     public function respuestaCaso($id)
     {
-        $caso = casos::respuestaCaso($id);
-        
+        $caso = Casos::respuestaCaso($id);
         $acceso = User::acceso($caso);
-        
-        return view('respuestaCaso', compact('caso','acceso'));
+
+        return view('respuestaCaso', compact('caso', 'acceso'));
     }
 
     public function editarPersonaJuridica($id)
     {
         $personaJuridica = DB::table('persona_juridicas')
-                ->where('id', '=', $id)
-                ->get();
+            ->where('id', '=', $id)
+            ->first();
 
-        $personaJuridica=$personaJuridica[0];
-
-        return view('editarPersonaJuridica',['personaJuridica' => $personaJuridica]);
+        return view('editarPersonaJuridica', ['personaJuridica' => $personaJuridica]);
     }
 
     public function cambiarPass()
     {
         return view('cambiarPass');
-    } 
+    }
 
     public function clausulaProyecto()
     {
         return view('clausulaProyecto');
-    } 
+    }
 
     public function clausulaFondo()
     {
         return view('clausulaFondo');
-    } 
+    }
 
     public function confirmacionPass()
     {
@@ -331,463 +292,36 @@ public function listarFondos()
     {
         return view('confirmacionUsuario');
     }
-    
+
     public function changePasswordUsu(Request $request)
     {
         $validator = Validator::make($request->all(), [
-        'current_password' => [
-            'required',
-            function ($attribute, $value, $fail) {
-                if (!Auth::attempt(['email' => Auth::user()->email, 'password' => $value])) {
-                    $fail('La contraseña actual no es válida.');
-                }
-            },
-        ],
-        'new_password' => [
-            'required',
-            'string',
-            'different:current_password', // Nueva regla: debe ser diferente de la contraseña actual
-            'min:8',
-            'confirmed',
-        ],
-        ], [
-            'current_password.required' => 'El campo contraseña actual es obligatorio.',
-            'new_password.required' => 'El campo nueva contraseña es obligatorio.',
-            'new_password.different' => 'La nueva contraseña debe ser diferente de la contraseña actual.',
-            'new_password.min' => 'El campo nueva contraseña debe tener al menos :min caracteres.',
-            'new_password.confirmed' => 'La confirmación de la nueva contraseña no coincide.',
-        ]);
-
-
-        if ($validator->fails()) {
-        return response()->json([
-            'success' => false,
-            'errors' => $validator->errors()->toArray()
-        ]);
-        }   
-
-        // // Obtener el usuario autenticado
-        $user = auth()->user();
-
-        // Cambiar la contraseña del usuario
-        $user->password = Hash::make($request->new_password);
-        $user->save();
-
-        // Devolver una respuesta de éxito
-        return response()->json(['success' => true, 'message' => '¡La contraseña ha sido cambiada correctamente!']);
-    }
-
-        public function updateProfile(Request $request)
-    {
-        
-        $user = Auth::user();
-
-        $validator = Validator::make($request->all(), [
-            'email' => [
+            'current_password' => [
                 'required',
-                'email',
-                function ($attribute, $value, $fail) use ($user) {
-                    $existingUser = \App\Models\User::where('email', $value)->first();
-                    if ($existingUser && $existingUser->id !== $user->id) {
-                        $fail('El correo electrónico ya está en uso.');
+                function ($attribute, $value, $fail) {
+                    if (!Hash::check($value, auth()->user()->password)) {
+                        $fail('The current password is incorrect.');
                     }
                 },
             ],
-            'fono' => [
-            'required',
-            'min:8',
-            ],
-        ]);
-
-        if ($validator->fails()) {
-        return response()->json([
-            'success' => false,
-            'errors' => $validator->errors()->toArray()
-        ]);
-        }  
-
-        $user = auth()->user();
-        $user->update($request->all());
-
-        return response()->json(['success' => true]);
-    }
-
-     public function verPerfilUsu()
-    {
-       $user = DB::table('users')
-                ->where('id', '=', auth()->id())
-                ->get();
-
-                $user=$user[0];
-
-        return view('verPerfilUsu',['user' => $user]);
-    }
-
-     public function personaJuridica()
-    {
-       $user = DB::table('users')
-                ->where('id', '=', auth()->id())
-                ->get();
-
-                $user=$user[0];
-
-        return view('personaJuridica');
-    }
-
-     public function confirmacionPersonaJuridica()
-    {
-    
-        return view('confirmacionPersonaJuridica');
-    }
-
-     public function confirmacionFondos()
-    {
-    
-        return view('confirmacionFondos');
-    }
-
-     public function confirmacionEditarPersonaJuridica()
-    {
-    
-        return view('confirmacionEditarPersonaJuridica');
-    }    
-
-        public function crearPersonaJuridica(Request $request)
-    {
-
-        $validator = Validator::make($request->all(), [
-            'rut' => 'required|string|max:255|unique:persona_juridicas,rut',
-            'razon_social' => 'required|string|max:255',
-            'relacion' => 'required|string|max:255',
-            'estado' => 'required|string|max:255',
+            'new_password' => 'required|min:6|different:current_password',
+            'confirm_password' => 'required|same:new_password',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-            'success' => false,
-            'errors' => $validator->errors()->toArray()
-            ]);
-        }  
-
-          try {
-        // Insertar el registro y obtener el ID del nuevo registro insertado
-        $insertedId = PersonaJuridicas::insertGetId([
-            'user_id' => auth()->id(),
-            'rut' => $request->rut,
-            'razon_social' => $request->razon_social,
-            'relacion' => $request->relacion,
-            'estado' => $request->estado,
-        ]);
-
-        // Verificar si se obtuvo un ID válido
-        if ($insertedId) {
-            // El insert fue exitoso
-            return response()->json([
-                'success' => true,
-                'message' => 'El registro se ha insertado correctamente con el ID: ' . $insertedId
-            ]);
-        } else {
-            // El insert falló
-            return response()->json([
-                'success' => false,
-                'message' => 'Hubo un error al guardar el formulario en la base de datos.'
-            ], 500); // 500 es el código de estado para errores internos del servidor
-        }
-    } catch (\Exception $e) {
-        // Capturar y manejar cualquier excepción
-        return response()->json([
-            'success' => false,
-            'message' => 'Error al crear persona jurídica: ' . $e->getMessage()
-        ], 500);
-    }
-
-}
-
-public function actualizarPersonaJuridica(Request $request)
-{
-    
-    $validator = Validator::make($request->all(), [
-            'razon_social' => 'required|string|max:255',
-    ]);
-
-    if ($validator->fails()) {
-            return response()->json([
-            'success' => false,
-            'errors' => $validator->errors()->toArray()
-            ]);
-    }  
-
-
-    try {
-    // Validar los datos
-    $validatedData = $request->validate([
-        'razon_social' => 'required|string|max:255',
-        // Agrega otras reglas de validación si es necesario
-    ]);
-
-    // Obtener el ID de la persona jurídica
-    $personaJuridica_id = $request->personaJuridica_id;
-
-    // Actualizar los campos en la base de datos
-    PersonaJuridicas::where('id', $personaJuridica_id)->update([
-        'razon_social' => $validatedData['razon_social'],
-        'relacion' => $request->relacion,
-        'estado' => $request->estado,
-        // Otros campos si es necesario
-    ]);
-
-    return response()->json([
-        'success' => true,
-        'message' => 'Los datos se actualizaron correctamente'], 200);
-    } catch (\Exception $e) {
-    return response()->json(['error' => 'Error al actualizar los datos'], 500);
-    }
-}
-
-    public function validarFrmProy(Request $request)
-    {
-        $id_val=$request->id;
-
-        if($id_val==1){
-            $validator = PostulacionProyectos::validarEtapa1($request->all());
-        }
-
-        if($id_val==2){
-            $validator = PostulacionProyectos::validarEtapa2($request->all());
-        }
-
-        if($id_val==3){
-
-            $validator = PostulacionProyectos::validarEtapa3($request->all());
-
-            if ($validator->fails()) {
-                return response()->json([
                 'success' => false,
                 'errors' => $validator->errors()->toArray()
-                ]);
-            }
-
-            try {
-
-                $dataOrg = DatosOrganizaciones::prepararDatos($request);
-                $datosOrgId = DatosOrganizaciones::insertarDatos($dataOrg,$request);
-
-                $dataPostProy = PostulacionProyectos::prepararDatos($request);
-                $insertedId = PostulacionProyectos::crearPostulacionFondos($dataPostProy,$datosOrgId);
-
-                if ($insertedId) {
-                    return response()->json([
-                        'status' => true,
-                        'success' => true,
-                        'message' => 'El registro se ha insertado correctamente con el ID: ' . $insertedId
-                    ]);
-                } else {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Hubo un error al guardar el formulario en la base de datos.'
-                    ], 500);
-                }
-            } catch (\Exception $e) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Error al crear persona jurídica: ' . $e->getMessage()
-                ], 500);
-            }
-
-        }
-
-        if($id_val==4){
-            $validator = PostulacionProyectos::validarEtapa4($request->all());
-        }
-
-            
-        if ($validator->fails()) {
-            return response()->json([
-            'success' => false,
-            'errors' => $validator->errors()->toArray()
             ]);
-        }else{
-            return response()->json([
+        }
+
+        $user = auth()->user();
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+
+        return response()->json([
             'success' => true,
-            ]);
-        }
+            'message' => 'Password updated successfully.'
+        ]);
     }
-
-    public function validarFrmFondos(Request $request)
-    {
-        $id_val=$request->id;  
-
-        if($id_val==1){
-            $validator = PostulacionFondos::validarEtapa1($request->all());
-        }
-
-        if($id_val==2){
-            $validator = PostulacionFondos::validarEtapa2($request->all());
-        }
-
-        // if($id_val==3){
-        //     $validator = PostulacionFondos::validarEtapa3($request->all());
-        // }
-
-        if($id_val==4){
-            $validator = PostulacionFondos::validarEtapa4($request->all());
-        }
-
-        if($id_val==3){
-            try {
-                // Iniciar una transacción de base de datos
-                DB::beginTransaction();
-                
-                    $validator = PostulacionFondos::validarEtapa3($request->all());
-
-                    if ($validator->fails()) {
-                            return response()->json([
-                            'success' => false,
-                            'errors' => $validator->errors()->toArray()
-                            ]);
-                    }
-
-                    if($request->id_dato_organizacion){
-                        $datosOrgId=$request->id_dato_organizacion;
-                    }else{
-                        $dataOrg = DatosOrganizaciones::prepararDatos($request);
-                        $datosOrgId = DatosOrganizaciones::insertarDatos($dataOrg,$request);
-                    }
-                 
-                // Preparar y guardar datos de PostulacionFondos
-                $fondoVigenteId = PostulacionFondos::fondoVigenteId();     
-
-                $dataPosFon = PostulacionFondos::prepararDatos($request);
-                $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId,$request,$fondoVigenteId);
-
-                // Si todos los inserts fueron exitosos, hacer commit de la transacción
-                DB::commit();
-
-                // Devolver una respuesta JSON indicando el éxito
-                return response()->json([
-                    'status' => true,
-                    'success' => true,
-                    // 'message' => 'El registro se ha insertado correctamente con el ID: ' . $postulacionId
-                ]);
-            } catch (\Exception $e) {
-                // En caso de error, hacer rollback de la transacción
-                DB::rollBack();
-
-                // Capturar y manejar cualquier excepción
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Error al crear persona jurídica: ' . $e->getMessage()
-                ], 500); // 500 es el código de estado para errores internos del servidor
-            } catch (ValidationException $e) {
-                // En caso de error de validación, devolver los errores de validación
-                return response()->json([
-                    'success' => false,
-                    'errors' => $e->validator->errors()->toArray()
-                ]);
-            }             
-
-        } 
-        
-         if($id_val==6){
-            try {
-                // Iniciar una transacción de base de datos
-                DB::beginTransaction();
-                
-                    // Validar los campos de DatosOrganizaciones
-                    $validator = Validator::make($request->all(), [
-                        'persona_juridica_id' => 'required',
-                        ]);
-
-                    if ($validator->fails()) {
-                            return response()->json([
-                            'success' => false,
-                            'errors' => $validator->errors()->toArray()
-                            ]);
-                    }
-
-                    if($request->id_dato_organizacion){
-                        $datosOrgId=$request->id_dato_organizacion;
-                    }else{
-                        $dataOrg = DatosOrganizaciones::prepararDatos($request);
-                        $datosOrgId = DatosOrganizaciones::insertarDatos($dataOrg);
-                    }
-
-                    if($request->persona_juridica_id){
-                        $personaJurId=$request->persona_juridica_id;
-                    }
-                 
-                // Preparar y guardar datos de PostulacionFondos
-                $fondoVigenteId = PostulacionFondos::fondoVigenteId();    
-
-                $dataPosFon = PostulacionFondos::prepararDatos($request);
-                $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId, $personaJurId, $request,$fondoVigenteId);
-
-                $dataPrefon = PostulacionPresupuestos::prepararDatos($request);
-                $postulacionPreId=PostulacionPresupuestos::crearPresupuestos($dataPrefon,$postulacionId);
-
-                // Si todos los inserts fueron exitosos, hacer commit de la transacción
-                DB::commit();
-
-                // Devolver una respuesta JSON indicando el éxito
-                return response()->json([
-                    'status' => true,
-                    'success' => true,
-                    // 'message' => 'El registro se ha insertado correctamente con el ID: ' . $postulacionId
-                ]);
-            } catch (\Exception $e) {
-                // En caso de error, hacer rollback de la transacción
-                DB::rollBack();
-
-                // Capturar y manejar cualquier excepción
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Error al crear persona jurídica: ' . $e->getMessage()
-                ], 500); // 500 es el código de estado para errores internos del servidor
-            } catch (ValidationException $e) {
-                // En caso de error de validación, devolver los errores de validación
-                return response()->json([
-                    'success' => false,
-                    'errors' => $e->validator->errors()->toArray()
-                ]);
-            }             
-
-        } 
-
-        if ($validator->fails()) {
-            return response()->json([
-            'success' => false,
-            'errors' => $validator->errors()->toArray()
-            ]);
-        }else{
-            return response()->json([
-            'success' => true,
-            ]);
-        }
-    }
-
-
-    public function obtenerPersonasJuridicas()
-    {
-        $user = Auth::user();
-           $pjuridicas = PersonaJuridicas::where('user_id', $user->id)
-                ->select('id', 'razon_social')
-                ->get();
-
-                // dd($pjuridicas);
-        return response()->json($pjuridicas);
-    }
-
-    public function obtenerOrganizaciones()
-    {
-        $user = Auth::user();
-        $organizaciones = DatosOrganizaciones::where('user_id', $user->id)
-                ->select('id', 'nombre_organizacion')
-                ->get();
-
-                // dd($pjuridicas);
-        return response()->json($organizaciones);
-    }
-
-
-    
 }
