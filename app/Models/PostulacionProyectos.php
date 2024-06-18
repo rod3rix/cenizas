@@ -112,10 +112,10 @@ protected $fillable = [
     public static function validarEtapa1(array $data)
     {
         $validator = Validator::make($data, [
-             'nacionalidad' => 'required|string|max:255',
+            'nacionalidad' => 'required|string|max:255',
             'genero' => 'required|string|max:255',
-            'pueblo_originario' => 'required|string|max:255',
-            'discapacidad' => 'required|string|max:255',
+            'pueblo_originario' =>  'required|boolean', 
+            'discapacidad' => 'required|boolean',
             'fecha_nacimiento' => 'required',
             'actividad_economica' => 'required|string|max:255',
             'direccion' => 'required|string|max:255',

@@ -89,7 +89,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="archivo_anexo" class="col-md-12 col-form-label text-md-left">7. Adjuntar certificado de personalidad jurídica* &nbsp;&nbsp;<br>&nbsp; &nbsp; (formato .pdf, .zip, .rar. Tamaño máximo 20 mb.)</label>
+                            <label for="certificado_pj" class="col-md-12 col-form-label text-md-left">7. Adjuntar certificado de personalidad jurídica* &nbsp;&nbsp;<br>&nbsp; &nbsp; (formato .pdf, .zip, .rar. Tamaño máximo 20 mb.)</label>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">

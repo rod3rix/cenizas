@@ -5,7 +5,7 @@
             <div class="card-header"><b><u>{{ __('ANTECEDENTES GENERALES') }}</b></u></div>
             <div class="card-body">
                   <div class="form-group row">
-                     <label for="nombres" class="col-md-12 col-form-label text-md-left">{{ __('1. Nombre *') }}</label>
+                     <label for="name" class="col-md-12 col-form-label text-md-left">{{ __('1. Nombre *') }}</label>
                      <div class="col-md-12">
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}" required autocomplete="name"  disabled>
                      </div>
@@ -73,15 +73,15 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="pueblo_originario" class="col-md-12 col-form-label text-md-left">{{ __('9. Pertenece a pueblo originario *') }}</label>
+                     <label class="col-md-12 col-form-label text-md-left">{{ __('9. Pertenece a pueblo originario *') }}</label>
                      <div class="col-md-12">
                         <div class="form-check form-check-inline">
-                          <input class="form-check-input" id="pueblo_originario" name="pueblo_originario" type="radio" value="1">
-                          <label class="form-check-label" for="inlineCheckbox1">Si</label>
+                          <input class="form-check-input" id="pueblo_originario_si" name="pueblo_originario" type="radio" value="1">
+                          <label class="form-check-label" for="pueblo_originario_si">Si</label>
                         </div>
                         <div class="form-check form-check-inline">
-                          <input class="form-check-input" id="pueblo_originario" name="pueblo_originario" type="radio"  value="0">
-                          <label class="form-check-label" for="inlineCheckbox2">No</label>
+                          <input class="form-check-input" id="pueblo_originario_no" name="pueblo_originario" type="radio"  value="0">
+                          <label class="form-check-label" for="pueblo_originario_no">No</label>
                         </div>
                         @error('pueblo_originario')
                         <span class="invalid-feedback" role="alert">
@@ -91,15 +91,15 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="discapacidad" class="col-md-12 col-form-label text-md-left">{{ __('10. Discapacidad *') }}</label>
+                     <label class="col-md-12 col-form-label text-md-left">{{ __('10. Discapacidad *') }}</label>
                      <div class="col-md-12">
                         <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" id="discapacidad" name="discapacidad" value="1">
-                          <label class="form-check-label" for="inlineCheckbox1">Si</label>
+                          <input class="form-check-input" type="radio" id="discapacidad_si" name="discapacidad" value="1">
+                          <label class="form-check-label" for="discapacidad_si">Si</label>
                         </div>
                         <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" id="discapacidad" name="discapacidad" value="0">
-                          <label class="form-check-label" for="inlineCheckbox2">No</label>
+                          <input class="form-check-input" type="radio" id="discapacidad_no" name="discapacidad" value="0">
+                          <label class="form-check-label" for="discapacidad_no">No</label>
                         </div>
                         @error('discapacidad')
                         <span class="invalid-feedback" role="alert">

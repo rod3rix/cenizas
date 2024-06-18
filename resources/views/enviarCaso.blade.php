@@ -11,8 +11,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">{{ __('') }}</div>
-
+                <div class="card-header"></div>
                 <div class="card-body">
                     <form method="POST" id="frm1" name="frm1" enctype="multipart/form-data">
                          <input id="frm" id="frm" value="1" type="hidden">
@@ -62,16 +61,16 @@
                         <div class="form-group row">
                             <label for="name" class="col-md-12 col-form-label text-md-left">{{ __('3. Nombre*') }}</label>
                             <div class="col-md-12">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ $user->name }}" disabled>
+                                <input id="name" type="text" class="form-control" name="name" value="{{ $user->name }}" autocomplete="name" disabled>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="apellidop" class="col-md-12 col-form-label text-md-left">{{ __('4. Apellido Paterno*') }}</label>
+                            <label for="apellido_paterno" class="col-md-12 col-form-label text-md-left">{{ __('4. Apellido Paterno*') }}</label>
 
                             <div class="col-md-12">
                                 <input id="apellido_paterno" type="text" class="form-control @error('apellido_paterno') is-invalid @enderror" name="apellido_paterno" value="{{ $user->apellido_paterno }}" required autocomplete="apellido_paterno"  disabled>
 
-                                @error('apellidop')
+                                @error('apellido_paterno')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -134,7 +133,7 @@
                             <label for="region" class="col-md-12 col-form-label text-md-left">{{ __('9. Región*') }}</label>
 
                             <div class="col-md-12">
-                                 <select id="region" name="region" type="text" class="form-control @error('region') is-invalid @enderror">
+                                 <select id="region" name="region" type="text" class="form-control @error('region') is-invalid @enderror" autocomplete="region">
                                     <option value="">Seleccione una región</option>
                                 </select>
                                 

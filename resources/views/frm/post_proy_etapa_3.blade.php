@@ -59,7 +59,7 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="telefono" class="col-md-12 col-form-label text-md-left">{{ __('4. Número beneficiarios directos e indirectos *') }}</label>
+                     <label class="col-md-12 col-form-label text-md-left">{{ __('4. Número beneficiarios directos e indirectos *') }}</label>
                       <label for="directos" class="col-md-2 col-form-label text-md-left">{{ __('Directos') }}<span data-bs-toggle="tooltip" title="Aquí puedes elegir ....">
                       <i class="bi bi-question-circle"></i></span></label>
                       <div class="col-md-2">
@@ -98,7 +98,7 @@
                   <div class="form-group row">
                      <div class="col-md-12">
                         <div class="form-check form-check-inline">
-                           <label class="form-check-label" for="inlineCheckbox1">6. Minera Las Cenizas tiene el derecho de tomar fotografías y hacer visitas del proyecto. Además, instalar placa conmemorativa *<br>Marcar casilla para aceptar cláusula</label>
+                           <label class="form-check-label" for="acepto_clausula_proy">6. Minera Las Cenizas tiene el derecho de tomar fotografías y hacer visitas del proyecto. Además, instalar placa conmemorativa *<br>Marcar casilla para aceptar cláusula</label>
                           <input class="form-check-input" type="checkbox" id="acepto_clausula_proy" name="acepto_clausula_proy" value="1">
                          
                         </div>
