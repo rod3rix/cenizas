@@ -7,7 +7,6 @@
         </div>
 
         <div  class="container">          
-            <h5><b>Mis relaciones jurídicas asociadas</b></h5>
                   <table id="registros" class="table table-striped table-bordered" style="width:100%">
                       <thead>
                           <tr>

@@ -19,9 +19,8 @@
     <link href="{{ asset('css/bootstrap-directional-buttons.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
-    <!-- <link rel="stylesheet" href="{{ asset('css/bootstrap-icons.css') }}"> -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", rel="stylesheet", integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN", crossorigin="anonymous">
 
@@ -41,10 +40,6 @@
     <script src="{{ asset('js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('js/buttons.colVis.min.js') }}"></script>
-
-
-
-
 </head>
 
 <body class="">
@@ -191,21 +186,6 @@
     </ul>
   </footer>
 </div>
-<script>
-(function(d, t, g, k) {
-    var ph = d.createElement(t),
-    s = d.getElementsByTagName(t)[0],
-    t = (new URLSearchParams(window.location.search)).get(k);
-    t && localStorage.setItem(k, t);
-    t = localStorage.getItem(k);
-    ph.type = 'text/javascript';
-    ph.async = true;
-    ph.defer = true;
-    ph.charset = 'UTF-8';
-    ph.src = g + '&v=' + (new Date()).getTime();
-    ph.src += t ? '&' + k + '=' + t : '';
-    s.parentNode.insertBefore(ph, s);
-})(document, 'script', '//fb.zimple.pro/?p=21473&ph_apikey=046938ab124c94e711b10564aa759d62', 'ph_access_token');
-</script>
+
 </body>
 </html>

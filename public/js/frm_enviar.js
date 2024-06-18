@@ -22,7 +22,6 @@ $(document).ready(function() {
                 if (xhr.status === 200) {
                     if (response.success) {
                         $('#frmInsert')[0].reset();
-                        alert(href);
                         window.location.href = href;
                     } else {
                         $.each(response.errors, function(key, value) {

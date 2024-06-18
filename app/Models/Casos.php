@@ -168,4 +168,21 @@ class Casos extends Model
 
         return $caso;
     }
+
+    public static function casosUsuario()
+    {
+        $casos = Casos::where('idUser', '=', auth()->id())
+            ->join('users', 'casos.idUser', '=', 'users.id')
+            ->select('casos.*', 'users.name as nombre_usuario', 'casos.id as caso_id')
+            ->get();
+
+        $casos->transform(function ($caso) {
+            $caso->fecha_creacion = Carbon::parse($caso->created_at)->format('d-m-Y');
+            $caso->estado = $caso->estado === null || $caso->estado == 0 ? 'ABIERTO' : 'CERRADO';
+            $caso->respuesta = $caso->respuesta === null ? 'EN ESPERA' : '<a href="' . route("respuestaCaso", ['id' => $caso->caso_id]) . '">VER RESPUESTA</a>';
+            return $caso;
+        });
+
+        return $casos;
+    }
 }

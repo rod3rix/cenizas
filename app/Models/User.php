@@ -189,4 +189,12 @@ class User extends Authenticatable
     {
         return substr($rut, 0, -1).substr($rut, -1);
     }
+
+     public static function userData()
+    {
+        $user = DB::table('users')
+            ->where('id', '=', auth()->id())
+            ->first();
+        return $user;
+    }
 }

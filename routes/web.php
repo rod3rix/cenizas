@@ -117,6 +117,7 @@ Route::get('/ingreso-caso',  [App\Http\Controllers\HomeController::class,'ingres
     Route::get('respuestaCaso/{id}', [App\Http\Controllers\HomeController::class, 'respuestaCaso'])->name('respuestaCaso');
     Route::get('/obtenerPersonasJuridicas', [App\Http\Controllers\HomeController::class, 'obtenerPersonasJuridicas'])->name('obtenerPersonasJuridicas');
      Route::get('/obtenerOrganizaciones', [App\Http\Controllers\HomeController::class, 'obtenerOrganizaciones'])->name('obtenerOrganizaciones');
+     Route::get('respuestaFondo/{id}', [App\Http\Controllers\HomeController::class, 'respuestaFondo'])->name('respuestaFondo');
 });
 
 // admin routes

@@ -58,7 +58,7 @@ class PersonaJuridicas extends Model
         ]);
     }
 
-      static function validarCampos(array $data)
+    static function validarCampos(array $data)
     {
         $validator = Validator::make($data, [
             'rut_juridico' => 'required|string|max:255',
@@ -73,5 +73,14 @@ class PersonaJuridicas extends Model
         ]);
 
         return $validator;
+    }
+
+    static function editarPersonaJuridica($id)
+    {
+        $personaJuridica = DB::table('persona_juridicas')
+            ->where('id', '=', $id)
+            ->first();
+
+        return $personaJuridica;
     }
 }

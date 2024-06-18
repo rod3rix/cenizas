@@ -75,5 +75,15 @@ class ListadoFondos extends Model
 
       return $postulacion;
 
-    }        
+    }
+
+    public static function fondoVigente()       
+   {
+        $currentDate = Carbon::now()->endOfDay()->format('Y-m-d');
+        $isVigente = ListadoFondos::where('vigencia', 1)
+            ->whereDate('fecha_termino', '>=', $currentDate)
+            ->exists();
+
+        return $isVigente;
+   } 
 }

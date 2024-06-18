@@ -270,5 +270,32 @@ protected $fillable = [
 
         return $validator;
     }
+
+    public static function listarApoyoProyectos()
+    {
+        $postulacion = PostulacionProyectos::where('user_id', auth()->id())->get();
+
+        $postulacion = $postulacion->transform(function ($postulacion) {
+            switch ($postulacion->estado) {
+                case 1:
+                    $postulacion->estado_texto = 'Enviado';
+                    $postulacion->resolucion = 'En proceso';
+                    break;
+                case 2:
+                    $postulacion->estado_texto = 'Aceptado';
+                    $postulacion->resolucion = '<a href="' . route("respuestaProyecto", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
+                    break;
+                case 3:
+                    $postulacion->estado_texto = 'Rechazado';
+                    $postulacion->resolucion = '<a href="' . route("respuestaProyecto", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
+                    break;
+            }
+            $postulacion->created_at_formatted = Carbon::parse($postulacion->created_at)->format('d-m-Y');
+
+            return $postulacion;
+        });
+
+        return $postulacion;
+    }
 }
             
