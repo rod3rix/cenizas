@@ -108,6 +108,8 @@
             <div class="mb-3">
           Descargar archivo:
             <a href="{{ asset('storage/archivos/' . $caso->archivo_respuesta) }}" download>{{ $caso->archivo_respuesta }}</a>
+
+
             </div>
         </p>
     </div>
