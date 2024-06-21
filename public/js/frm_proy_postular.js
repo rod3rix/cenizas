@@ -133,7 +133,22 @@ function validarFrmProy(id) {
                 // Si la respuesta indica que hubo errores de validación, muestras los mensajes de error debajo de los campos correspondientes
                 $.each(response.errors, function(key, value) {
                     // Encuentra el campo correspondiente al error y muestra el mensaje de error
-                    $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
+                    if(key === 'pueblo_originario') {
+                    // Añade la clase de error a ambos inputs de radio
+                    $('#pueblo_originario_si').addClass('is-invalid');
+                    $('#pueblo_originario_no').addClass('is-invalid');
+                    // Añade el mensaje de error después del último input de radio
+                    $('#v_pueblo_originario').after('<div class="invalid-feedback d-block">' + value + '</div>');
+                    } else if (key === 'discapacidad') {
+                        // Añade la clase de error a ambos inputs de radio
+                        $('#discapacidad_si').addClass('is-invalid');
+                        $('#discapacidad_no').addClass('is-invalid');
+                        // Añade el mensaje de error antes del primer input de radio
+                        $('#v_discapacidad').after('<div class="invalid-feedback d-block">' + value + '</div>');
+                    } else {
+                        // Encuentra el campo correspondiente al error y muestra el mensaje de error
+                        $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
+                    }
                 });
             }
         } else {
