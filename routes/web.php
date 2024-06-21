@@ -128,7 +128,10 @@ Route::middleware(['class','auth', 'access-level:admin'])->group(function () {
     // Ruta para obtener detalles del usuario
     Route::post('getUserDetails', [App\Http\Controllers\AdminController::class, 'getUserDetails'])->name('getUserDetails');
 
-    // Ruta para actualizar el usuario
+    Route::post('getFondo', [App\Http\Controllers\AdminController::class, 'getFondo'])->name('getFondo');
+
+    Route::post('updateAFondo', [App\Http\Controllers\AdminController::class, 'updateAFondo'])->name('updateAFondo');
+    
     Route::post('updateUser/{id}', [App\Http\Controllers\AdminController::class, 'updateUser'])->name('updateUser');
 
     Route::post('registrarUsuAdmin', [App\Http\Controllers\AdminController::class, 'registrarUsuAdmin'])->name('registrarUsuAdmin');
@@ -190,6 +193,8 @@ Route::middleware(['class','auth', 'access-level:admin'])->group(function () {
     Route::get('/obtenerTitulosFondos', [App\Http\Controllers\AdminController::class, 'obtenerTitulosFondos'])->name('obtenerTitulosFondos');
 
     Route::get('listarFondosConcursables',  [App\Http\Controllers\AdminController::class,'listarFondosConcursables'])->name('listarFondosConcursables');
+
+    Route::post('/listarEdicionFondos',  [App\Http\Controllers\AdminController::class, 'listarEdicionFondos'])->name('listarEdicionFondos');
 });
 
 

@@ -564,4 +564,68 @@ class AdminController extends Controller
         return response()->json($titulos);
     }
 
+    public function listarEdicionFondos()
+    {
+        $listado = ListadoFondos::all();
+        foreach ($listado as $fondo) {
+            $fondo->fecha_inicio = Carbon::parse($fondo->fecha_inicio)->format('d-m-Y');
+            $fondo->fecha_termino = Carbon::parse($fondo->fecha_termino)->format('d-m-Y');
+            $fondo->link_modal = '<div class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarFondoModal" data-id="'.$fondo->id.'">Ver Detalles</button><div>';
+        }
+
+        return response()->json($listado);
+    }
+
+     public function getFondo(Request $request)
+    {
+       $fondo = ListadoFondos::find($request->id);
+
+        if ($fondo) {
+            $fondo->fecha_inicio = Carbon::parse($fondo->fecha_inicio)->format('d-m-Y');
+            $fondo->fecha_termino = Carbon::parse($fondo->fecha_termino)->format('d-m-Y');
+            return response()->json($fondo);
+        } else {
+            return response()->json(['error' => 'Fondo no encontrado'], 404);
+        }
+    }
+
+    public function updateAFondo(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'fondo_id' => 'required|exists:listado_fondos,id',
+            'nombre_fondo_edit' => 'required|string|max:255',
+            'descripcion_edit' => 'required|string',
+            'fecha_inicio_edit' => 'required',
+            'fecha_termino_edit' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                    'success' => false,
+                    'errors' => $validator->errors()->toArray()
+            ]);
+        }
+
+        $fondo = ListadoFondos::find($request->fondo_id);
+
+        $fecha_inicio_formatted = date('Y-m-d', strtotime($request->fecha_inicio_edit));
+        $fecha_termino_formatted = date('Y-m-d', strtotime($request->fecha_termino_edit));
+       
+        if ($fondo) {
+            $fondo->nombre_fondo = $request->nombre_fondo_edit;
+            $fondo->descripcion = $request->descripcion_edit;
+            $fondo->fecha_inicio = $fecha_inicio_formatted;
+            $fondo->fecha_termino =$fecha_termino_formatted;
+            $fondo->save();
+
+            return response()->json([
+                'message' => 'Fondo actualizado con éxito',
+                'status' => true,
+                'success' => true
+                ],200);
+
+        } else {
+            return response()->json(['error' => 'Fondo no encontrado'], 404);
+        }
+}
 }
