@@ -227,16 +227,13 @@
       </p>
       <div class="col col-sm-4">
             <label for="calificacion" class="col-sm-2 col-form-label  border-bottom border-gray">Calificación:</label>
-            <select class="form-control @error('calificar') is-invalid @enderror" id="calificar" name="calificar">
+            <select class="form-control" id="calificar" name="calificar">
                 <option value="">Seleccione</option>
                 @for ($i = 0; $i <= 10; $i++)
                             <option value="{{ $i }}">{{ $i }}</option>
 
                 @endfor
             </select>
-            @error('calificar')
-              <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
         </div>
     </div>
      <div class="media text-muted pt-3">
@@ -284,33 +281,24 @@
           <p class="media-body pb-3 mb-0 small lh-125">
               <strong class="d-block text-gray-dark">RESPUESTA:</strong>
                <label for="respuesta" class="col-sm-2 col-form-label  border-bottom border-gray">RESPUESTA:</label>
-              <textarea id="respuesta" name="respuesta" class="form-control @error('respuesta') is-invalid @enderror" rows="3" placeholder="Escribir respuesta"></textarea>
-            @error('respuesta')
-              <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
+              <textarea id="respuesta" name="respuesta" class="form-control" rows="3" placeholder="Escribir respuesta"></textarea>
           </p>
       </div>
       <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 text-md-right">
             <strong class="d-block text-gray-dark">Estado del proyecto:</strong>
-            <select id="estado_fondo" name="estado_fondo" class="form-control @error('estado_fondo') is-invalid @enderror">
+            <select id="estado_fondo" name="estado_fondo" class="form-control">
                 <option value="">Seleccione</option>
                 <option value="2">Proyecto aceptado</option>
                 <option value="3">Proyecto rechazado</option>
             </select>
-            @error('estado_fondo')
-              <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
         </p>
       </div>
       <div class="media text-muted pt-3">
           <p class="media-body pb-3 mb-0 small lh-125 text-md-right">
               <strong class="d-block text-gray-dark">Adjuntar archivo (Formatos .pdf, .zip, .rar. Tamaño máximo 20 mb.):</strong>
               <div class="mb-3">
-                  <input class="form-control @error('archivo') is-invalid @enderror" type="file" id="archivo" name="archivo" accept=".pdf,.zip,.rar">
-                  @error('archivo')
-                      <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
+                  <input class="form-control" type="file" id="archivo" name="archivo" accept=".pdf,.zip,.rar">
               </div>
               <button id="cerrarFondoBtn" type="button" class="btn btn-primary btn-block">Guardar ></button>
           </p>

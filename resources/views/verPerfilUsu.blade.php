@@ -14,7 +14,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">Nombre:</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ $user->name }}" required autocomplete="name" autofocus disabled>
+                                <input id="name" type="text" class="form-control" name="name" value="{{ $user->name }}" autocomplete="name" disabled>
                             </div>
                         </div>
 
@@ -27,7 +27,7 @@
                             <label for="apellido_paterno" class="col-md-4 col-form-label text-md-right">Apellido Paterno:</label>
 
                             <div class="col-md-6">
-                                <input id="apellido_paterno" type="text" class="form-control" name="apellido_paterno" value="{{ $user->apellido_paterno }}" required autocomplete="apellido_paterno" disabled>
+                                <input id="apellido_paterno" type="text" class="form-control" name="apellido_paterno" value="{{ $user->apellido_paterno }}" autocomplete="apellido_paterno" disabled>
                             </div>
                         </div>
 
@@ -40,7 +40,7 @@
                             <label for="apellido_materno" class="col-md-4 col-form-label text-md-right">Apellido Materno:</label>
 
                             <div class="col-md-6">
-                                <input id="apellido_materno" type="text" class="form-control" name="apellido_materno" value="{{ $user->apellido_materno }}" required autocomplete="apellido_materno" disabled>
+                                <input id="apellido_materno" type="text" class="form-control" name="apellido_materno" value="{{ $user->apellido_materno }}" autocomplete="apellido_materno" disabled>
                             </div>
                         </div>
 
@@ -53,7 +53,7 @@
                             <label for="rut" class="col-md-4 col-form-label text-md-right">RUT:</label>
 
                             <div class="col-md-6">
-                                <input id="rut" type="text" class="form-control" name="rut" value="{{ $user->rut }}" required autocomplete="rut" disabled>
+                                <input id="rut" type="text" class="form-control" name="rut" value="{{ $user->rut }}" autocomplete="rut" disabled>
                             </div>
                         </div>
 

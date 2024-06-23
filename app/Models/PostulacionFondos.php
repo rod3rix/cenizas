@@ -290,12 +290,13 @@ class PostulacionFondos extends Model
     public static function respuestaFondoAdmin($id)
     {
         $pfondo = DB::table('postulacion_fondos')
+            ->join('listado_fondos', 'listado_fondos.id', '=', 'postulacion_fondos.id_fondo_concursable')
             ->join('users', 'users.id', '=', 'postulacion_fondos.user_id')
             ->join('datos_organizaciones', 'datos_organizaciones.id', '=', 'postulacion_fondos.id_dato_organizacion')
-            ->select('users.*', 'postulacion_fondos.*', 'datos_organizaciones.*','datos_organizaciones.domicilio_organizacion','postulacion_fondos.id as post_fondo_id')
+            ->select('listado_fondos.*','users.*', 'postulacion_fondos.*', 'datos_organizaciones.*', 'datos_organizaciones.domicilio_organizacion', 'postulacion_fondos.id as post_fondo_id')
             ->where('postulacion_fondos.id', $id)
             ->first();
-    
+
         return $pfondo;
     }
 

@@ -17,9 +17,6 @@
                         <label for="rut" class="col-sm-2 col-form-label">RUT:</label>
                         <div class="col-sm-10">
                         <input type="text" class="form-control" id="rut" name="rut" maxlength="12" onkeyup="formatRut(this)">
-                        @error('rut')
-                        <div class="text-danger">{{ $message }}</div>
-                        @enderror
                         </div>
                         </div>
 
@@ -27,9 +24,6 @@
                             <label for="razon_social" class="col-sm-2 col-form-label">Razón Social:</label>
                             <div class="col-sm-10">
                                <input type="text" class="form-control" id="razon_social" name="razon_social" >
-                                @error('razon_social')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
                             </div>
                         </div>
            
@@ -41,9 +35,6 @@
                                     <option value="socio">Socio</option>
                                     <option value="otros">Otros</option>
                                 </select>
-                                @error('relacion')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
                             </div>
                         </div>
 
@@ -55,9 +46,6 @@
                                     <option value="activo">Activo</option>
                                     <option value="inactivo">Inactivo</option>
                                 </select>
-                                @error('estado')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
                             </div>
                         </div>
 
@@ -90,5 +78,4 @@
 </script>
 <script src="{{ asset('js/format_rut.js') }}?v={{ time() }}"></script>
 <script src="{{ asset('js/persona_juridicas_usu.js') }}?v={{ time() }}"></script>
-
 @endsection

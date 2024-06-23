@@ -7,13 +7,8 @@
         <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content.</p>
     </div>
     <div class="container mt-5">
-        <!-- Mensaje de éxito -->
-        <div id="success-message" class="alert alert-success" style="display: none;">
-            ¡El formulario se ha enviado correctamente!
+        <div id="mensajeExito" class="alert alert-success" style="display: none;">
         </div>
-        <div id="mensajeExito" class="alert alert-success" style="display: none;"></div>
-
-        <div id="statusMessage" class="alert alert-success d-none" role="alert"></div>
         <!-- Primer acordeón -->
         <div class="accordion" id="accordionOne">
             <div class="accordion-item">
@@ -33,12 +28,7 @@
                                         <div class="row mb-3">
                                             <label for="nombre_fondo" class="col-md-4 col-form-label text-md-end">{{ __('Título Anual:') }}</label>
                                             <div class="col-md-6">
-                                                <input id="titulo_anual" type="text" class="form-control @error('titulo_anual') is-invalid @enderror" name="titulo_anual" value="{{ old('titulo_anual') }}" autocomplete="titulo_anual" autofocus>
-                                                @error('titulo_anual')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                                @enderror
+                                                <input id="titulo_anual" type="text" class="form-control" name="titulo_anual" value="{{ old('titulo_anual') }}" autocomplete="titulo_anual" autofocus>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -73,62 +63,36 @@
                                 <div class="row mb-3">
                                     <label for="nombre_fondo" class="col-md-4 col-form-label text-md-end">{{ __('Nombre del Fondo:') }}</label>
                                     <div class="col-md-6">
-                                        <input id="nombre_fondo" type="text" class="form-control @error('nombre_fondo') is-invalid @enderror" name="nombre_fondo" value="{{ old('nombre_fondo') }}" autocomplete="nombre_fondo" autofocus>
-                                        @error('nombre_fondo')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
+                                        <input id="nombre_fondo" type="text" class="form-control" name="nombre_fondo" value="{{ old('nombre_fondo') }}" autocomplete="nombre_fondo" autofocus>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <label for="descripcion" class="col-md-4 col-form-label text-md-end">{{ __('Descripción:') }}</label>
                                     <div class="col-md-6">
-                                        <textarea id="descripcion" class="form-control @error('descripcion') is-invalid @enderror" name="descripcion" autocomplete="descripcion">{{ old('descripcion') }}</textarea>
-                                        @error('descripcion')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                        <textarea id="descripcion" class="form-control" name="descripcion" autocomplete="descripcion">{{ old('descripcion') }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <label for="fecha_inicio" class="col-md-4 col-form-label text-md-end">{{ __('Fecha de Inicio:') }}</label>
                                     <div class="col-md-6">
-                                        <input id="fecha_inicio" type="text" class="form-control @error('fecha_inicio') is-invalid @enderror" name="fecha_inicio" value="{{ old('fecha_inicio') }}" autocomplete="fecha_inicio" readonly>
-                                        @error('fecha_inicio')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
+                                        <input id="fecha_inicio" type="text" class="form-control" name="fecha_inicio" value="{{ old('fecha_inicio') }}" autocomplete="fecha_inicio" readonly>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <label for="fecha_termino" class="col-md-4 col-form-label text-md-end">{{ __('Fecha de Término:') }}</label>
                                     <div class="col-md-6">
-                                        <input id="fecha_termino" type="text" class="form-control @error('fecha_termino') is-invalid @enderror" name="fecha_termino" value="{{ old('fecha_termino') }}" autocomplete="fecha_termino" readonly>
-                                        @error('fecha_termino')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
+                                        <input id="fecha_termino" type="text" class="form-control" name="fecha_termino" value="{{ old('fecha_termino') }}" autocomplete="fecha_termino" readonly>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <label for="titulo_anual_id" class="col-md-4 col-form-label text-md-end">{{ __('Asociar a Título Anual:') }}</label>
                                     <div class="col-md-6">
-                                        <select id="titulo_anual_id" name="titulo_anual_id" class="form-control @error('titulo_anual') is-invalid @enderror">
-
+                                        <select id="titulo_anual_id" name="titulo_anual_id" class="form-control">
                                         </select>
-                                        @error('titulo_anual_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
                                     </div>
                                 </div>
 
@@ -195,39 +159,19 @@
                     <input type="hidden" id="fondo_id" name="fondo_id" value="">
                     <div class="mb-3">
                         <label for="nombre_fondo_edit" class="form-label">Nombre del Fondo:</label>
-                        <input type="text" class="form-control @error('nombre_fondo_edit') is-invalid @enderror" id="nombre_fondo_edit" name="nombre_fondo_edit">
-                        @error('nombre_fondo_edit')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
+                        <input type="text" class="form-control" id="nombre_fondo_edit" name="nombre_fondo_edit">
                     </div>
                     <div class="mb-3">
                         <label for="descripcion_edit" class="form-label">Descripción:</label>
-                        <textarea class="form-control @error('descripcion_edit') is-invalid @enderror" id="descripcion_edit" name="descripcion_edit"></textarea>
-                        @error('descripcion_edit')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
+                        <textarea class="form-control" id="descripcion_edit" name="descripcion_edit"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="fecha_inicio_edit" class="form-label">Fecha de Inicio:</label>
-                        <input type="text" class="form-control @error('fecha_inicio_edit') is-invalid @enderror" id="fecha_inicio_edit" name="fecha_inicio_edit" readonly>
-                        @error('fecha_inicio_edit')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
+                        <input type="text" class="form-control" id="fecha_inicio_edit" name="fecha_inicio_edit" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="fecha_termino_edit" class="form-label">Fecha de Término:</label>
-                        <input type="text" class="form-control @error('fecha_termino_edit') is-invalid @enderror" id="fecha_termino_edit" name="fecha_termino_edit" readonly>
-                        @error('fecha_termino_edit')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
+                        <input type="text" class="form-control" id="fecha_termino_edit" name="fecha_termino_edit" readonly>
                     </div>
                     <button id="actualizarFondo" name="actualizarFondo" type="button" class="btn btn-primary">Actualizar Fondo</button>
                 </form>

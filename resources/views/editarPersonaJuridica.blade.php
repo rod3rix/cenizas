@@ -17,7 +17,7 @@
                             <label for="rut" class="col-md-4 col-form-label text-md-right">RUT:</label>
 
                             <div class="col-md-6">
-                                <input id="rut" type="text" class="form-control" name="rut" value="{{ $personaJuridica->rut }}" required autocomplete="rut" disabled>
+                                <input id="rut" type="text" class="form-control" name="rut" value="{{ $personaJuridica->rut }}" autocomplete="rut" disabled>
                             </div>
                         </div>
 
@@ -31,10 +31,6 @@
 
                             <div class="col-md-6">
                                 <input id="razon_social" type="text" class="form-control" name="razon_social" value="{{ $personaJuridica->razon_social }}" autocomplete="razon_social">
-
-                                @error('razon_social')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
                             </div>
                         </div>
 
@@ -47,7 +43,7 @@
                             <label for="relacion" class="col-md-4 col-form-label text-md-right">Relación:</label>
 
                             <div class="col-md-6">
-                                <select id="relacion" class="form-control" name="relacion" required>
+                                <select id="relacion" class="form-control" name="relacion">
                                     <option value="socio" {{ $personaJuridica->relacion == 'socio' ? 'selected' : '' }}>Socio</option>
                                     <option value="otros" {{ $personaJuridica->relacion == 'otros' ? 'selected' : '' }}>Otros</option>
                                 </select>

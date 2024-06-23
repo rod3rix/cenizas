@@ -13,7 +13,7 @@
                             <label for="current_password" class="col-md-4 col-form-label text-md-right">Contraseña Actual</label>
 
                             <div class="col-md-6">
-                                <input id="current_password" type="password" class="form-control" name="current_password"  autocomplete="current-password">
+                                <input id="current_password" type="password" class="form-control" name="current_password" autocomplete="current-password" autofocus>
                                 
                             </div>
                         </div>

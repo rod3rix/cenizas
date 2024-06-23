@@ -1,7 +1,6 @@
 $(document).ready(function() {
     obtenerTitulosFondos();
     listarEdicionFondos();
-     // Delegar el evento de clic a los botones generados dinámicamente
     $(document).on('click', '[data-bs-toggle="modal"]', function() {
         var id = $(this).data('id');
         cargarDatosModal(id);
@@ -51,13 +50,12 @@ function enviarFormulario(idFrm) {
         data: formData,
         contentType: false,
         processData: false,
-   success: function(response, textStatus, xhr) {
+        success: function(response, textStatus, xhr) {
         if (xhr.status === 200) {
-            // La solicitud fue exitosa, ahora verifica el contenido de la respuesta
             if (response.success) {
 
-                $('#success-message').text(response.message).show();
-                  
+                 $('#mensajeExito').text(response.message).show();
+                
                 if(idFrm=="frm1"){
                     $('#collapseOne').collapse('hide');
                     $('#collapseTwo').collapse('hide'); 
@@ -154,10 +152,7 @@ function listarEdicionFondos() {
             }
         });
     }
-
-    // Inicializar la tabla al cargar la página
-    //listarEdicionFondos();
-
+    
 function cargarDatosModal(id) {
     $.ajax({
         url: 'getFondo',

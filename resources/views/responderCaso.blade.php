@@ -111,22 +111,13 @@
             <p class="media-body pb-3 mb-0 small lh-125">
                 <strong class="d-block text-gray-dark">RESPUESTA:</strong>
                 <textarea id="respuesta" name="respuesta" class="form-control" rows="3" placeholder="Escribir respuesta"></textarea>
-               @error('respuesta')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
             </p>
         </div>
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 text-md-right">
             <strong class="d-block text-gray-dark">Adjuntar archivo (Formatos .pdf, .zip, .rar. Tamaño máximo 20 mb.):</strong>
             <div class="mb-3">
-                <input class="form-control @error('archivo') is-invalid @enderror" type="file" id="archivo" name="archivo" accept=".pdf,.zip,.rar">
-                @error('archivo')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-                <div id="archivoAlert" class="alert alert-danger d-none" role="alert">
-                    ¡El archivo es obligatorio!
-                </div>
+                <input class="form-control" type="file" id="archivo" name="archivo" accept=".pdf,.zip,.rar">
             </div>
             <button id="cerrarCasoBtn" type="button" class="btn btn-primary btn-block">Guardar ></button>
         </p>

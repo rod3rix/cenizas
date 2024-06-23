@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
 @section('content')
-
 <div class="jumbotron">
         <div class="container">
           <h3><b>Postular Fondos Concursables</b></h3>

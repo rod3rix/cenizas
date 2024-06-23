@@ -7,7 +7,8 @@
 Fondos Concursables</b></h1>
       <p class="lead text-muted text-center">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
 <div class="my-3 p-3 bg-white rounded shadow-sm">
-    <h4 class="border-bottom border-gray pb-2 mb-0">PROYECTO FOLIO {{ $pfondo->id }}</h4>
+    <h4 class="border-bottom border-gray pb-2 mb-0">
+      {{ $pfondo->nombre_fondo }} - PROYECTO FOLIO {{ $pfondo->id }}</h4>
     <h6 class="border-bottom border-gray pb-2 mb-0">Antecedentes generales</h6>
     
     <div class="media text-muted pt-3">

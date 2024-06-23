@@ -15,13 +15,7 @@
                             <label for="nombres" class="col-md-4 col-form-label text-md-right">{{ __('Nombres') }}</label>
 
                             <div class="col-md-6">
-                                <input id="nombres" type="text" class="form-control @error('nombres') is-invalid @enderror" name="nombres" value="{{ old('nombres') }}" required autocomplete="nombres" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="nombres" type="text" class="form-control" name="nombres" value="{{ old('nombres') }}" autocomplete="nombres">
                             </div>
                         </div>
 
@@ -29,13 +23,7 @@
                             <label for="apellidos" class="col-md-4 col-form-label text-md-right">{{ __('Apellidos') }}</label>
 
                             <div class="col-md-6">
-                                <input id="apellidos" type="text" class="form-control @error('apellidos') is-invalid @enderror" name="apellidos" value="{{ old('apellidos') }}" required autocomplete="apellidos" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="apellidos" type="text" class="form-control" name="apellidos" value="{{ old('apellidos') }}" autocomplete="apellidos">
                             </div>
                         </div>
 
@@ -43,13 +31,7 @@
                             <label for="rut" class="col-md-4 col-form-label text-md-right">{{ __('RUT') }}</label>
 
                             <div class="col-md-6">
-                                <input id="rut" type="text" class="form-control @error('rut') is-invalid @enderror" name="rut" value="{{ old('rut') }}" required autocomplete="rut" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="rut" type="text" class="form-control" name="rut" value="{{ old('rut') }}" autocomplete="rut">
                             </div>
                         </div>
 
@@ -57,13 +39,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" autocomplete="email">
                             </div>
                         </div>
 
@@ -71,13 +47,7 @@
                             <label for="telefono" class="col-md-4 col-form-label text-md-right">{{ __('Teléfono') }}</label>
 
                             <div class="col-md-6">
-                                <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="telefono" type="text" class="form-control" name="telefono" value="{{ old('telefono') }}" autocomplete="telefono">
                             </div>
                         </div>
 
@@ -108,13 +78,7 @@
                             <label for="razon_social" class="col-md-4 col-form-label text-md-right">{{ __('Razón Social') }}</label>
 
                             <div class="col-md-6">
-                                <input id="razon_social" type="text" class="form-control @error('razon_social') is-invalid @enderror" name="razon_social" value="{{ old('razon_social') }}" required autocomplete="razon_social" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="razon_social" type="text" class="form-control" name="razon_social" value="{{ old('razon_social') }}"autocomplete="razon_social">
                             </div>
                         </div>
 
@@ -122,13 +86,7 @@
                             <label for="rut" class="col-md-4 col-form-label text-md-right">{{ __('RUT') }}</label>
 
                             <div class="col-md-6">
-                                <input id="rut" type="text" class="form-control @error('rut') is-invalid @enderror" name="rut" value="{{ old('rut') }}" required autocomplete="rut" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="rut" type="text" class="form-control" name="rut" value="{{ old('rut') }}" autocomplete="rut">
                             </div>
                         </div>
 
@@ -136,13 +94,7 @@
                             <label for="direccion" class="col-md-4 col-form-label text-md-right">{{ __('Dirección') }}</label>
 
                             <div class="col-md-6">
-                                <input id="direccion" type="text" class="form-control @error('direccion') is-invalid @enderror" name="direccion" value="{{ old('direccion') }}" required autocomplete="direccion">
-
-                                @error('direccion')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="direccion" type="text" class="form-control" name="direccion" value="{{ old('direccion') }}" autocomplete="direccion">
                             </div>
                         </div>
 
@@ -150,13 +102,7 @@
                             <label for="giro" class="col-md-4 col-form-label text-md-right">{{ __('Giro') }}</label>
 
                             <div class="col-md-6">
-                                <input id="giro" type="text" class="form-control @error('giro') is-invalid @enderror" name="giro" value="{{ old('giro') }}" required autocomplete="giro" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="giro" type="text" class="form-control" name="giro" value="{{ old('giro') }}" autocomplete="giro" >
                             </div>
                         </div>
 
@@ -190,13 +136,7 @@
                             <label for="razon_social" class="col-md-4 col-form-label text-md-right">{{ __('Razón Social') }}</label>
 
                             <div class="col-md-6">
-                                <input id="razon_social" type="text" class="form-control @error('razon_social') is-invalid @enderror" name="razon_social" value="{{ old('razon_social') }}" required autocomplete="razon_social" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="razon_social" type="text" class="form-control" name="razon_social" value="{{ old('razon_social') }}"  autocomplete="razon_social">
                             </div>
                         </div>
 
@@ -204,13 +144,7 @@
                             <label for="rut" class="col-md-4 col-form-label text-md-right">{{ __('RUT') }}</label>
 
                             <div class="col-md-6">
-                                <input id="rut" type="text" class="form-control @error('rut') is-invalid @enderror" name="rut" value="{{ old('rut') }}" required autocomplete="rut" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="rut" type="text" class="form-control" name="rut" value="{{ old('rut') }}" autocomplete="rut">
                             </div>
                         </div>
 
@@ -218,18 +152,11 @@
                             <label for="relacion" class="col-md-4 col-form-label text-md-right">{{ __('RELACIÓN') }}</label>
 
                             <div class="col-md-6">
-                                <!-- <input id="relacion" type="text" class="form-control @error('relacion') is-invalid @enderror" name="relacion" value="{{ old('relacion') }}" required autocomplete="relacion"> -->
-                                <select id="relacion" type="text" class="form-control @error('relacion') is-invalid @enderror" name="relacion" value="{{ old('relacion') }}" required autocomplete="relacion">
+                                <select id="relacion" type="text" class="form-control" name="relacion" value="{{ old('relacion') }}" autocomplete="relacion">
                                     <option>SELECIONE</option> 
                                     <option>SOCIO</option>
                                     <option>DUEÑO</option>
                                 </select>
-
-                                @error('relacion')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
                         </div>
 

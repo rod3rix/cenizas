@@ -56,35 +56,35 @@
                             <label for="apellido_paterno" class="col-md-12 col-form-label text-md-left">{{ __('4. Apellido Paterno*') }}</label>
 
                             <div class="col-md-12">
-                                <input id="apellido_paterno" type="text" class="form-control" name="apellido_paterno" value="{{ $user->apellido_paterno }}" required autocomplete="apellido_paterno"  disabled>
+                                <input id="apellido_paterno" type="text" class="form-control" name="apellido_paterno" value="{{ $user->apellido_paterno }}" autocomplete="apellido_paterno"  disabled>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="apellido_materno" class="col-md-12 col-form-label text-md-left">{{ __('5. Apellido Materno*') }}</label>
 
                             <div class="col-md-12">
-                                <input id="apellido_materno" type="text" class="form-control" name="apellido_materno" value="{{ $user->apellido_materno }}" required autocomplete="apellido_materno"  disabled>
+                                <input id="apellido_materno" type="text" class="form-control" name="apellido_materno" value="{{ $user->apellido_materno }}" autocomplete="apellido_materno"  disabled>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="rut" class="col-md-12 col-form-label text-md-left">{{ __('6. RUT*') }}</label>
 
                             <div class="col-md-12">
-                                <input id="rut" type="text" class="form-control" name="rut" value="{{ $user->rut }}" required autocomplete="rut"  disabled>
+                                <input id="rut" type="text" class="form-control" name="rut" value="{{ $user->rut }}" autocomplete="rut"  disabled>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="email" class="col-md-12 col-form-label text-md-left">{{ __('7. E-Mail*') }}</label>
 
                             <div class="col-md-12">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ $user->email }}" required autocomplete="email" disabled>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ $user->email }}" autocomplete="email" disabled>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="fono" class="col-md-12 col-form-label text-md-left">{{ __('8. Teléfono*') }}</label>
 
                             <div class="col-md-12">
-                                <input id="fono" type="text" class="form-control" name="fono" value="{{ $user->fono }}" required autocomplete="email" disabled>
+                                <input id="fono" type="text" class="form-control" name="fono" value="{{ $user->fono }}" autocomplete="email" disabled>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -108,21 +108,21 @@
                             <label for="direccion" class="col-md-12 col-form-label text-md-left">{{ __('11. Dirección*') }}</label>
 
                             <div class="col-md-12">
-                                <input id="direccion" name="direccion" type="text" class="form-control" name="direccion" value="{{ old('direccion') }}" required autocomplete="direccion">
+                                <input id="direccion" name="direccion" type="text" class="form-control" name="direccion" value="{{ old('direccion') }}" autocomplete="direccion">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="asunto" class="col-md-12 col-form-label text-md-left">{{ __('12. Asunto*') }}</label>
 
                             <div class="col-md-12">
-                                <input id="asunto" name="asunto" type="text" class="form-control" name="asunto" value="{{ old('asunto') }}" required autocomplete="asunto" >
+                                <input id="asunto" name="asunto" type="text" class="form-control" name="asunto" value="{{ old('asunto') }}" autocomplete="asunto" >
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="descripcion" class="col-md-12 col-form-label text-md-left">{{ __('13. Descripción*') }}</label>
 
                             <div class="col-md-12">
-                                <textarea id="descripcion" name="descripcion" type="text" class="form-control" name="descripcion" value="{{ old('descripcion') }}" required autocomplete="descripcion" ></textarea>
+                                <textarea id="descripcion" name="descripcion" type="text" class="form-control" name="descripcion" value="{{ old('descripcion') }}" autocomplete="descripcion" ></textarea>
                             </div>
                         </div>
                         <div class="form-group row">

@@ -520,11 +520,7 @@ class AdminController extends Controller
         }
 
         if($request->idFrm=="frm2"){
-                $request->merge([
-                    'fecha_inicio' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->fecha_inicio)->format('Y-m-d'),
-                    'fecha_termino' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->fecha_termino)->format('Y-m-d'),
-                ]);
-
+            
                 $validator = Validator::make($request->all(), [
                     'nombre_fondo' => 'required|string|max:255',
                     'descripcion' => 'required|string|max:255',
