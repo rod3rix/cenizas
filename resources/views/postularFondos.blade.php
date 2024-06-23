@@ -36,7 +36,7 @@
         <h3><b>MOMENTANEAMENTE NO EXISTEN FONDOS CONCURSABLES</b></h3>
      </div>
      @endif
-
 </div>
+<script src="{{ asset('js/format_rut.js') }}?v={{ time() }}"></script>
 <script src="{{ asset('js/frm_fondos_postular.js') }}?v={{ time() }}"></script>
 @endsection

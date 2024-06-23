@@ -142,9 +142,9 @@
                                     <a class="dropdown-item" href="{{ route('verPerfilUsu') }}">
                                         {{ __('Perfil Personal') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('personaJuridica') }}">
+                                    <!-- <a class="dropdown-item" href="{{ route('personaJuridica') }}">
                                         {{ __('Perfil Persona Juridica') }}
-                                    </a>
+                                    </a> -->
 
                                     <a class="dropdown-item" href="{{ route('cambiarPass') }}">
                                         {{ __('Cambiar contraseña') }}

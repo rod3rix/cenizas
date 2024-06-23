@@ -7,7 +7,7 @@ Route::get('refreshcaptcha', [CaptchaController::class, 'refresh']);
 Route::get('captcha/{config?}', function (\Mews\Captcha\Captcha $captcha, $config = 'default') {
     return $captcha->create($config);
 });
-// Route::get('createcaptcha', [App\Http\Controllers\CaptchaController::class, 'create'])->name("captchacontroller.create");
+
 Route::post('createcaptcha', [App\Http\Controllers\CaptchaController::class, 'captchaValidate'])->name("captchacontroller.captcha");
 Route::get('refreshcaptcha', [App\Http\Controllers\CaptchaController::class, 'refreshCaptcha'])->name("captchacontroller.refresh");
 
@@ -41,9 +41,8 @@ Route::get('terminoCondiciones', function () {
     return view('terminoCondiciones');
 })->name('terminoCondiciones');
 
-
 Auth::routes();
-//users routes
+
 Route::middleware(['class','auth', 'access-level:user'])->group(function () {
 
 Route::get('/clausulaProyecto', [App\Http\Controllers\HomeController::class, 'clausulaProyecto'])->name('clausulaProyecto');
@@ -61,7 +60,6 @@ Route::post('/listarPersonaJuridicas',  [App\Http\Controllers\HomeController::cl
 Route::post('/listarFondos',  [App\Http\Controllers\HomeController::class, 'listarFondos'])->name('listarFondos');
 
 Route::post('/listarApoyoProyectos',  [App\Http\Controllers\HomeController::class, 'listarApoyoProyectos'])->name('listarApoyoProyectos');
-
 
 Route::post('/crearPersonaJuridica',  [App\Http\Controllers\HomeController::class, 'crearPersonaJuridica'])->name('crearPersonaJuridica');
 
@@ -120,12 +118,10 @@ Route::get('/ingreso-caso',  [App\Http\Controllers\HomeController::class,'ingres
      Route::get('respuestaFondo/{id}', [App\Http\Controllers\HomeController::class, 'respuestaFondo'])->name('respuestaFondo');
 });
 
-// admin routes
 Route::middleware(['class','auth', 'access-level:admin'])->group(function () {
 
      Route::get('/crearFondoConcursable',  [App\Http\Controllers\AdminController::class,'crearFondoConcursable'])->name('crearFondoConcursable');
 
-    // Ruta para obtener detalles del usuario
     Route::post('getUserDetails', [App\Http\Controllers\AdminController::class, 'getUserDetails'])->name('getUserDetails');
 
     Route::post('getFondo', [App\Http\Controllers\AdminController::class, 'getFondo'])->name('getFondo');
@@ -174,7 +170,7 @@ Route::middleware(['class','auth', 'access-level:admin'])->group(function () {
     
     Route::get('detalleUser/{id}', [App\Http\Controllers\AdminController::class, 'detalleUser'])->name('detalleUser');
 
-     Route::get('responderCaso/{id}', [App\Http\Controllers\AdminController::class, 'responderCaso'])->name('responderCaso');
+    Route::get('responderCaso/{id}', [App\Http\Controllers\AdminController::class, 'responderCaso'])->name('responderCaso');
     Route::get('respuestaCasoAdmin/{id}', [App\Http\Controllers\AdminController::class, 'respuestaCasoAdmin'])->name('respuestaCasoAdmin');
 
     Route::get('respuestaFondoAdmin/{id}', [App\Http\Controllers\AdminController::class, 'respuestaFondoAdmin'])->name('respuestaFondoAdmin');

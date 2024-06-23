@@ -481,4 +481,49 @@ class HomeController extends Controller
             ]);
         }
     }
+
+    public function verPerfilUsu()
+    {
+       $user = DB::table('users')
+                ->where('id', '=', auth()->id())
+                ->get();
+
+                $user=$user[0];
+
+        return view('verPerfilUsu',['user' => $user]);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        $validator = Validator::make($request->all(), [
+            'email' => [
+                'required',
+                'email',
+                function ($attribute, $value, $fail) use ($user) {
+                    $existingUser = \App\Models\User::where('email', $value)->first();
+                    if ($existingUser && $existingUser->id !== $user->id) {
+                        $fail('El correo electrónico ya está en uso.');
+                    }
+                },
+            ],
+            'fono' => [
+            'required',
+            'min:8',
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->toArray()
+            ]);
+        }  
+
+        $user = auth()->user();
+        $user->update($request->all());
+
+        return response()->json(['success' => true]);
+    }
 }

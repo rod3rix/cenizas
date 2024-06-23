@@ -11,26 +11,16 @@ $(document).ready(function() {
     }
     
     $('.miles').on('input', formatInputField);
-    // obtenerPersonasJuridicas(); 
 });
 
 function handlePaste(e) {
     var clipboardData, pastedData;
-
-    // Access the clipboard data
     clipboardData = e.clipboardData || window.clipboardData;
     pastedData = clipboardData.getData('Text');
 
-    // If the pasted data is not a number, prevent the paste action
     if (isNaN(pastedData)) {
         e.preventDefault();
     }
-}
-
-function formatRut(cliente) {
-  cliente.value = cliente.value
-    .replace(/[^0-9kK]/g, '') // Elimina todo excepto números y la letra 'k' o 'K'
-    .replace(/^(\d{1,2})(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4'); // Agrega puntos y guión en el formato estándar
 }
 
 function btn_volver(id) {
@@ -86,7 +76,6 @@ function validarFrmProy(id) {
         processData: false,
    success: function(response, textStatus, xhr) {
         if (xhr.status === 200) {
-            // La solicitud fue exitosa, ahora verifica el contenido de la respuesta
             if (response.success) {
 
                 if(id==1){
@@ -128,32 +117,22 @@ function validarFrmProy(id) {
                 }
 
             } else {
-
-                //alert(id);
-                // Si la respuesta indica que hubo errores de validación, muestras los mensajes de error debajo de los campos correspondientes
                 $.each(response.errors, function(key, value) {
-                    // Encuentra el campo correspondiente al error y muestra el mensaje de error
                     if(key === 'pueblo_originario') {
-                    // Añade la clase de error a ambos inputs de radio
                     $('#pueblo_originario_si').addClass('is-invalid');
                     $('#pueblo_originario_no').addClass('is-invalid');
-                    // Añade el mensaje de error después del último input de radio
                     $('#v_pueblo_originario').after('<div class="invalid-feedback d-block">' + value + '</div>');
                     } else if (key === 'discapacidad') {
-                        // Añade la clase de error a ambos inputs de radio
                         $('#discapacidad_si').addClass('is-invalid');
                         $('#discapacidad_no').addClass('is-invalid');
-                        // Añade el mensaje de error antes del primer input de radio
                         $('#v_discapacidad').after('<div class="invalid-feedback d-block">' + value + '</div>');
                     } else {
-                        // Encuentra el campo correspondiente al error y muestra el mensaje de error
                         $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
                     }
                 });
             }
         } else {
             console.error('Error en la solicitud:', xhr.status);
-            // Aquí puedes manejar otros tipos de errores de solicitud si es necesario
         }
     },
     error: function(xhr, status, error) {
@@ -161,33 +140,3 @@ function validarFrmProy(id) {
     }
     });
 }
-
-
- function obtenerPersonasJuridicas() {
-        $.ajax({
-            url: 'obtenerPersonasJuridicas',
-            type: 'GET',
-            success: function(response) {
-                // Limpiar opciones actuales del select
-                $('#persona_juridica_id').empty();
-
-                // Agregar opciones estáticas
-                $('#persona_juridica_id').append($('<option>', {
-                    value: '',
-                    text: 'Selecciona un título'
-                }));
-
-                // Agregar nuevas opciones basadas en los datos recibidos
-                $.each(response, function(index, res) {
-                    $('#persona_juridica_id').append($('<option>', {
-                        value: res.id,
-                        text: res.razon_social
-                    }));
-                });
-            },
-            error: function() {
-                console.log('Error al obtener las personas jurídicas.');
-            }
-        });
-    }
-

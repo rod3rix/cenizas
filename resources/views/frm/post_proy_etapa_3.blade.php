@@ -7,12 +7,7 @@
                   <div class="form-group row">
                      <label for="nombre_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('1. Nombre Proyecto *') }}</label>
                      <div class="col-md-12">
-                        <input id="nombre_proyecto" name="nombre_proyecto" type="text" class="form-control @error('nombre_proyecto') is-invalid @enderror"  value="{{ old('nombre_proyecto') }}" autocomplete="nombre_proyecto" autofocus>
-                        @error('nombre_proyecto')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
+                        <input id="nombre_proyecto" name="nombre_proyecto" type="text" class="form-control"  value="{{ old('nombre_proyecto') }}" autocomplete="nombre_proyecto" autofocus>
                      </div>
                   </div>
                   <div class="form-group row">
@@ -20,7 +15,7 @@
                      <label for="tipo_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('2. Temática *') }}<span data-bs-toggle="tooltip" title="Aquí puedes elegir Temática.">
                     <i class="bi bi-question-circle"></i></span></label>
                      <div class="col-md-12">
-                        <select id="tipo_proyecto" class="form-control @error('tipo_proyecto') is-invalid @enderror" name="tipo_proyecto" required autocomplete="tipo_proyecto" >
+                        <select id="tipo_proyecto" class="form-control" name="tipo_proyecto" required autocomplete="tipo_proyecto" >
                            <option value="">Seleccione</option>
                            <!-- <option value="Apoyo a emprendimientos y oficios en vías de formalización">Apoyo a emprendimientos y oficios en vías de formalización</option>
                            <option value="Equipamiento para organizaciones">Equipamiento para organizaciones</option>
@@ -37,25 +32,14 @@
                            <option value="Salud">Salud</option>
                            <option value="Voluntariado">Voluntariado</option>
                            <option value="Otra">Otra</option>
-
                        </select>
-                       @error('tipo_proyecto')
-                           <span class="invalid-feedback" role="alert">
-                               <strong>{{ $message }}</strong>
-                           </span>
-                       @enderror
                      </div>
                   </div>
                   <div class="form-group row">
                      <label for="lugar_proyecto" class="col-md-12 col-form-label text-md-left">{{ __('3. Lugar de ejecución del proyecto*') }}<span data-bs-toggle="tooltip" title="Aquí puedes elegir ....">
                     <i class="bi bi-question-circle"></i></span></label>
                      <div class="col-md-12">
-                        <textarea id="lugar_proyecto" name="lugar_proyecto" type="text" class="form-control @error('lugar_proyecto') is-invalid @enderror" name="lugar_proyecto" value="{{ old('lugar_proyecto') }}" required autocomplete="lugar_proyecto" ></textarea>
-                        @error('lugar_proyecto')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
+                        <textarea id="lugar_proyecto" name="lugar_proyecto" type="text" class="form-control" name="lugar_proyecto" value="{{ old('lugar_proyecto') }}" required autocomplete="lugar_proyecto" ></textarea>
                      </div>
                   </div>
                   <div class="form-group row">
@@ -63,22 +47,12 @@
                       <label for="directos" class="col-md-2 col-form-label text-md-left">{{ __('Directos') }}<span data-bs-toggle="tooltip" title="Aquí puedes elegir ....">
                       <i class="bi bi-question-circle"></i></span></label>
                       <div class="col-md-2">
-                        <input id="directos" type="text" class="form-control @error('directos') is-invalid @enderror" name="directos" value="{{ old('directos') }}" required autocomplete="directos"  onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3" onpaste="handlePaste(event)">
-                        @error('directos')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
+                        <input id="directos" type="text" class="form-control" name="directos" value="{{ old('directos') }}" required autocomplete="directos"  onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3" onpaste="handlePaste(event)">
                      </div>
                       <label for="indirectos" class="col-md-2 col-form-label text-md-left">{{ __('Indirectos') }}<span data-bs-toggle="tooltip" title="Aquí puedes elegir ....">
                     <i class="bi bi-question-circle"></i></span></label>
                      <div class="col-md-2">
-                        <input id="indirectos" type="text" class="form-control @error('indirectos') is-invalid @enderror" name="indirectos" value="{{ old('indirectos') }}" required autocomplete="indirectos"  onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3" onpaste="handlePaste(event)">
-                        @error('indirectos')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
+                        <input id="indirectos" type="text" class="form-control" name="indirectos" value="{{ old('indirectos') }}" required autocomplete="indirectos"  onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="3" onpaste="handlePaste(event)">
                      </div>     
                   </div>
                   <hr>
@@ -86,12 +60,7 @@
                      <label for="aporte_solicitado" class="col-md-12 col-form-label text-md-left">{{ __('5.  Montos del proyecto *') }}</label>
                      <label for="aporte_solicitado" class="col-md-2 col-form-label text-md-left">{{ __('Aporte solicitado') }}</label>
                       <div class="col-md-4">
-                        <input id="aporte_solicitado" type="text" class="miles form-control @error('aporte_solicitado') is-invalid @enderror" name="aporte_solicitado" value="{{ old('aporte_solicitado') }}" required autocomplete="aporte_solicitado"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
-                        @error('aporte_solicitado')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
+                        <input id="aporte_solicitado" type="text" class="miles form-control" name="aporte_solicitado" value="{{ old('aporte_solicitado') }}" required autocomplete="aporte_solicitado"  placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
                      </div>
                   </div>
                   <hr>
@@ -100,13 +69,7 @@
                         <div class="form-check form-check-inline">
                            <label class="form-check-label" for="acepto_clausula_proy">6. Minera Las Cenizas tiene el derecho de tomar fotografías y hacer visitas del proyecto. Además, instalar placa conmemorativa *<br>Marcar casilla para aceptar cláusula</label>
                           <input class="form-check-input" type="checkbox" id="acepto_clausula_proy" name="acepto_clausula_proy" value="1">
-                         
                         </div>
-                        @error('acepto_clausula_proy')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
                      </div>
                   </div>
                   <hr>

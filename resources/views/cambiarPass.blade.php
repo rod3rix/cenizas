@@ -7,49 +7,41 @@
                 <div class="card-header">Cambiar Contraseña</div>
 
                 <div class="card-body">
-                    <form id="changePasswordUsu">
-    @csrf
-    <div class="form-group row mb-3">
-        <label for="current_password" class="col-md-4 col-form-label text-md-right">Contraseña Actual</label>
+                        <form id="changePasswordUsu">
+                        @csrf
+                        <div class="form-group row mb-3">
+                            <label for="current_password" class="col-md-4 col-form-label text-md-right">Contraseña Actual</label>
 
-        <div class="col-md-6">
-            <input id="current_password" type="password" class="form-control @error('current_password') is-invalid @enderror" name="current_password" required autocomplete="current-password">
-            @error('current_password')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
+                            <div class="col-md-6">
+                                <input id="current_password" type="password" class="form-control" name="current_password"  autocomplete="current-password">
+                                
+                            </div>
+                        </div>
 
-    <div class="form-group row mb-3">
-        <label for="new_password" class="col-md-4 col-form-label text-md-right">Nueva Contraseña</label>
+                        <div class="form-group row mb-3">
+                            <label for="new_password" class="col-md-4 col-form-label text-md-right">Nueva Contraseña</label>
+                            <div class="col-md-6">
+                                <input id="new_password" type="password" class="form-control" name="new_password"  autocomplete="new-password">
+                            </div>
+                        </div>
 
-        <div class="col-md-6">
-            <input id="new_password" type="password" class="form-control" name="new_password" required autocomplete="new-password">
-            @error('new_password')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
+                        <div class="form-group row mb-3">
+                            <label for="confirm_password" class="col-md-4 col-form-label text-md-right">Confirmar Nueva Contraseña</label>
 
-    <div class="form-group row mb-3">
-        <label for="new_password_confirmation" class="col-md-4 col-form-label text-md-right">Confirmar Nueva Contraseña</label>
+                            <div class="col-md-6">
+                                <input id="confirm_password" type="password" class="form-control" name="confirm_password" autocomplete="confirm_password">
+                               
+                            </div>
+                        </div>
 
-        <div class="col-md-6">
-            <input id="new_password_confirmation" type="password" class="form-control" name="new_password_confirmation" required autocomplete="new-password">
-            @error('new_password_confirmation')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
-
-    <div class="form-group row mb-0">
-        <div class="col-md-6 offset-md-4">
-            <button type="submit" class="btn btn-primary">
-                Cambiar Contraseña
-            </button>
-        </div>
-    </div>
-</form>
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Cambiar Contraseña
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
