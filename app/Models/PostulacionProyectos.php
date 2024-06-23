@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 use DB;
+use App\Rules\RutValidation;
 
 class PostulacionProyectos extends Model
 {
@@ -146,7 +147,7 @@ protected $fillable = [
     {
          $validator = Validator::make( $data,[
             'razons_pyme' => 'required|string|max:255',
-            'rut_pyme' => 'required',
+            'rut_pyme' => ['required', new RutValidation],
             'domicilio_pyme' => 'required|string|max:255',
             'certificado_sii' => 'required|file|mimes:pdf,zip,rar|max:20480',
             'archivo_rsh' => 'required|file|mimes:pdf,zip,rar|max:20480',
@@ -260,7 +261,7 @@ protected $fillable = [
     {
         $validator = Validator::make($data, [
             'nombre_organizacion' => 'required|string|max:255',
-            'rut_organizacion' => 'required',
+            'rut_organizacion' => ['required', new RutValidation],
             'domicilio_organizacion' => 'required|string|max:255',
             'personalidad_juridica' => 'required|string|max:255',
             'antiguedad_anos' => 'required',
