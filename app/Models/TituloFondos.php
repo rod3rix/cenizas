@@ -11,5 +11,5 @@ class TituloFondos extends Model
 
     protected $table = 'titulo_fondos';
 
-    protected $fillable = ['nombre'];
+    protected $fillable = ['titulo_anual'];
 }

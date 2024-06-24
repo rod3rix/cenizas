@@ -1,10 +1,17 @@
 $(document).ready(function() {
     obtenerTitulosFondos();
     listarEdicionFondos();
-    $(document).on('click', '[data-bs-toggle="modal"]', function() {
-        var id = $(this).data('id');
-        cargarDatosModal(id);
-    });
+    listarEdicionTFondos();
+});
+
+$(document).on('click', '.verDetallesTitulo', function() {
+    var id = $(this).data('id');
+    cargarDatosTituloModal(id);
+});
+
+$(document).on('click', '.verDetallesFondo', function() {
+    var id = $(this).data('id');
+    cargarDatosFondoModal(id);
 });
 
 function obtenerTitulosFondos() {
@@ -12,16 +19,13 @@ function obtenerTitulosFondos() {
             url: 'obtenerTitulosFondos',
             type: 'GET',
             success: function(response) {
-                // Limpiar opciones actuales del select
                 $('#titulo_anual_id').empty();
 
-                // Agregar opciones estáticas
                 $('#titulo_anual_id').append($('<option>', {
                     value: '',
                     text: 'Selecciona un título'
                 }));
 
-                // Agregar nuevas opciones basadas en los datos recibidos
                 $.each(response, function(index, titulo) {
                     $('#titulo_anual_id').append($('<option>', {
                         value: titulo.id,
@@ -38,7 +42,7 @@ function obtenerTitulosFondos() {
 function enviarFormulario(idFrm) {
 
     var formData = new FormData(document.getElementById(idFrm));
-    // Adjuntar el ID del formulario al FormData
+
     formData.append('idFrm', idFrm);
 
     $('form :input').removeClass('is-invalid');
@@ -70,15 +74,12 @@ function enviarFormulario(idFrm) {
                 }
 
             } else {
-                // Si la respuesta indica que hubo errores de validación, muestras los mensajes de error debajo de los campos correspondientes
                 $.each(response.errors, function(key, value) {
-                    // Encuentra el campo correspondiente al error y muestra el mensaje de error
                     $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
                 });
             }
         } else {
             console.error('Error en la solicitud:', xhr.status);
-            // Aquí puedes manejar otros tipos de errores de solicitud si es necesario
         }
     },
     error: function(xhr, status, error) {
@@ -96,10 +97,8 @@ function listarEdicionFondos() {
             success: function(response) {
                 var table = $('#registros').DataTable();
 
-                // Destruir la instancia existente antes de crear una nueva
                 table.destroy();
 
-                // Crear nueva instancia de DataTable con los datos actualizados
                 $('#registros').DataTable({
                     language: {
                         url: appConfig.dataTablesLangUrl
@@ -108,7 +107,6 @@ function listarEdicionFondos() {
                     columns: [
                         { data: 'id' },
                         { data: 'nombre_fondo' },
-                        // { data: 'descripcion' }, // Asegúrate de que 'descripcion' esté en tu response
                         { data: 'fecha_inicio' },
                         { data: 'fecha_termino' },
                         { data: 'link_modal' }
@@ -151,9 +149,70 @@ function listarEdicionFondos() {
                 console.error('Error al cargar los datos:', error);
             }
         });
-    }
+}
+
+function listarEdicionTFondos() {
+        $.ajax({
+            url: 'listarEdicionTFondos',
+            type: 'POST',
+            dataType: 'json',
+            data: {_token: $('meta[name="csrf-token"]').attr('content')},
+            success: function(response) {
+                var table = $('#registros_tfondo').DataTable();
+
+                table.destroy();
+
+                $('#registros_tfondo').DataTable({
+                    language: {
+                        url: appConfig.dataTablesLangUrl
+                    },
+                    data: response,
+                    columns: [
+                        { data: 'id' },
+                        { data: 'titulo_anual' },
+                        { data: 'link_modal' }
+                    ],
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            extend: 'copy',
+                            exportOptions: {
+                                modifier: {
+                                    page: 'all'
+                                }
+                            }
+                        },
+                        {
+                            extend: 'excel',
+                            exportOptions: {
+                                modifier: {
+                                    page: 'all'
+                                }
+                            },
+                            filename: 'Portal Comunidades',
+                            title: 'Portal Comunidades'
+                        },
+                        {
+                            extend: 'pdf',
+                            exportOptions: {
+                                modifier: {
+                                    page: 'all'
+                                }
+                            },
+                            filename: 'Portal Comunidades',
+                            title: 'Portal Comunidades'
+                        }
+                    ],
+                    paging: true
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error al cargar los datos:', error);
+            }
+        });
+}
     
-function cargarDatosModal(id) {
+function cargarDatosFondoModal(id) {
     $.ajax({
         url: 'getFondo',
         method: 'POST',
@@ -167,7 +226,21 @@ function cargarDatosModal(id) {
             $('#descripcion_edit').val(data.descripcion);
             $('#fecha_inicio_edit').val(data.fecha_inicio);
             $('#fecha_termino_edit').val(data.fecha_termino);
-            $('#editarFondoModal').modal('show');
+        }
+    });
+}
+
+function cargarDatosTituloModal(id) {
+    $.ajax({
+        url: 'getTFondo',
+        method: 'POST',
+        data: {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            id: id
+        },
+        success: function(data) {
+            $('#tfondo_id').val(data.id);
+            $('#nombre_tfondo_edit').val(data.titulo_anual);
         }
     });
 }

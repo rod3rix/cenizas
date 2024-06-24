@@ -14,7 +14,7 @@
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
                     <button class="accordion-button collapsed text-center-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                        Crear Título del Fondo Concursable Anual
+                        Crear Título Fondo Concursable
                     </button>
                 </h2>
                 <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionOne">
@@ -115,10 +115,40 @@
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingThree">
                     <button class="accordion-button collapsed text-center-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Editar Fondo Concursable
+                        Editar Título Fondo Concursable
                     </button>
                 </h2>
                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionThree">
+                    <div class="accordion-body">
+                        <div class="container">
+                            <table id="registros_tfondo" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Título Fondo Concursable</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Los datos se cargarán dinámicamente aquí -->
+                                </tbody>
+                            </table>
+                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cuarto acordeón independiente para editar Fondo Concursable -->
+        <div class="accordion" id="accordionFour">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed text-center-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Editar Fondo Concursable
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionFour">
                     <div class="accordion-body">
                         <div class="container">
                             <table id="registros" class="table table-striped table-bordered" style="width:100%">
@@ -140,6 +170,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 <!-- Modal de Edición -->
@@ -174,6 +205,30 @@
                         <input type="text" class="form-control" id="fecha_termino_edit" name="fecha_termino_edit" readonly>
                     </div>
                     <button id="actualizarFondo" name="actualizarFondo" type="button" class="btn btn-primary">Actualizar Fondo</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Editar Título del Fondo Concursable -->
+<div class="modal fade" id="editarTFondoModal" tabindex="-1" aria-labelledby="editarTFondoModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarTFondoModalLabel">Editar Fondo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="frmUpdateTFondo" name="frmUpdateTFondo" enctype="multipart/form-data">
+                    @csrf
+                    <input id="url" name="url" value="updateATFondo" type="hidden">
+                    <input type="hidden" id="tfondo_id" name="tfondo_id" value="">
+                    <div class="mb-3">
+                        <label for="nombre_tfondo_edit" class="form-label">Título Fondo Concursable:</label>
+                        <input type="text" class="form-control" id="nombre_tfondo_edit" name="nombre_tfondo_edit">
+                    </div>
+                    <button id="actualizarTFondo" name="actualizarTFondo" type="button" class="btn btn-primary">Actualizar Fondo</button>
                 </form>
             </div>
         </div>

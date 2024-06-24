@@ -560,19 +560,40 @@ class AdminController extends Controller
         return response()->json($titulos);
     }
 
+    public function listarEdicionTFondos()
+    {
+        $listado = TituloFondos::all();
+        foreach ($listado as $fondo) {
+            $fondo->link_modal = '<div class="text-center"><button type="button" class="btn btn-primary verDetallesTitulo" data-bs-toggle="modal" data-bs-target="#editarTFondoModal" data-id="'.$fondo->id.'">Ver Detalles</button><div>';
+        }
+
+        return response()->json($listado);
+    }
+
     public function listarEdicionFondos()
     {
         $listado = ListadoFondos::all();
         foreach ($listado as $fondo) {
             $fondo->fecha_inicio = Carbon::parse($fondo->fecha_inicio)->format('d-m-Y');
             $fondo->fecha_termino = Carbon::parse($fondo->fecha_termino)->format('d-m-Y');
-            $fondo->link_modal = '<div class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarFondoModal" data-id="'.$fondo->id.'">Ver Detalles</button><div>';
+            $fondo->link_modal = '<div class="text-center"><button type="button" class="btn btn-primary verDetallesFondo" data-bs-toggle="modal" data-bs-target="#editarFondoModal" data-id="'.$fondo->id.'">Ver Detalles</button><div>';
         }
 
         return response()->json($listado);
     }
 
-     public function getFondo(Request $request)
+    public function getTFondo(Request $request)
+    {
+       $fondo = TituloFondos::find($request->id);
+
+        if ($fondo) {
+            return response()->json($fondo);
+        } else {
+            return response()->json(['error' => 'Fondo no encontrado'], 404);
+        }
+    }
+
+    public function getFondo(Request $request)
     {
        $fondo = ListadoFondos::find($request->id);
 
@@ -580,6 +601,37 @@ class AdminController extends Controller
             $fondo->fecha_inicio = Carbon::parse($fondo->fecha_inicio)->format('d-m-Y');
             $fondo->fecha_termino = Carbon::parse($fondo->fecha_termino)->format('d-m-Y');
             return response()->json($fondo);
+        } else {
+            return response()->json(['error' => 'Fondo no encontrado'], 404);
+        }
+    }
+
+    public function updateATFondo(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'tfondo_id' => 'required|exists:titulo_fondos,id',
+            'nombre_tfondo_edit' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                    'success' => false,
+                    'errors' => $validator->errors()->toArray()
+            ]);
+        }
+
+        $fondo = TituloFondos::find($request->tfondo_id);
+       
+        if ($fondo) {
+            $fondo->titulo_anual = $request->nombre_tfondo_edit;
+            $fondo->save();
+
+            return response()->json([
+                'message' => 'Fondo actualizado con éxito',
+                'status' => true,
+                'success' => true
+                ],200);
+
         } else {
             return response()->json(['error' => 'Fondo no encontrado'], 404);
         }
@@ -623,5 +675,5 @@ class AdminController extends Controller
         } else {
             return response()->json(['error' => 'Fondo no encontrado'], 404);
         }
-}
+    }
 }
