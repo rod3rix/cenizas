@@ -1,27 +1,22 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeMail;
 use App\Http\Controllers\CaptchaController;
+
+Route::get('/send-welcome-email', function () {
+    Mail::to('sebas_cris@yahoo.com')->send(new WelcomeMail());
+
+    return 'Email de bienvenida enviado';
+});
 
 Route::get('refreshcaptcha', [CaptchaController::class, 'refresh']);
 Route::get('captcha/{config?}', function (\Mews\Captcha\Captcha $captcha, $config = 'default') {
     return $captcha->create($config);
 });
-
 Route::post('createcaptcha', [App\Http\Controllers\CaptchaController::class, 'captchaValidate'])->name("captchacontroller.captcha");
 Route::get('refreshcaptcha', [App\Http\Controllers\CaptchaController::class, 'refreshCaptcha'])->name("captchacontroller.refresh");
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
-
-Route::get('/send-test-email', function () {
-    $details = [
-        'title' => 'Mail from Laravel',
-        'body' => 'This is for testing SMTP mail from Gmail'
-    ];
-
-    Mail::to('sebas_cris@yahoo.com')->send(new \App\Mail\TestMail($details));
-
-    return 'Email Sent';
-});
 
 Route::get('/', function () {  
     if(auth()->user()){

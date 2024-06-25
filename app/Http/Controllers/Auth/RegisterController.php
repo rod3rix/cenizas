@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Mews\Captcha\Facades\Captcha;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeMail;
 
 class RegisterController extends Controller
 {
@@ -73,15 +75,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'apellido_paterno' => $data['apellido_paterno'],
-            'apellido_materno' => $data['apellido_materno'],
-            'rut' => $data['rut'],
-            'fono' => $data['telefono'],
-            'email' => $data['email'],
-            'zona' => $data['zona'],
-            'password' => Hash::make($data['password']),
+        $user = User::create([
+        'name' => $data['name'],
+        'apellido_paterno' => $data['apellido_paterno'],
+        'apellido_materno' => $data['apellido_materno'],
+        'rut' => $data['rut'],
+        'fono' => $data['telefono'],
+        'email' => $data['email'],
+        'zona' => $data['zona'],
+        'password' => Hash::make($data['password']),
         ]);
+
+        Mail::to($user->email)->send(new WelcomeMail());
+
+        return $user;
     }
 }
