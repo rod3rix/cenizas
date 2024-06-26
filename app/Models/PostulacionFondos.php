@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Validator;
 use Auth;
 use DB;
 use App\Rules\RutValidation;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\FondosMail;
 
 class PostulacionFondos extends Model
 {
@@ -340,4 +342,26 @@ class PostulacionFondos extends Model
         return $postulacion;
 
     }
+
+    public static function fondosEmail($fondo_id)
+    {
+        try {
+        $email = PostulacionFondos::where('postulacion_fondos.id', '=', $fondo_id)
+            ->join('users', 'postulacion_fondos.user_id', '=', 'users.id')
+            ->select('users.email as email')
+            ->first();
+
+        if (!$email) {
+            throw new Exception('No se encontró el correo electrónico para el proyecto ID: ' . $proy_id);
+        }
+
+        Mail::to($email->email)->send(new FondosMail());
+
+        return true;
+        } catch (Exception $e) {
+            Log::error('Error al enviar el correo: ' . $e->getMessage());
+            return false;
+        }
+    }
+
 }

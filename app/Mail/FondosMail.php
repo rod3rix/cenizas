@@ -24,7 +24,7 @@ class FondosMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Bienvenido a GRUPO MINERO LAS CENIZAS')
+        return $this->subject('GRUPO MINERO LAS CENIZAS')
                     ->view('emails.fondos');
     }
 }

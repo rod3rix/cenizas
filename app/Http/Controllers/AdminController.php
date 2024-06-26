@@ -338,6 +338,9 @@ class AdminController extends Controller
             $updateId= PostulacionProyectos::cerrarPostulacion($request);
 
             if ($updateId) {
+
+                $email = PostulacionProyectos::proyectosEmail($request->pproy_id);
+
                 return response()->json([
                     'success' => true,
                     'message' => '¡La respuesta y el archivo se han actualizado correctamente!'
@@ -483,6 +486,9 @@ class AdminController extends Controller
             $fondo = PostulacionFondos::cerrarFondo($request);
 
             if ($fondo) {
+
+                $email = PostulacionFondos::fondosEmail($request->pfondo_id);
+
                 return response()->json([
                     'success' => true,
                     'message' => '¡La respuesta y el archivo se han actualizado correctamente!'

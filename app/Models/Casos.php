@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\Validator;
 use Auth;
 use DB;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\FondosMail;
-use App\Mail\ProyectosMail;
 use App\Mail\CasosMail;
 
 class Casos extends Model
@@ -208,6 +206,6 @@ class Casos extends Model
         } catch (Exception $e) {
             Log::error('Error al enviar el correo: ' . $e->getMessage());
             return false;
-        } 
+        }
     }
 }

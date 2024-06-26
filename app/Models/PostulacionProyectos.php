@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Validator;
 use Auth;
 use DB;
 use App\Rules\RutValidation;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ProyectosMail;
 
 class PostulacionProyectos extends Model
 {
@@ -159,7 +161,7 @@ protected $fillable = [
     public static function cerrarPostulacion($request)
     {
         $archivo = $request->file('archivo');
-        $nombreArchivo = 'res_proy_' . auth()->id() . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
+        $nombreArchivo = 'res_proy_' . $request->pproy_id . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
         $archivo->storeAs('public/archivos', $nombreArchivo);
         
         $post = PostulacionProyectos::findOrFail($request->pproy_id);
@@ -297,6 +299,27 @@ protected $fillable = [
         });
 
         return $postulacion;
+    }
+
+    public static function proyectosEmail($proy_id)
+    {
+        try {
+        $email = PostulacionProyectos::where('postulacion_proyectos.id', '=', $proy_id)
+            ->join('users', 'postulacion_proyectos.user_id', '=', 'users.id')
+            ->select('users.email as email')
+            ->first();
+
+        if (!$email) {
+            throw new Exception('No se encontró el correo electrónico para el proyecto ID: ' . $proy_id);
+        }
+
+        Mail::to($email->email)->send(new ProyectosMail());
+
+        return true;
+        } catch (Exception $e) {
+            Log::error('Error al enviar el correo: ' . $e->getMessage());
+            return false;
+        }
     }
 }
             
