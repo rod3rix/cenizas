@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 use DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\FondosMail;
+use App\Mail\ProyectosMail;
+use App\Mail\CasosMail;
 
 class Casos extends Model
 {
@@ -156,7 +160,7 @@ class Casos extends Model
     {
         $archivo = $request->file('archivo');
 
-        $nombreArchivo = 'res_caso_' . auth()->id() . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
+        $nombreArchivo = 'res_caso_' . $request->casoId . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
         $archivo->storeAs('public/archivos', $nombreArchivo);
 
         $caso = Casos::findOrFail($request->casoId);
@@ -184,5 +188,26 @@ class Casos extends Model
         });
 
         return $casos;
+    }
+
+    public static function casosEmail($caso_id)
+    {
+        try {
+        $email = Casos::where('casos.id', '=', $caso_id)
+            ->join('users', 'casos.idUser', '=', 'users.id')
+            ->select('users.email as email')
+            ->first();
+
+        if (!$email) {
+            throw new Exception('No se encontró el correo electrónico para el caso ID: ' . $caso_id);
+        }
+
+        Mail::to($email->email)->send(new CasosMail());
+
+        return true;
+        } catch (Exception $e) {
+            Log::error('Error al enviar el correo: ' . $e->getMessage());
+            return false;
+        } 
     }
 }

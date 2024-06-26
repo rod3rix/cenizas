@@ -142,6 +142,9 @@ class AdminController extends Controller
             $caso = Casos::cerrarCaso($request);          
 
             if ($caso) {
+
+                $email = Casos::casosEmail($request->casoId);
+
                 return response()->json([
                     'status' => true,
                     'success' => true,
