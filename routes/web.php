@@ -4,12 +4,6 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\WelcomeMail;
 use App\Http\Controllers\CaptchaController;
 
-Route::get('/send-welcome-email', function () {
-    Mail::to('sebas_cris@yahoo.com')->send(new WelcomeMail());
-
-    return 'Email de bienvenida enviado';
-});
-
 Route::get('refreshcaptcha', [CaptchaController::class, 'refresh']);
 Route::get('captcha/{config?}', function (\Mews\Captcha\Captcha $captcha, $config = 'default') {
     return $captcha->create($config);

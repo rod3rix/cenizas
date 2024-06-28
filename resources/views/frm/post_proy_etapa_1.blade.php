@@ -41,9 +41,30 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="nacionalidad" class="col-md-12 col-form-label text-md-left">{{ __('7. Nacionalidad *') }}</label>
+                            <label for="localidad" class="col-md-12 col-form-label text-md-left">{{ __('7. Comuna') }}</label>
+
+                            <div class="col-md-12">
+                                <select id="localidad" name="localidad" type="text" class="form-control" {{ in_array($user->zona, [1, 2]) ? 'disabled' : '' }} >
+                                    <option value="">Seleccione</option>
+                                    <option value="1" {{ $user->zona == 1 ? 'selected' : '' }}>Taltal</option>
+                                    <option value="2" {{ $user->zona == 2 ? 'selected' : '' }}>Cabildo</option>
+                                </select>
+                                @if(in_array($user->zona, [1, 2]))
+                                    <input type="hidden" name="localidad" value="{{ $user->zona }}">
+                                @endif
+                            </div>
+                  </div>
+                  
+                   <div class="form-group row">
+                     <label for="direccion" class="col-md-12 col-form-label text-md-left">{{ __('8. Dirección *') }}</label>
                      <div class="col-md-12">
-                        <select id="nacionalidad" name="nacionalidad" type="text" class="form-control" autofocus>
+                        <input id="direccion" type="text" class="form-control" name="direccion" value="{{ old('direccion') }}" autocomplete="direccion" autofocus>
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label for="nacionalidad" class="col-md-12 col-form-label text-md-left">{{ __('9. Nacionalidad *') }}</label>
+                     <div class="col-md-12">
+                        <select id="nacionalidad" name="nacionalidad" type="text" class="form-control" >
                            <option value="">Seleccione</option>
                            <option value="Chilena">Chilena</option>
                            <option value="Extranjera">Extranjera</option>
@@ -52,7 +73,7 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="genero" class="col-md-12 col-form-label text-md-left">{{ __('8. Genero *') }}</label>
+                     <label for="genero" class="col-md-12 col-form-label text-md-left">{{ __('10. Genero *') }}</label>
                      <div class="col-md-12">
                         <select id="genero" name="genero" type="text" class="form-control">
                            <option value="">Seleccione</option>
@@ -63,7 +84,7 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label class="col-md-12 col-form-label text-md-left">{{ __('9. Pertenece a pueblo originario *') }}</label>
+                     <label class="col-md-12 col-form-label text-md-left">{{ __('11. Pertenece a pueblo originario *') }}</label>
                      <div class="col-md-12" id="v_pueblo_originario">
                         <div class="form-check form-check-inline ">
                           <input class="form-check-input" type="radio" id="pueblo_originario_si" name="pueblo_originario" value="1">
@@ -76,7 +97,7 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label class="col-md-12 col-form-label text-md-left">{{ __('10. Discapacidad *') }}</label>
+                     <label class="col-md-12 col-form-label text-md-left">{{ __('12. Discapacidad *') }}</label>
                      <div class="col-md-12" id="v_discapacidad">
                         <div class="form-check form-check-inline ">
                           <input class="form-check-input" type="radio" id="discapacidad_si" name="discapacidad" value="1">
@@ -89,13 +110,13 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                     <label for="fecha_nacimiento" class="col-md-12 col-form-label text-md-left">{{ __('11. Fecha nacimiento *') }}</label>
+                     <label for="fecha_nacimiento" class="col-md-12 col-form-label text-md-left">{{ __('13. Fecha nacimiento *') }}</label>
                      <div class="col-md-6">
                         <input id="fecha_nacimiento" type="text" class="form-control" name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}" required autocomplete="fecha_nacimiento" readonly>
                      </div>  
                   </div>
                    <div class="form-group row">
-                     <label for="actividad_economica" class="col-md-12 col-form-label text-md-left">{{ __('12. Actividad económica *') }}</label>
+                     <label for="actividad_economica" class="col-md-12 col-form-label text-md-left">{{ __('14. Actividad económica *') }}</label>
                      <div class="col-md-12">
                       <select id="actividad_economica" class="form-control" name="actividad_economica" required>
                           <option value="">Seleccione su actividad económica</option>
@@ -117,20 +138,15 @@
                           <option value="Otra" {{ old('actividad_economica') == 'Otra' ? 'selected' : '' }}>Otra (especifique)</option>
                       </select>
                   </div>
+                 
                   <div class="form-group row">
-                     <label for="direccion" class="col-md-12 col-form-label text-md-left">{{ __('13. Dirección *') }}</label>
-                     <div class="col-md-12">
-                        <input id="direccion" type="text" class="form-control" name="direccion" value="{{ old('direccion') }}" required autocomplete="direccion" >
-                     </div>
-                  </div>
-                  <div class="form-group row">
-                     <label for="formacion_formal" class="col-md-12 col-form-label text-md-left">{{ __('14. Posee formación formal *') }}</label>
+                     <label for="formacion_formal" class="col-md-12 col-form-label text-md-left">{{ __('15. Posee formación formal *') }}</label>
                      <div class="col-md-12">
                         <input id="formacion_formal" type="text" class="form-control" name="formacion_formal" value="{{ old('formacion_formal') }}" required autocomplete="formacion_formal" >
                      </div>
                   </div>
                   <div class="form-group row">
-                   <label for="profesion" class="col-md-12 col-form-label text-md-left">{{ __('15. Profesión *') }}</label>
+                   <label for="profesion" class="col-md-12 col-form-label text-md-left">{{ __('16. Profesión *') }}</label>
                    <div class="col-md-12">
                        <select id="profesion" class="form-control" name="profesion" required>
                            <option value="">Seleccione una opción</option>
@@ -144,12 +160,21 @@
                </div>
 
                   <div class="form-group row">
-                     <div class="col-md-12">
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="checkbox" id="acepto_clausula" name="acepto_clausula" value="1">
-                        </div>
-                          <label class="form-check-label" for="acepto_clausula"><a href="#" data-bs-toggle="modal" data-bs-target="#clausulaModal">Acepto cláusula de tratamiento de información personal *</a><br> Marcar casilla para aceptar cláusula..</label>
+                      <div class="col-md-12">
+                    <label for="formacion_formal" class="col-form-label text-md-left">
+                        {{ __('17.') }}
+                    </label>
+                    <div class="form-check form-check-inline">
+                       <input class="form-check-input" type="checkbox" id="acepto_clausula" name="acepto_clausula" value="1">
+                        <label class="form-check-label" for="formacion_formal_checkbox">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#clausulaModal">Acepto cláusula de tratamiento de información personal * </a>
+                        </label>
+                    </div>
+                    <br>
+                     <div>
+                        <span>Marcar casilla para aceptar la formación formal.</span>
                      </div>
+                </div>
                   </div>
                   <div class="form-group row">
                      <div class="col-md-12  text-md-right">

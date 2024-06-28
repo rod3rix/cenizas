@@ -1,5 +1,20 @@
 @extends('layouts.app')
 @section('content')
+ <style>
+    .input-prefix {
+        position: relative;
+    }
+    .input-prefix span {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #aaa;
+    }
+    .input-prefix input {
+        padding-left: 50px; /* Adjust according to the width of the prefix */
+    }
+</style>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-5">
@@ -76,10 +91,13 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="telefono" class="col-md-12 col-form-label text-align-left">{{ __('Teléfono') }}</label>
+                            <label for="telefono" class="col-md-12 col-form-label text-align-left">{{ __('Teléfono') }} * Ingrese 8 dígitos</label>
 
                             <div class="col-md-12">
-                                <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}"  autocomplete="name" autofocus onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12">
+                                <div class="input-prefix">
+                                <span>+56 9</span>
+                                <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}"  autocomplete="name" autofocus onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="8">
+                            </div>
 
                                 @error('telefono')
                                     <span class="invalid-feedback" role="alert">
@@ -136,8 +154,10 @@
                                    </div>
                                 </div>
 
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-12">
+                                    <p>Tómate tu tiempo para mirar cuidadosamente la imagen del CAPTCHA. Aunque las letras puedan estar distorsionadas, con paciencia podrás distinguirlas.</p>
                                 <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha">
+
                                 </div>
                                 @error('captcha')
                                     <span class="invalid-feedback" role="alert">
