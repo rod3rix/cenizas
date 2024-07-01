@@ -107,10 +107,7 @@
         {{ $pproy->profesion }}
       </p>
     </div>
-<!--     <small class="d-block text-right mt-3">
-      <a href="#">All updates</a>
-    </small>
- -->  </div>
+</div>
 
 
  @if($pproy->tipo=="organizacion")
@@ -159,8 +156,8 @@
         <strong class="d-block text-gray-dark">7. Certificado de personalidad jurídica:</strong>
         <div class="mb-3">
           Descargar archivo:
-            <a href="{{ asset('storage/archivos/' . $pproy->certificado_pj) }}" download>{{ $pproy->certificado_pj }}</a>
-            </div>
+            <a href="{{ asset('storage/archivos/' . $pproy->certificado_pj ) }}" download="{{ $pproy->certificado_pj }}">{{ $pproy->certificado_pj }}</a>
+        </div>
       </p>
     </div>
 </div>
@@ -191,7 +188,7 @@
         <strong class="d-block text-gray-dark">4. Certificado iniciación actividades (SII)</strong>
         <div class="mb-3">
           Descargar archivo:
-            <a href="{{ asset('storage/archivos/' . $pproy->certificado_sii) }}">{{ $pproy->certificado_sii }}</a>
+            <a href="{{ asset('storage/archivos/' . $pproy->certificado_sii) }}" download="{{ $pproy->certificado_sii }}">{{ $pproy->certificado_sii }}</a>
         </div>
       </p>
     </div>
@@ -201,7 +198,7 @@
         <strong class="d-block text-gray-dark">5. Ficha de registro social de hogares del representante legal de MIPYME</strong>
         <div class="mb-3">
           Descargar archivo:
-            <a href="{{ asset('storage/archivos/' . $pproy->archivo_rsh) }}" download>{{ $pproy->archivo_rsh }}</a>
+            <a href="{{ asset('storage/archivos/' . $pproy->archivo_rsh) }}" download="{{ $pproy->archivo_rsh }}">{{ $pproy->archivo_rsh }}</a>
         </div>
       </p>
     </div>
@@ -249,9 +246,6 @@
         <strong class="d-block text-gray-dark">6. Cargar anexo – Declaración jurada simple con firma del representante legal (ESTANDARIZAR NOMBRE DECLARACIÓN)</strong>
       </p>
     </div>
-    <div class="media text-muted pt-3">
-      <a href="{{ asset('storage/archivos') }}/declaracion_jurada.pdf" download="declaracion_jurada.pdf">declaracion_jurada</a>
-    </div>
 </div>
 
  <div class="my-3 p-3 bg-white rounded shadow-sm">
@@ -265,7 +259,7 @@
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">Archivo Adjunto</strong>
         </p>
-      <a href="{{ asset('storage/archivos/' . $pproy->archivo_respuesta ) }}" download="Fondo_anexo.pdf">Descargar Adjunto</a>
+      <a href="{{ asset('storage/archivos/' . $pproy->archivo_respuesta ) }}" download="{{ $pproy->archivo_respuesta }}">Descargar Adjunto</a>
     </div>
 </div>
 </div>

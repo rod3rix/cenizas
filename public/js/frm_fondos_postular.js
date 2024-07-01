@@ -117,6 +117,12 @@ function validarFrmFondos(id) {
                         $('#discapacidad_si').addClass('is-invalid');
                         $('#discapacidad_no').addClass('is-invalid');
                         $('#v_discapacidad').after('<div class="invalid-feedback d-block">' + value + '</div>');
+                    } else if (key === 'formacion_formal') {
+                        $('#formacion_formal_si').addClass('is-invalid');
+                        $('#formacion_formal_no').addClass('is-invalid');
+                        $('#v_formacion_formal').after('<div class="invalid-feedback d-block">' + value + '</div>');
+                    } else if (key === 'acepto_clausula') {
+                        $('#v_clausula').after('<div class="invalid-feedback d-block">' + value + '</div>');
                     } else {
                         $('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>');
                     }

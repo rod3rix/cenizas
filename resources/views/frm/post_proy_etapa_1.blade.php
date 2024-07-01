@@ -141,8 +141,15 @@
                  
                   <div class="form-group row">
                      <label for="formacion_formal" class="col-md-12 col-form-label text-md-left">{{ __('15. Posee formación formal *') }}</label>
-                     <div class="col-md-12">
-                        <input id="formacion_formal" type="text" class="form-control" name="formacion_formal" value="{{ old('formacion_formal') }}" required autocomplete="formacion_formal" >
+                     <div class="col-md-12" id="v_formacion_formal">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" id="formacion_formal_si" name="formacion_formal" value="1">
+                          <label class="form-check-label" for="formacion_formal_si">Si</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" id="formacion_formal_no" name="formacion_formal" value="0">
+                          <label class="form-check-label" for="formacion_formal_no">No</label>
+                        </div>
                      </div>
                   </div>
                   <div class="form-group row">
@@ -160,7 +167,7 @@
                </div>
 
                   <div class="form-group row">
-                      <div class="col-md-12">
+                      <div class="col-md-12" id="v_clausula">
                     <label for="formacion_formal" class="col-form-label text-md-left">
                         {{ __('17.') }}
                     </label>

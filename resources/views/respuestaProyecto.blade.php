@@ -1,278 +1,151 @@
 @extends('layouts.app')
+
 @section('content')
 @if($acceso)
 <section class="jumbotron">
-    <div class="container ">
-      <h1 class="jumbotron-heading text-center"><b>Ver respuesta Apoyo Proyectos</b></h1>
-      <p class="lead text-muted text-center">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
-<div class="my-3 p-3 bg-white rounded shadow-sm">
-    <h4 class="border-bottom border-gray pb-2 mb-0">PROYECTO FOLIO {{ $pproy->id }}</h4>
-    <h6 class="border-bottom border-gray pb-2 mb-0">Antecedentes generales</h6>
+  <div class="container">
+    <h1 class="jumbotron-heading text-center"><b>Respuesta Apoyo Proyectos</b></h1>
     
     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">1. Nombre</strong>
-        {{ $pproy->name }}
-      </p>
+      <h3>APOYO PROYECTO ID: {{ $pproy->id }}</h3>
+      <p class="media-body pb-3 mb-0 small lh-125">{{ $pproy->respuesta }}</p>
     </div>
+    
     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">2. Apellido paterno</strong>
-        {{ $pproy->apellido_paterno }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">3. Apellido materno</strong>
-        {{ $pproy->apellido_materno }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">4. RUT</strong>
-        {{ $pproy->rut }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">5. Correo electrónico</strong>
-        {{ $pproy->email }}
-      </p>
-    </div>
-        <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">6. Teléfono</strong>
-        {{ $pproy->fono }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">7. Nacionalidad</strong>
-        {{ $pproy->nacionalidad }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">8. Género</strong>
-        {{ $pproy->genero }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">9. Pertenece a pueblo originario</strong>
-          @if($pproy->pueblo_originario == 1)
-              Sí
-          @else
-              No
-          @endif      
-        </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">10. Discapacidad</strong>
-        @if($pproy->discapacidad == 1)
-            Sí
-        @else
-            No
-        @endif
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">11. Fecha de nacimiento</strong>
-        {{ $pproy->fecha_nacimiento }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">12. Actividad económica</strong>
-        {{ $pproy->actividad_economica }}
-        </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">13. Dirección</strong>
-        {{ $pproy->direccion}}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">14. Posee formación formal</strong>
-        {{ $pproy->formacion_formal }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">15. Profesión</strong>
-        {{ $pproy->profesion }}
-      </p>
-    </div>
-<!--     <small class="d-block text-right mt-3">
-      <a href="#">All updates</a>
-    </small>
- -->  </div>
-
-
- @if($pproy->tipo=="organizacion")
- <div class="my-3 p-3 bg-white rounded shadow-sm">
-    <h6 class="border-bottom border-gray pb-2 mb-0">DATOS ORGANIZACIÓN</h6>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">1. Nombre organización</strong>
-        {{ $pproy->nombre_organizacion }}
-      </p>
-    </div>
-     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">2. RUT organización</strong>
-        {{ $pproy->rut_organizacion }}
-      </p>
-    </div>
-     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">3. Domicilio organización</strong>
-        {{ $pproy->domicilio_organizacion }}
-      </p>
-    </div>
-     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">4. Personalidad jurídica</strong>
-        {{ $pproy->personalidad_juridica }}
-      </p>
-    </div>
-     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">5. Antigüedad años</strong>
-        {{ $pproy->antiguedad_anos }}
+      <p class="media-body pb-3 mb-0 small lh-125 text-md-right">
+        ARCHIVO ADJUNTO:<br>
+        <a href="{{ asset('storage/archivos/' . $pproy->archivo_respuesta ) }}" download="Fondo_anexo.pdf">Descargar Adjunto</a>
       </p>
     </div>
 
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 ">
-        <strong class="d-block text-gray-dark">6. Número de socios</strong>
-        {{ $pproy->numero_socios }}
-      </p>
-    </div>
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button text-center collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            Ver detalles Apoyo Proyecto postulado
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <div class="my-3 p-3 bg-white rounded shadow-sm">
+              <h6 class="border-bottom border-gray pb-2 mb-0">Antecedentes generales</h6>
 
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 ">
-        <strong class="d-block text-gray-dark">7. Certificado de personalidad jurídica:</strong>
-        <div class="mb-3">
-          Descargar archivo:
-            <a href="{{ asset('storage/archivos/' . $pproy->certificado_pj) }}" download>{{ $pproy->certificado_pj }}</a>
+              @foreach([
+                'Nombre' => $pproy->name,
+                'Apellido paterno' => $pproy->apellido_paterno,
+                'Apellido materno' => $pproy->apellido_materno,
+                'RUT' => $pproy->rut,
+                'Correo electrónico' => $pproy->email,
+                'Teléfono' => $pproy->fono,
+                'Nacionalidad' => $pproy->nacionalidad,
+                'Género' => $pproy->genero,
+                'Pertenece a pueblo originario' => $pproy->pueblo_originario == 1 ? 'Sí' : 'No',
+                'Discapacidad' => $pproy->discapacidad == 1 ? 'Sí' : 'No',
+                'Fecha de nacimiento' => $pproy->fecha_nacimiento,
+                'Actividad económica' => $pproy->actividad_economica,
+                'Dirección' => $pproy->direccion,
+                'Posee formación formal' => $pproy->formacion_formal,
+                'Profesión' => $pproy->profesion
+              ] as $label => $value)
+              <div class="media text-muted pt-3">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                  <strong class="d-block text-gray-dark">{{ $loop->iteration }}. {{ $label }}</strong>
+                  {{ $value }}
+                </p>
+              </div>
+              @endforeach
             </div>
-      </p>
-    </div>
-</div>
-@endif
-@if($pproy->tipo=="mipyme")
-<div class="my-3 p-3 bg-white rounded shadow-sm">
-    <h6 class="border-bottom border-gray pb-2 mb-0">DATOS MIPYME (Micro, pequeña y mediana empresa)</h6>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">1. Razón social MIPYME</strong>
-        {{ $pproy->razons_pyme }}
-      </p>
-    </div>
-     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">2. RUT MIPYME</strong>
-        {{ $pproy->rut_pyme }}
-      </p>
-    </div>
-     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">3. Domicilio MIPYME</strong>
-        {{ $pproy->domicilio_pyme }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 ">
-        <strong class="d-block text-gray-dark">4. Certificado iniciación actividades (SII)</strong>
-        <div class="mb-3">
-          Descargar archivo:
-            <a href="{{ asset('storage/archivos/' . $pproy->certificado_sii) }}" download>{{ $pproy->certificado_sii }}</a>
+
+            @if($pproy->tipo == "organizacion")
+            <div class="my-3 p-3 bg-white rounded shadow-sm">
+              <h6 class="border-bottom border-gray pb-2 mb-0">DATOS ORGANIZACIÓN</h6>
+              @foreach([
+                'Nombre organización' => $pproy->nombre_organizacion,
+                'RUT organización' => $pproy->rut_organizacion,
+                'Domicilio organización' => $pproy->domicilio_organizacion,
+                'Personalidad jurídica' => $pproy->personalidad_juridica,
+                'Antigüedad años' => $pproy->antiguedad_anos,
+                'Número de socios' => $pproy->numero_socios
+              ] as $label => $value)
+              <div class="media text-muted pt-3">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                  <strong class="d-block text-gray-dark">{{ $loop->iteration }}. {{ $label }}</strong>
+                  {{ $value }}
+                </p>
+              </div>
+              @endforeach
+              <div class="media text-muted pt-3">
+                <p class="media-body pb-3 mb-0 small lh-125">
+                  <strong class="d-block text-gray-dark">Certificado de personalidad jurídica:</strong>
+                  <div class="mb-3">
+                    Descargar archivo:
+                    <a href="{{ asset('storage/archivos/' . $pproy->certificado_pj) }}" download>{{ $pproy->certificado_pj }}</a>
+                  </div>
+                </p>
+              </div>
+            </div>
+            @endif
+
+            @if($pproy->tipo == "mipyme")
+            <div class="my-3 p-3 bg-white rounded shadow-sm">
+              <h6 class="border-bottom border-gray pb-2 mb-0">DATOS MIPYME (Micro, pequeña y mediana empresa)</h6>
+              @foreach([
+                'Razón social MIPYME' => $pproy->razons_pyme,
+                'RUT MIPYME' => $pproy->rut_pyme,
+                'Domicilio MIPYME' => $pproy->domicilio_pyme
+              ] as $label => $value)
+              <div class="media text-muted pt-3">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                  <strong class="d-block text-gray-dark">{{ $loop->iteration }}. {{ $label }}</strong>
+                  {{ $value }}
+                </p>
+              </div>
+              @endforeach
+              @foreach([
+                'Certificado iniciación actividades (SII)' => $pproy->certificado_sii,
+                'Ficha de registro social de hogares del representante legal de MIPYME' => $pproy->archivo_rsh
+              ] as $label => $value)
+              <div class="media text-muted pt-3">
+                <p class="media-body pb-3 mb-0 small lh-125">
+                  <strong class="d-block text-gray-dark">{{ $loop->iteration + 3 }}. {{ $label }}</strong>
+                  <div class="mb-3">
+                    Descargar archivo:
+                    <a href="{{ asset('storage/archivos/' . $value) }}" download>{{ $value }}</a>
+                  </div>
+                </p>
+              </div>
+              @endforeach
+            </div>
+            @endif
+
+            <div class="my-3 p-3 bg-white rounded shadow-sm">
+              <h6 class="border-bottom border-gray pb-2 mb-0">TIPO DE PROYECTO</h6>
+              @foreach([
+                'Nombre proyecto' => $pproy->nombre_proyecto,
+                'Temática' => $pproy->tipo_proyecto,
+                'Lugar ejecución proyecto' => $pproy->lugar_proyecto,
+                'Número beneficiarios directos e indirectos' => 'Directos: ' . $pproy->directos . ' Indirectos: ' . $pproy->indirectos,
+                'Montos del proyecto' => 'Aporte solicitado: $' . $pproy->aporte_solicitado,
+                'Minera Las Cenizas tiene el derecho de tomar fotografías y hacer visitas del proyecto. Además, instalar placa conmemorativa.' => ''
+              ] as $label => $value)
+              <div class="media text-muted pt-3">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                  <strong class="d-block text-gray-dark">{{ $loop->iteration }}. {{ $label }}</strong>
+                  {{ $value }}
+                </p>
+              </div>
+              @endforeach
+            </div>
+
+          </div>
         </div>
-      </p>
+      </div>
     </div>
-
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 ">
-        <strong class="d-block text-gray-dark">5. Ficha de registro social de hogares del representante legal de MIPYME</strong>
-        <div class="mb-3">
-          Descargar archivo:
-            <a href="{{ asset('storage/archivos/' . $pproy->archivo_rsh) }}" download>{{ $pproy->archivo_rsh }}</a>
-        </div>
-      </p>
-    </div>
-</div>
-@endif
-
-<div class="my-3 p-3 bg-white rounded shadow-sm">
-    <h6 class="border-bottom border-gray pb-2 mb-0">TIPO DE PROYECTO</h6>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">1. Nombre proyecto</strong>
-          {{ $pproy->nombre_proyecto }}
-      </p>
-    </div>
-     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">2. Tipo de proyecto</strong>
-          {{ $pproy->tipo_proyecto }}
-      </p>
-    </div>
-     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">3. Lugar ejecución proyecto</strong>
-          {{ $pproy->lugar_proyecto }}
-      </p>
-    </div>
-     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">4. Número beneficiarios directos e indirectos</strong>
-             Directos: {{ $pproy->directos }} Indirectos:  {{ $pproy->indirectos }}
-      </p>
-    </div>
-     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">5. Montos solicitados</strong><p>
-    </div>
-
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 ">
-        <strong class="d-block text-gray-dark">Aporte solicitado: ${{ $pproy->aporte_solicitado }}</strong>
-      </p>
-    </div>
-     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">6. Cargar anexo – Declaración jurada simple con firma del representante legal (ESTANDARIZAR NOMBRE DECLARACIÓN)</strong>
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <a href="{{ asset('storage/archivos') }}/declaracion_jurada.pdf" download="declaracion_jurada.pdf">declaracion_jurada</a>
-    </div>
-</div>
-
- <div class="my-3 p-3 bg-white rounded shadow-sm">
-    <h6 class="border-bottom border-gray pb-2 mb-0">RESPUESTA</h6>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">{{ $pproy->respuesta }}</strong>
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">Archivo Adjunto</strong>
-        </p>
-      <a href="{{ asset('storage/archivos/' . $pproy->archivo_respuesta ) }}" download="Fondo_anexo.pdf">Descargar Adjunto</a>
-    </div>
-</div>
-</div>
+  </div>
 </section>
 @else
 <div class="container text-center">
   <h1>No tiene acceso a esta página</h1>
-<div>
+</div>
 @endif
 @endsection

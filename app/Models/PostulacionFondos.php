@@ -163,7 +163,7 @@ class PostulacionFondos extends Model
             'fecha_nacimiento' => 'required',
             'actividad_economica' => 'required|string|max:255',
             'direccion' => 'required|string|max:255',
-            'formacion_formal' => 'required|string|max:255',  
+            'formacion_formal' => 'required',
             'profesion' => 'required|string|max:255', 
             'acepto_clausula' => 'required',
             ]);

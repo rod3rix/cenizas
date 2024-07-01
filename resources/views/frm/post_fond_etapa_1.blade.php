@@ -143,8 +143,15 @@
                   
                   <div class="form-group row">
                      <label for="formacion_formal" class="col-md-12 col-form-label text-md-left">{{ __('15. Posee formación formal *') }}</label>
-                     <div class="col-md-12">
-                        <input id="formacion_formal" type="text" class="form-control"name="formacion_formal" value="{{ old('formacion_formal') }}" required autocomplete="formacion_formal" placeholder="Ej: Técnico en Electricidad, Instituto Técnico Superior, 2018">
+                     <div class="col-md-12" id="v_formacion_formal">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" id="formacion_formal_si" name="formacion_formal" value="1">
+                          <label class="form-check-label" for="formacion_formal_si">Si</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" id="formacion_formal_no" name="formacion_formal" value="0">
+                          <label class="form-check-label" for="formacion_formal_no">No</label>
+                        </div>
                      </div>
                   </div>
                   <div class="form-group row">
@@ -163,33 +170,23 @@
                    </div>
                </div>
 
-                  <!-- <div class="form-group row">
-                     <div class="col-md-12">
-                        <label for="acepto_clausula" class="col-md-12 col-form-label text-md-left">{{ __('17.') }}</label>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="checkbox" id="acepto_clausula" name="acepto_clausula" value="1">
-                          <a href="#" data-bs-toggle="modal" data-bs-target="#clausulaModal">Acepto cláusula de tratamiento de información personal * </a> <br>Marcar casilla para aceptar cláusula.
-                        </div>
+               <div class="form-group row">
+                <div class="col-md-12" id="v_clausula">
+                    <label for="formacion_formal" class="col-form-label text-md-left">
+                        {{ __('17.') }}
+                    </label>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label" for="formacion_formal_checkbox">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#clausulaModal">Acepto cláusula de tratamiento de información personal * </a>
+                        </label>
+                        <input class="form-check-input" type="checkbox" id="acepto_clausula" name="acepto_clausula" value="1">
+                    </div>
+                    <br>
+                     <div>
+                            <span>Marcar casilla para aceptar la formación formal.</span>
                      </div>
-                  </div>
- -->
-                  <div class="form-group row">
-    <div class="col-md-12">
-        <label for="formacion_formal" class="col-form-label text-md-left">
-            {{ __('17.') }}
-        </label>
-        <div class="form-check form-check-inline">
-           <input class="form-check-input" type="checkbox" id="acepto_clausula" name="acepto_clausula" value="1">
-            <label class="form-check-label" for="formacion_formal_checkbox">
-                <a href="#" data-bs-toggle="modal" data-bs-target="#clausulaModal">Acepto cláusula de tratamiento de información personal * </a>
-            </label>
-        </div>
-        <br>
-         <div>
-                <span>Marcar casilla para aceptar la formación formal.</span>
-         </div>
-    </div>
-</div>
+                </div>
+               </div>
 
                   <div class="form-group row">
                      <div class="col-md-12  text-md-right">
