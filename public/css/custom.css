@@ -69,9 +69,6 @@ button:hover.btn {
     border: 0px !important;
 }
 
-
-
-
 .form-group {
     margin-bottom: 15px;
 }
@@ -255,6 +252,14 @@ body.register .card {
     border: 0px;
 }
 
+/* body.register header .btn {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--yellow-1);
+    border-color: 0px;
+    outline: 0;
+    box-shadow: var(--bs-btn-focus-box-shadow);
+} */
+
 /* home ---------------------------------------------------------- */
 
 h1.jumbotron-heading,
@@ -270,6 +275,12 @@ p.lead,
     color: var(--txt-2);
 }
 
+.card.fondos,
+.card.proyectos,
+.card.sugerencias {
+    margin-top: 45px;
+}
+
 .card.fondos {
     background-color: #F8F0EB;
 }
@@ -281,6 +292,29 @@ p.lead,
 .card.sugerencias {
     background-color: #FBEEEA;
 }
+
+.card.fondos .card-header,
+.card.proyectos .card-header,
+.card.sugerencias .card-header {
+    background-size: 90px;
+    background-repeat: no-repeat;
+    background-position: center top;
+    margin-top: -45px;
+    padding-top: 100px;
+}
+
+.card.fondos .card-header {
+    background-image: url('../images/icon-fondos.svg');
+}
+
+.card.proyectos .card-header {
+    background-image: url('../images/icon-apoyo.svg');
+}
+
+.card.sugerencias .card-header {
+    background-image: url('../images/icon-sugerencia.svg');
+}
+
 
 .card.fondos h4,
 .card.proyectos h4,
@@ -303,18 +337,24 @@ p.lead,
 }
 
 .card.fondos a.btn {
+    width: 80%;
+    margin-bottom: 20px;
     background-color: #EEDCCE;
     border: 1px solid #BD9376;
     color: #8C4A1D;
 }
 
 .card.proyectos a.btn {
+    width: 80%;
+    margin-bottom: 20px;
     background-color: #F5E8CD;
     border: 1px solid #E4C37A;
     color: #BC9226;
 }
 
 .card.sugerencias a.btn {
+    width: 80%;
+    margin-bottom: 20px;
     background-color: #F5D8CE;
     border: 1px solid #E5987D;
     color: #D4582C;
