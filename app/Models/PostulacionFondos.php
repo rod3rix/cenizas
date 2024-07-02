@@ -186,7 +186,7 @@ class PostulacionFondos extends Model
         return $validator;
     }
 
-    public static function validarEtapa3(array $data)
+    public static function validarEtapa4(array $data)
     {
         $validator = Validator::make($data, [
             'nombre_proyecto' => 'required|string|max:255',
@@ -215,7 +215,36 @@ class PostulacionFondos extends Model
         return $validator;
     }
 
-    public static function validarEtapa4(array $data)
+     public static function validarEtapa5(array $data)
+    {
+        $validator = Validator::make($data, [
+            'nombre_proyecto' => 'required|string|max:255',
+            'tipo_proyecto' => 'required|string|max:255',
+            'fundamentacion' => 'required|string|max:255',
+            'descripcion_proyecto' => 'required|string|max:255',
+            'objetivo_general' => 'required|string|max:255',
+            'objetivos_especificos' => 'required|string|max:255',
+            'cierre_proyecto' => 'required|string|max:255',
+            'directos' => 'required',
+            'indirectos' => 'required',
+            'fecha_inicio' => 'required',
+            'fecha_termino' => 'required',
+            'cantidad_dias' => 'required',
+            // 'rec_humanos' => 'required',
+            // 'mat_insumos' => 'required',
+            // 'otros' => 'required',
+            'aporte_solicitado' => 'required',
+            'aporte_terceros' => 'required',
+            'aporte_propio' => 'required',
+            'detalle.*' => 'required|string',
+            'monto.*' => 'required|string',
+            'archivo_anexo' => 'required|file|mimes:pdf,zip,rar|max:20480',
+            ]);
+
+        return $validator;
+    }
+
+    public static function validarEtapa3(array $data)
     {
          $validator = Validator::make( $data,[
             'razons_pyme' => 'required|string|max:255',
@@ -224,15 +253,6 @@ class PostulacionFondos extends Model
             'certificado_sii' => 'required|file|mimes:pdf,zip,rar|max:20480',
             'archivo_rsh' => 'required|file|mimes:pdf,zip,rar|max:20480',
             ]);
-
-        return $validator;
-    }
-
-    public static function validarEtapa5(array $data)
-    {
-        $validator = Validator::make($data, [
-            'id_dato_organizacion' => 'required'
-        ]);
 
         return $validator;
     }

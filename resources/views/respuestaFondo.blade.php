@@ -100,7 +100,11 @@ Fondos Concursables</b></h1>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">14. Posee formación formal</strong>
-        {{ $pfondo->formacion_formal }}
+        @if($pfondo->formacion_formal == 1)
+              Sí
+        @else
+              No
+        @endif
       </p>
     </div>
     <div class="media text-muted pt-3">
@@ -264,7 +268,7 @@ Fondos Concursables</b></h1>
 
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">9. Fecha de inicio / Fecha Término</strong>Fecha Termino: {{ $pfondo->directos }} Fecha Inicio:  {{ $pfondo->fecha_termino }} Cantidad de días: {{ $pfondo->cantidad_dias }}
+        <strong class="d-block text-gray-dark">9. Fecha de inicio / Fecha Término</strong>Fecha Termino: {{ $pfondo->fecha_inicio }} Fecha Inicio:  {{ $pfondo->fecha_termino }} Cantidad de días: {{ $pfondo->cantidad_dias }}
       </p>
     </div>
  <div class="my-3 p-3 bg-white rounded shadow-sm">

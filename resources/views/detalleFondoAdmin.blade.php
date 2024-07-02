@@ -98,7 +98,11 @@
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">14. Posee formación formal</strong>
-        {{ $pfondo->formacion_formal }}
+        @if($pfondo->formacion_formal == 1)
+            Sí
+        @else
+            No
+        @endif
       </p>
     </div>
     <div class="media text-muted pt-3">

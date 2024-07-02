@@ -14,7 +14,7 @@
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 text-md-right">
         ARCHIVO ADJUNTO:<br>
-        <a href="{{ asset('storage/archivos/' . $pproy->archivo_respuesta ) }}" download="Fondo_anexo.pdf">Descargar Adjunto</a>
+        <a href="{{ asset('storage/archivos/' . $pproy->archivo_respuesta ) }}" download="{{ $pproy->archivo_respuesta }}">Descargar Adjunto</a>
       </p>
     </div>
 
@@ -44,7 +44,7 @@
                 'Fecha de nacimiento' => $pproy->fecha_nacimiento,
                 'Actividad económica' => $pproy->actividad_economica,
                 'Dirección' => $pproy->direccion,
-                'Posee formación formal' => $pproy->formacion_formal,
+                'Posee formación formal' => $pproy->formacion_formal == 1 ? 'Sí' : 'No',
                 'Profesión' => $pproy->profesion
               ] as $label => $value)
               <div class="media text-muted pt-3">

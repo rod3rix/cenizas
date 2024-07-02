@@ -276,7 +276,7 @@ Fondos Concursables</b></h1>
      <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">Archivo Adjunto</strong>
-        <a href="{{ asset('storage/archivos/' . $pfondo->archivo_respuesta ) }}">Descargar Archivo</a>
+        <a href="{{ asset('storage/archivos/' . $pfondo->archivo_respuesta ) }}"download>Descargar Archivo</a>
       </p>
     </div>
 </div>

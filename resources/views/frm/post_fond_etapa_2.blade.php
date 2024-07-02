@@ -124,7 +124,7 @@
                                 <button type="button" onclick="btn_volver(1)" class="btn btn-primary">
                                     {{ __('Anterior') }}
                                 </button>
-                                <button type="button" onclick="validarFrmFondos(4)" class="btn btn-primary">
+                                <button type="button" onclick="validarFrmFondos(3)" class="btn btn-primary">
                                     {{ __('Siguiente') }}
                                 </button>
                             </div>
