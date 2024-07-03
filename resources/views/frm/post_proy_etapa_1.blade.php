@@ -41,18 +41,10 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                            <label for="localidad" class="col-md-12 col-form-label text-md-left">{{ __('7. Comuna') }}</label>
-
-                            <div class="col-md-12">
-                                <select id="localidad" name="localidad" type="text" class="form-control" {{ in_array($user->zona, [1, 2]) ? 'disabled' : '' }} >
-                                    <option value="">Seleccione</option>
-                                    <option value="1" {{ $user->zona == 1 ? 'selected' : '' }}>Taltal</option>
-                                    <option value="2" {{ $user->zona == 2 ? 'selected' : '' }}>Cabildo</option>
-                                </select>
-                                @if(in_array($user->zona, [1, 2]))
-                                    <input type="hidden" name="localidad" value="{{ $user->zona }}">
-                                @endif
-                            </div>
+                        <label for="localidad" class="col-md-12 col-form-label text-md-left">{{ __('7. Comuna') }}</label>
+                        <div class="col-md-12">
+                        <input type="text" class="form-control" value="{{ $user->zona == 1 ? 'Taltal' : 'Cabildo' }}" disabled>
+                        </div>
                   </div>
                   
                    <div class="form-group row">
@@ -153,7 +145,7 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                   <label for="profesion" class="col-md-12 col-form-label text-md-left">{{ __('16. Profesión *') }}</label>
+                   <label for="profesion" class="col-md-12 col-form-label text-md-left">{{ __('16. Nivel educacional *') }}</label>
                    <div class="col-md-12">
                        <select id="profesion" class="form-control" name="profesion" required>
                            <option value="">Seleccione una opción</option>

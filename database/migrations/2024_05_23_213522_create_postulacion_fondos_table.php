@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('postulacion_fondos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('id_fondo_concursable'); // Correct column name
+            $table->unsignedBigInteger('id_fondo_concursable');
             $table->string('nacionalidad', 255);
             $table->string('genero', 255);
             $table->integer('pueblo_originario');
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('formacion_formal', 255);
             $table->string('profesion', 255);
             $table->integer('acepto_clausula');
-            $table->unsignedBigInteger('id_dato_organizacion'); // Correct column name
+            $table->unsignedBigInteger('id_dato_organizacion');
             $table->string('nombre_proyecto', 255)->nullable();
             $table->text('tipo_proyecto')->nullable();
             $table->text('fundamentacion')->nullable();
@@ -43,17 +43,14 @@ return new class extends Migration
             $table->string('aporte_propio')->nullable();
             $table->string('archivo_anexo')->nullable();
             $table->string('archivo_certificado')->nullable();
-            // $table->unsignedBigInteger('id_persona_juridica');
             $table->string('estado', 255)->nullable();
             $table->integer('calificar')->nullable();
             $table->string('respuesta', 2500)->nullable();
             $table->string('archivo_respuesta')->nullable();
             $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('id_fondo_concursable')->references('id')->on('listado_fondos')->onDelete('cascade');
             $table->foreign('id_dato_organizacion')->references('id')->on('datos_organizaciones')->onDelete('cascade');
-            // $table->foreign('id_persona_juridica')->references('id')->on('persona_juridicas')->onDelete('cascade');
         });
     }
 

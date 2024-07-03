@@ -41,25 +41,19 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="personalidad_juridica" class="col-md-12 col-form-label text-md-left">{{ __('4. Personalidad Jurídica *') }}</label>
-                            <div class="col-md-12">
-                                <input id="personalidad_juridica" name="personalidad_juridica" type="text" class="form-control" value="{{ old('personalidad_juridica') }}" required autocomplete="personalidad_juridica">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="antiguedad_anos" class="col-md-12 col-form-label text-md-left">{{ __('5. Antiguedad de años *') }}</label>
+                            <label for="antiguedad_anos" class="col-md-12 col-form-label text-md-left">{{ __('4. Antiguedad de años *') }}</label>
                             <div class="col-md-12">
                                 <input id="antiguedad_anos" type="text" class="form-control" name="antiguedad_anos" value="{{ old('antiguedad_anos') }}" required autocomplete="antiguedad_anos" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="3" onpaste="handlePaste(event)">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="numero_socios" class="col-md-12 col-form-label text-md-left">{{ __('6. Número de socios *') }}</label>
+                            <label for="numero_socios" class="col-md-12 col-form-label text-md-left">{{ __('5. Número de socios *') }}</label>
                             <div class="col-md-12">
                                 <input id="numero_socios" name="numero_socios" type="text" class="form-control" value="{{ old('numero_socios') }}" required autocomplete="numero_socios" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="4" onpaste="handlePaste(event)">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="certificado_pj" class="col-md-12 col-form-label text-md-left">7. Adjuntar certificado de personalidad jurídica* &nbsp;&nbsp;<br>&nbsp; &nbsp; (formato .pdf, .zip, .rar. Tamaño máximo 20 mb.)</label>
+                            <label for="certificado_pj" class="col-md-12 col-form-label text-md-left">6. Adjuntar certificado de personalidad jurídica* &nbsp;&nbsp;<br>&nbsp; &nbsp; (formato .pdf, .zip, .rar. Tamaño máximo 20 mb.)</label>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">

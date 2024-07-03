@@ -17,11 +17,10 @@ class CreateListadoFondosTable extends Migration
             $table->id();
             $table->string('nombre_fondo');
             $table->string('descripcion',2500)->nullable();
+            $table->integer('zona');
             $table->date('fecha_inicio');
             $table->date('fecha_termino');
-            $table->integer('vigencia');
-            $table->unsignedBigInteger('titulo_anual_id');
-            $table->foreign('titulo_anual_id')->references('id')->on('titulo_fondos');
+            $table->integer('estado');
             $table->timestamps();
         });
     }

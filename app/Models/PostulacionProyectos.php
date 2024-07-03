@@ -160,9 +160,14 @@ protected $fillable = [
 
     public static function cerrarPostulacion($request)
     {
+        
+        if ($request->hasFile('archivo')) {
         $archivo = $request->file('archivo');
         $nombreArchivo = 'res_proy_' . $request->pproy_id . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
         $archivo->storeAs('public/archivos', $nombreArchivo);
+        }else {
+            $nombreArchivo=null;
+        }
         
         $post = PostulacionProyectos::findOrFail($request->pproy_id);
         $post->respuesta = $request->input('respuesta');
@@ -265,7 +270,6 @@ protected $fillable = [
             'nombre_organizacion' => 'required|string|max:255',
             'rut_organizacion' => ['required', new RutValidation],
             'domicilio_organizacion' => 'required|string|max:255',
-            'personalidad_juridica' => 'required|string|max:255',
             'antiguedad_anos' => 'required',
             'numero_socios' => 'required',
             'certificado_pj' => 'required|file|mimes:pdf,zip,rar|max:20480',

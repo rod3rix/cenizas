@@ -22,9 +22,7 @@ class Casos extends Model
     protected $fillable = [
         'idUser',
         'tipo',
-        'localidad',
-        'region_id',
-        'comuna_id',
+        'comuna',
         'direccion',
         'asunto',
         'descripcion',
@@ -38,16 +36,17 @@ class Casos extends Model
 
      public static function validar(array $data)
     {
-         $validator = Validator::make( $data,[
+        $validator = Validator::make( $data,[
             'tipo' => 'required|string|max:255',
-            'localidad' => 'required',
-            'region' => 'required',
             'comuna' => 'required',
             'direccion' => 'required|string|max:255',
             'asunto' => 'required|string|max:255',  
-            'descripcion' => 'required|string|max:2500', 
-            // 'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480',
-            ]);
+            'descripcion' => 'required|string|max:2500',
+            ], [
+            'tipo.required' => 'El campo sugerencia, reclamo u otro es obligatorio.',
+            'direccion.required' => 'El campo dirección es obligatorio.',
+            'descripcion.required' => 'El campo descripción es obligatorio.'
+        ]);
 
         return $validator;
     }
@@ -65,9 +64,7 @@ class Casos extends Model
         $insertedId = \DB::table('casos')->insertGetId([
             'idUser' => auth()->id(),
             'tipo' => $request->tipo,
-            'localidad' => $request->localidad,
-            'region_id' => $request->region,
-            'comuna_id' => $request->comuna,
+            'comuna' => $request->comuna,
             'direccion' => $request->direccion,
             'asunto' => $request->asunto,
             'descripcion' => $request->descripcion,
@@ -83,9 +80,7 @@ class Casos extends Model
     public static function respuestaCaso($id)
     {
         $caso = Casos::join('users', 'casos.idUser', '=', 'users.id')
-                 ->join('regiones', 'casos.region_id', '=', 'regiones.id')
-                 ->join('comunas', 'casos.comuna_id', '=', 'comunas.id')
-                 ->select('casos.*', 'users.*', 'regiones.nombre as region', 'comunas.nombre as comuna','casos.id as casoid')
+                 ->select('casos.*', 'users.*','casos.id as casoid')
                  ->findOrFail($id);
   
         return $caso;
@@ -116,9 +111,7 @@ class Casos extends Model
     public static function respuestaCasoAdmin($id)
     {
         $caso = Casos::join('users', 'casos.idUser', '=', 'users.id')
-                 ->join('regiones', 'casos.region_id', '=', 'regiones.id')
-                 ->join('comunas', 'casos.comuna_id', '=', 'comunas.id')
-                 ->select('casos.*', 'users.*', 'regiones.nombre as region', 'comunas.nombre as comuna','casos.id as casoid')
+                 ->select('casos.*', 'users.*','casos.id as casoid')
                  ->findOrFail($id);
 
         return $caso;
@@ -127,9 +120,7 @@ class Casos extends Model
     public static function responderCaso($id)
     {
         $caso = Casos::join('users', 'casos.idUser', '=', 'users.id')
-                 ->join('regiones', 'casos.region_id', '=', 'regiones.id')
-                 ->join('comunas', 'casos.comuna_id', '=', 'comunas.id')
-                 ->select('casos.*', 'users.*', 'regiones.nombre as region', 'comunas.nombre as comuna','casos.id as casoid')
+                 ->select('casos.*', 'users.*','casos.id as casoid')
                  ->findOrFail($id);
         
         return $caso;
@@ -156,10 +147,13 @@ class Casos extends Model
 
     public static function cerrarCaso($request)
     {
-        $archivo = $request->file('archivo');
-
-        $nombreArchivo = 'res_caso_' . $request->casoId . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
-        $archivo->storeAs('public/archivos', $nombreArchivo);
+        if ($request->hasFile('archivo')) {
+            $archivo = $request->file('archivo');
+            $nombreArchivo = 'res_caso_' . $request->casoId . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
+            $archivo->storeAs('public/archivos', $nombreArchivo);
+        }else{
+            $nombreArchivo = null;
+        }
 
         $caso = Casos::findOrFail($request->casoId);
         $caso->respuesta = $request->input('respuesta');

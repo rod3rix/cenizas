@@ -16,28 +16,26 @@ class ListadoFondos extends Model
 
     protected $table = 'listado_fondos';
 
-    protected $fillable = ['nombre_fondo', 'descripcion',
+    protected $fillable = [
+    'nombre_fondo', 
+    'descripcion',
+    'zona',
     'fecha_inicio',
     'fecha_termino',
-    'vigencia',
-    'titulo_anual_id'];
+    'estado'];
 
      public static function crearFondo($request)
     {
        $insertedId = \DB::table('listado_fondos')->insertGetId([
                     'nombre_fondo' => $request->nombre_fondo,
                     'descripcion' => $request->descripcion,
+                    'zona' => $request->zona,
                     'fecha_inicio' =>  $fecha_inicio_formatted = date('Y-m-d', strtotime($request->fecha_inicio)),
                     'fecha_termino' => $fecha_termino_formatted = date('Y-m-d', strtotime($request->fecha_termino)),
-                    'vigencia' => 1,
-                    'titulo_anual_id'  => $request->titulo_anual_id,
+                    'estado' => $request->estado,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ]);
-
-                DB::table('listado_fondos')
-                ->where('id', '!=', $insertedId)
-                ->update(['vigencia' => 0]);
 
         return $insertedId;
     }    
@@ -80,7 +78,7 @@ class ListadoFondos extends Model
     public static function fondoVigente()       
    {
         $currentDate = Carbon::now()->endOfDay()->format('Y-m-d');
-        $isVigente = ListadoFondos::where('vigencia', 1)
+        $isVigente = ListadoFondos::where('estado', 1)
             ->whereDate('fecha_termino', '>=', $currentDate)
             ->exists();
 

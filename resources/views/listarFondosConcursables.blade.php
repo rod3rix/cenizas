@@ -7,13 +7,10 @@
         </div>
         <hr>
         <div  class="container">    
-            @foreach($titulos as $titulo)
-            <h2>{{ $titulo->titulo_anual }}</h2>
+            @foreach($listados as $listado)
             <ul>
-                @foreach($listados->where('titulo_anual_id', $titulo->id) as $listado)
                     <li>{{ $listado->nombre_fondo }} </li>
-                @endforeach
-            </ul>
+           </ul>
             @endforeach
         </div>
 </div>

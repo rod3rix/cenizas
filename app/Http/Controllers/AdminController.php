@@ -56,11 +56,10 @@ class AdminController extends Controller
 
     public function listarFondosConcursables()
     {
-        $titulos = TituloFondos::orderBy('id', 'desc')->get();
 
         $listados = ListadoFondos::all();
 
-        return view('listarFondosConcursables', compact('titulos', 'listados'));
+        return view('listarFondosConcursables', compact('listados'));
     } 
 
     public function verSugerenciaReclamo()
@@ -127,7 +126,7 @@ class AdminController extends Controller
     
         $validator = Validator::make($request->all(), [
             'respuesta' => 'required|string|max:2500',
-            'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480',
+            // 'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480',
         ]);
 
         if ($validator->fails()) {
@@ -323,7 +322,7 @@ class AdminController extends Controller
         $validator = Validator::make($request->all(), [
             'respuesta' => 'required|string|max:2500',
             'estado_proyecto' => 'required',
-            'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480', 
+            // 'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480', 
         ]);
 
         if ($validator->fails()) {
@@ -471,7 +470,7 @@ class AdminController extends Controller
             'calificar' => 'required',
             'respuesta' => 'required|string|max:2500',
             'estado_fondo' => 'required',
-            'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
+            // 'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
         ]);
 
         if ($validator->fails()) {
@@ -507,47 +506,39 @@ class AdminController extends Controller
         }
     }
 
-    public function frmTituloFondo(Request $request)
+    public function frmCrearAFondo(Request $request)
     {
-        if($request->idFrm=="frm1"){
-                $validator = Validator::make($request->all(), [
-                    'titulo_anual' => 'required',
-                ]);
+        $validator = Validator::make($request->all(), [
+            'nombre_fondo' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:255',
+            'zona' => 'required',
+            'fecha_inicio' => 'required|date|before:fecha_termino',
+            'fecha_termino' => 'required|date',
+            'estado' => 'required'
+        ], [
+            'nombre_fondo.required' => 'El campo nombre fondo es obligatorio.',
+            'nombre_fondo.string' => 'El campo nombre fondo debe ser una cadena de texto.',
+            'nombre_fondo.max' => 'El campo nombre fondo no debe exceder los 255 caracteres.',
+            'descripcion.required' => 'El campo descripción es obligatorio.',
+            'descripcion.string' => 'El campo descripción debe ser una cadena de texto.',
+            'descripcion.max' => 'El campo descripción no debe exceder los 255 caracteres.',
+            'zona.required' => 'El campo comuna es obligatorio.',
+            'fecha_inicio.required' => 'El campo fecha de inicio es obligatorio.',
+            'fecha_inicio.date' => 'El campo fecha de inicio debe ser una fecha válida.',
+            'fecha_inicio.before' => 'La fecha de inicio no puede ser mayor ni igual a la fecha de término.',
+            'fecha_termino.required' => 'El campo fecha de término es obligatorio.',
+            'fecha_termino.date' => 'El campo fecha de término debe ser una fecha válida.',
+            'estado.required' => 'El campo estado es obligatorio.'
+        ]);
 
-                if ($validator->fails()) {
-                    return response()->json([
-                        'success' => false,
-                        'errors' => $validator->errors()->toArray()
-                    ]);
-                }
-
-                $insertedId = \DB::table('titulo_fondos')->insertGetId([
-                    'titulo_anual' => $request->titulo_anual,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->toArray()
+            ]);
         }
 
-        if($request->idFrm=="frm2"){
-            
-                $validator = Validator::make($request->all(), [
-                    'nombre_fondo' => 'required|string|max:255',
-                    'descripcion' => 'required|string|max:255',
-                    'fecha_inicio' => 'required|date',
-                    'fecha_termino' => 'required|date',
-                    'titulo_anual_id' => 'required'
-                ]);
-
-                if ($validator->fails()) {
-                    return response()->json([
-                        'success' => false,
-                        'errors' => $validator->errors()->toArray()
-                    ]);
-                }
-
-            $insertedId = listadoFondos::crearFondo($request);
-
-        }
+        $insertedId = listadoFondos::crearFondo($request);
 
         if ($insertedId) {
             return response()->json([
@@ -586,20 +577,11 @@ class AdminController extends Controller
             $fondo->fecha_inicio = Carbon::parse($fondo->fecha_inicio)->format('d-m-Y');
             $fondo->fecha_termino = Carbon::parse($fondo->fecha_termino)->format('d-m-Y');
             $fondo->link_modal = '<div class="text-center"><button type="button" class="btn btn-primary verDetallesFondo" data-bs-toggle="modal" data-bs-target="#editarFondoModal" data-id="'.$fondo->id.'">Ver Detalles</button><div>';
+            $fondo->zona = ($fondo->zona == 1) ? 'Cabildo' : 'Taltal';
+            $fondo->estado = ($fondo->estado == 1) ? 'Activo' : 'Inactivo';
         }
 
         return response()->json($listado);
-    }
-
-    public function getTFondo(Request $request)
-    {
-       $fondo = TituloFondos::find($request->id);
-
-        if ($fondo) {
-            return response()->json($fondo);
-        } else {
-            return response()->json(['error' => 'Fondo no encontrado'], 404);
-        }
     }
 
     public function getFondo(Request $request)
@@ -615,45 +597,27 @@ class AdminController extends Controller
         }
     }
 
-    public function updateATFondo(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'tfondo_id' => 'required|exists:titulo_fondos,id',
-            'nombre_tfondo_edit' => 'required|string|max:255',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                    'success' => false,
-                    'errors' => $validator->errors()->toArray()
-            ]);
-        }
-
-        $fondo = TituloFondos::find($request->tfondo_id);
-       
-        if ($fondo) {
-            $fondo->titulo_anual = $request->nombre_tfondo_edit;
-            $fondo->save();
-
-            return response()->json([
-                'message' => 'Fondo actualizado con éxito',
-                'status' => true,
-                'success' => true
-                ],200);
-
-        } else {
-            return response()->json(['error' => 'Fondo no encontrado'], 404);
-        }
-    }
-
     public function updateAFondo(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'fondo_id' => 'required|exists:listado_fondos,id',
             'nombre_fondo_edit' => 'required|string|max:255',
             'descripcion_edit' => 'required|string',
-            'fecha_inicio_edit' => 'required',
-            'fecha_termino_edit' => 'required'
+            'zona_edit' => 'required',
+            'fecha_inicio_edit' => 'required|date|before:fecha_termino_edit',
+            'fecha_termino_edit' => 'required|date',
+            'estado_edit' => 'required'
+        ], [
+            'nombre_fondo_edit.required' => 'El campo nombre fondo es obligatorio.',
+            'zona.required' => 'El campo comuna es obligatorio.',
+            'descripcion_edit.required' => 'El campo descripción es obligatorio.',
+            'zona_edit.required' => 'El campo fecha inicio es obligatorio.',
+            'fecha_inicio_edit.required' => 'El campo fecha inicio es obligatorio.',
+            'fecha_inicio_edit.date' => 'El campo fecha inicio debe ser una fecha válida.',
+            'fecha_inicio_edit.before' => 'La fecha de inicio no puede ser mayor ni igual a la fecha de término.',
+            'fecha_termino_edit.required' => 'El campo fecha termino es obligatorio.',
+            'fecha_termino_edit.date' => 'El campo fecha termino debe ser una fecha válida.',
+            'estado_edit.required' => 'El campo estado es obligatorio.'
         ]);
 
         if ($validator->fails()) {
@@ -671,8 +635,10 @@ class AdminController extends Controller
         if ($fondo) {
             $fondo->nombre_fondo = $request->nombre_fondo_edit;
             $fondo->descripcion = $request->descripcion_edit;
+            $fondo->zona = $request->zona_edit;
             $fondo->fecha_inicio = $fecha_inicio_formatted;
             $fondo->fecha_termino =$fecha_termino_formatted;
+            $fondo->estado = $request->estado_edit;
             $fondo->save();
 
             return response()->json([

@@ -177,7 +177,6 @@ class PostulacionFondos extends Model
             'nombre_organizacion' => 'required|string|max:255',
             'rut_organizacion' => ['required', new RutValidation],
             'domicilio_organizacion' => 'required|string|max:255',
-            'personalidad_juridica' => 'required|string|max:255',
             'antiguedad_anos' => 'required',
             'numero_socios' => 'required',
             'certificado_pj' => 'required|file|mimes:pdf,zip,rar|max:20480',
@@ -260,7 +259,7 @@ class PostulacionFondos extends Model
     public static function fondoVigenteId()
     {
       $currentDate = Carbon::now();
-      $fondoVigente = ListadoFondos::where('vigencia', 1)
+      $fondoVigente = ListadoFondos::where('estado', 1)
                                  ->where('fecha_termino', '>=', $currentDate)
                                  ->first();
 
@@ -271,9 +270,14 @@ class PostulacionFondos extends Model
 
      public static function cerrarFondo($request)
     {
+        
+        if ($request->hasFile('archivo')) {
         $archivo = $request->file('archivo');
         $nombreArchivo = 'res_fondo_' . $request->pfondo_id . "_" . date('Ymd_His') . "." . $archivo->getClientOriginalExtension();
         $archivo->storeAs('public/archivos', $nombreArchivo);
+        }else{
+            $nombreArchivo= null;
+        }
 
         $fondo = PostulacionFondos::findOrFail($request->pfondo_id);
         $fondo->calificar = $request->input('calificar');

@@ -16,11 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('idUser')->unsigned();
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
             $table->string('tipo');
-            $table->integer('localidad');
-            $table->unsignedBigInteger('region_id');
-            $table->foreign('region_id')->references('id')->on('regiones');
-            $table->unsignedBigInteger('comuna_id');
-            $table->foreign('comuna_id')->references('id')->on('comunas');
+            $table->integer('comuna');
             $table->string('direccion');
             $table->string('asunto');
             $table->string('descripcion', 2500);

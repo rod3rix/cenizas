@@ -1,7 +1,5 @@
 $(document).ready(function() {
-    obtenerTitulosFondos();
     listarEdicionFondos();
-    listarEdicionTFondos();
 });
 
 $(document).on('click', '.verDetallesTitulo', function() {
@@ -14,31 +12,6 @@ $(document).on('click', '.verDetallesFondo', function() {
     cargarDatosFondoModal(id);
 });
 
-function obtenerTitulosFondos() {
-        $.ajax({
-            url: 'obtenerTitulosFondos',
-            type: 'GET',
-            success: function(response) {
-                $('#titulo_anual_id').empty();
-
-                $('#titulo_anual_id').append($('<option>', {
-                    value: '',
-                    text: 'Selecciona un título'
-                }));
-
-                $.each(response, function(index, titulo) {
-                    $('#titulo_anual_id').append($('<option>', {
-                        value: titulo.id,
-                        text: titulo.titulo_anual
-                    }));
-                });
-            },
-            error: function() {
-                console.log('Error al obtener los títulos de fondos.');
-            }
-        });
-    }
-
 function enviarFormulario(idFrm) {
 
     var formData = new FormData(document.getElementById(idFrm));
@@ -49,7 +22,7 @@ function enviarFormulario(idFrm) {
     $('.invalid-feedback').remove();
 
     $.ajax({
-        url: 'frmTituloFondo',
+        url: 'frmCrearAFondo',
         method: 'POST',
         data: formData,
         contentType: false,
@@ -58,20 +31,13 @@ function enviarFormulario(idFrm) {
         if (xhr.status === 200) {
             if (response.success) {
 
-                 $('#mensajeExito').text(response.message).show();
+                $('#mensajeExito').text(response.message).show();
                 
-                if(idFrm=="frm1"){
-                    $('#collapseOne').collapse('hide');
-                    $('#collapseTwo').collapse('hide'); 
-                    $('#frm1')[0].reset();
-                    obtenerTitulosFondos();
-                }
+                listarEdicionFondos();
 
-                if(idFrm=="frm2"){
-                    $('#collapseOne').collapse('hide');
-                    $('#collapseTwo').collapse('hide');
-                    $('#frm2')[0].reset();
-                }
+                $('#collapseOne').collapse('hide');
+                $('#collapseTwo').collapse('hide');
+                $('#frm2')[0].reset();
 
             } else {
                 $.each(response.errors, function(key, value) {
@@ -107,69 +73,10 @@ function listarEdicionFondos() {
                     columns: [
                         { data: 'id' },
                         { data: 'nombre_fondo' },
+                        { data: 'zona' },
                         { data: 'fecha_inicio' },
                         { data: 'fecha_termino' },
-                        { data: 'link_modal' }
-                    ],
-                    dom: 'Bfrtip',
-                    buttons: [
-                        {
-                            extend: 'copy',
-                            exportOptions: {
-                                modifier: {
-                                    page: 'all'
-                                }
-                            }
-                        },
-                        {
-                            extend: 'excel',
-                            exportOptions: {
-                                modifier: {
-                                    page: 'all'
-                                }
-                            },
-                            filename: 'Portal Comunidades',
-                            title: 'Portal Comunidades'
-                        },
-                        {
-                            extend: 'pdf',
-                            exportOptions: {
-                                modifier: {
-                                    page: 'all'
-                                }
-                            },
-                            filename: 'Portal Comunidades',
-                            title: 'Portal Comunidades'
-                        }
-                    ],
-                    paging: true
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error('Error al cargar los datos:', error);
-            }
-        });
-}
-
-function listarEdicionTFondos() {
-        $.ajax({
-            url: 'listarEdicionTFondos',
-            type: 'POST',
-            dataType: 'json',
-            data: {_token: $('meta[name="csrf-token"]').attr('content')},
-            success: function(response) {
-                var table = $('#registros_tfondo').DataTable();
-
-                table.destroy();
-
-                $('#registros_tfondo').DataTable({
-                    language: {
-                        url: appConfig.dataTablesLangUrl
-                    },
-                    data: response,
-                    columns: [
-                        { data: 'id' },
-                        { data: 'titulo_anual' },
+                        { data: 'estado' },
                         { data: 'link_modal' }
                     ],
                     dom: 'Bfrtip',
@@ -224,23 +131,10 @@ function cargarDatosFondoModal(id) {
             $('#fondo_id').val(data.id);
             $('#nombre_fondo_edit').val(data.nombre_fondo);
             $('#descripcion_edit').val(data.descripcion);
+            $('#zona_edit').val(data.zona);  // Asegúrate de que 'data.comuna' tenga el valor correcto
             $('#fecha_inicio_edit').val(data.fecha_inicio);
             $('#fecha_termino_edit').val(data.fecha_termino);
-        }
-    });
-}
-
-function cargarDatosTituloModal(id) {
-    $.ajax({
-        url: 'getTFondo',
-        method: 'POST',
-        data: {
-            _token: $('meta[name="csrf-token"]').attr('content'),
-            id: id
-        },
-        success: function(data) {
-            $('#tfondo_id').val(data.id);
-            $('#nombre_tfondo_edit').val(data.titulo_anual);
+            $('#estado_edit').val(data.estado);  // Asegúrate de que 'data.estado' tenga el valor correcto
         }
     });
 }
