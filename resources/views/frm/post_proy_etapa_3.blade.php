@@ -64,14 +64,23 @@
                      </div>
                   </div>
                   <hr>
-                  <div class="form-group row">
-                     <div class="col-md-12">
-                        <div class="form-check form-check-inline">
-                           <label class="form-check-label" for="acepto_clausula_proy">6. Minera Las Cenizas tiene el derecho de tomar fotografías y hacer visitas del proyecto. Además, instalar placa conmemorativa *<br>Marcar casilla para aceptar cláusula</label>
-                          <input class="form-check-input" type="checkbox" id="acepto_clausula_proy" name="acepto_clausula_proy" value="1">
-                        </div>
+               <div class="form-group row">
+                <div class="col-md-12" id="v_clausula">
+                    <label for="formacion_formal" class="col-form-label text-md-left">
+                        {{ __('6.') }}
+                    </label>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label" for="formacion_formal_checkbox">
+                            Minera Las Cenizas tiene el derecho de tomar fotografías y hacer visitas del proyecto. Además, instalar placa conmemorativa *
+                        </label>
+                        <input class="form-check-input" type="checkbox" id="acepto_clausula_proy" name="acepto_clausula_proy" value="1">
+                    </div>
+                    <br>
+                     <div>
+                            <span>Marcar casilla para aceptar la formación formal.</span>
                      </div>
-                  </div>
+                </div>
+               </div>
                   <hr>
                   <div class="form-group row">
                      <div class="col-md-12  text-md-right">
