@@ -88,25 +88,49 @@ class Casos extends Model
 
     public static function getCasosUsu($id)
     {
-         $casos = DB::table('casos')
-        ->where('casos.idUser', $id)
-        ->select(
-            'casos.id AS id_caso', 
-            'casos.tipo', 
-            DB::raw("CASE 
-                        WHEN estado = 1 THEN 'Pendiente'
-                        WHEN estado = 2 THEN 'Resuelto'
-                     END AS estado"),
-            'created_at'
-        )
-        ->get();
+        $casos = DB::table('casos')
+            ->where('casos.idUser', $id)
+            ->select(
+                'casos.id AS id_caso',
+                'casos.tipo',
+                'casos.estado AS estado_num',
+                DB::raw("CASE 
+                            WHEN estado = 1 THEN 'Pendiente'
+                            WHEN estado = 2 THEN 'Resuelto'
+                         END AS estado"),
+                'created_at'
+            )
+            ->get();
 
+        // Formatear la fecha
         foreach ($casos as $caso) {
             $caso->created_at = Carbon::parse($caso->created_at)->format('d/m/Y');
         }
 
+        // Transformar los resultados
+        $casos = $casos->map(function ($caso) {
+            switch ($caso->estado_num) {
+                case 1:
+                    $caso->estado = 'Pendiente';
+                    $caso->respuesta = '<a href="' . route("responderCaso", ['id' => $caso->id_caso]) . '">RESPONDER</a>';
+                    break;
+                case 2:
+                    $caso->estado = 'Resuelto';
+                    $caso->respuesta = '<a href="' . route("respuestaCasoAdmin", ['id' => $caso->id_caso]) . '">VER RESPUESTA</a>';
+                    break;
+                default:
+                    $caso->estado = 'ABIERTO';
+                    $caso->respuesta = '<a href="' . route("responderCaso", ['id' => $caso->id_caso]) . '">RESPONDER</a>';
+                    break;
+            }
+            $caso->fecha_creacion = Carbon::parse($caso->created_at)->format('d-m-Y');
+
+            return $caso;
+        });
+
         return $casos;
-    }      
+    }
+
 
     public static function respuestaCasoAdmin($id)
     {

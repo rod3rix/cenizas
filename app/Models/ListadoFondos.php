@@ -56,12 +56,12 @@ class ListadoFondos extends Model
                     break;
                 case 2:
                     $postulacion->calificacion = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '#calificacion">Ver Calificación</a>';
-                    $postulacion->estado = 'En proceso';
+                    $postulacion->estado = 'Aprobado';
                     $postulacion->respuesta = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
                     break;
                 case 3:
                     $postulacion->calificacion = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '#calificacion">Ver Calificación</a>';
-                    $postulacion->estado = 'En proceso';
+                    $postulacion->estado = 'Rechazado';
                     $postulacion->respuesta = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
                     break;
             } 

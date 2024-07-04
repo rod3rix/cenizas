@@ -191,21 +191,42 @@ protected $fillable = [
         $postulaciones = DB::table('postulacion_proyectos')
             ->where('postulacion_proyectos.user_id', $id)
             ->select(
-            'postulacion_proyectos.id AS id_postulacion', 
-            'postulacion_proyectos.nombre_proyecto', 
-            'postulacion_proyectos.created_at', 
-            DB::raw("CASE 
-                        WHEN estado = 1 THEN 'Enviado'
-                        WHEN estado = 2 THEN 'Aprobado'
-                        WHEN estado = 3 THEN 'Rechazado'
-                     END AS estado"),
-            'created_at'
-        )
-        ->get();
+                'postulacion_proyectos.id AS id_postulacion',
+                'postulacion_proyectos.nombre_proyecto',
+                'postulacion_proyectos.created_at',
+                DB::raw("CASE 
+                            WHEN estado = 1 THEN 'En proceso'
+                            WHEN estado = 2 THEN 'Aceptado'
+                            WHEN estado = 3 THEN 'Rechazado'
+                         END AS estado"),
+                'postulacion_proyectos.estado AS estado_num', // Para manejar el estado en el switch
+                'created_at'
+            )
+            ->get();
 
+        // Formatear la fecha
         foreach ($postulaciones as $postulacion) {
             $postulacion->created_at = Carbon::parse($postulacion->created_at)->format('d/m/Y');
         }
+
+        // Transformar los resultados
+        $postulaciones = $postulaciones->map(function ($postulacion) {
+            switch ($postulacion->estado_num) {
+                case 1:
+                    $postulacion->calificacion = '<a href="' . route("detalleProyectoAdmin", ["id" => $postulacion->id_postulacion]) . '">Responder</a>';
+                    $postulacion->respuesta = '<a href="' . route("detalleProyectoAdmin", ["id" => $postulacion->id_postulacion]) . '">Responder</a>';
+                    break;
+                case 2:
+                    $postulacion->calificacion = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id_postulacion]) . '#calificacion">Ver Calificación</a>';
+                    $postulacion->respuesta = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id_postulacion]) . '">Ver Respuesta</a>';
+                    break;
+                case 3:
+                    $postulacion->calificacion = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id_postulacion]) . '#calificacion">Ver Calificación</a>';
+                    $postulacion->respuesta = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id_postulacion]) . '">Ver Respuesta</a>';
+                    break;
+            }
+            return $postulacion;
+        });
 
         return $postulaciones;
     }
@@ -227,12 +248,12 @@ protected $fillable = [
                     break;
                 case 2:
                     $postulacion->calificacion = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '#calificacion">Ver Calificación</a>';
-                    $postulacion->estado = 'Enviado';
+                    $postulacion->estado = 'Aceptado';
                     $postulacion->respuesta = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
                     break;
                 case 3:
                     $postulacion->calificacion = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '#calificacion">Ver Calificación</a>';
-                    $postulacion->estado = 'Enviado';
+                    $postulacion->estado = 'Rechazado';
                     $postulacion->respuesta = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
                     break;
             } 
