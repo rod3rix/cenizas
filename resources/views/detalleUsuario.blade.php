@@ -4,7 +4,7 @@
 <section class="jumbotron">
     <div class="container ">
         <h1 class="jumbotron-heading text-center"><b>Usuario Registrado</b></h1>
-        <p class="lead text-muted text-center">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+        <!-- <p class="lead text-muted text-center">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p> -->
         
         <!-- Información de Usuario -->
         <div class="my-3 p-3 bg-white rounded shadow-sm">

@@ -114,11 +114,11 @@
         @guest
         <div class="col-md-3 text-end">
         @if (Route::has('login'))
-            <a class="btn btn-outline-primary me-2" href="{{ route('login') }}">{{ __('Entrar') }}</a>
+            <a class="btn btn-outline-primary me-2 btn-login" href="{{ route('login') }}">{{ __('Entrar') }}</a>
         @endif
 
         @if (Route::has('register'))
-            <a class="btn btn-primary" href="{{ route('register') }}">{{ __('Registrar') }}</a>
+            <a class="btn btn-primary btn-register" href="{{ route('register') }}">{{ __('Registrar') }}</a>
         @endif
         </div>
         @else
