@@ -16,7 +16,6 @@ $(document).ready(function() {
                     { data: 'created_at_formatted' },
                     { data: 'estado' },
                     { data: 'name' },
-                    { data: 'calificacion' },
                     { data: 'respuesta' }
                 ],
                 dom: 'Bfrtip',

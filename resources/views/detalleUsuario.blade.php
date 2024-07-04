@@ -68,6 +68,7 @@
                                                             <th class="col-4">Nombre</th>
                                                             <th class="col-4">Fecha</th>
                                                             <th class="col-4">Estado</th>
+                                                            <th class="col-4">Actividad</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -76,6 +77,8 @@
                                                             <td class="col-4">{{ $fondo->nombre_fondo }}</td>
                                                             <td class="col-4">{{ $fondo->created_at }}</td>
                                                             <td class="col-4">{{ $fondo->estado }}</td>
+                                                            <td class="col-4">{!! $fondo->resolucion !!}</td>
+                                                            </td>
                                                         </tr>
                                                         @endforeach
                                                     </tbody>
@@ -102,6 +105,7 @@
                                                             <th class="col-4">Nombre</th>
                                                             <th class="col-4">Fecha</th>
                                                             <th class="col-4">Estado</th>
+                                                            <th class="col-4">Actividad</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -110,6 +114,7 @@
                                                             <td class="col-4">{{ $proy->nombre_proyecto }}</td>
                                                             <td class="col-4">{{ $proy->created_at }}</td>
                                                             <td class="col-4">{{ $proy->estado }}</td>
+                                                            <td class="col-4">{!! $proy->respuesta !!}</td>
                                                         </tr>
                                                         @endforeach
                                                     </tbody>
@@ -136,6 +141,7 @@
                                                             <th class="col-4" >Tipo</th>
                                                             <th class="col-4">Fecha</th>
                                                             <th class="col-4">Estado</th>
+                                                            <th class="col-4">Actividad</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -144,6 +150,7 @@
                                                             <td class="col-4">{{ $caso->tipo }}</td>
                                                             <td class="col-4">{{ $caso->created_at }}</td>
                                                             <td class="col-4">{{ $caso->estado }}</td>
+                                                            <td class="col-4">{!! $caso->respuesta !!}</td>
                                                         </tr>
                                                         @endforeach
                                                     </tbody>

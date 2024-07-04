@@ -16,7 +16,6 @@
                               <th>FECHA ENVÍO</th>
                               <th>ESTADO</th>
                               <th>POSTULANTE</th>
-                              <th>CALIFICACIÓN</th>
                               <th>RESPUESTA</th>
                           </tr>
                       </thead>

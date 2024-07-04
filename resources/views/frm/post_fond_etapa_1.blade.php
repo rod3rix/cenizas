@@ -1,5 +1,23 @@
 <div id="etapa_1" style="display:none">
    <div class="row justify-content-center">
+          <div class="col-md-12">
+         <div class="card">
+            <div class="card-header"><b><u>{{ __('FONDOS CONCURSABLES DISPONIBLES') }}</b></u></div>
+            <div class="card-body">
+                  <div class="form-group row">
+                     <label for="name" class="col-md-12 col-form-label text-md-left">{{ __('Fondos Disponibles *') }}</label>
+                     <div class="col-md-12">
+                        <select id="id_fondo_concursable" name="id_fondo_concursable" class="form-control">
+                         <option value="">Seleccione Fondo a postular</option>
+                         @foreach($listarFondos as $fondo)
+                             <option value="{{ $fondo->id }}">{{ $fondo->nombre_fondo }}</option>
+                         @endforeach
+                        </select>
+                     </div>
+                  </div> 
+            </div>
+         </div>
+      </div>
       <div class="col-md-12">
          <div class="card">
             <div class="card-header"><b><u>{{ __('ANTECEDENTES GENERALES') }}</b></u></div>
@@ -129,10 +147,14 @@
                           <option value="Funcionario/a público/a" {{ old('actividad_economica') == 'Funcionario/a público/a' ? 'selected' : '' }}>Funcionario/a público/a</option>
                           <option value="Otra" {{ old('actividad_economica') == 'Otra' ? 'selected' : '' }}>Otra (especifique)</option>
                       </select>
+                     </div>
                   </div>
-
+                  <div class="form-group row" id="otra_especificar_container" style="display: none;">
+                   <label for="otra_especificar" class="col-md-12 col-form-label text-md-left">{{ __('Especifique:') }}</label>
+                   <div class="col-md-12">
+                       <input type="text" id="otra_especificar" name="otra_especificar" class="form-control" value="{{ old('otra_especificar', '') }}">
+                   </div>
                   </div>
-                  
                   <div class="form-group row">
                      <label for="formacion_formal" class="col-md-12 col-form-label text-md-left">{{ __('15. Posee formación formal *') }}</label>
                      <div class="col-md-12" id="v_formacion_formal">

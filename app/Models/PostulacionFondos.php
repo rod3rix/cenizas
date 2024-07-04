@@ -29,6 +29,7 @@ class PostulacionFondos extends Model
          'discapacidad',
          'fecha_nacimiento',
          'actividad_economica',
+         'otros',
          'direccion',
          'formacion_formal',
          'profesion',
@@ -71,6 +72,7 @@ class PostulacionFondos extends Model
          'discapacidad',
          'fecha_nacimiento',
          'actividad_economica',
+         'otra_especificar',
          'direccion',
          'formacion_formal',
          'profesion',
@@ -103,7 +105,7 @@ class PostulacionFondos extends Model
         ]);
     }
 
-    public static function crearPostulacionFondos(array $data, $datosOrgId, $request,$fondoVigenteId)
+    public static function crearPostulacionFondos(array $data, $datosOrgId, $request)
     {
         // Manejo de archivos anexos
         $nombreArchivoAnexo = 'Fondo_anexo_' . auth()->id() . "_" . date('Ymd_His') . "." . $request->file('archivo_anexo')->getClientOriginalExtension();
@@ -115,13 +117,14 @@ class PostulacionFondos extends Model
         // Insertar el registro y obtener el ID del nuevo registro insertado
         $insertedId = self::insertGetId([
             'user_id' => auth()->id(),
-            'id_fondo_concursable' => $fondoVigenteId,
+            'id_fondo_concursable' => $data['id_fondo_concursable'],
             'nacionalidad' => $data['nacionalidad'],
             'genero' => $data['genero'],
             'pueblo_originario' => $data['pueblo_originario'],
             'discapacidad' => $data['discapacidad'],
             'fecha_nacimiento' => date('Y-m-d', strtotime($data['fecha_nacimiento'])),
             'actividad_economica' => $data['actividad_economica'],
+            'otros' => $data['otra_especificar'],
             'direccion' => $data['direccion'],
             'formacion_formal' => $data['formacion_formal'],
             'profesion' => $data['profesion'],
@@ -155,7 +158,8 @@ class PostulacionFondos extends Model
 
     public static function validarEtapa1(array $data)
     {
-         $validator = Validator::make( $data,[
+        $validator = Validator::make( $data,[
+            'id_fondo_concursable' => 'required',
             'nacionalidad' => 'required|string|max:255',
             'genero' => 'required|string|max:255',
             'pueblo_originario' => 'required|string|max:255',
@@ -166,7 +170,14 @@ class PostulacionFondos extends Model
             'formacion_formal' => 'required',
             'profesion' => 'required|string|max:255', 
             'acepto_clausula' => 'required',
-            ]);
+        ],[
+            'id_fondo_concursable.required' => 'El campo fondos disponibles es obligatorio.',
+        ]);
+
+        
+        $validator->sometimes('otra_especificar', 'required|string|max:255', function ($input) {
+            return $input->actividad_economica === 'Otra';
+        });
 
         return $validator;
     }
@@ -202,7 +213,6 @@ class PostulacionFondos extends Model
             'cantidad_dias' => 'required',
             'rec_humanos' => 'required',
             'mat_insumos' => 'required',
-            'otros' => 'required',
             'aporte_solicitado' => 'required',
             'aporte_terceros' => 'required',
             'aporte_propio' => 'required',
@@ -210,6 +220,10 @@ class PostulacionFondos extends Model
             // 'monto.*' => 'required|string',
             'archivo_anexo' => 'required|file|mimes:pdf,zip,rar|max:20480',
             ]);
+
+        $validator->sometimes('otra_especificar', 'required|string|max:255', function ($input) {
+            return $input->actividad_economica === 'Otra';
+        });
 
         return $validator;
     }
@@ -245,13 +259,17 @@ class PostulacionFondos extends Model
 
     public static function validarEtapa3(array $data)
     {
-         $validator = Validator::make( $data,[
+        $validator = Validator::make( $data,[
             'razons_pyme' => 'required|string|max:255',
             'rut_pyme' => ['required', new RutValidation],
             'domicilio_pyme' => 'required|string|max:255',
             'certificado_sii' => 'required|file|mimes:pdf,zip,rar|max:20480',
             'archivo_rsh' => 'required|file|mimes:pdf,zip,rar|max:20480',
-            ]);
+            ], [
+            'razons_pyme.required' => 'El campo razón social MIPYME es obligatorio.',
+            'certificado_sii.required' => 'El campo Adjuntar certificado iniciación actividades (SII) es obligatorio.',
+            'archivo_rsh.required' => 'El campo  Adjuntar ficha de registro social de hogares del representante legal de MIPYME es obligatorio.'
+        ]);
 
         return $validator;
     }
@@ -293,23 +311,46 @@ class PostulacionFondos extends Model
     public static function getPostFondos($id)
     {
         $postulaciones = DB::table('listado_fondos')
-        ->join('postulacion_fondos', 'listado_fondos.id', '=', 'postulacion_fondos.id_fondo_concursable')
-        ->where('postulacion_fondos.user_id', $id)
-        ->select(
-            'postulacion_fondos.id AS id_postulacion', 
-            'listado_fondos.nombre_fondo', 
-            'postulacion_fondos.created_at', 
-            DB::raw("CASE 
-                        WHEN postulacion_fondos.estado = 1 THEN 'Enviado'
-                        WHEN postulacion_fondos.estado = 2 THEN 'Aprobado'
-                        WHEN postulacion_fondos.estado = 3 THEN 'Rechazado'
-                     END AS estado")
-        )
-        ->get();
+            ->join('postulacion_fondos', 'listado_fondos.id', '=', 'postulacion_fondos.id_fondo_concursable')
+            ->where('postulacion_fondos.user_id', $id)
+            ->select(
+                'postulacion_fondos.id AS id_postulacion',
+                'listado_fondos.nombre_fondo',
+                'postulacion_fondos.created_at',
+                'postulacion_fondos.estado AS estado_num',
+                DB::raw("CASE 
+                            WHEN postulacion_fondos.estado = 1 THEN 'Enviado'
+                            WHEN postulacion_fondos.estado = 2 THEN 'Aprobado'
+                            WHEN postulacion_fondos.estado = 3 THEN 'Rechazado'
+                         END AS estado")
+            )
+            ->get();
 
+        // Formatear la fecha
         foreach ($postulaciones as $postulacion) {
             $postulacion->created_at = Carbon::parse($postulacion->created_at)->format('d/m/Y');
         }
+
+        // Transformar los resultados
+        $postulaciones = $postulaciones->map(function ($postulacion) {
+            switch ($postulacion->estado_num) {
+                case 1:
+                    $postulacion->estado_texto = 'Enviado';
+                    $postulacion->resolucion = 'En proceso';
+                    break;
+                case 2:
+                    $postulacion->estado_texto = 'Aceptado';
+                    $postulacion->resolucion = '<a href="' . route("respuestaFondo", ["id" => $postulacion->id_postulacion]) . '">Ver Respuesta</a>';
+                    break;
+                case 3:
+                    $postulacion->estado_texto = 'Rechazado';
+                    $postulacion->resolucion = '<a href="' . route("respuestaFondo", ["id" => $postulacion->id_postulacion]) . '">Ver Respuesta</a>';
+                    break;
+            }
+            $postulacion->created_at_formatted = Carbon::parse($postulacion->created_at)->format('d-m-Y');
+
+            return $postulacion;
+        });
 
         return $postulaciones;
     }

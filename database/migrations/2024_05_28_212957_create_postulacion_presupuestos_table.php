@@ -16,8 +16,8 @@ class CreatePostulacionPresupuestosTable extends Migration
         Schema::create('postulacion_presupuestos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('postulacion_fondos_id');
-            $table->string('detalle',255)->nullable();
-            $table->string('monto');
+            $table->string('detalle')->nullable();
+            $table->string('monto')->nullable();
             $table->timestamps();
             $table->foreign('postulacion_fondos_id')->references('id')->on('postulacion_fondos')->onDelete('cascade');
         });

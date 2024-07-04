@@ -36,10 +36,13 @@ class HomeController extends Controller
     public function postularFondos()
     {
         $isVigente = ListadoFondos::fondoVigente();
+        $listarFondos = ListadoFondos::listarFondosVig();
         $user = User::userData();
+
         return view('postularFondos', [
             'user' => $user,
-            'isVigente' => $isVigente
+            'isVigente' => $isVigente,
+            'listarFondos' => $listarFondos
         ]);
     }
 
@@ -266,7 +269,7 @@ class HomeController extends Controller
 
      public function validarFrmFondos(Request $request)
     {
-        $id_val=$request->id;  
+        $id_val=$request->id;
 
         if($id_val==1){
             $validator = PostulacionFondos::validarEtapa1($request->all());
@@ -301,9 +304,8 @@ class HomeController extends Controller
                         $dataOrg = DatosOrganizaciones::prepararDatos($request);
                         $datosOrgId = DatosOrganizaciones::insertarDatos($dataOrg,$request);
                  
-                $fondoVigenteId = PostulacionFondos::fondoVigenteId();
                 $dataPosFon = PostulacionFondos::prepararDatos($request);
-                $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId,$request,$fondoVigenteId);
+                $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId,$request);
 
                 if($request->organizationType==="mipyme"){
                 $dataPrefon = PostulacionPresupuestos::prepararDatos($request);

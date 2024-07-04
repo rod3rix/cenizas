@@ -56,12 +56,12 @@ class ListadoFondos extends Model
                     break;
                 case 2:
                     $postulacion->calificacion = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '#calificacion">Ver Calificación</a>';
-                    $postulacion->estado = 'En proceso';
+                    $postulacion->estado = 'Aprobado';
                     $postulacion->respuesta = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
                     break;
                 case 3:
                     $postulacion->calificacion = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '#calificacion">Ver Calificación</a>';
-                    $postulacion->estado = 'En proceso';
+                    $postulacion->estado = 'Rechazado';
                     $postulacion->respuesta = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
                     break;
             } 
@@ -79,9 +79,21 @@ class ListadoFondos extends Model
    {
         $currentDate = Carbon::now()->endOfDay()->format('Y-m-d');
         $isVigente = ListadoFondos::where('estado', 1)
+            ->where('zona',Auth::user()->zona)
             ->whereDate('fecha_termino', '>=', $currentDate)
             ->exists();
 
         return $isVigente;
+   } 
+
+   public static function listarFondosVig()       
+   {
+        $currentDate = Carbon::now()->endOfDay()->format('Y-m-d');
+        $listarFondosVig = ListadoFondos::where('estado', 1)
+            ->where('zona',Auth::user()->zona)
+            ->whereDate('fecha_termino', '>=', $currentDate)
+            ->get();
+
+        return $listarFondosVig;
    } 
 }
