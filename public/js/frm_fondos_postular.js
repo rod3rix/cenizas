@@ -75,6 +75,16 @@ $(document).ready(function() {
         });
         $('#tot_presupuesto').val(total.toLocaleString('es-CL'));
     });
+
+     $('#actividad_economica').on('change', function() {
+        if ($(this).val() === 'Otra') {
+            $('#otra_especificar_container').show();
+        } else {
+            $('#otra_especificar_container').hide();
+            $('#otra_especificar').val('');
+        }
+        
+    }).trigger('change');
 });
 
 function formatMiles() {

@@ -266,7 +266,7 @@ class HomeController extends Controller
 
      public function validarFrmFondos(Request $request)
     {
-        $id_val=$request->id;  
+        $id_val=$request->id;
 
         if($id_val==1){
             $validator = PostulacionFondos::validarEtapa1($request->all());

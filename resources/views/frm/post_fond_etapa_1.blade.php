@@ -129,10 +129,14 @@
                           <option value="Funcionario/a público/a" {{ old('actividad_economica') == 'Funcionario/a público/a' ? 'selected' : '' }}>Funcionario/a público/a</option>
                           <option value="Otra" {{ old('actividad_economica') == 'Otra' ? 'selected' : '' }}>Otra (especifique)</option>
                       </select>
+                     </div>
                   </div>
-
+                  <div class="form-group row" id="otra_especificar_container" style="display: none;">
+                   <label for="otra_especificar" class="col-md-12 col-form-label text-md-left">{{ __('Especifique:') }}</label>
+                   <div class="col-md-12">
+                       <input type="text" id="otra_especificar" name="otra_especificar" class="form-control" value="{{ old('otra_especificar', '') }}">
+                   </div>
                   </div>
-                  
                   <div class="form-group row">
                      <label for="formacion_formal" class="col-md-12 col-form-label text-md-left">{{ __('15. Posee formación formal *') }}</label>
                      <div class="col-md-12" id="v_formacion_formal">

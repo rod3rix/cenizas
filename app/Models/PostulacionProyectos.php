@@ -28,6 +28,7 @@ protected $fillable = [
     'discapacidad',
     'fecha_nacimiento',
     'actividad_economica',
+    'otros',
     'direccion',
     'formacion_formal',  
     'profesion', 
@@ -65,6 +66,7 @@ protected $fillable = [
             'discapacidad',
             'fecha_nacimiento',
             'actividad_economica',
+            'otra_especificar',
             'direccion',
             'formacion_formal',
             'profesion', 
@@ -93,6 +95,7 @@ protected $fillable = [
             'discapacidad' => $data['discapacidad'],
             'fecha_nacimiento' =>  date('Y-m-d', strtotime($data['fecha_nacimiento'])),
             'actividad_economica' => $data['actividad_economica'],
+            'otros' => $data['otra_especificar'],
             'direccion' => $data['direccion'],
             'formacion_formal' => $data['formacion_formal'],  
             'profesion' => $data['profesion'],
@@ -126,6 +129,10 @@ protected $fillable = [
             'profesion' => 'required|string|max:255', 
             'acepto_clausula' => 'required',
         ]);
+
+        $validator->sometimes('otra_especificar', 'required|string|max:255', function ($input) {
+            return $input->actividad_economica === 'Otra';
+        });
 
         return $validator;
     }

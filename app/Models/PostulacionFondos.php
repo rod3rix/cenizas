@@ -29,6 +29,7 @@ class PostulacionFondos extends Model
          'discapacidad',
          'fecha_nacimiento',
          'actividad_economica',
+         'otros',
          'direccion',
          'formacion_formal',
          'profesion',
@@ -71,6 +72,7 @@ class PostulacionFondos extends Model
          'discapacidad',
          'fecha_nacimiento',
          'actividad_economica',
+         'otra_especificar',
          'direccion',
          'formacion_formal',
          'profesion',
@@ -122,6 +124,7 @@ class PostulacionFondos extends Model
             'discapacidad' => $data['discapacidad'],
             'fecha_nacimiento' => date('Y-m-d', strtotime($data['fecha_nacimiento'])),
             'actividad_economica' => $data['actividad_economica'],
+            'otros' => $data['otra_especificar'],
             'direccion' => $data['direccion'],
             'formacion_formal' => $data['formacion_formal'],
             'profesion' => $data['profesion'],
@@ -155,7 +158,7 @@ class PostulacionFondos extends Model
 
     public static function validarEtapa1(array $data)
     {
-         $validator = Validator::make( $data,[
+        $validator = Validator::make( $data,[
             'nacionalidad' => 'required|string|max:255',
             'genero' => 'required|string|max:255',
             'pueblo_originario' => 'required|string|max:255',
@@ -166,7 +169,11 @@ class PostulacionFondos extends Model
             'formacion_formal' => 'required',
             'profesion' => 'required|string|max:255', 
             'acepto_clausula' => 'required',
-            ]);
+        ]);
+        
+        $validator->sometimes('otra_especificar', 'required|string|max:255', function ($input) {
+            return $input->actividad_economica === 'Otra';
+        });
 
         return $validator;
     }
@@ -202,7 +209,6 @@ class PostulacionFondos extends Model
             'cantidad_dias' => 'required',
             'rec_humanos' => 'required',
             'mat_insumos' => 'required',
-            'otros' => 'required',
             'aporte_solicitado' => 'required',
             'aporte_terceros' => 'required',
             'aporte_propio' => 'required',
@@ -210,6 +216,10 @@ class PostulacionFondos extends Model
             // 'monto.*' => 'required|string',
             'archivo_anexo' => 'required|file|mimes:pdf,zip,rar|max:20480',
             ]);
+
+        $validator->sometimes('otra_especificar', 'required|string|max:255', function ($input) {
+            return $input->actividad_economica === 'Otra';
+        });
 
         return $validator;
     }

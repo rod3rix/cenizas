@@ -24,6 +24,7 @@ class CreatePostulacionProyectosTable extends Migration
             $table->string('discapacidad')->nullable();
             $table->date('fecha_nacimiento')->nullable();
             $table->string('actividad_economica')->nullable();
+            $table->string('otros')->nullable();
             $table->string('direccion')->nullable();
             $table->string('formacion_formal')->nullable();
             $table->string('profesion')->nullable();

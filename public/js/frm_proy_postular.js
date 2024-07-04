@@ -11,6 +11,16 @@ $(document).ready(function() {
     }
     
     $('.miles').on('input', formatInputField);
+
+    $('#actividad_economica').on('change', function() {
+        if ($(this).val() === 'Otra') {
+            $('#otra_especificar_container').show();
+        } else {
+            $('#otra_especificar_container').hide();
+            $('#otra_especificar').val('');
+        }
+        
+    }).trigger('change');
 });
 
 function handlePaste(e) {
