@@ -105,7 +105,7 @@ class PostulacionFondos extends Model
         ]);
     }
 
-    public static function crearPostulacionFondos(array $data, $datosOrgId, $request,$fondoVigenteId)
+    public static function crearPostulacionFondos(array $data, $datosOrgId, $request)
     {
         // Manejo de archivos anexos
         $nombreArchivoAnexo = 'Fondo_anexo_' . auth()->id() . "_" . date('Ymd_His') . "." . $request->file('archivo_anexo')->getClientOriginalExtension();
@@ -117,7 +117,7 @@ class PostulacionFondos extends Model
         // Insertar el registro y obtener el ID del nuevo registro insertado
         $insertedId = self::insertGetId([
             'user_id' => auth()->id(),
-            'id_fondo_concursable' => $fondoVigenteId,
+            'id_fondo_concursable' => $data['id_fondo_concursable'],
             'nacionalidad' => $data['nacionalidad'],
             'genero' => $data['genero'],
             'pueblo_originario' => $data['pueblo_originario'],
@@ -159,6 +159,7 @@ class PostulacionFondos extends Model
     public static function validarEtapa1(array $data)
     {
         $validator = Validator::make( $data,[
+            'id_fondo_concursable' => 'required',
             'nacionalidad' => 'required|string|max:255',
             'genero' => 'required|string|max:255',
             'pueblo_originario' => 'required|string|max:255',
@@ -169,7 +170,10 @@ class PostulacionFondos extends Model
             'formacion_formal' => 'required',
             'profesion' => 'required|string|max:255', 
             'acepto_clausula' => 'required',
+        ],[
+            'id_fondo_concursable.required' => 'El campo fondos disponibles es obligatorio.',
         ]);
+
         
         $validator->sometimes('otra_especificar', 'required|string|max:255', function ($input) {
             return $input->actividad_economica === 'Otra';
@@ -255,13 +259,17 @@ class PostulacionFondos extends Model
 
     public static function validarEtapa3(array $data)
     {
-         $validator = Validator::make( $data,[
+        $validator = Validator::make( $data,[
             'razons_pyme' => 'required|string|max:255',
             'rut_pyme' => ['required', new RutValidation],
             'domicilio_pyme' => 'required|string|max:255',
             'certificado_sii' => 'required|file|mimes:pdf,zip,rar|max:20480',
             'archivo_rsh' => 'required|file|mimes:pdf,zip,rar|max:20480',
-            ]);
+            ], [
+            'razons_pyme.required' => 'El campo razón social MIPYME es obligatorio.',
+            'certificado_sii.required' => 'El campo Adjuntar certificado iniciación actividades (SII) es obligatorio.',
+            'archivo_rsh.required' => 'El campo  Adjuntar ficha de registro social de hogares del representante legal de MIPYME es obligatorio.'
+        ]);
 
         return $validator;
     }

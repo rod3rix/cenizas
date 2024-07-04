@@ -1,5 +1,23 @@
 <div id="etapa_1" style="display:none">
    <div class="row justify-content-center">
+          <div class="col-md-12">
+         <div class="card">
+            <div class="card-header"><b><u>{{ __('FONDOS CONCURSABLES DISPONIBLES') }}</b></u></div>
+            <div class="card-body">
+                  <div class="form-group row">
+                     <label for="name" class="col-md-12 col-form-label text-md-left">{{ __('Fondos Disponibles *') }}</label>
+                     <div class="col-md-12">
+                        <select id="id_fondo_concursable" name="id_fondo_concursable" class="form-control">
+                         <option value="">Seleccione Fondo a postular</option>
+                         @foreach($listarFondos as $fondo)
+                             <option value="{{ $fondo->id }}">{{ $fondo->nombre_fondo }}</option>
+                         @endforeach
+                        </select>
+                     </div>
+                  </div> 
+            </div>
+         </div>
+      </div>
       <div class="col-md-12">
          <div class="card">
             <div class="card-header"><b><u>{{ __('ANTECEDENTES GENERALES') }}</b></u></div>

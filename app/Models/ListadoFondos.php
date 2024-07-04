@@ -79,9 +79,21 @@ class ListadoFondos extends Model
    {
         $currentDate = Carbon::now()->endOfDay()->format('Y-m-d');
         $isVigente = ListadoFondos::where('estado', 1)
+            ->where('zona',Auth::user()->zona)
             ->whereDate('fecha_termino', '>=', $currentDate)
             ->exists();
 
         return $isVigente;
+   } 
+
+   public static function listarFondosVig()       
+   {
+        $currentDate = Carbon::now()->endOfDay()->format('Y-m-d');
+        $listarFondosVig = ListadoFondos::where('estado', 1)
+            ->where('zona',Auth::user()->zona)
+            ->whereDate('fecha_termino', '>=', $currentDate)
+            ->get();
+
+        return $listarFondosVig;
    } 
 }
