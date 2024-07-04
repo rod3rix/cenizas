@@ -287,11 +287,11 @@ class HomeController extends Controller
             try {
                 DB::beginTransaction();
 
-                    if($request->organizationType==="mipyme"){
-                        $validator = PostulacionFondos::validarEtapa5($request->all());
-                    }else{
+                    // if($request->organizationType==="mipyme"){
+                    //     $validator = PostulacionFondos::validarEtapa5($request->all());
+                    // }else{
                         $validator = PostulacionFondos::validarEtapa4($request->all());
-                    }
+                    // }
 
                     if ($validator->fails()) {
                             return response()->json([
@@ -307,10 +307,10 @@ class HomeController extends Controller
                 $dataPosFon = PostulacionFondos::prepararDatos($request);
                 $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId,$request);
 
-                if($request->organizationType==="mipyme"){
-                $dataPrefon = PostulacionPresupuestos::prepararDatos($request);
-                $postulacionPreId=PostulacionPresupuestos::crearPresupuestos($dataPrefon,$postulacionId);
-                }
+                // if($request->organizationType==="mipyme"){
+                // $dataPrefon = PostulacionPresupuestos::prepararDatos($request);
+                // $postulacionPreId=PostulacionPresupuestos::crearPresupuestos($dataPrefon,$postulacionId);
+                // }
 
                 DB::commit();
 

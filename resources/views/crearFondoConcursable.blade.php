@@ -41,8 +41,8 @@
                                     <div class="col-md-6">
                                         <select id="zona" class="form-control" name="zona">
                                         <option value="">{{ __('Seleccione') }}</option>
-                                        <option value="1" @if(old('zona') == '1') selected @endif>{{ __('Cabildo') }}</option>
-                                        <option value="2" @if(old('zona') == '2') selected @endif>{{ __('Taltal') }}</option>
+                                        <option value="1" @if(old('zona') == '1') selected @endif>{{ __('Taltal') }}</option>
+                                        <option value="2" @if(old('zona') == '2') selected @endif>{{ __('Cabildo') }}</option>
                                     </select>
                                     </div>
                                 </div>

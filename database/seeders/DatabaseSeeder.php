@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             [
                'name'=>'Rod Admin',
                'type'=>2, // 1 = User, 2 = Admin, 3 = SuperAdmin
-               'password'=> bcrypt('123456'),
+               'password'=> bcrypt('gmlc2024.,'),
                'apellido_paterno'=>'Paterno',
                'apellido_materno'=>'Marterno',
                'rut' =>'11.111.111.1',
@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             [
                'name'=>'Admin Taltal',
                'type'=>2, // 1 = User, 2 = Admin, 3 = SuperAdmin
-               'password'=> bcrypt('123456'),
+               'password'=> bcrypt('gmlc2024.,'),
                'apellido_paterno'=>'Paterno',
                'apellido_materno'=>'Marterno',
                'rut' =>'11.111.111.1',
@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
             [
                'name'=>'Admin Cabilo',
                'type'=>2, // 1 = User, 2 = Admin, 3 = SuperAdmin
-               'password'=> bcrypt('123456'),
+               'password'=> bcrypt('gmlc2024.,'),
                'apellido_paterno'=>'Paterno',
                'apellido_materno'=>'Marterno',
                'rut' =>'22.222.222-2',
@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
             [
                'name'=>'User Taltal',
                'type'=>1, // 1 = User, 2 = Admin, 3 = SuperAdmin
-               'password'=> bcrypt('123456'),
+               'password'=> bcrypt('gmlc2024.,'),
                'apellido_paterno'=>'Paterno',
                'apellido_materno'=>'Marterno',
                'rut' =>'22.222.222-2',
@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
             [
                'name'=>'User Cabildo',
                'type'=>1, // 1 = User, 2 = Admin, 3 = SuperAdmin
-               'password'=> bcrypt('123456'),
+               'password'=> bcrypt('gmlc2024.,'),
                'apellido_paterno'=>'Paterno',
                'apellido_materno'=>'Marterno',
                'rut' =>'22.222.222-2',
