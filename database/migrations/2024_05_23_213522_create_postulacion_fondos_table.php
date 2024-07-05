@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('id_fondo_concursable');
             $table->string('nacionalidad')->nullable();
-            $table->string('genero', 255)->nullable();
+            $table->string('genero')->nullable();
             $table->integer('pueblo_originario')->nullable();
             $table->integer('discapacidad')->nullable();
             $table->date('fecha_nacimiento')->nullable();
@@ -29,10 +29,10 @@ return new class extends Migration
             $table->unsignedBigInteger('id_dato_organizacion');
             $table->string('nombre_proyecto')->nullable();
             $table->text('tipo_proyecto')->nullable();
-            $table->text('fundamentacion')->nullable();
-            $table->text('descripcion_proyecto')->nullable();
-            $table->text('objetivo_general')->nullable();
-            $table->text('objetivos_especificos')->nullable();
+            $table->text('fundamentacion', 1500)->nullable();
+            $table->text('descripcion_proyecto', 1500)->nullable();
+            $table->text('objetivo_general', 1500)->nullable();
+            $table->text('objetivos_especificos', 1500)->nullable();
             $table->text('cierre_proyecto')->nullable();
             $table->integer('directos')->nullable();
             $table->integer('indirectos')->nullable();
@@ -46,7 +46,7 @@ return new class extends Migration
             $table->string('archivo_certificado')->nullable();
             $table->string('estado')->nullable();
             $table->integer('calificar')->nullable();
-            $table->string('respuesta', 2500)->nullable();
+            $table->string('respuesta', 1500)->nullable();
             $table->string('archivo_respuesta')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

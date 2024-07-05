@@ -229,16 +229,7 @@
         <strong class="d-block text-gray-dark">3. Fundamentación – Razones que motivan la calidad del proyecto</strong>
         {{ $pfondo->fundamentacion }}
       </p>
-      <div class="col col-sm-4">
-            <label for="calificacion" class="col-sm-2 col-form-label  border-bottom border-gray">Calificación:</label>
-            <select class="form-control" id="calificar" name="calificar">
-                <option value="">Seleccione</option>
-                @for ($i = 0; $i <= 10; $i++)
-                            <option value="{{ $i }}">{{ $i }}</option>
 
-                @endfor
-            </select>
-        </div>
     </div>
      <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">

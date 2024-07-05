@@ -17,7 +17,7 @@
                      </span>
                   </label>
                   <div class="col-md-12">
-                        <div id="organizacionDiv" class="organizacionDiv d-none">
+                        <div class="organizacionDiv d-none">
                          <select class="form-select" id="tipo_proyecto" name="tipo_proyecto">
                                <option value="">Seleccione</option>
                              <option value="Equipamiento para organizaciones">Equipamiento para organizaciones</option>
@@ -26,7 +26,7 @@
                          </select>
                      </div>
 
-                     <div id="mipymeDiv" class="mipymeDiv d-none">
+                     <div class="mipymeDiv d-none">
                          <select class="form-select" id="tipo_proyecto" name="tipo_proyecto">
                              <option value="Apoyo a emprendimientos y oficios en vías de formalización">Apoyo a emprendimientos y oficios en vías de formalización</option>
                          </select>

@@ -149,6 +149,12 @@ function validarFrmFondos(id) {
     $('form :input').removeClass('is-invalid');
     $('.invalid-feedback').remove();
 
+    if ($('.organizacionDiv').is(':visible')) {
+        $('.mipymeDiv').remove();
+    } else if ($('.mipymeDiv').is(':visible')) {
+        $('.organizacionDiv').remove();
+    }
+
     $.ajax({
         url: 'validarFrmFondos',
         method: 'POST',

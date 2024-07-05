@@ -125,7 +125,7 @@ class AdminController extends Controller
     {
     
         $validator = Validator::make($request->all(), [
-            'respuesta' => 'required|string|max:2500',
+            'respuesta' => 'required|string|max:1500',
             // 'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480',
         ]);
 
@@ -320,7 +320,7 @@ class AdminController extends Controller
     public function cerrarProyecto(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'respuesta' => 'required|string|max:2500',
+            'respuesta' => 'required|string|max:1500',
             'estado_proyecto' => 'required',
             // 'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480', 
         ]);
@@ -467,8 +467,8 @@ class AdminController extends Controller
     public function cerrarFondo(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'calificar' => 'required',
-            'respuesta' => 'required|string|max:2500',
+            // 'calificar' => 'required',
+            'respuesta' => 'required|string|max:1500',
             'estado_fondo' => 'required',
             // 'archivo' => 'required|file|mimes:pdf,zip,rar|max:20480', // Máximo de 20 MB y permitir solo PDF, ZIP y RAR
         ]);
@@ -510,7 +510,7 @@ class AdminController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nombre_fondo' => 'required|string|max:255',
-            'descripcion' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:1500',
             'zona' => 'required',
             'fecha_inicio' => 'required|date|before:fecha_termino',
             'fecha_termino' => 'required|date',
@@ -602,7 +602,7 @@ class AdminController extends Controller
         $validator = Validator::make($request->all(), [
             'fondo_id' => 'required|exists:listado_fondos,id',
             'nombre_fondo_edit' => 'required|string|max:255',
-            'descripcion_edit' => 'required|string',
+            'descripcion_edit' => 'required|string|max:1500',
             'zona_edit' => 'required',
             'fecha_inicio_edit' => 'required|date|before:fecha_termino_edit',
             'fecha_termino_edit' => 'required|date',

@@ -41,7 +41,7 @@ class Casos extends Model
             'comuna' => 'required',
             'direccion' => 'required|string|max:255',
             'asunto' => 'required|string|max:255',  
-            'descripcion' => 'required|string|max:2500',
+            'descripcion' => 'required|string|max:1500',
             ], [
             'tipo.required' => 'El campo sugerencia, reclamo u otro es obligatorio.',
             'direccion.required' => 'El campo dirección es obligatorio.',

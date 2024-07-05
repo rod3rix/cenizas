@@ -19,10 +19,10 @@ return new class extends Migration
             $table->integer('comuna');
             $table->string('direccion');
             $table->string('asunto');
-            $table->string('descripcion', 2500);
+            $table->string('descripcion', 1500);
             $table->string('archivo')->nullable();
             $table->integer('estado')->nullable();
-            $table->string('respuesta', 2500)->nullable();
+            $table->string('respuesta', 1500)->nullable();
             $table->string('archivo_respuesta')->nullable();
             $table->timestamps();
         });
