@@ -83,6 +83,13 @@
                         <div class="form-group row mb-4">
                             <!-- Espacio en blanco -->
                         </div>
+                        <div class="form-group row">
+                            <label for="fono" class="col-md-4 col-form-label text-md-right">Comuna:</label>
+
+                            <div class="col-md-6">
+                                 <input type="text" class="form-control" value="{{ $user->zona == 1 ? 'Taltal' : 'Cabildo' }}" disabled>
+                            </div>
+                        </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

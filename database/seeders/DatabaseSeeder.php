@@ -27,17 +27,6 @@ class DatabaseSeeder extends Seeder
                'rol'=>'1',
             ],
             [
-               'name'=>'Admin Cabilo',
-               'type'=>2, // 1 = User, 2 = Admin, 3 = SuperAdmin
-               'password'=> bcrypt('gmlc2024.,'),
-               'apellido_paterno'=>'Paterno',
-               'apellido_materno'=>'Marterno',
-               'rut' =>'22.222.222-2',
-               'fono'=>'963548898',
-               'email'=>'adminzonac@cenizas.cl',
-               'zona'=>'1',
-            ],
-            [
                'name'=>'Admin Taltal',
                'type'=>2, // 1 = User, 2 = Admin, 3 = SuperAdmin
                'password'=> bcrypt('gmlc2024.,'),
@@ -46,18 +35,18 @@ class DatabaseSeeder extends Seeder
                'rut' =>'11.111.111.1',
                'fono'=>'963548898',
                'email'=>'adminzonat@cenizas.cl',
-               'zona'=>'2',
+               'zona'=>'1',
             ],
-             [
-               'name'=>'User Cabildo',
-               'type'=>1, // 1 = User, 2 = Admin, 3 = SuperAdmin
+            [
+               'name'=>'Admin Cabilo',
+               'type'=>2, // 1 = User, 2 = Admin, 3 = SuperAdmin
                'password'=> bcrypt('gmlc2024.,'),
                'apellido_paterno'=>'Paterno',
                'apellido_materno'=>'Marterno',
                'rut' =>'22.222.222-2',
                'fono'=>'963548898',
-               'email'=>'userc@cenizas.cl',
-               'zona'=>'1',
+               'email'=>'adminzonac@cenizas.cl',
+               'zona'=>'2',
             ],
             [
                'name'=>'User Taltal',
@@ -68,6 +57,17 @@ class DatabaseSeeder extends Seeder
                'rut' =>'22.222.222-2',
                'fono'=>'963548898',
                'email'=>'usert@cenizas.cl',
+               'zona'=>'1',
+            ],
+            [
+               'name'=>'User Cabildo',
+               'type'=>1, // 1 = User, 2 = Admin, 3 = SuperAdmin
+               'password'=> bcrypt('gmlc2024.,'),
+               'apellido_paterno'=>'Paterno',
+               'apellido_materno'=>'Marterno',
+               'rut' =>'22.222.222-2',
+               'fono'=>'963548898',
+               'email'=>'userc@cenizas.cl',
                'zona'=>'2',
             ]
         ];

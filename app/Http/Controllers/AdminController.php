@@ -577,7 +577,7 @@ class AdminController extends Controller
             $fondo->fecha_inicio = Carbon::parse($fondo->fecha_inicio)->format('d-m-Y');
             $fondo->fecha_termino = Carbon::parse($fondo->fecha_termino)->format('d-m-Y');
             $fondo->link_modal = '<div class="text-center"><button type="button" class="btn btn-primary verDetallesFondo" data-bs-toggle="modal" data-bs-target="#editarFondoModal" data-id="'.$fondo->id.'">Ver Detalles</button><div>';
-            $fondo->zona = ($fondo->zona == 1) ? 'Cabildo' : 'Taltal';
+            $fondo->zona = ($fondo->zona == 1) ? 'Taltal' : 'Cabildo';
             $fondo->estado = ($fondo->estado == 1) ? 'Activo' : 'Inactivo';
         }
 
