@@ -148,8 +148,8 @@
                         <label for="comuna_edit" class="form-label">Comuna:</label>
                         <select id="zona_edit" class="form-control" name="zona_edit">
                             <option value="">{{ __('Seleccione') }}</option>
-                            <option value="1" @if(old('zona_edit') == '1') selected @endif>{{ __('Cabildo') }}</option>
-                            <option value="2" @if(old('zona_edit') == '2') selected @endif>{{ __('Taltal') }}</option>
+                            <option value="1" @if(old('zona_edit') == '1') selected @endif>{{ __('Taltal') }}</option>
+                            <option value="2" @if(old('zona_edit') == '2') selected @endif>{{ __('Cabildo') }}</option>
                         </select>
                     </div>
                     <div class="mb-3">
