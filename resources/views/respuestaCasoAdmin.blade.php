@@ -81,11 +81,11 @@
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">Adjunto foto y/o video:</strong>
-            Descargar archivo:
         @if ($caso->archivo)
+        Descargar archivo:
         <a href="{{ asset('storage/archivos/' . $caso->archivo) }}" download>{{ $caso->archivo }}</a>
         @else
-            Sin archivo adjunto
+            Sin archivo
         @endif
     </div>
     <div class="media text-muted pt-3">
@@ -102,7 +102,7 @@
               Descargar archivo:
             <a href="{{ asset('storage/archivos/' . $caso->archivo_respuesta) }}" download>{{ $caso->archivo_respuesta }}</a>
             @else
-              Sin Archivo
+              Sin archivo
             @endif
             </div>
         </p>
