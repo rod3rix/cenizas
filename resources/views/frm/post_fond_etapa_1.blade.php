@@ -7,7 +7,7 @@
                   <div class="form-group row">
                      <label for="name" class="col-md-12 col-form-label text-md-left">{{ __('Fondos Disponibles *') }}</label>
                      <div class="col-md-12">
-                        <select id="id_fondo_concursable" name="id_fondo_concursable" class="form-control">
+                        <select id="id_fondo_concursable" name="id_fondo_concursable" class="form-control" autofocus >
                          <option value="">Seleccione Fondo a postular</option>
                          @foreach($listarFondos as $fondo)
                              <option value="{{ $fondo->id }}">{{ $fondo->nombre_fondo }}</option>
@@ -68,7 +68,7 @@
                   <div class="form-group row">
                      <label for="direccion" class="col-md-12 col-form-label text-md-left">{{ __('8. Dirección *') }}</label>
                      <div class="col-md-12">
-                        <input id="direccion" type="text" class="form-control" name="direccion" value="{{ old('direccion') }}" autocomplete="direccion" autofocus>
+                        <input id="direccion" type="text" class="form-control" name="direccion" value="{{ old('direccion') }}" autocomplete="direccion" >
                      </div>
                   </div>
                   <div class="form-group row">

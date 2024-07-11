@@ -39,6 +39,9 @@ return new class extends Migration
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_termino')->nullable();
             $table->integer('cantidad_dias')->nullable();
+            $table->string('rec_humanos')->nullable();
+            $table->string('mat_insumos')->nullable();
+            $table->string('rec_hum_otros')->nullable();
             $table->string('aporte_solicitado')->nullable();
             $table->string('aporte_terceros')->nullable();
             $table->string('aporte_propio')->nullable();

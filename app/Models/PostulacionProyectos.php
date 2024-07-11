@@ -269,10 +269,14 @@ protected $fillable = [
     public static function detalleProyectoAdmin($id)
     {
         $pproy = DB::table('postulacion_proyectos')
-            ->join('users as users1', 'users1.id', '=', 'postulacion_proyectos.user_id')
-            ->join('datos_organizaciones', 'datos_organizaciones.user_id', '=', 'users1.id')
-            ->join('users as users2', 'users2.id', '=', 'datos_organizaciones.user_id')
-            ->select('users1.*', 'postulacion_proyectos.*', 'postulacion_proyectos.id as id_proy','datos_organizaciones.*')
+            ->join('datos_organizaciones', 'postulacion_proyectos.organizacion_id', '=', 'datos_organizaciones.id')
+            ->join('users', 'users.id', '=', 'postulacion_proyectos.user_id')
+            ->select(
+                'postulacion_proyectos.id as id_proy',
+                'datos_organizaciones.*',
+                'users.*',
+                'postulacion_proyectos.*' // Agregado para obtener todas las columnas de postulacion_proyectos
+            )
             ->where('postulacion_proyectos.id', $id)
             ->first();
 
@@ -282,10 +286,14 @@ protected $fillable = [
     public static function respuestaProyectoAdmin($id)
     {
         $pproy = DB::table('postulacion_proyectos')
-            ->join('users as users1', 'users1.id', '=', 'postulacion_proyectos.user_id')
-            ->join('datos_organizaciones', 'datos_organizaciones.user_id', '=', 'users1.id')
-            ->join('users as users2', 'users2.id', '=', 'datos_organizaciones.user_id')
-            ->select('users1.*', 'postulacion_proyectos.*', 'postulacion_proyectos.id as id_proy','datos_organizaciones.*')
+            ->join('datos_organizaciones', 'postulacion_proyectos.organizacion_id', '=', 'datos_organizaciones.id')
+            ->join('users', 'users.id', '=', 'postulacion_proyectos.user_id')
+            ->select(
+                'postulacion_proyectos.id as id_proy',
+                'datos_organizaciones.*',
+                'users.*',
+                'postulacion_proyectos.*' // Agregado para obtener todas las columnas de postulacion_proyectos
+            )
             ->where('postulacion_proyectos.id', $id)
             ->first();
 

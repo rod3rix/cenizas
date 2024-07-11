@@ -37,15 +37,18 @@
                 'RUT' => $pproy->rut,
                 'Correo electrónico' => $pproy->email,
                 'Teléfono' => $pproy->fono,
+                'Comuna'  => $pproy->zona == 1 ? 'Taltal' : 'Cabildo',
+                'Dirección' => $pproy->direccion,
                 'Nacionalidad' => $pproy->nacionalidad,
                 'Género' => $pproy->genero,
                 'Pertenece a pueblo originario' => $pproy->pueblo_originario == 1 ? 'Sí' : 'No',
                 'Discapacidad' => $pproy->discapacidad == 1 ? 'Sí' : 'No',
                 'Fecha de nacimiento' => $pproy->fecha_nacimiento,
                 'Actividad económica' => $pproy->actividad_economica,
-                'Dirección' => $pproy->direccion,
+    
                 'Posee formación formal' => $pproy->formacion_formal == 1 ? 'Sí' : 'No',
-                'Profesión' => $pproy->profesion
+                'Profesión' => $pproy->profesion,
+                'Acepto cláusula de tratamiento de información personal' => "Aceptada",
               ] as $label => $value)
               <div class="media text-muted pt-3">
                 <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
@@ -63,7 +66,6 @@
                 'Nombre organización' => $pproy->nombre_organizacion,
                 'RUT organización' => $pproy->rut_organizacion,
                 'Domicilio organización' => $pproy->domicilio_organizacion,
-                'Personalidad jurídica' => $pproy->personalidad_juridica,
                 'Antigüedad años' => $pproy->antiguedad_anos,
                 'Número de socios' => $pproy->numero_socios
               ] as $label => $value)
@@ -76,7 +78,7 @@
               @endforeach
               <div class="media text-muted pt-3">
                 <p class="media-body pb-3 mb-0 small lh-125">
-                  <strong class="d-block text-gray-dark">Certificado de personalidad jurídica:</strong>
+                  <strong class="d-block text-gray-dark">6. Certificado de personalidad jurídica:</strong>
                   <div class="mb-3">
                     Descargar archivo:
                     <a href="{{ asset('storage/archivos/' . $pproy->certificado_pj) }}" download>{{ $pproy->certificado_pj }}</a>
@@ -126,7 +128,7 @@
                 'Lugar ejecución proyecto' => $pproy->lugar_proyecto,
                 'Número beneficiarios directos e indirectos' => 'Directos: ' . $pproy->directos . ' Indirectos: ' . $pproy->indirectos,
                 'Montos del proyecto' => 'Aporte solicitado: $' . $pproy->aporte_solicitado,
-                'Minera Las Cenizas tiene el derecho de tomar fotografías y hacer visitas del proyecto. Además, instalar placa conmemorativa.' => ''
+                'Minera Las Cenizas tiene el derecho de tomar fotografías y hacer visitas del proyecto. Además, instalar placa conmemorativa.' => 'Aceptada'
               ] as $label => $value)
               <div class="media text-muted pt-3">
                 <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">

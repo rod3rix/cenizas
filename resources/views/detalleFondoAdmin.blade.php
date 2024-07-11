@@ -47,19 +47,29 @@
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">7. Nacionalidad</strong>
+        <strong class="d-block text-gray-dark">7. Comuna</strong>
+         @if($pfondo->zona === 1)
+              Taltal
+         @else
+              Cabildo
+         @endif  
+      </p>
+    </div>
+     <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">9. Nacionalidad</strong>
         {{ $pfondo->nacionalidad }}
       </p>
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">8. Género</strong>
+        <strong class="d-block text-gray-dark">10. Género</strong>
         {{ $pfondo->genero }}
       </p>
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">9. Pertenece a pueblo originario</strong>
+        <strong class="d-block text-gray-dark">11. Pertenece a pueblo originario</strong>
           @if($pfondo->pueblo_originario == 1)
               Sí
           @else
@@ -69,7 +79,7 @@
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">10. Discapacidad</strong>
+        <strong class="d-block text-gray-dark">12. Discapacidad</strong>
         @if($pfondo->discapacidad == 1)
             Sí
         @else
@@ -79,25 +89,24 @@
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">11. Fecha de nacimiento</strong>
-        {{ $pfondo->fecha_nacimiento }}
+        <strong class="d-block text-gray-dark">13. Fecha de nacimiento</strong>
+         {{ \Carbon\Carbon::parse($pfondo->fecha_nacimiento)->format('d-m-Y') }}
       </p>
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">12. Actividad económica</strong>
-        {{ $pfondo->actividad_economica }}
+        <strong class="d-block text-gray-dark">14. Actividad económica</strong>
+        @if($pfondo->actividad_economica === 'Otra')
+          {{ $pfondo->otros }}
+        @else
+          {{ $pfondo->actividad_economica }}
+        @endif
         </p>
     </div>
+    
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">13. Dirección</strong>
-        {{ $pfondo->direccion}}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">14. Posee formación formal</strong>
+        <strong class="d-block text-gray-dark">15. Posee formación formal</strong>
         @if($pfondo->formacion_formal == 1)
             Sí
         @else
@@ -107,8 +116,14 @@
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">15. Profesión</strong>
+        <strong class="d-block text-gray-dark">16. Nivel educacional</strong>
         {{ $pfondo->profesion }}
+      </p>
+    </div>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">17. Acepto cláusula de tratamiento de información personal </strong>
+        Aceptada
       </p>
     </div>
 </div>
@@ -136,27 +151,21 @@
     </div>
      <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">4. Personalidad jurídica</strong>
-        {{ $pfondo->personalidad_juridica }}
-      </p>
-    </div>
-     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">5. Antigüedad años</strong>
+        <strong class="d-block text-gray-dark">4. Antigüedad años</strong>
         {{ $pfondo->antiguedad_anos }}
       </p>
     </div>
 
     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 ">
-        <strong class="d-block text-gray-dark">6. Número de socios</strong>
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">5. Número de socios</strong>
         {{ $pfondo->numero_socios }}
       </p>
     </div>
 
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 ">
-        <strong class="d-block text-gray-dark">7. Certificado de personalidad jurídica:</strong>
+        <strong class="d-block text-gray-dark">6. Certificado de personalidad jurídica:</strong>
         <div class="mb-3">
           Descargar archivo:
             <a href="{{ asset('storage/archivos/' . $pfondo->certificado_pj) }}" download>{{ $pfondo->certificado_pj }}</a>
@@ -243,14 +252,12 @@
         {{ $pfondo->objetivo_general }}
         <p>
     </div>
-
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">6. Objetivos específicos</strong>
         {{ $pfondo->objetivos_especificos }}
       </p>
     </div>
-
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">7. Lugar de cierre del proyecto</strong>
@@ -261,21 +268,41 @@
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">8. Número beneficiarios directos e indirectos</strong>
-             Directos: {{ $pfondo->directos }} Indirectos:  {{ $pfondo->indirectos }}
+             Directos: {{ $pfondo->directos }} <br> 
+             Indirectos:  {{ $pfondo->indirectos }}
       </p>
     </div>
 
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">9. Fecha de inicio / Fecha Término</strong>Fecha Termino: {{ $pfondo->directos }} Fecha Inicio:  {{ $pfondo->fecha_termino }} Cantidad de días: {{ $pfondo->cantidad_dias }}
+        <strong class="d-block text-gray-dark">9. Fecha de inicio / Fecha Término</strong>Fecha Inicio: {{ \Carbon\Carbon::parse($pfondo->fecha_inicio)->format('d-m-Y') }}<br>
+        Fecha Termino:  {{ \Carbon\Carbon::parse($pfondo->fecha_termino)->format('d-m-Y') }}<br> 
+        Cantidad de días: {{ $pfondo->cantidad_dias }}
+      </p>
+    </div>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">10. Presupuesto:</strong>
+             Recursos Humanos: {{ $pfondo->rec_humanos }}<br>
+             Materiales e Insumos: {{ $pfondo->mat_insumos }} <br>
+             Otros: {{ $pfondo->rec_hum_otros }}<br>
+             Total: {{ $pfondo->rec_humanos + $pfondo->mat_insumos + $pfondo->rec_hum_otros }}
+      </p>
+    </div>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">11. Montos solicitados:</strong>
+             Aporte solicitado: {{ $pfondo->aporte_solicitado }}<br>
+             Aporte de terceros: {{ $pfondo->aporte_terceros }} <br>
+             Aporte propio: {{ $pfondo->aporte_propio }}<br>
+             Total: {{ $pfondo->aporte_solicitado + $pfondo->aporte_terceros + $pfondo->aporte_propio }}
       </p>
     </div>
 
       <input type="hidden" id="pfondo_id" name="pfondo_id" value="{{ $pfondo->post_fondo_id }}">
       <div class="media text-muted pt-3">
           <p class="media-body pb-3 mb-0 small lh-125">
-              <strong class="d-block text-gray-dark">RESPUESTA:</strong>
-               <label for="respuesta" class="col-sm-2 col-form-label  border-bottom border-gray">RESPUESTA:</label>
+              <strong class="d-block text-gray-dark">Respuesta:</strong>
               <textarea id="respuesta" name="respuesta" class="form-control" rows="3" placeholder="Escribir respuesta"></textarea>
           </p>
       </div>
