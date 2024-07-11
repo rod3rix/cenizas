@@ -1,17 +1,18 @@
 @extends('layouts.app')
 @section('content')
 <div class="jumbotron">
-        <div class="container">
-          <h3><b>Postular Fondos Concursables</b></h3>
-          <p>Los <b>Fondos Concursables de Desarrollo Comunitario para Organizaciones Sociales de Cabildo</b>, son una iniciativa de Grupo Minero Las Cenizas que busca apoyar en el desarrollo socioeconómico de Cabildo. Se enmarca en el principio de responsabilidad social de nuestra Política de Sustentabilidad.<br />
-          <b>“Generar relaciones de respeto y colaboración mutua con las comunidades cercanas a nuestras operaciones mineras”.</b></p>
-        </div>
-    <hr>
+  <div class="container-fluid headpage">
+    <div class="row justify-content-center headinner">
+      <h1>Postular Fondos Concursables</h1>
+      <p>Los <b>Fondos Concursables de Desarrollo Comunitario para Organizaciones Sociales de Cabildo</b>, son una iniciativa de Grupo Minero Las Cenizas que busca apoyar en el desarrollo socioeconómico de Cabildo. Se enmarca en el principio de responsabilidad social de nuestra Política de Sustentabilidad.<br />
+      <b>“Generar relaciones de respeto y colaboración mutua con las comunidades cercanas a nuestras operaciones mineras”.</b></p>
+    </div>
+  </div>
     @if ($isVigente)
     <div class="container text-center">
-          <button type="button" class="btn btn-info btn-arrow-right btn-lg">ANTECEDENTES GENERALES</button>
-          <button type="button" class="btn btn-info btn-arrow-right btn-lg">DATOS ORGANIZACIÓN/MIPYM</button>
-          <button type="button" class="btn btn-info btn-arrow-right btn-lg">POSTULACIÓN</button>
+          <button type="button" class="btn btn-info btn-arrow-right btn-lg">Antecedentes generales</button>
+          <button type="button" class="btn btn-info btn-arrow-right btn-lg">Datos organización / MIPYME</button>
+          <button type="button" class="btn btn-info btn-arrow-right btn-lg">Postulación</button>
     </div>
 
     <div class="container">
@@ -31,7 +32,7 @@
     </div>
      @else
      <div class="container text-center">
-        <h3><b>MOMENTANEAMENTE NO EXISTEN FONDOS CONCURSABLES</b></h3>
+        <h3>Por el momento no existen fondos concursables</h3>
      </div>
      @endif
 </div>
