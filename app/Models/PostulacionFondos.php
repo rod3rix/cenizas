@@ -349,11 +349,11 @@ class PostulacionFondos extends Model
                     break;
                 case 2:
                     $postulacion->estado_texto = 'Aceptado';
-                    $postulacion->resolucion = '<a href="' . route("respuestaFondo", ["id" => $postulacion->id_postulacion]) . '">Ver Respuesta</a>';
+                    $postulacion->resolucion = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id_postulacion]) . '">Ver Respuesta</a>';
                     break;
                 case 3:
                     $postulacion->estado_texto = 'Rechazado';
-                    $postulacion->resolucion = '<a href="' . route("respuestaFondo", ["id" => $postulacion->id_postulacion]) . '">Ver Respuesta</a>';
+                    $postulacion->resolucion = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id_postulacion]) . '">Ver Respuesta</a>';
                     break;
             }
             $postulacion->created_at_formatted = Carbon::parse($postulacion->created_at)->format('d-m-Y');

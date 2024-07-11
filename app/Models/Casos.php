@@ -95,8 +95,8 @@ class Casos extends Model
                 'casos.tipo',
                 'casos.estado AS estado_num',
                 DB::raw("CASE 
-                            WHEN estado = 1 THEN 'Pendiente'
-                            WHEN estado = 2 THEN 'Resuelto'
+                            WHEN estado = 0 THEN 'Pendiente'
+                            WHEN estado = 1 THEN 'Resuelto'
                          END AS estado"),
                 'created_at'
             )
@@ -110,17 +110,13 @@ class Casos extends Model
         // Transformar los resultados
         $casos = $casos->map(function ($caso) {
             switch ($caso->estado_num) {
-                case 1:
+                case 0:
                     $caso->estado = 'Pendiente';
                     $caso->respuesta = '<a href="' . route("responderCaso", ['id' => $caso->id_caso]) . '">RESPONDER</a>';
                     break;
-                case 2:
+                case 1:
                     $caso->estado = 'Resuelto';
                     $caso->respuesta = '<a href="' . route("respuestaCasoAdmin", ['id' => $caso->id_caso]) . '">VER RESPUESTA</a>';
-                    break;
-                default:
-                    $caso->estado = 'ABIERTO';
-                    $caso->respuesta = '<a href="' . route("responderCaso", ['id' => $caso->id_caso]) . '">RESPONDER</a>';
                     break;
             }
             $caso->fecha_creacion = Carbon::parse($caso->created_at)->format('d-m-Y');
