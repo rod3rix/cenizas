@@ -1,9 +1,13 @@
 @extends('layouts.app')
 @section('content')
 <section class="jumbotron text-center">
+        <div class="container-fluid headpage">
+          <div class="row justify-content-center headinner">
+            <h1>Bienvenid@</h1>
+            <p>Acceda al <b>Portal Fondos</b> de Grupo Minera Las Cenizas. Aquí podrá informarse de los fondos concursables con los que contamos, postular tus proyectos y realizar sugerencias o reclamos</p>
+          </div>
+        </div>
         <div class="container">
-          <h1 class="jumbotron-heading">Bienvenido</h1>
-          <p class="mb-3">Acceda al <b>Portal Fondos</b> de Grupo Minera Las Cenizas. Aquí podrá informarse de los fondos concursables con los que contamos, postular tus proyectos y realizar sugerencias o reclamos.</p>
         <div class="card-deck mb-3 text-center">
         <div class="row mb-3 text-center">
       <div class="col-md-4 themed-grid-col"><div class="card fondos mb-4 shadow-sm">

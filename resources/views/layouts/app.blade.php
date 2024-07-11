@@ -43,7 +43,7 @@
     <div id="app">
         <div class="container zheader">
              
-    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
       <div class="col-md-3 mb-2 mb-md-0">
         <!-- <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none"> -->
           <a class="navbar-brand" href="{{ url('/') }}">
@@ -168,17 +168,17 @@
       
     </header>
   </div>
-        <main class="py-4">
+        <main class="pb-4">
             @yield('content')
         </main>
     </div>
 
     <div class="container zfooter">
   <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-4">
-    <p class="col-md-6 mb-0 text-body-secondary">Para mayor información, consultas o dudas:  +56 9 9159 4961  /  XXXXX@CENIZAS.CL</p>
-    <ul class="nav col-md-4 justify-content-end">
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Términos y condiciones</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">www.cenizas.cl</a></li>
+  <p class="col-md-6 mb-0 text-body-secondary">Para mayor información, consultas o dudas:  <a href="tel:+56991594961">+56 9 9159 4961</a>  /  <a href="mailto:comunidades@cenizas.cl">comunidades@cenizas.cl</a></p>
+  <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item"><a href="https://comunidades.cenizas.cl/terminoCondiciones" class="nav-link px-2 text-body-secondary">Términos y condiciones</a></li>
+      <li class="nav-item"><a href="https://cenizas.cl" class="nav-link px-2 text-body-secondary">www.cenizas.cl</a></li>
 
     </ul>
   </footer>

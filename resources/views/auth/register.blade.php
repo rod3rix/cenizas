@@ -1,23 +1,8 @@
 @extends('layouts.app')
 @section('content')
- <style>
-    .input-prefix {
-        position: relative;
-    }
-    .input-prefix span {
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #aaa;
-    }
-    .input-prefix input {
-        padding-left: 50px; /* Adjust according to the width of the prefix */
-    }
-</style>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-5">
+        <div class="col-md-8 col-lg-5">
             <div class="card">
                 <div class="card-header">{{ __('Registro datos personales') }}</div>
 
@@ -91,7 +76,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="telefono" class="col-md-12 col-form-label text-align-left">{{ __('Teléfono*') }} Ingrese 8 dígitos</label>
+                            <label for="telefono" class="col-md-12 col-form-label text-align-left">{{ __('Teléfono*') }} <br /><small>Ingrese 8 dígitos</small></label>
 
                             <div class="col-md-12">
                                 <div class="input-prefix">
@@ -107,7 +92,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="zona" class="col-md-12 col-form-label text-align-left">{{ __('Comuna') }}</label>
+                            <label for="zona" class="col-md-12 col-form-label text-align-left">{{ __('Comuna*') }}</label>
 
                             <div class="col-md-12">
                                 <select id="zona" class="form-control @error('zona') is-invalid @enderror" name="zona">
@@ -124,7 +109,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="password" class="col-md-12 col-form-label text-align-left">{{ __('Crear una contraseña') }}</label>
+                            <label for="password" class="col-md-12 col-form-label text-align-left">{{ __('Crear una contraseña*') }} <br /><small>Debe contener al menos 8 carateres</small></label>
 
                             <div class="col-md-12">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password"  autocomplete="new-password">
@@ -138,7 +123,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-12 col-form-label text-align-left">{{ __('Repetir contraseña') }}</label>
+                            <label for="password-confirm" class="col-md-12 col-form-label text-align-left">{{ __('Repetir contraseña*') }}</label>
 
                             <div class="col-md-12">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation"  autocomplete="new-password">
@@ -154,7 +139,7 @@
                                 </div>
 
                                 <div class="form-group col-md-12">
-                                    <p>Tómate tu tiempo para mirar cuidadosamente la imagen del CAPTCHA. Aunque las letras puedan estar distorsionadas, con paciencia podrás distinguirlas.</p>
+                                    <small>Tómate tu tiempo para mirar cuidadosamente la imagen del CAPTCHA. Aunque las letras puedan estar distorsionadas, con paciencia podrás distinguirlas.</small>
                                 <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha">
 
                                 </div>
