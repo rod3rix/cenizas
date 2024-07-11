@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="jumbotron text-center">
-<div class="container">
+<section class="jumbotron text-center d-flex align-items-center h-100">
+    <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6 col-lg-4">
             <div class="card">
