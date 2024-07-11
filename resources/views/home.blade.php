@@ -2,7 +2,7 @@
 @section('content')
 <section class="jumbotron text-center">
         <div class="container-fluid headpage">
-          <div class="row justify-content-center text-center">
+          <div class="row justify-content-center headinner">
             <h1>Bienvenid@</h1>
             <p>Acceda al <b>Portal Fondos</b> de Grupo Minera Las Cenizas. Aquí podrá informarse de los fondos concursables con los que contamos, postular tus proyectos y realizar sugerencias o reclamos</p>
           </div>
