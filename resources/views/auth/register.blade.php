@@ -76,7 +76,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="telefono" class="col-md-12 col-form-label text-align-left">{{ __('Teléfono*') }} Ingrese 8 dígitos</label>
+                            <label for="telefono" class="col-md-12 col-form-label text-align-left">{{ __('Teléfono*') }} <br /><small>Ingrese 8 dígitos</small></label>
 
                             <div class="col-md-12">
                                 <div class="input-prefix">
