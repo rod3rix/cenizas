@@ -2,7 +2,7 @@
 @section('content')
 <div class="jumbotron">
         <div class="container-fluid headpage">
-            <div class="row justify-content-center text-center">
+            <div class="row justify-content-center headinner">
             <h1>Ingreso sugerencias, reclamos u otros</h1>
             <p>Utiliza nuestro canal de requerimientos y reclamos para comunicarte directamente con MLC. Registra tu caso y recibe seguimiento y respuesta personalizada.</p>
             </div>
