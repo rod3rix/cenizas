@@ -26,7 +26,7 @@
                         @csrf
 
                         <div class="row mb-3">
-                            <label for="name" class="col-md-12 col-form-label  text-align-left">{{ __('Nombre') }}</label>
+                            <label for="name" class="col-md-12 col-form-label  text-align-left">{{ __('Nombre*') }}</label>
 
                             <div class="col-md-12">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"  autocomplete="name" autofocus>
@@ -38,12 +38,12 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="apellido_paterno" class="col-md-12 col-form-label  text-align-left">{{ __('Apellido Paterno') }}</label>
+                            <label for="apellido_paterno" class="col-md-12 col-form-label  text-align-left">{{ __('Apellido Paterno*') }}</label>
 
                             <div class="col-md-12">
                                 <input id="apellido_paterno" type="text" class="form-control @error('apellido_paterno') is-invalid @enderror" name="apellido_paterno" value="{{ old('apellido_paterno') }}"  autocomplete="apellido_paterno" autofocus>
 
-                                @error('apellido_paterno')
+                                @error('apellido_paterno*')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -51,7 +51,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="apellido_materno" class="col-md-12 col-form-label  text-align-left">{{ __('Apellido Materno') }}</label>
+                            <label for="apellido_materno" class="col-md-12 col-form-label  text-align-left">{{ __('Apellido Materno*') }}</label>
 
                             <div class="col-md-12">
                                 <input id="apellido_materno" type="text" class="form-control @error('apellido_materno') is-invalid @enderror" name="apellido_materno" value="{{ old('apellido_materno') }}"  autocomplete="apellido_paterno" autofocus>
@@ -64,7 +64,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="rut" class="col-md-12 col-form-label  text-align-left">{{ __('RUT') }}</label>
+                            <label for="rut" class="col-md-12 col-form-label  text-align-left">{{ __('RUT*') }}</label>
 
                             <div class="col-md-12">
                                 <input id="rut" type="text" class="form-control @error('rut') is-invalid @enderror" name="rut" value="{{ old('rut') }}"  autocomplete="name" autofocus maxlength="12" onkeyup="formatRut(this)">
@@ -77,7 +77,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="email" class="col-md-12 col-form-label text-align-left">{{ __('Email') }}</label>
+                            <label for="email" class="col-md-12 col-form-label text-align-left">{{ __('Email*') }}</label>
 
                             <div class="col-md-12">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  autocomplete="email">
@@ -91,30 +91,29 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="telefono" class="col-md-12 col-form-label text-align-left">{{ __('Teléfono') }} * Ingrese 8 dígitos</label>
+                            <label for="telefono" class="col-md-12 col-form-label text-align-left">{{ __('Teléfono*') }} Ingrese 8 dígitos</label>
 
                             <div class="col-md-12">
                                 <div class="input-prefix">
                                 <span>+56 9</span>
                                 <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}"  autocomplete="name" autofocus onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="8">
-                            </div>
-
                                 @error('telefono')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                @enderror
+                                @enderror       
+                                </div>
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label for="zona" class="col-md-12 col-form-label text-align-left">{{ __('Zona') }}</label>
+                            <label for="zona" class="col-md-12 col-form-label text-align-left">{{ __('Comuna') }}</label>
 
                             <div class="col-md-12">
                                 <select id="zona" class="form-control @error('zona') is-invalid @enderror" name="zona">
                                     <option value="">{{ __('Seleccione') }}</option>
-                                    <option value="1" @if(old('zona') == '1') selected @endif>{{ __('Cabildo') }}</option>
-                                    <option value="2" @if(old('zona') == '2') selected @endif>{{ __('Taltal') }}</option>
+                                    <option value="1" @if(old('zona') == '1') selected @endif>{{ __('Taltal') }}</option>
+                                    <option value="2" @if(old('zona') == '2') selected @endif>{{ __('Cabildo') }}</option>
                                 </select>
                                 @error('zona')
                                     <span class="invalid-feedback" role="alert">

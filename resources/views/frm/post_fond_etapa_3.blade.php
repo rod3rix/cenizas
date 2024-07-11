@@ -17,12 +17,20 @@
                      </span>
                   </label>
                   <div class="col-md-12">
-                     <select class="form-select" id="tipo_proyecto" name="tipo_proyecto">
-                        <option value="">Seleccione una opción</option>
-                        <option value="Equipamiento para organizaciones">Equipamiento para organizaciones</option>
-                        <option value="Mejoramiento infraestructura sedes y entorno comunitario">Mejoramiento infraestructura sedes y entorno comunitario</option>
-                        <option value="Medio ambiente y cultura">Medio ambiente y cultura</option>
-                     </select>
+                        <div class="organizacionDiv d-none">
+                         <select class="form-select" id="tipo_proyecto" name="tipo_proyecto">
+                               <option value="">Seleccione</option>
+                             <option value="Equipamiento para organizaciones">Equipamiento para organizaciones</option>
+                             <option value="Mejoramiento infraestructura sedes y entorno comunitario">Mejoramiento infraestructura sedes y entorno comunitario</option>
+                             <option value="Medio ambiente y cultura">Medio ambiente y cultura</option>
+                         </select>
+                     </div>
+
+                     <div class="mipymeDiv d-none">
+                         <select class="form-select" id="tipo_proyecto" name="tipo_proyecto">
+                             <option value="Apoyo a emprendimientos y oficios en vías de formalización">Apoyo a emprendimientos y oficios en vías de formalización</option>
+                         </select>
+                     </div>
                   </div>
                </div>
                <div class="form-group row">
@@ -108,41 +116,7 @@
                       <div id="date-error" class="alert alert-danger" style="display:none;">La fecha de inicio debe ser anterior a la fecha de término.</div>
                   </div>
                </div>
-               <div class="form-group row mipymeDiv d-none">
-                  <label for="presupuesto" class="col-md-12 col-form-label text-md-left">{{ __('10. Presupuesto: Agregar: Recursos Humanos, Materiales e insumos') }}</label>
-                  <div id="alert-container" class="col-md-12 mt-3"></div>
-                  <div id="presupuesto-container">
-                     <!-- Initial form group -->
-                     <div class="form-group row" id="presupuesto-row-0">
-                    <label for="detalle-0" class="col-md-2 col-form-label text-md-left">Detalle</label>
-                    <div class="col-md-5">
-                        <select id="detalle-0" class="form-control" name="detalle[]">
-                            <option value="">Seleccione</option>
-                            <option value="Recursos Humanos">Recursos Humanos</option>
-                            <option value="Materiales e insumos">Materiales e insumos</option>
-                        </select>
-                    </div>
-                    <label for="monto-0" class="col-md-1 col-form-label text-md-left">Monto</label>
-                    <div class="col-md-4">
-                        <input id="monto-0" type="text" class="form-control monto" name="monto[]" placeholder="$" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="12">
-                    </div>
-                </div>
-                  </div>
-                  <div class="form-group row">
-                     <div class="col-md-2"></div>
-                     <div class="col-md-10">
-                        <button type="button" class="btn btn-primary me-2" id="add-presupuesto">Agregar otro</button>
-                        <button type="button" class="btn btn-danger" id="remove-presupuesto" style="display:none;">Eliminar último</button>
-                     </div>
-                  </div>
-                  <div class="form-group row">
-                     <label for="total" class="col-md-2 col-form-label text-md-left">Total</label>
-                     <div class="col-md-10">
-                        <input id="total" type="text" class="miles form-control" name="total" value="{{ old('total') }}" autocomplete="total" placeholder="$" readonly>
-                     </div>
-                  </div>
-               </div>
-               <div class="form-group row organizacionDiv d-none">
+               <div class="form-group row">
                   <label class="col-md-12 col-form-label text-md-left">{{ __('10. Presupuesto:') }}</label>
                   <div class="form-group row">
                      <label for="rec_humanos" class="col-md-2 col-form-label text-md-left">{{ __('Recursos Humanos') }}</label>

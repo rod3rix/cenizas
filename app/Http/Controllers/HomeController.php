@@ -36,10 +36,13 @@ class HomeController extends Controller
     public function postularFondos()
     {
         $isVigente = ListadoFondos::fondoVigente();
+        $listarFondos = ListadoFondos::listarFondosVig();
         $user = User::userData();
+
         return view('postularFondos', [
             'user' => $user,
-            'isVigente' => $isVigente
+            'isVigente' => $isVigente,
+            'listarFondos' => $listarFondos
         ]);
     }
 
@@ -266,7 +269,7 @@ class HomeController extends Controller
 
      public function validarFrmFondos(Request $request)
     {
-        $id_val=$request->id;  
+        $id_val=$request->id;
 
         if($id_val==1){
             $validator = PostulacionFondos::validarEtapa1($request->all());
@@ -284,11 +287,11 @@ class HomeController extends Controller
             try {
                 DB::beginTransaction();
 
-                    if($request->organizationType==="mipyme"){
-                        $validator = PostulacionFondos::validarEtapa5($request->all());
-                    }else{
+                    // if($request->organizationType==="mipyme"){
+                    //     $validator = PostulacionFondos::validarEtapa5($request->all());
+                    // }else{
                         $validator = PostulacionFondos::validarEtapa4($request->all());
-                    }
+                    // }
 
                     if ($validator->fails()) {
                             return response()->json([
@@ -301,14 +304,13 @@ class HomeController extends Controller
                         $dataOrg = DatosOrganizaciones::prepararDatos($request);
                         $datosOrgId = DatosOrganizaciones::insertarDatos($dataOrg,$request);
                  
-                $fondoVigenteId = PostulacionFondos::fondoVigenteId();
                 $dataPosFon = PostulacionFondos::prepararDatos($request);
-                $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId,$request,$fondoVigenteId);
+                $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId,$request);
 
-                if($request->organizationType==="mipyme"){
-                $dataPrefon = PostulacionPresupuestos::prepararDatos($request);
-                $postulacionPreId=PostulacionPresupuestos::crearPresupuestos($dataPrefon,$postulacionId);
-                }
+                // if($request->organizationType==="mipyme"){
+                // $dataPrefon = PostulacionPresupuestos::prepararDatos($request);
+                // $postulacionPreId=PostulacionPresupuestos::crearPresupuestos($dataPrefon,$postulacionId);
+                // }
 
                 DB::commit();
 
@@ -325,68 +327,6 @@ class HomeController extends Controller
             }       
 
         } 
-        
-        // if($id_val==6){
-        //     try {
-        //         DB::beginTransaction();
-                
-        //             $validator = Validator::make($request->all(), [
-        //                 'persona_juridica_id' => 'required',
-        //                 ]);
-
-        //             if ($validator->fails()) {
-        //                     return response()->json([
-        //                     'success' => false,
-        //                     'errors' => $validator->errors()->toArray()
-        //                     ]);
-        //             }
-
-        //             if($request->id_dato_organizacion){
-        //                 $datosOrgId=$request->id_dato_organizacion;
-        //             }else{
-        //                 $dataOrg = DatosOrganizaciones::prepararDatos($request);
-        //                 $datosOrgId = DatosOrganizaciones::insertarDatos($dataOrg);
-        //             }
-
-        //             if($request->persona_juridica_id){
-        //                 $personaJurId=$request->persona_juridica_id;
-        //             }
-                 
-        //         $fondoVigenteId = PostulacionFondos::fondoVigenteId();    
-
-        //         $dataPosFon = PostulacionFondos::prepararDatos($request);
-        //         $postulacionId = PostulacionFondos::crearPostulacionFondos($dataPosFon, $datosOrgId, $personaJurId, $request,$fondoVigenteId);
-
-        //         $dataPrefon = PostulacionPresupuestos::prepararDatos($request);
-        //         $postulacionPreId=PostulacionPresupuestos::crearPresupuestos($dataPrefon,$postulacionId);
-
-        //         // Si todos los inserts fueron exitosos, hacer commit de la transacción
-        //         DB::commit();
-
-        //         // Devolver una respuesta JSON indicando el éxito
-        //         return response()->json([
-        //             'status' => true,
-        //             'success' => true,
-        //             // 'message' => 'El registro se ha insertado correctamente con el ID: ' . $postulacionId
-        //         ]);
-        //     } catch (\Exception $e) {
-        //         // En caso de error, hacer rollback de la transacción
-        //         DB::rollBack();
-
-        //         // Capturar y manejar cualquier excepción
-        //         return response()->json([
-        //             'success' => false,
-        //             'message' => 'Error al crear persona jurídica: ' . $e->getMessage()
-        //         ], 500); // 500 es el código de estado para errores internos del servidor
-        //     } catch (ValidationException $e) {
-        //         // En caso de error de validación, devolver los errores de validación
-        //         return response()->json([
-        //             'success' => false,
-        //             'errors' => $e->validator->errors()->toArray()
-        //         ]);
-        //     }             
-
-        // } 
 
         if ($validator->fails()) {
             return response()->json([

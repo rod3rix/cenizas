@@ -15,14 +15,7 @@
     
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">Reclamo:</strong>
             {{ $caso->tipo }}
-        </p>
-    </div>
-    <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">Localidad:</strong>
-            {{ $caso->localidad }}
         </p>
     </div>
     <div class="media text-muted pt-3">
@@ -61,22 +54,20 @@
             {{ $caso->fono }}
         </p>
     </div>
-    <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">Región:</strong>
-            {{ $caso->region }}
-        </p>
-    </div>
-    <div class="media text-muted pt-3">
+        <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">Comuna:</strong>
-            {{ $caso->comuna }}
+            @if($caso->comuna === 1)
+              Taltal
+            @else
+              Cabildo
+            @endif  
         </p>
     </div>
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">Dirección:</strong>
-            {{ $caso->descripcion }}
+            {{ $caso->direccion }}
         </p>
     </div>
     <div class="media text-muted pt-3">

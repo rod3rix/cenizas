@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('rut');
             $table->string('fono');
             $table->string('email');
-            $table->integer('zona'); //1-superadmin, 2-admin, 3-normal-user
+            $table->integer('zona');
             $table->integer('rol')->default(0);
-            $table->tinyInteger('type')->default(1); // 1 = User, 2 = Admin
+            $table->tinyInteger('type')->default(1);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

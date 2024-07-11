@@ -16,8 +16,12 @@
     </div>
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">Localidad:</strong>
-            {{ $caso->localidad }}
+            <strong class="d-block text-gray-dark">Comuna:</strong>
+            @if($caso->comuna === 1)
+              Taltal
+            @else
+              Cabildo
+            @endif 
         </p>
     </div>
     <div class="media text-muted pt-3">
@@ -29,13 +33,13 @@
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">Apellido paterno:</strong>
-            {{ $caso->apellido }}
+            {{ $caso->apellido_paterno }}
         </p>
     </div>
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">Apellido materno:</strong>
-            {{ $caso->appellido }}
+            {{ $caso->apellido_materno }}
         </p>
     </div>
     <div class="media text-muted pt-3">
@@ -54,18 +58,6 @@
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">Teléfono:</strong>
             {{ $caso->fono }}
-        </p>
-    </div>
-    <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">Región:</strong>
-            {{ $caso->region }}
-        </p>
-    </div>
-    <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">Comuna:</strong>
-            {{ $caso->comuna }}
         </p>
     </div>
     <div class="media text-muted pt-3">
@@ -89,11 +81,11 @@
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">Adjunto foto y/o video:</strong>
-            Descargar archivo:
         @if ($caso->archivo)
+        Descargar archivo:
         <a href="{{ asset('storage/archivos/' . $caso->archivo) }}" download>{{ $caso->archivo }}</a>
         @else
-            Sin archivo adjunto
+            Sin archivo
         @endif
     </div>
     <div class="media text-muted pt-3">
@@ -106,10 +98,12 @@
         <p class="media-body pb-3 mb-0 small lh-125 text-md-right">
             <strong class="d-block text-gray-dark">Archivo Adjunto:</strong>
             <div class="mb-3">
-          Descargar archivo:
+            @if($caso->archivo_respuesta)
+              Descargar archivo:
             <a href="{{ asset('storage/archivos/' . $caso->archivo_respuesta) }}" download>{{ $caso->archivo_respuesta }}</a>
-
-
+            @else
+              Sin archivo
+            @endif
             </div>
         </p>
     </div>

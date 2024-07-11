@@ -56,8 +56,15 @@
                             <p>{{ $user->email }}</p>
                         </div>
                     </div>
+                     @if(auth::user()->rol!="1")
+                    <div class="form-group row">
+                        <label for="email" class="col-md-4 col-form-label text-md-right">Comuna:</label>
 
-                    <!-- Agrega más campos según sea necesario -->
+                        <div class="col-md-6">
+                            <p>{{ $user->zona == 1 ? 'Taltal' : 'Cabildo' }}</p>
+                        </div>
+                    </div>
+                     @endif
 
                 </div>
             </div>

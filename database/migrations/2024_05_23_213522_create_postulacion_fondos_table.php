@@ -14,24 +14,25 @@ return new class extends Migration
         Schema::create('postulacion_fondos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('id_fondo_concursable'); // Correct column name
-            $table->string('nacionalidad', 255);
-            $table->string('genero', 255);
-            $table->integer('pueblo_originario');
-            $table->integer('discapacidad');
-            $table->date('fecha_nacimiento');
-            $table->string('actividad_economica', 255);
-            $table->string('direccion', 255);
-            $table->string('formacion_formal', 255);
-            $table->string('profesion', 255);
-            $table->integer('acepto_clausula');
-            $table->unsignedBigInteger('id_dato_organizacion'); // Correct column name
-            $table->string('nombre_proyecto', 255)->nullable();
+            $table->unsignedBigInteger('id_fondo_concursable');
+            $table->string('nacionalidad')->nullable();
+            $table->string('genero')->nullable();
+            $table->integer('pueblo_originario')->nullable();
+            $table->integer('discapacidad')->nullable();
+            $table->date('fecha_nacimiento')->nullable();
+            $table->string('actividad_economica')->nullable();
+            $table->string('otros')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('formacion_formal')->nullable();
+            $table->string('profesion')->nullable();
+            $table->integer('acepto_clausula')->nullable();
+            $table->unsignedBigInteger('id_dato_organizacion');
+            $table->string('nombre_proyecto')->nullable();
             $table->text('tipo_proyecto')->nullable();
-            $table->text('fundamentacion')->nullable();
-            $table->text('descripcion_proyecto')->nullable();
-            $table->text('objetivo_general')->nullable();
-            $table->text('objetivos_especificos')->nullable();
+            $table->text('fundamentacion', 1500)->nullable();
+            $table->text('descripcion_proyecto', 1500)->nullable();
+            $table->text('objetivo_general', 1500)->nullable();
+            $table->text('objetivos_especificos', 1500)->nullable();
             $table->text('cierre_proyecto')->nullable();
             $table->integer('directos')->nullable();
             $table->integer('indirectos')->nullable();
@@ -43,17 +44,14 @@ return new class extends Migration
             $table->string('aporte_propio')->nullable();
             $table->string('archivo_anexo')->nullable();
             $table->string('archivo_certificado')->nullable();
-            // $table->unsignedBigInteger('id_persona_juridica');
-            $table->string('estado', 255)->nullable();
+            $table->string('estado')->nullable();
             $table->integer('calificar')->nullable();
-            $table->string('respuesta', 2500)->nullable();
+            $table->string('respuesta', 1500)->nullable();
             $table->string('archivo_respuesta')->nullable();
             $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('id_fondo_concursable')->references('id')->on('listado_fondos')->onDelete('cascade');
             $table->foreign('id_dato_organizacion')->references('id')->on('datos_organizaciones')->onDelete('cascade');
-            // $table->foreign('id_persona_juridica')->references('id')->on('persona_juridicas')->onDelete('cascade');
         });
     }
 

@@ -31,102 +31,82 @@
                                 </select>
                             </div>
                         </div>
-
                         <div class="form-group row">
-                            <label for="localidad" class="col-md-12 col-form-label text-md-left">{{ __('2. Localidad*') }}</label>
-
-                            <div class="col-md-12">
-                                <select id="localidad" name="localidad" type="text" class="form-control" {{ in_array($user->zona, [1, 2]) ? 'disabled' : '' }}>
-                                    <option value="">Seleccione</option>
-                                    <option value="1" {{ $user->zona == 1 ? 'selected' : '' }}>Taltal</option>
-                                    <option value="2" {{ $user->zona == 2 ? 'selected' : '' }}>Cabildo</option>
-                                </select>
-                                @if(in_array($user->zona, [1, 2]))
-                                    <input type="hidden" name="localidad" value="{{ $user->zona }}">
-                                @endif
-                            </div>
-                         </div>
-                        <div class="form-group row">
-                            <label for="name" class="col-md-12 col-form-label text-md-left">{{ __('3. Nombre*') }}</label>
+                            <label for="name" class="col-md-12 col-form-label text-md-left">{{ __('2. Nombre*') }}</label>
                             <div class="col-md-12">
                                 <input id="name" type="text" class="form-control" name="name" value="{{ $user->name }}" autocomplete="name" disabled>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="apellido_paterno" class="col-md-12 col-form-label text-md-left">{{ __('4. Apellido Paterno*') }}</label>
+                            <label for="apellido_paterno" class="col-md-12 col-form-label text-md-left">{{ __('3. Apellido Paterno*') }}</label>
 
                             <div class="col-md-12">
                                 <input id="apellido_paterno" type="text" class="form-control" name="apellido_paterno" value="{{ $user->apellido_paterno }}" autocomplete="apellido_paterno"  disabled>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="apellido_materno" class="col-md-12 col-form-label text-md-left">{{ __('5. Apellido Materno*') }}</label>
+                            <label for="apellido_materno" class="col-md-12 col-form-label text-md-left">{{ __('4. Apellido Materno*') }}</label>
 
                             <div class="col-md-12">
                                 <input id="apellido_materno" type="text" class="form-control" name="apellido_materno" value="{{ $user->apellido_materno }}" autocomplete="apellido_materno"  disabled>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="rut" class="col-md-12 col-form-label text-md-left">{{ __('6. RUT*') }}</label>
+                            <label for="rut" class="col-md-12 col-form-label text-md-left">{{ __('5. RUT*') }}</label>
 
                             <div class="col-md-12">
                                 <input id="rut" type="text" class="form-control" name="rut" value="{{ $user->rut }}" autocomplete="rut"  disabled>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="email" class="col-md-12 col-form-label text-md-left">{{ __('7. E-Mail*') }}</label>
+                            <label for="email" class="col-md-12 col-form-label text-md-left">{{ __('6. E-Mail*') }}</label>
 
                             <div class="col-md-12">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ $user->email }}" autocomplete="email" disabled>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="fono" class="col-md-12 col-form-label text-md-left">{{ __('8. Teléfono*') }}</label>
+                            <label for="fono" class="col-md-12 col-form-label text-md-left">{{ __('7. Teléfono*') }}</label>
 
                             <div class="col-md-12">
                                 <input id="fono" type="text" class="form-control" name="fono" value="{{ $user->fono }}" autocomplete="email" disabled>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="region" class="col-md-12 col-form-label text-md-left">{{ __('9. Región*') }}</label>
+                            <label class="col-md-12 col-form-label text-md-left">{{ __('8. Comuna*') }}</label>
 
                             <div class="col-md-12">
-                                 <select id="region" name="region" type="text" class="form-control" autocomplete="region">
-                                    <option value="">Seleccione una región</option>
-                                </select>
+                                @if(in_array($user->zona, [1, 2]))
+                                <input type="text" class="form-control" value="{{ $user->zona == 1 ? 'Taltal' : 'Cabildo' }}" disabled>
+                                <input type="hidden" name="comuna" value="{{ $user->zona }}">
+                                @else
+                                <input id="comuna" name="comuna" type="text" class="form-control" value="{{ old('comuna', '') }}">
+                                @endif
                             </div>
-                        </div>
+                         </div>
                         <div class="form-group row">
-                            <label for="comuna" class="col-md-12 col-form-label text-md-left">{{ __('10. Comuna*') }}</label>
-
-                            <div class="col-md-12">
-                                 <select id="comuna" name="comuna" type="text" class="form-control">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="direccion" class="col-md-12 col-form-label text-md-left">{{ __('11. Dirección*') }}</label>
+                            <label for="direccion" class="col-md-12 col-form-label text-md-left">{{ __('9. Dirección*') }}</label>
 
                             <div class="col-md-12">
                                 <input id="direccion" name="direccion" type="text" class="form-control" name="direccion" value="{{ old('direccion') }}" autocomplete="direccion">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="asunto" class="col-md-12 col-form-label text-md-left">{{ __('12. Asunto*') }}</label>
+                            <label for="asunto" class="col-md-12 col-form-label text-md-left">{{ __('10. Asunto*') }}</label>
 
                             <div class="col-md-12">
                                 <input id="asunto" name="asunto" type="text" class="form-control" name="asunto" value="{{ old('asunto') }}" autocomplete="asunto" >
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="descripcion" class="col-md-12 col-form-label text-md-left">{{ __('13. Descripción*') }}</label>
+                            <label for="descripcion" class="col-md-12 col-form-label text-md-left">{{ __('11. Descripción*') }}</label>
 
                             <div class="col-md-12">
                                 <textarea id="descripcion" name="descripcion" type="text" class="form-control" name="descripcion" value="{{ old('descripcion') }}" autocomplete="descripcion" ></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="archivo" class="col-md-12 col-form-label text-md-left">{{ __('14. Adjuntar foto o Video') }}</label>
+                            <label for="archivo" class="col-md-12 col-form-label text-md-left">{{ __('12. Adjuntar foto o Video') }}</label>
                             <div class="col-md-12">
                                 <input type="file" id="archivo" name="archivo" class="form-control" >
                                 <small>(Formatos .pdf, .zip, .rar. Tamaño máximo 20 mb.)</small>

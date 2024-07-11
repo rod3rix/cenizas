@@ -117,7 +117,7 @@ Route::middleware(['class','auth', 'access-level:admin'])->group(function () {
     Route::post('detalleFondoAdmin/cerrarFondo', [App\Http\Controllers\AdminController::class, 'cerrarFondo'])->name('cerrarFondo');
     Route::get('confirmacionRespuestaCaso',  [App\Http\Controllers\AdminController::class,'confirmacionRespuestaCaso'])->name('confirmacionRespuestaCaso');
     Route::get('confirmacionAsignacion',  [App\Http\Controllers\AdminController::class,'confirmacionAsignacion'])->name('confirmacionAsignacion');
-    Route::post('frmTituloFondo', [App\Http\Controllers\AdminController::class, 'frmTituloFondo'])->name('frmTituloFondo');
+    Route::post('frmCrearAFondo', [App\Http\Controllers\AdminController::class, 'frmCrearAFondo'])->name('frmCrearAFondo');
     Route::get('/obtenerTitulosFondos', [App\Http\Controllers\AdminController::class, 'obtenerTitulosFondos'])->name('obtenerTitulosFondos');
     Route::get('listarFondosConcursables',  [App\Http\Controllers\AdminController::class,'listarFondosConcursables'])->name('listarFondosConcursables');
     Route::post('/listarEdicionTFondos',  [App\Http\Controllers\AdminController::class, 'listarEdicionTFondos'])->name('listarEdicionTFondos');

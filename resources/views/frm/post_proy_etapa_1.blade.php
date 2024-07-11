@@ -41,18 +41,10 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                            <label for="localidad" class="col-md-12 col-form-label text-md-left">{{ __('7. Comuna') }}</label>
-
-                            <div class="col-md-12">
-                                <select id="localidad" name="localidad" type="text" class="form-control" {{ in_array($user->zona, [1, 2]) ? 'disabled' : '' }} >
-                                    <option value="">Seleccione</option>
-                                    <option value="1" {{ $user->zona == 1 ? 'selected' : '' }}>Taltal</option>
-                                    <option value="2" {{ $user->zona == 2 ? 'selected' : '' }}>Cabildo</option>
-                                </select>
-                                @if(in_array($user->zona, [1, 2]))
-                                    <input type="hidden" name="localidad" value="{{ $user->zona }}">
-                                @endif
-                            </div>
+                        <label for="localidad" class="col-md-12 col-form-label text-md-left">{{ __('7. Comuna') }}</label>
+                        <div class="col-md-12">
+                        <input type="text" class="form-control" value="{{ $user->zona == 1 ? 'Taltal' : 'Cabildo' }}" disabled>
+                        </div>
                   </div>
                   
                    <div class="form-group row">
@@ -115,7 +107,7 @@
                         <input id="fecha_nacimiento" type="text" class="form-control" name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}" required autocomplete="fecha_nacimiento" readonly>
                      </div>  
                   </div>
-                   <div class="form-group row">
+                         <div class="form-group row">
                      <label for="actividad_economica" class="col-md-12 col-form-label text-md-left">{{ __('14. Actividad económica *') }}</label>
                      <div class="col-md-12">
                       <select id="actividad_economica" class="form-control" name="actividad_economica" required>
@@ -137,6 +129,13 @@
                           <option value="Funcionario/a público/a" {{ old('actividad_economica') == 'Funcionario/a público/a' ? 'selected' : '' }}>Funcionario/a público/a</option>
                           <option value="Otra" {{ old('actividad_economica') == 'Otra' ? 'selected' : '' }}>Otra (especifique)</option>
                       </select>
+                     </div>
+                  </div>
+                  <div class="form-group row" id="otra_especificar_container" style="display: none;">
+                   <label for="otra_especificar" class="col-md-12 col-form-label text-md-left">{{ __('Especifique:') }}</label>
+                   <div class="col-md-12">
+                       <input type="text" id="otra_especificar" name="otra_especificar" class="form-control" value="{{ old('otra_especificar', '') }}">
+                   </div>
                   </div>
                  
                   <div class="form-group row">
@@ -153,7 +152,7 @@
                      </div>
                   </div>
                   <div class="form-group row">
-                   <label for="profesion" class="col-md-12 col-form-label text-md-left">{{ __('16. Profesión *') }}</label>
+                   <label for="profesion" class="col-md-12 col-form-label text-md-left">{{ __('16. Nivel educacional *') }}</label>
                    <div class="col-md-12">
                        <select id="profesion" class="form-control" name="profesion" required>
                            <option value="">Seleccione una opción</option>

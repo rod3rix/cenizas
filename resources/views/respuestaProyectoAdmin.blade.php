@@ -47,29 +47,45 @@
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">7. Nacionalidad</strong>
-        {{ $pproy->nacionalidad }}
+        <strong class="d-block text-gray-dark">7. Comuna</strong>
+         @if($pproy->zona === 1)
+              Taltal
+         @else
+              Cabildo
+         @endif  
       </p>
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">8. Género</strong>
+        <strong class="d-block text-gray-dark">8. Dirección</strong>
+        {{ $pproy->direccion }}
+      </p>
+    </div>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">9. Nacionalidad</strong>
+          {{ $pproy->nacionalidad }}    
+        </p>
+    </div>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">10. Género</strong>
         {{ $pproy->genero }}
       </p>
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">9. Pertenece a pueblo originario</strong>
-          @if($pproy->pueblo_originario == 1)
-              Sí
-          @else
-              No
-          @endif      
-        </p>
+        <strong class="d-block text-gray-dark">11. Pertenece a pueblo originario</strong>
+       @if($pproy->pueblo_originario == 1)
+          Sí
+       @else
+          No
+       @endif 
+      </p>
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">10. Discapacidad</strong>
+        <strong class="d-block text-gray-dark">12. Discapacidad</strong>
         @if($pproy->discapacidad == 1)
             Sí
         @else
@@ -79,25 +95,23 @@
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">11. Fecha de nacimiento</strong>
-        {{ $pproy->fecha_nacimiento }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">12. Actividad económica</strong>
-        {{ $pproy->actividad_economica }}
+        <strong class="d-block text-gray-dark">13. Fecha de nacimiento</strong>
+         {{ \Carbon\Carbon::parse($pproy->fecha_nacimiento)->format('d-m-Y') }}
         </p>
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">13. Dirección</strong>
-        {{ $pproy->direccion}}
+        <strong class="d-block text-gray-dark">14. Actividad económica</strong>
+         @if($pproy->actividad_economica === 'Otra')
+          {{ $pproy->otros }}
+        @else
+          {{ $pproy->actividad_economica }}
+        @endif
       </p>
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">14. Posee formación formal</strong>
+        <strong class="d-block text-gray-dark">15. Posee formación formal</strong>
         @if($pproy->formacion_formal == 1)
             Sí
         @else
@@ -107,8 +121,14 @@
     </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">15. Profesión</strong>
+        <strong class="d-block text-gray-dark">16. Nivel educacional</strong>
         {{ $pproy->profesion }}
+      </p>
+    </div>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">17. Acepto cláusula de tratamiento de información personal </strong>
+        Aceptada
       </p>
     </div>
 </div>
@@ -137,27 +157,21 @@
     </div>
      <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">4. Personalidad jurídica</strong>
-        {{ $pproy->personalidad_juridica }}
-      </p>
-    </div>
-     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">5. Antigüedad años</strong>
+        <strong class="d-block text-gray-dark">4. Antigüedad años</strong>
         {{ $pproy->antiguedad_anos }}
       </p>
     </div>
 
     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 ">
-        <strong class="d-block text-gray-dark">6. Número de socios</strong>
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">5. Número de socios</strong>
         {{ $pproy->numero_socios }}
       </p>
     </div>
 
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 ">
-        <strong class="d-block text-gray-dark">7. Certificado de personalidad jurídica:</strong>
+        <strong class="d-block text-gray-dark">6. Certificado de personalidad jurídica:</strong>
         <div class="mb-3">
           Descargar archivo:
             <a href="{{ asset('storage/archivos/' . $pproy->certificado_pj ) }}" download="{{ $pproy->certificado_pj }}">{{ $pproy->certificado_pj }}</a>
@@ -219,7 +233,7 @@
     </div>
      <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">2. Tipo de proyecto</strong>
+        <strong class="d-block text-gray-dark">2. Temática</strong>
           {{ $pproy->tipo_proyecto }}
       </p>
     </div>
@@ -237,17 +251,11 @@
     </div>
      <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">5. Montos solicitados</strong><p>
-    </div>
-
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 ">
-        <strong class="d-block text-gray-dark">Aporte solicitado: ${{ $pproy->aporte_solicitado }}</strong>
-      </p>
+        <strong class="d-block text-gray-dark">5. Montos del proyecto</strong>Aporte solicitado: ${{ $pproy->aporte_solicitado }}<p>
     </div>
      <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125">
-        <strong class="d-block text-gray-dark">6. Cargar anexo – Declaración jurada simple con firma del representante legal (ESTANDARIZAR NOMBRE DECLARACIÓN)</strong>
+        <strong class="d-block text-gray-dark">6. Minera Las Cenizas tiene el derecho de tomar fotografías y hacer visitas del proyecto. Además, instalar placa conmemorativa:</strong> Aceptada
       </p>
     </div>
 </div>
@@ -260,10 +268,14 @@
       </p>
     </div>
     <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <p class="media-body pb-3 mb-0 small lh-125">
             <strong class="d-block text-gray-dark">Archivo Adjunto</strong>
         </p>
+      @if($pproy->archivo_respuesta)
       <a href="{{ asset('storage/archivos/' . $pproy->archivo_respuesta ) }}" download="{{ $pproy->archivo_respuesta }}">Descargar Adjunto</a>
+      @else
+      Sin archivo
+      @endif 
     </div>
 </div>
 </div>

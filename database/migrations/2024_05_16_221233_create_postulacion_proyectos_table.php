@@ -24,13 +24,14 @@ class CreatePostulacionProyectosTable extends Migration
             $table->string('discapacidad')->nullable();
             $table->date('fecha_nacimiento')->nullable();
             $table->string('actividad_economica')->nullable();
+            $table->string('otros')->nullable();
             $table->string('direccion')->nullable();
             $table->string('formacion_formal')->nullable();
             $table->string('profesion')->nullable();
             $table->integer('acepto_clausula')->nullable();
             $table->string('nombre_proyecto')->nullable();
             $table->string('tipo_proyecto')->nullable();
-            $table->string('lugar_proyecto')->nullable();
+            $table->string('lugar_proyecto', 1500)->nullable();
             $table->string('directos')->nullable();
             $table->string('indirectos')->nullable();
             $table->string('aporte_solicitado')->nullable();
@@ -38,7 +39,7 @@ class CreatePostulacionProyectosTable extends Migration
             $table->integer('estado')->nullable();
             $table->integer('calificar_pregunta')->nullable();
             $table->integer('calificar')->nullable();
-            $table->string('respuesta', 2500)->nullable();
+            $table->string('respuesta', 1500)->nullable();
             $table->string('archivo_respuesta')->nullable();
             $table->timestamps();
 

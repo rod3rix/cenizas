@@ -9,53 +9,15 @@
     <div class="container mt-5">
         <div id="mensajeExito" class="alert alert-success" style="display: none;">
         </div>
-        <!-- Primer acordeón -->
+        <!-- Primer acordeón independiente -->
         <div class="accordion" id="accordionOne">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
                     <button class="accordion-button collapsed text-center-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                        Crear Título Fondo Concursable
-                    </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionOne">
-                    <div class="accordion-body">
-                        <!-- Aquí puedes agregar el contenido de la sección de administración de usuarios -->
-                        <div class="container mt-5">
-                            <div class="row justify-content-center">
-                                <div class="col-md-8">
-                                    <form method="POST" id="frm1" name="frm1">
-                                        @csrf
-                                        <div class="row mb-3">
-                                            <label for="nombre_fondo" class="col-md-4 col-form-label text-md-end">{{ __('Título Anual:') }}</label>
-                                            <div class="col-md-6">
-                                                <input id="titulo_anual" type="text" class="form-control" name="titulo_anual" value="{{ old('titulo_anual') }}" autocomplete="titulo_anual" autofocus>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-md-8 offset-md-4">
-                                                <button type="button" class="btn btn-primary" onclick="enviarFormulario('frm1')">
-                                                    {{ __('Crear Título') }}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Segundo acordeón independiente -->
-        <div class="accordion" id="accordionTwo">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed text-center-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         Crear Fondo Concursable
                     </button>
                 </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionTwo">
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionOne">
                     <div class="accordion-body">
                         <div class="container mt-5">
                             <form method="POST" id="frm2" name="frm2">
@@ -63,7 +25,7 @@
                                 <div class="row mb-3">
                                     <label for="nombre_fondo" class="col-md-4 col-form-label text-md-end">{{ __('Nombre del Fondo:') }}</label>
                                     <div class="col-md-6">
-                                        <input id="nombre_fondo" type="text" class="form-control" name="nombre_fondo" value="{{ old('nombre_fondo') }}" autocomplete="nombre_fondo" autofocus>
+                                        <input id="nombre_fondo" type="text" class="form-control" name="nombre_fondo" value="{{ old('nombre_fondo') }}" autocomplete="nombre_fondo" >
                                     </div>
                                 </div>
 
@@ -71,6 +33,17 @@
                                     <label for="descripcion" class="col-md-4 col-form-label text-md-end">{{ __('Descripción:') }}</label>
                                     <div class="col-md-6">
                                         <textarea id="descripcion" class="form-control" name="descripcion" autocomplete="descripcion">{{ old('descripcion') }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="zona" class="col-md-4 col-form-label text-md-end">{{ __('Comuna:') }}</label>
+                                    <div class="col-md-6">
+                                        <select id="zona" class="form-control" name="zona">
+                                        <option value="">{{ __('Seleccione') }}</option>
+                                        <option value="1" @if(old('zona') == '1') selected @endif>{{ __('Taltal') }}</option>
+                                        <option value="2" @if(old('zona') == '2') selected @endif>{{ __('Cabildo') }}</option>
+                                    </select>
                                     </div>
                                 </div>
 
@@ -89,9 +62,12 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="titulo_anual_id" class="col-md-4 col-form-label text-md-end">{{ __('Asociar a Título Anual:') }}</label>
+                                    <label for="estado" class="col-md-4 col-form-label text-md-end">{{ __('Estado:') }}</label>
                                     <div class="col-md-6">
-                                        <select id="titulo_anual_id" name="titulo_anual_id" class="form-control">
+                                        <select id="estado" class="form-control" name="estado">
+                                            <option value="">{{ __('Seleccione') }}</option>
+                                            <option value="1" @if(old('estado') == '1') selected @endif>{{ __('Activo') }}</option>
+                                            <option value="2" @if(old('estado') == '2') selected @endif>{{ __('Inactivo') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -110,45 +86,15 @@
             </div>
         </div>
 
-        <!-- Tercer acordeón independiente para editar Fondo Concursable -->
-        <div class="accordion" id="accordionThree">
+        <!-- Segundo acordeón independiente -->
+        <div class="accordion" id="accordionTwo">
             <div class="accordion-item">
-                <h2 class="accordion-header" id="headingThree">
-                    <button class="accordion-button collapsed text-center-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Editar Título Fondo Concursable
-                    </button>
-                </h2>
-                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionThree">
-                    <div class="accordion-body">
-                        <div class="container">
-                            <table id="registros_tfondo" class="table table-striped table-bordered" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Título Fondo Concursable</th>
-                                        <th>Acción</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Los datos se cargarán dinámicamente aquí -->
-                                </tbody>
-                            </table>
-                         
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Cuarto acordeón independiente para editar Fondo Concursable -->
-        <div class="accordion" id="accordionFour">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingFour">
-                    <button class="accordion-button collapsed text-center-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed text-center-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         Editar Fondo Concursable
                     </button>
                 </h2>
-                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionFour">
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionTwo">
                     <div class="accordion-body">
                         <div class="container">
                             <table id="registros" class="table table-striped table-bordered" style="width:100%">
@@ -156,8 +102,10 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Nombre del Fondo</th>
+                                        <th>Comuna</th>
                                         <th>Fecha de Inicio</th>
                                         <th>Fecha de Término</th>
+                                        <th>Estado</th>
                                         <th>Acción</th>
                                     </tr>
                                 </thead>
@@ -197,12 +145,29 @@
                         <textarea class="form-control" id="descripcion_edit" name="descripcion_edit"></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="fecha_inicio_edit" class="form-label">Fecha de Inicio:</label>
+                        <label for="comuna_edit" class="form-label">Comuna:</label>
+                        <select id="zona_edit" class="form-control" name="zona_edit">
+                            <option value="">{{ __('Seleccione') }}</option>
+                            <option value="1" @if(old('zona_edit') == '1') selected @endif>{{ __('Taltal') }}</option>
+                            <option value="2" @if(old('zona_edit') == '2') selected @endif>{{ __('Cabildo') }}</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fecha_inicio_edit" class="form-label">
+                        Fecha de Inicio:</label>
                         <input type="text" class="form-control" id="fecha_inicio_edit" name="fecha_inicio_edit" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="fecha_termino_edit" class="form-label">Fecha de Término:</label>
                         <input type="text" class="form-control" id="fecha_termino_edit" name="fecha_termino_edit" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="estado_edit" class="form-label">Estado:</label>
+                        <select id="estado_edit" class="form-control" name="estado_edit">
+                            <option value="">{{ __('Seleccione') }}</option>
+                            <option value="1" @if(old('estado') == '1') selected @endif>{{ __('Activo') }}</option>
+                            <option value="2" @if(old('estado') == '2') selected @endif>{{ __('Inactivo') }}</option>
+                        </select>
                     </div>
                     <button id="actualizarFondo" name="actualizarFondo" type="button" class="btn btn-primary">Actualizar Fondo</button>
                 </form>
@@ -210,31 +175,6 @@
         </div>
     </div>
 </div>
-
-<!-- Modal para Editar Título del Fondo Concursable -->
-<div class="modal fade" id="editarTFondoModal" tabindex="-1" aria-labelledby="editarTFondoModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editarTFondoModalLabel">Editar Fondo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" id="frmUpdateTFondo" name="frmUpdateTFondo" enctype="multipart/form-data">
-                    @csrf
-                    <input id="url" name="url" value="updateATFondo" type="hidden">
-                    <input type="hidden" id="tfondo_id" name="tfondo_id" value="">
-                    <div class="mb-3">
-                        <label for="nombre_tfondo_edit" class="form-label">Título Fondo Concursable:</label>
-                        <input type="text" class="form-control" id="nombre_tfondo_edit" name="nombre_tfondo_edit">
-                    </div>
-                    <button id="actualizarTFondo" name="actualizarTFondo" type="button" class="btn btn-primary">Actualizar Fondo</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <script>
     const appConfig = {dataTablesLangUrl:
