@@ -51,12 +51,14 @@ select.form-control {
     background-size: 12px 7px;
 }
 
-button.btn {
+button.btn,
+a.btn-primary {
     background-color: var(--yellow-3);
     border: 0px;
 }
 
-button:hover.btn {
+button:hover.btn,
+a:hover.btn-primary {
     background-color: var(--brown-1);
 }
 
@@ -72,6 +74,21 @@ button:hover.btn {
 .form-group {
     margin-bottom: 15px;
 }
+
+.btn-login {
+    background-color: var(--yellow-3);
+    color: var(--yellow-1);
+    border: transparent;
+}
+
+.btn-login:hover {
+    background-color: var(--brown-1);
+}
+
+.btn-register {
+    display: none;
+}
+
 
 
 
@@ -140,8 +157,10 @@ header a.navbar-brand {
     color: var(--yellow-1);
 }
 
-.container.zfooter footer p {
+.container.zfooter footer p,
+.container.zfooter footer p a {
     color: var(--yellow-1) !important;
+    text-decoration: none;
 }
 
 .container.zfooter footer li a {
@@ -252,13 +271,37 @@ body.register .card {
     border: 0px;
 }
 
-/* body.register header .btn {
-    color: var(--bs-btn-hover-color);
-    background-color: var(--yellow-1);
-    border-color: 0px;
-    outline: 0;
-    box-shadow: var(--bs-btn-focus-box-shadow);
-} */
+body.register .input-prefix {
+    position: relative;
+}
+
+body.register .input-prefix span {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+}
+
+body.register .input-prefix input {
+    padding-left: 56px;
+}
+
+body.register small {
+    font-size: 13px;
+    color: #777;
+    font-weight: 400;
+}
+
+body.password-request .card-header,
+body.verPerfilUsu .card-header,
+body.cambiarPass .card-header {
+    font-size: 22px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--brown-2);
+    text-align: center;
+}
 
 /* home ---------------------------------------------------------- */
 
@@ -363,5 +406,37 @@ p.lead,
 
 /* postularFondos ---------------------------------------------------------- */
 
+label.form-check-label a {
+    color: #D4582C;
+}
 
+/* Terminos y condiciones ---------------------------------------------------------- */
+
+
+
+ol.termscond {
+    margin-top: 20px;
+    counter-reset: item;
+    padding-left: 0;
+    list-style: none;
+}
+
+ol.termscond > li {
+    position: relative;
+    margin: 10px 0;
+    padding-left: 30px;
+}
+
+ol.termscond > li:before {
+    content: counter(item) ".";
+    counter-increment: item;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: bold;
+}
+
+li.termscond {
+    line-height: 1.6;
+}
 
