@@ -4,10 +4,10 @@
 <section class="jumbotron text-center">
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-4">
+        <div class="col-md-6 col-lg-4">
             <div class="card">
                 <div class="card-header logo">
-                    <img src="https://comuni.zlab.cl/assets/images/logo-cenizas-color.png" alt="GRUPO MINERO LAS CENIZAS">
+                    <img src="https://comunidades.cenizas.cl/public/images/logo-cenizas-color.png" alt="GRUPO MINERO LAS CENIZAS">
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -71,7 +71,7 @@
                     </div>
                         <div class="row mt-4 mb-2">
                             <div class="col-md-12">
-                                    <a class="linkcorp" href="https://www.cenizas.cl/">{{ __('www.cenizas.cl') }}
+                                    <a class="linkcorp" href="https://cenizas.cl/">{{ __('www.cenizas.cl') }}
                                     </a>
                             </div>
                         </div>
