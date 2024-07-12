@@ -23,7 +23,7 @@
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
     <button class="accordion-button text-center collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-        Ver detalles Caso ingresado
+        VER DETALLE CASO INGRESADO
     </button>
 
     </h2>
@@ -38,8 +38,12 @@
     </div>
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">Localidad:</strong>
-            {{ $caso->localidad }}
+            <strong class="d-block text-gray-dark">Comuna:</strong>
+            @if($caso->comuna === 1)
+              Taltal
+            @else
+              Cabildo
+            @endif 
         </p>
     </div>
     <div class="media text-muted pt-3">
@@ -80,18 +84,6 @@
     </div>
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">Región:</strong>
-            {{ $caso->region }}
-        </p>
-    </div>
-    <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">Comuna:</strong>
-            {{ $caso->comuna }}
-        </p>
-    </div>
-    <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">Dirección:</strong>
             {{ $caso->descripcion }}
         </p>
@@ -112,11 +104,11 @@
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">Adjuntar foto y/o video:</strong>
             Descargar archivo:
-        @if ($caso->archivo)
-            <a href="{{ asset('storage/archivos/' . $caso->archivo) }}" download>{{ $caso->archivo }}</a>
-        @else
-            <p>Sin archivo adjunto</p>
-        @endif
+            @if ($caso->archivo)
+                <a href="{{ asset('storage/archivos/' . $caso->archivo) }}" download>{{ $caso->archivo }}</a>
+            @else
+                <p>Sin archivo adjunto</p>
+            @endif
         </p>
     </div>
 </div>
