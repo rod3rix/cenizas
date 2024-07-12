@@ -108,7 +108,9 @@ class AdminController extends Controller
     public function responderCaso($id)
     {
         $caso = Casos::responderCaso($id);
-        
+
+        // dd($caso->estado);
+
         $acceso = User::acceso($caso);
 
         return view('responderCaso', compact('caso','acceso'));

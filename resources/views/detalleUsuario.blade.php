@@ -158,7 +158,7 @@
                                                         @foreach($casos as $caso)
                                                         <tr>
                                                             <td class="col-4">{{ $caso->tipo }}</td>
-                                                            <td class="col-4">{{ $caso->created_at }}</td>
+                                                            <td class="col-4">{{ $caso->fecha_creacion }}</td>
                                                             <td class="col-4">{{ $caso->estado }}</td>
                                                             <td class="col-4">{!! $caso->respuesta !!}</td>
                                                         </tr>

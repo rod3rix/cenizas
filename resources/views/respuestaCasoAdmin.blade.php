@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-@if($acceso)
+@if($acceso && ($caso->estado !== null || $caso->estado === 1))
 <section class="jumbotron">
     <div class="container ">
       <h1 class="jumbotron-heading text-center"><b>Respuesta Caso</b></h1>

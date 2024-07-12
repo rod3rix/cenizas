@@ -34,7 +34,7 @@ class Casos extends Model
         'updated_at'
     ];
 
-     public static function validar(array $data)
+    public static function validar(array $data)
     {
         $validator = Validator::make( $data,[
             'tipo' => 'required|string|max:255',
@@ -51,7 +51,7 @@ class Casos extends Model
         return $validator;
     }
 
-     public static function crearCaso($request)
+    public static function crearCaso($request)
     {
         if ($request->hasFile('archivo')) {
             $archivo = $request->file('archivo');
@@ -86,48 +86,6 @@ class Casos extends Model
         return $caso;
     }  
 
-    public static function getCasosUsu($id)
-    {
-        $casos = DB::table('casos')
-            ->where('casos.idUser', $id)
-            ->select(
-                'casos.id AS id_caso',
-                'casos.tipo',
-                'casos.estado AS estado_num',
-                DB::raw("CASE 
-                            WHEN estado = 0 THEN 'Pendiente'
-                            WHEN estado = 1 THEN 'Resuelto'
-                         END AS estado"),
-                'created_at'
-            )
-            ->get();
-
-        // Formatear la fecha
-        foreach ($casos as $caso) {
-            $caso->created_at = Carbon::parse($caso->created_at)->format('d/m/Y');
-        }
-
-        // Transformar los resultados
-        $casos = $casos->map(function ($caso) {
-            switch ($caso->estado_num) {
-                case 0:
-                    $caso->estado = 'Pendiente';
-                    $caso->respuesta = '<a href="' . route("responderCaso", ['id' => $caso->id_caso]) . '">RESPONDER</a>';
-                    break;
-                case 1:
-                    $caso->estado = 'Resuelto';
-                    $caso->respuesta = '<a href="' . route("respuestaCasoAdmin", ['id' => $caso->id_caso]) . '">VER RESPUESTA</a>';
-                    break;
-            }
-            $caso->fecha_creacion = Carbon::parse($caso->created_at)->format('d-m-Y');
-
-            return $caso;
-        });
-
-        return $casos;
-    }
-
-
     public static function respuestaCasoAdmin($id)
     {
         $caso = Casos::join('users', 'casos.idUser', '=', 'users.id')
@@ -146,19 +104,60 @@ class Casos extends Model
         return $caso;
     }
 
+    public static function getCasosUsu($id)
+    {
+        $casos = DB::table('casos')
+            ->where('casos.idUser', $id)
+            ->select(
+                'casos.id AS id_caso',
+                'casos.tipo',
+                'casos.estado',
+                'created_at'
+            )
+            ->get();
+
+        $casos = $casos->map(function ($caso) {
+            switch ($caso->estado) {
+                case 1:
+                    $caso->estado = 'RESUELTO';
+                    $caso->respuesta = '<a href="' . route("respuestaCasoAdmin", ['id' => $caso->id_caso]) . '">VER RESPUESTA</a>';
+                    break;
+                default:
+                    $caso->estado = 'PENDIENTE';
+                    $caso->respuesta = '<a href="' . route("responderCaso", ['id' => $caso->id_caso]) . '">RESPONDER</a>';
+                    break;
+            }
+            $caso->fecha_creacion = Carbon::parse($caso->created_at)->format('d-m-Y');
+
+            return $caso;
+        });
+
+        return $casos;
+    }
+
     public static function casosUsuarioAdmin()
     {
         $zona = auth()->user()->zona;
    
         $casos = Casos::join('users', 'casos.idUser', '=', 'users.id')
-                        ->select('casos.*', 'users.name as nombre_usuario','casos.id as caso_id')
+                        ->select('casos.*', 'users.name as nombre_usuario','casos.id as id_caso')
                         ->where('users.zona',$zona)
                         ->get();
 
-        $casos->transform(function ($caso) {
+         $casos = $casos->map(function ($caso) {
+            switch ($caso->estado) {
+                case 1:
+                    $caso->estado = 'RESUELTO';
+                    $caso->respuesta = '<a href="' . route("respuestaCasoAdmin", ['id' => $caso->id_caso]) . '">VER RESPUESTA</a>';
+                    break;
+                default:
+                    $caso->estado = 'PENDIENTE';
+                    $caso->respuesta = '<a href="' . route("responderCaso", ['id' => $caso->id_caso]) . '">RESPONDER</a>';
+                    break;
+            }
+
             $caso->fecha_creacion = Carbon::parse($caso->created_at)->format('d-m-Y');
-            $caso->estado = $caso->estado === null || $caso->estado == 0 ? 'ABIERTO' : 'CERRADO';
-            $caso->respuesta = $caso->respuesta === null ? '<a href="' . route("responderCaso", ['id' => $caso->caso_id]) . '">RESPONDER</a>' : '<a href="' . route("respuestaCasoAdmin", ['id' => $caso->caso_id]) . '">VER RESPUESTA</a>';
+
             return $caso;
         });
 
@@ -194,7 +193,7 @@ class Casos extends Model
 
         $casos->transform(function ($caso) {
             $caso->fecha_creacion = Carbon::parse($caso->created_at)->format('d-m-Y');
-            $caso->estado = $caso->estado === null || $caso->estado == 0 ? 'ABIERTO' : 'CERRADO';
+            $caso->estado = $caso->estado === null || $caso->estado == 0 ? 'Pendiente' : 'Resuelto';
             $caso->respuesta = $caso->respuesta === null ? 'EN ESPERA' : '<a href="' . route("respuestaCaso", ['id' => $caso->caso_id]) . '">VER RESPUESTA</a>';
             return $caso;
         });
