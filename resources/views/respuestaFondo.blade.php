@@ -1,12 +1,49 @@
 @extends('layouts.app')
 @section('content')
-@if($acceso)
+@if($acceso && ($pfondo->estado === 2 || $pfondo->estado === 3))
 <section class="jumbotron">
     <div class="container ">
-      <h1 class="jumbotron-heading text-center"><b>Ver respuesta postulación a <br>
-Fondos Concursables</b></h1>
-      <p class="lead text-muted text-center">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
-<div class="my-3 p-3 bg-white rounded shadow-sm">
+  <div class="my-3 p-3 bg-white rounded shadow-sm">
+    <div class="media text-muted pt-3">
+        <h4>RESPUESTA A FONDOS CONCURSABLES POSTULACIÓN N°: {{ $pfondo->id }}</h4>
+    </div>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">RESPUESTA:</strong>
+        {{ $pfondo->respuesta }}<p>
+    </div>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">ESTADO:</strong>
+        @if($pfondo->estado==2)
+            Aceptado
+        @else
+            Rechazado
+        @endif<p>
+    </div>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">ARCHIVO ADJUNTO:</strong>
+        @if($pfondo->archivo_respuesta)
+      <a href="{{ asset('storage/archivos/' . $pfondo->archivo_respuesta ) }}" download="{{ $pfondo->archivo_respuesta }}">Descargar Adjunto</a>
+      @else
+      Sin archivo
+      @endif 
+      <p>
+    </div>
+  </div>
+
+  <div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+    <button class="accordion-button text-center collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        VER DETALLE POSTULACION FONDO
+    </button>
+
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
     <h4 class="border-bottom border-gray pb-2 mb-0">PROYECTO FOLIO {{ $pfondo->id }}</h4>
     <h6 class="border-bottom border-gray pb-2 mb-0">Antecedentes generales</h6>
     
@@ -295,25 +332,12 @@ Fondos Concursables</b></h1>
              Total: {{ $pfondo->aporte_solicitado + $pfondo->aporte_terceros + $pfondo->aporte_propio }}
       </p>
     </div>
-   <div class="my-3 p-3 bg-white rounded shadow-sm">
-      <h6 class="border-bottom border-gray pb-2 mb-0">RESPUESTA:</h6>
-      <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-          <strong class="d-block text-gray-dark">{{ $pfondo->respuesta }}</strong>
-        </p>
-      </div>
-       <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-          <strong class="d-block text-gray-dark">Archivo Adjunto</strong>
-          @if($pfondo->archivo_respuesta)
-          <a href="{{ asset('storage/archivos/' . $pfondo->archivo_respuesta ) }}"download>Descargar Archivo</a>
-          @else
-          Sin Archivo
-          @endif
-        </p>
-      </div>
-  </div>
 </div>
+
+    </div>
+    </div>
+    </div>
+    </div>
 </section>
 @else
 <div class="container text-center">

@@ -47,7 +47,7 @@ return new class extends Migration
             $table->string('aporte_propio')->nullable();
             $table->string('archivo_anexo')->nullable();
             $table->string('archivo_certificado')->nullable();
-            $table->string('estado')->nullable();
+            $table->integer('estado')->nullable();
             $table->integer('calificar')->nullable();
             $table->string('respuesta', 1500)->nullable();
             $table->string('archivo_respuesta')->nullable();

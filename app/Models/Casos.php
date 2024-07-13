@@ -119,11 +119,11 @@ class Casos extends Model
         $casos = $casos->map(function ($caso) {
             switch ($caso->estado) {
                 case 1:
-                    $caso->estado = 'RESUELTO';
+                    $caso->estado = 'Resuelto';
                     $caso->respuesta = '<a href="' . route("respuestaCasoAdmin", ['id' => $caso->id_caso]) . '">VER RESPUESTA</a>';
                     break;
                 default:
-                    $caso->estado = 'PENDIENTE';
+                    $caso->estado = 'Pendiente';
                     $caso->respuesta = '<a href="' . route("responderCaso", ['id' => $caso->id_caso]) . '">RESPONDER</a>';
                     break;
             }
@@ -147,11 +147,11 @@ class Casos extends Model
          $casos = $casos->map(function ($caso) {
             switch ($caso->estado) {
                 case 1:
-                    $caso->estado = 'RESUELTO';
+                    $caso->estado = 'Resuelto';
                     $caso->respuesta = '<a href="' . route("respuestaCasoAdmin", ['id' => $caso->id_caso]) . '">VER RESPUESTA</a>';
                     break;
                 default:
-                    $caso->estado = 'PENDIENTE';
+                    $caso->estado = 'Pendiente';
                     $caso->respuesta = '<a href="' . route("responderCaso", ['id' => $caso->id_caso]) . '">RESPONDER</a>';
                     break;
             }

@@ -1,21 +1,36 @@
 @extends('layouts.app')
 
 @section('content')
-@if($acceso)
+@if($acceso && ($pproy->estado === 2 || $pproy->estado === 3))
 <section class="jumbotron">
   <div class="container">
-    <h1 class="jumbotron-heading text-center"><b>Respuesta Apoyo Proyectos</b></h1>
-    
-    <div class="media text-muted pt-3">
-      <h3>APOYO PROYECTO ID: {{ $pproy->id }}</h3>
-      <p class="media-body pb-3 mb-0 small lh-125">{{ $pproy->respuesta }}</p>
+     <div class="my-3 p-3 bg-white rounded shadow-sm">
+     <div class="media pt-3">
+        <h4>RESPUESTA APOYO PROYECTO POSTULACIÓN N°: {{ $pproy->id }}</h4>
     </div>
-    
     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 text-md-right">
-        ARCHIVO ADJUNTO:<br>
-        <a href="{{ asset('storage/archivos/' . $pproy->archivo_respuesta ) }}" download="{{ $pproy->archivo_respuesta }}">Descargar Adjunto</a>
-      </p>
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">RESPUESTA:</strong>
+        {{ $pproy->respuesta }}<p>
+    </div>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">ESTADO:</strong>
+        @if($pproy->estado==2)
+            Aceptado
+        @else
+            Rechazado
+        @endif<p>
+    </div>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">ARCHIVO ADJUNTO:</strong>
+        @if($pproy->archivo_respuesta)
+      <a href="{{ asset('storage/archivos/' . $pproy->archivo_respuesta ) }}" download="{{ $pproy->archivo_respuesta }}">Descargar Adjunto</a>
+      @else
+      Sin archivo
+      @endif 
+      <p>
     </div>
 
     <div class="accordion" id="accordionExample">

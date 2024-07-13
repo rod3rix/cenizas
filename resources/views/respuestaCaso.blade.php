@@ -3,21 +3,27 @@
 @if($acceso && ($caso->estado !== null || $caso->estado === 1))
 <section class="jumbotron">
 <div class="container ">
+    <div class="my-3 p-3 bg-white rounded shadow-sm">
     <div class="media text-muted pt-3">
-        <h3>SUGERENCIA, RECLAMO U OTRO CASO N°:{{ $caso->casoid }}</h3>
-        <p class="media-body pb-3 mb-0 small lh-125">
-            <strong class="d-block text-gray-dark"></strong>
-            {{ $caso->respuesta }}
-        </p>
+        <h4>SUGERENCIA, RECLAMO U OTRO CASO N°:{{ $caso->casoid }}</h4>
     </div>
     <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 text-md-right">
-            <div class="mb-3">
-          ARCHIVO ADJUNTO:<br>
-            <a href="{{ asset('storage/archivos/' . $caso->archivo) }}" download>{{ $caso->archivo_respuesta }}</a>
-            </div>
-        </p>
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">RESPUESTA:</strong>
+        {{ $caso->respuesta }}<p>
     </div>
+
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">ARCHIVO ADJUNTO:</strong>
+        @if($caso->archivo_respuesta)
+      <a href="{{ asset('storage/archivos/' . $caso->archivo) }}" download>{{ $caso->archivo_respuesta }}</a>
+      @else
+      Sin archivo
+      @endif 
+      <p>
+    </div>
+  </div>
  
 <div class="accordion" id="accordionExample">
   <div class="accordion-item">

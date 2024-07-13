@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-@if($acceso)
+@if($acceso && ($pfondo->estado === 1))
 <section class="jumbotron">
     <div class="container ">
       <h1 class="jumbotron-heading text-center"><b>Ver postulación y responder a Fondos Concursables</b></h1>

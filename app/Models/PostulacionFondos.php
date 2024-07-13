@@ -345,7 +345,7 @@ class PostulacionFondos extends Model
             switch ($postulacion->estado_num) {
                 case 1:
                     $postulacion->estado_texto = 'Enviado';
-                    $postulacion->resolucion = 'En proceso';
+                    $postulacion->resolucion = '<a href="' . route("detalleFondoAdmin", ["id" => $postulacion->id_postulacion]) . '">Responder</a>';
                     break;
                 case 2:
                     $postulacion->estado_texto = 'Aceptado';
