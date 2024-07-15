@@ -140,11 +140,11 @@ class Casos extends Model
         $zona = auth()->user()->zona;
    
         $casos = Casos::join('users', 'casos.idUser', '=', 'users.id')
-                        ->select('casos.*', 'users.name as nombre_usuario','casos.id as id_caso')
+                        ->select('casos.*', 'users.name as nombre_usuario','casos.id as id_caso','casos.respuesta as resp')
                         ->where('users.zona',$zona)
                         ->get();
 
-         $casos = $casos->map(function ($caso) {
+        $casos = $casos->map(function ($caso) {
             switch ($caso->estado) {
                 case 1:
                     $caso->estado = 'Resuelto';
@@ -155,6 +155,14 @@ class Casos extends Model
                     $caso->respuesta = '<a href="' . route("responderCaso", ['id' => $caso->id_caso]) . '">RESPONDER</a>';
                     break;
             }
+
+            // Mapear valores de comuna
+            $comunas = [
+                1 => 'Taltal',
+                2 => 'Cabildo',
+            ];
+
+            $caso->comuna = $comunas[$caso->comuna] ?? $caso->comuna;
 
             $caso->fecha_creacion = Carbon::parse($caso->created_at)->format('d-m-Y');
 
