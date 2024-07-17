@@ -26,6 +26,15 @@ $(document).ready(function() {
                     { data: 'direccion', title: 'DIRECCIÓN', visible: false },
                     { data: 'formacion_formal', title: 'FORMACION FORMAL', visible: false },
                     { data: 'profesion', title: 'PROFESION', visible: false },
+                    { data: 'nombre_organizacion', title: 'NOMBRE ORGANIZACION', visible: false },
+                    { data: 'rut_organizacion', title: 'RUT', visible: false },
+                    { data: 'domicilio_organizacion', title: 'DOMICILIO', visible: false },
+                    { data: 'antiguedad_anos', title: 'ANTIGUEDAD AÑOS', visible: false },
+                    { data: 'numero_socios', title: 'NUMERO SOCIOS', visible: false },
+                    { data: 'razons_pyme', title: 'RAZON SOCIAL PYME', visible: false },
+                    { data: 'rut_pyme', title: 'RUT PYME', visible: false },
+                    { data: 'domicilio_pyme', title: 'DOMICILIO PYME', visible: false },
+                    { data: 'nombre_proyecto', title: 'NOMBRE PROYECTO', visible: false },
                     { data: 'nombre_proyecto', title: 'NOMBRE PROYECTO', visible: false },
                     { data: 'tipo_proyecto', title: 'TIPO PROYECTO', visible: false },
                     { data: 'lugar_proyecto', title: 'LUGAR PROYECTO', visible: false },
@@ -56,16 +65,17 @@ $(document).ready(function() {
                         filename: 'Portal Comunidades', // Nombre del archivo Excel
                         title: 'Portal Comunidades'
                     },
-                    {
-                        extend: 'pdf',
-                        exportOptions: {
-                            columns: function ( idx, data, node ) {
-                                return idx !== 5; // Excluye la columna 'respuesta'
-                            }
-                        },
-                        filename: 'Portal Comunidades', // Nombre del archivo PDF
-                        title: 'Portal Comunidades'
-                    }
+                    // {
+                    //     extend: 'pdf',
+                    //     orientation: 'landscape', // Establece la orientación a horizontal
+                    //     exportOptions: {
+                    //         columns: function ( idx, data, node ) {
+                    //             return idx !== 5; // Excluye la columna 'respuesta'
+                    //         }
+                    //     },
+                    //     filename: 'Portal Comunidades', // Nombre del archivo PDF
+                    //     title: 'Portal Comunidades'
+                    // }
                 ],
                 paging: true // Habilitar paginación
             });

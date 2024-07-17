@@ -44,8 +44,10 @@ class ListadoFondos extends Model
    {
       $zona = Auth::user()->zona;
       $postulacion = PostulacionFondos::join('users', 'postulacion_fondos.user_id', '=', 'users.id')
+            ->join('datos_organizaciones', 'datos_organizaciones.id', '=', 'postulacion_fondos.id_dato_organizacion')
+            ->join('listado_fondos', 'listado_fondos.id', '=', 'postulacion_fondos.id_fondo_concursable')
             ->where('users.zona',$zona)
-            ->get(['postulacion_fondos.*', 'users.*','postulacion_fondos.id']);
+            ->get(['datos_organizaciones.*','listado_fondos.*','postulacion_fondos.*', 'postulacion_fondos.respuesta as resp','users.*','postulacion_fondos.id']);
 
       $postulacion = $postulacion->transform(function ($postulacion) {
             switch ($postulacion->estado) {
@@ -66,8 +68,39 @@ class ListadoFondos extends Model
                     break;
             } 
 
+            $pueblo_originario = [
+                1 => 'Si',
+                0 => 'No',
+            ];
+
+            $postulacion->pueblo_originario = $pueblo_originario[$postulacion->pueblo_originario] ?? $postulacion->pueblo_originario;
+
+            $discapacidad = [
+                1 => 'Si',
+                0 => 'No',
+            ];
+
+            $postulacion->discapacidad = $discapacidad[$postulacion->discapacidad] ?? $postulacion->discapacidad;
+
+            $formacion_formal = [
+                1 => 'Si',
+                0 => 'No',
+            ];
+
+            $postulacion->formacion_formal = $formacion_formal[$postulacion->formacion_formal] ?? $postulacion->formacion_formal;
+
+            $postulacion->acepto_clausula_proy = 'Aceptada';
+
             $postulacion->created_at_formatted = Carbon::parse($postulacion->created_at)->format('d-m-Y');
             
+            $postulacion->total = $postulacion->rec_humanos + 
+            $postulacion->mat_insumos +
+            $postulacion->rec_hum_otros;
+
+            $postulacion->total_aporte = $postulacion->aporte_solicitado + 
+            $postulacion->aporte_terceros +
+            $postulacion->aporte_propio;
+
             return $postulacion;
       });
 

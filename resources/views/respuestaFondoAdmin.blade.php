@@ -1,134 +1,134 @@
 @extends('layouts.app')
 @section('content')
-{{$pfondo->estado}}
 @if($acceso && ($pfondo->estado === 2 || $pfondo->estado === 3))
 <section class="jumbotron">
     <div class="container ">
-      <h1 class="jumbotron-heading text-center"><b>Ver respuesta postulación a <br>
-Fondos Concursables</b></h1>
+      <h1 class="jumbotron-heading text-center">
+        <b>Ver respuesta postulación a <br>
+        Fondos Concursables</b></h1>
       <p class="lead text-muted text-center">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
-<div class="my-3 p-3 bg-white rounded shadow-sm">
-    <h4 class="border-bottom border-gray pb-2 mb-0">PROYECTO FOLIO {{ $pfondo->id }}</h4>
-    <h6 class="border-bottom border-gray pb-2 mb-0">Antecedentes generales</h6>
-    
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">1. Nombre</strong>
-        {{ $pfondo->name }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">2. Apellido paterno</strong>
-        {{ $pfondo->apellido_paterno }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">3. Apellido materno</strong>
-        {{ $pfondo->apellido_materno }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">4. RUT</strong>
-        {{ $pfondo->rut }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">5. Correo electrónico</strong>
-        {{ $pfondo->email }}
-      </p>
-    </div>
-        <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">6. Teléfono</strong>
-        {{ $pfondo->fono }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">7. Comuna</strong>
-         @if($pfondo->zona === 1)
-              Taltal
-         @else
-              Cabildo
-         @endif  
-      </p>
-    </div>
-     <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">9. Nacionalidad</strong>
-        {{ $pfondo->nacionalidad }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">10. Género</strong>
-        {{ $pfondo->genero }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">11. Pertenece a pueblo originario</strong>
-          @if($pfondo->pueblo_originario == 1)
-              Sí
-          @else
-              No
-          @endif      
-        </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">12. Discapacidad</strong>
-        @if($pfondo->discapacidad == 1)
-            Sí
-        @else
-            No
-        @endif
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">13. Fecha de nacimiento</strong>
-         {{ \Carbon\Carbon::parse($pfondo->fecha_nacimiento)->format('d-m-Y') }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">14. Actividad económica</strong>
-        @if($pfondo->actividad_economica === 'Otra')
-          {{ $pfondo->otros }}
-        @else
-          {{ $pfondo->actividad_economica }}
-        @endif
-        </p>
-    </div>
-    
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">15. Posee formación formal</strong>
-        @if($pfondo->formacion_formal == 1)
-            Sí
-        @else
-            No
-        @endif
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">16. Nivel educacional</strong>
-        {{ $pfondo->profesion }}
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">17. Acepto cláusula de tratamiento de información personal </strong>
-        Aceptada
-      </p>
-    </div>
-</div>
+      <div class="my-3 p-3 bg-white rounded shadow-sm">
+          <h4 class="border-bottom border-gray pb-2 mb-0">PROYECTO FOLIO {{ $pfondo->id }}</h4>
+          <h6 class="border-bottom border-gray pb-2 mb-0">Antecedentes generales</h6>
+          
+          <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+              <strong class="d-block text-gray-dark">1. Nombre</strong>
+              {{ $pfondo->name }}
+            </p>
+          </div>
+          <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+              <strong class="d-block text-gray-dark">2. Apellido paterno</strong>
+              {{ $pfondo->apellido_paterno }}
+            </p>
+          </div>
+          <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+              <strong class="d-block text-gray-dark">3. Apellido materno</strong>
+              {{ $pfondo->apellido_materno }}
+            </p>
+          </div>
+          <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+              <strong class="d-block text-gray-dark">4. RUT</strong>
+              {{ $pfondo->rut }}
+            </p>
+          </div>
+          <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+              <strong class="d-block text-gray-dark">5. Correo electrónico</strong>
+              {{ $pfondo->email }}
+            </p>
+          </div>
+              <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+              <strong class="d-block text-gray-dark">6. Teléfono</strong>
+              {{ $pfondo->fono }}
+            </p>
+          </div>
+          <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+              <strong class="d-block text-gray-dark">7. Comuna</strong>
+               @if($pfondo->zona === 1)
+                    Taltal
+               @else
+                    Cabildo
+               @endif  
+            </p>
+          </div>
+           <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+              <strong class="d-block text-gray-dark">9. Nacionalidad</strong>
+              {{ $pfondo->nacionalidad }}
+            </p>
+          </div>
+          <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+              <strong class="d-block text-gray-dark">10. Género</strong>
+              {{ $pfondo->genero }}
+            </p>
+          </div>
+          <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+              <strong class="d-block text-gray-dark">11. Pertenece a pueblo originario</strong>
+                @if($pfondo->pueblo_originario == 1)
+                    Sí
+                @else
+                    No
+                @endif      
+              </p>
+          </div>
+          <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+              <strong class="d-block text-gray-dark">12. Discapacidad</strong>
+              @if($pfondo->discapacidad == 1)
+                  Sí
+              @else
+                  No
+              @endif
+            </p>
+          </div>
+          <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+              <strong class="d-block text-gray-dark">13. Fecha de nacimiento</strong>
+               {{ \Carbon\Carbon::parse($pfondo->fecha_nacimiento)->format('d-m-Y') }}
+            </p>
+          </div>
+          <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+              <strong class="d-block text-gray-dark">14. Actividad económica</strong>
+              @if($pfondo->actividad_economica === 'Otra')
+                {{ $pfondo->otros }}
+              @else
+                {{ $pfondo->actividad_economica }}
+              @endif
+              </p>
+          </div>
+          
+          <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+              <strong class="d-block text-gray-dark">15. Posee formación formal</strong>
+              @if($pfondo->formacion_formal == 1)
+                  Sí
+              @else
+                  No
+              @endif
+            </p>
+          </div>
+          <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+              <strong class="d-block text-gray-dark">16. Nivel educacional</strong>
+              {{ $pfondo->profesion }}
+            </p>
+          </div>
+          <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+              <strong class="d-block text-gray-dark">17. Acepto cláusula de tratamiento de información personal </strong>
+              Aceptada
+            </p>
+          </div>
+      </div>
 
  @if($pfondo->tipo=="organizacion")
  <div class="my-3 p-3 bg-white rounded shadow-sm">

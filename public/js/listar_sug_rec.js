@@ -44,16 +44,16 @@ $(document).ready(function() {
                         filename: 'Portal Comunidades',
                         title: 'Portal Comunidades'
                     },
-                    {
-                        extend: 'pdf',
-                        exportOptions: {
-                            columns: function ( idx, data, node ) {
-                                return idx !== 5; // Excluye la columna 'respuesta'
-                            }
-                        },
-                        filename: 'Portal Comunidades',
-                        title: 'Portal Comunidades'
-                    }
+                    // {
+                    //     extend: 'pdf',
+                    //     exportOptions: {
+                    //         columns: function ( idx, data, node ) {
+                    //             return idx !== 5; // Excluye la columna 'respuesta'
+                    //         }
+                    //     },
+                    //     filename: 'Portal Comunidades',
+                    //     title: 'Portal Comunidades'
+                    // }
                 ],
                 paging: true
             });
