@@ -95,6 +95,7 @@ Route::middleware(['class','auth', 'access-level:admin'])->group(function () {
     Route::post('/listarFondosAdmin',  [App\Http\Controllers\AdminController::class, 'listarFondosAdmin'])->name('listarFondosAdmin');
     Route::post('listarUsers', [App\Http\Controllers\AdminController::class, 'getData'])->name('listarUsers');
     Route::post('/cambiarPassAd', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('cambiarPassAd');
+    Route::post('/cambiarComuna', [App\Http\Controllers\AdminController::class, 'cambiarComuna'])->name('cambiarComuna');
     Route::post('detalleUser/guardarPuntaje', [App\Http\Controllers\AdminController::class, 'guardarPuntaje'])->name('guardarPuntaje');
     Route::get('/admin', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('verPerfil', [App\Http\Controllers\AdminController::class, 'verPerfil'])->name('verPerfil');

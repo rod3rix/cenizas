@@ -136,6 +136,11 @@
                                     <a class="dropdown-item" href="{{ route('cambiarPassAdmin') }}">
                                         {{ __('Cambiar contraseña') }}
                                     </a>
+                                        @if(auth::user()->rol=="1")
+                                        <button class="dropdown-item" id="cambiarComunaButton">
+                                            {{ __('Cambiar Comuna') }}
+                                        </button>
+                                        @endif
                                     @endif
 
                                     @if(auth::user()->type=="user")
@@ -149,7 +154,6 @@
                                     <a class="dropdown-item" href="{{ route('cambiarPass') }}">
                                         {{ __('Cambiar contraseña') }}
                                     </a>
-                                    
                                     @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -173,6 +177,24 @@
         </main>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="mensajeModal" tabindex="-1" role="dialog" aria-labelledby="mensajeModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="mensajeModalLabel">Mensaje</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="mensajeExito">
+            <!-- El mensaje se insertará aquí -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="container zfooter">
   <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-4">
   <p class="col-md-6 mb-0 text-body-secondary">Para mayor información, consultas o dudas:  <a href="tel:+56991594961">+56 9 9159 4961</a>  /  <a href="mailto:comunidades@cenizas.cl">comunidades@cenizas.cl</a></p>
@@ -183,6 +205,6 @@
     </ul>
   </footer>
 </div>
-
+<script src="{{ asset('js/frm_cambiar_comuna.js') }}?v={{ time() }}"></script>
 </body>
 </html>
