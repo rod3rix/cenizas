@@ -57,56 +57,74 @@
     @guest
     @else
     @if(auth::user()->type=="user")
-      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">FONDOS CONCURSABLES</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{{ route('postularFondos') }}">POSTULAR FONDOS CONCURSABLES.</a></li>
-              <li><a class="dropdown-item" href="{{ route('seguimientoFondos') }}">VER ESTADO POSTULACIONES</a></li>
+    <nav class="navbar navbar-expand-lg ms-auto" aria-label="Offcanvas navbar large">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasNavbar2" aria-labelledby="offcanvasNavbar2Label">
+          <div class="offcanvas-header">
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <li class="nav-item"><a class="nav-link" aria-current="page" href="{{ url('/') }}">Inicio</a></li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Fondos Concursables</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{{ route('postularFondos') }}">Postular Fondos Concursables</a></li>
+                  <li><a class="dropdown-item" href="{{ route('seguimientoFondos') }}">Ver Estado Postulaciones</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Apoyo proyectos</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{{ route('postularProyectos') }}">Postular Proyectos</a></li>
+                  <li><a class="dropdown-item" href="{{ route('seguimientoProyectos') }}">Ver Estado Postulaciones</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sugerencias / Reclamos</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{{ route('enviarCaso') }}">Ingresar Caso</a></li>
+                  <li><a class="dropdown-item" href="{{ route('seguimientoCasosUsu') }}">Ver estado del caso</a></li>
+                </ul>
+              </li>
             </ul>
-          </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">APOYO PROYECTOS</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{{ route('postularProyectos') }}">POSTULAR PROYECTOS</a></li>
-              <li><a class="dropdown-item" href="{{ route('seguimientoProyectos') }}">VER ESTADO POSTULACIONES</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">SUGERENCIAS/RECLAMOS</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{{ route('enviarCaso') }}">INGRESAR CASO</a></li>
-              <li><a class="dropdown-item" href="{{ route('seguimientoCasosUsu') }}">VER ESTADO DEL CASO</a></li>
-            </ul>
-          </li>
-      </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
       @endif
 
       @if(auth::user()->type=="admin")
-      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('usuariosRegistrados') }}" data-bs-toggle="" aria-expanded="false">USUARIOS</a>
-          </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">FONDOS CONCURSABLES</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{{ route('verPostulacionesFondos') }}">Ver Postulaciones</a></li>
-              <li><a class="dropdown-item" href="{{ route('listarFondosConcursables') }}">Ver fondos concursables</a></li>
-
-              @if(auth::user()->rol=="1")
-                <li><a class="dropdown-item" href="{{ route('crearFondoConcursable') }}">Crear fondos concursables</a></li>
-              @endif
-
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " href="{{ route('verPostulacionesProyectos') }}" data-bs-toggle="" aria-expanded="false">APOYO PROYECTOS</a>
-            
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('verSugerenciaReclamo') }}" data-bs-toggle="" aria-expanded="false">SUGERENCIAS/RECLAMOS</a>
-          </li>
-      </ul>
+      <nav class="navbar navbar-expand-lg ms-auto" aria-label="Offcanvas navbar large">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasNavbar2" aria-labelledby="offcanvasNavbar2Label">
+            <div class="offcanvas-header">
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item"><a class="nav-link" aria-current="page" href="{{ url('/') }}">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('usuariosRegistrados') }}" data-bs-toggle="" aria-expanded="false">Usuarios</a></li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Fondos Concursables</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{ route('verPostulacionesFondos') }}">Ver Postulaciones</a></li>
+                    <li><a class="dropdown-item" href="{{ route('listarFondosConcursables') }}">Ver fondos concursables</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link " href="{{ route('verPostulacionesProyectos') }}" data-bs-toggle="" aria-expanded="false">Apoyo proyectos</a</li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('verSugerenciaReclamo') }}" data-bs-toggle="" aria-expanded="false">Sugerencias / Reclamo</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
       @endif
       @endguest
 
@@ -122,7 +140,7 @@
         @endif
         </div>
         @else
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav">
         <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -199,7 +217,7 @@
   <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-4">
   <p class="col-md-6 mb-0 text-body-secondary">Para mayor información, consultas o dudas:  <a href="tel:+56991594961">+56 9 9159 4961</a>  /  <a href="mailto:comunidades@cenizas.cl">comunidades@cenizas.cl</a></p>
   <ul class="nav col-md-4 justify-content-end">
-        <li class="nav-item"><a href="https://comunidades.cenizas.cl/terminoCondiciones" class="nav-link px-2 text-body-secondary">Términos y condiciones</a></li>
+        <li class="nav-item"><a href="{{ route('terminoCondiciones') }}" class="nav-link px-2 text-body-secondary">Términos y condiciones</a></li>
       <li class="nav-item"><a href="https://cenizas.cl" class="nav-link px-2 text-body-secondary">www.cenizas.cl</a></li>
 
     </ul>
