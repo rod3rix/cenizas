@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
 <div class="jumbotron">
-    <div class="container text-center">
-          <h3><b>Ver Postulaciones a Fondos Concursables</b></h3>
-          <!-- <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique. This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p> -->
-        </div>
-
+    <div class="container-fluid headpage">
+    <div class="row justify-content-center headinner">
+      <h1>Ver Postulaciones a Fondos Concursables</h1>
+    </div>
+  </div>
         <div  class="container">          
             <!-- <h5><b>Mis relaciones jurídicas asociadas</b></h5> -->
                   <table id="registros" class="table table-striped table-bordered" style="width:100%">

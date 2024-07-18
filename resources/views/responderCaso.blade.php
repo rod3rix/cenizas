@@ -3,12 +3,12 @@
 @section('content')
 @if($acceso && ($caso->estado === null || $caso->estado != 1))
 <section class="jumbotron">
+    <div class="container-fluid headpage">
+        <div class="row justify-content-center headinner">
+            <h1>Responder Caso</h1>
+        </div>
+  </div>
     <div class="container ">
-      <h1 class="jumbotron-heading text-center"><b>Responder Caso</b></h1>
-      <p class="lead text-muted text-center">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una.</p>
-      <br>
-      <br>
-
   <div class="my-3 p-3 bg-white rounded shadow-sm">
     <h4 class="border-bottom border-gray pb-2 mb-0">N° CASO {{ $caso->id }}</h4>
     <h6 class="border-bottom border-gray pb-2 mb-0">Reclamo / Sugerencia / Otros</h6>

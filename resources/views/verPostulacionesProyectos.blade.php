@@ -1,9 +1,11 @@
 @extends('layouts.app')
 @section('content')
 <div class="jumbotron">
-    <div class="container text-center">
-          <h3><b>Seguimiento de postulaciones<br>Apoyo Proyecto</b></h3>
-        </div>
+    <div class="container-fluid headpage">
+    <div class="row justify-content-center headinner">
+      <h1>Seguimiento de postulaciones Apoyo Proyecto</h1>
+    </div>
+  </div>
 
         <div  class="container">          
             <!-- <h5><b>Mis relaciones jurídicas asociadas</b></h5> -->

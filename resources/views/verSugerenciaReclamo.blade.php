@@ -1,10 +1,11 @@
 @extends('layouts.app')
 @section('content')
 <div class="jumbotron">
-        <div class="container text-center">
-          <h3><b>Ver Sugerencia Reclamo u otros</b></h3>
-        </div>
-        <hr>
+<div class="container-fluid headpage">
+    <div class="row justify-content-center headinner">
+      <h1>Ver Sugerencias, Reclamos u otros</h1>
+    </div>
+  </div>
         <div  class="container">    
         <table id="registros" class="table table-striped table-bordered" style="width:100%">
         <thead>

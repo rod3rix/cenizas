@@ -3,7 +3,7 @@
 <div class="jumbotron">
     <div class="container-fluid headpage">
     <div class="row justify-content-center headinner">
-        <h1>Seguimiento de postulaciones Apoyo Proyecto</h1>
+        <h1>Seguimiento de postulaciones Apoyo de Proyectos</h1>
     </div>
     </div>
 

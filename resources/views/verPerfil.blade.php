@@ -1,12 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-
+<div class="container-fluid headpage">
+    <div class="row justify-content-center headinner">
+      <h1>Perfil de Usuario</h1>
+    </div>
+  </div>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Perfil de Usuario</div>
 
                 <div class="card-body">
                     <div class="form-group row">

@@ -2,10 +2,12 @@
 
 @section('content')
 <div class="jumbotron">
-    <div class="container">
-        <h3><b>Creación de Fondos Concursables</b></h3>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content.</p>
+    <div class="container-fluid headpage">
+        <div class="row justify-content-center headinner">
+            <h1>Creación de Fondos Concursables</h1>
+        </div>
     </div>
+
     <div class="container mt-5">
         <div id="mensajeExito" class="alert alert-success" style="display: none;">
         </div>

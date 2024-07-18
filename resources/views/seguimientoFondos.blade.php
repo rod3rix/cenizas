@@ -3,7 +3,7 @@
 <div class="jumbotron">
     <div class="container-fluid headpage">
     <div class="row justify-content-center headinner">
-        <h1>Seguimiento postulaciones a fondos concursables enviadas</h1>
+        <h1>Seguimiento postulaciones a Fondos Concursables</h1>
     </div>
     </div>
 

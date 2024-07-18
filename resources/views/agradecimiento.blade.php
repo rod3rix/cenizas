@@ -1,17 +1,16 @@
 @extends('layouts.app')
 @section('content')
 <section class="jumbotron text-center">
+  <div class="container-fluid headpage">
+    <div class="row justify-content-center headinner">
+      <h1>Gracias por postular a apoyo de proyectos</h1>
+      <p>Pronto te daremos una respuesta</p>
+    </div>
+  </div>
     <div class="container">
-      <h1 class="jumbotron-heading"><b>Gracias por postular a<br> apoyo de proyectos</b></h1>
-      <h1 class="jumbotron-heading">Pronto te daremos una respuesta.</h1>
-      <br>
-      <br>
-      <a href="" class="btn btn-primary my-2">Volver a inicio</a>
+        <a href="{{ route('home') }}" class="btn btn-primary my-2">Volver a inicio</a>
         <a href="{{ route('verPostulacionesFondos') }}" class="btn btn-primary my-2">Seguimiento de postulación</a>
       </p>
     </div>
-    <br>
-  <br>
-<hr>
 </section>
 @endsection

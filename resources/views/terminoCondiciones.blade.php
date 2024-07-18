@@ -1,8 +1,12 @@
 @extends('layouts.app')
 @section('content')
 <section class="jumbotron">
+<div class="container-fluid headpage">
+    <div class="row justify-content-center headinner">
+      <h1>Términos y condiciones</h1>
+    </div>
+  </div>
     <div class="container">
-      <h1 class="jumbotron-heading text-center"><b>Términos y condiciones</b></h1>
       <ol class="termscond">
         <li><strong>Objeto:</strong> La presente cláusula regula el tratamiento de la información personal proporcionada por los participantes en el marco de la postulación a los fondos concursables abiertos a la comunidad organizados por Grupo Minera Las Cenizas.</li>
         <li><strong>Finalidad del Tratamiento:</strong> Los datos personales recopilados serán utilizados exclusivamente para gestionar y evaluar las postulaciones a los fondos concursables, así como para comunicarse con los participantes en relación a sus solicitudes y los resultados del concurso.</li>
@@ -16,8 +20,5 @@
       </ol>
 
     </div>
-<br>
-<br>      
-<hr>
 </section>
 @endsection

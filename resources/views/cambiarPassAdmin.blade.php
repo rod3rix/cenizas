@@ -1,10 +1,15 @@
 @extends('layouts.app')
 @section('content')
+<div class="container-fluid headpage">
+  <div class="row justify-content-center headinner">
+    <h1>Cambiar Contraseña</h1>
+  </div>
+</div>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Cambiar Contraseña</div>
+                
 
                 <div class="card-body">
                         <form id="changePasswordForm">

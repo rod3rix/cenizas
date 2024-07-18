@@ -2,8 +2,12 @@
 @section('content')
 @if($acceso)
 <section class="jumbotron">
+<div class="container-fluid headpage">
+    <div class="row justify-content-center headinner">
+      <h1>Usuario Registrad</h1>
+    </div>
+  </div>
     <div class="container ">
-        <h1 class="jumbotron-heading text-center"><b>Usuario Registrado</b></h1>
         <div class="my-3 p-3 bg-white rounded shadow-sm">
             <h4 class="border-bottom border-gray pb-2 mb-0">USUARIO ID</h4>
             <h6 class="border-bottom border-gray pb-2 mb-0">Antecedentes generales</h6>

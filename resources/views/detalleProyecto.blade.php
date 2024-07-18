@@ -1,9 +1,12 @@
 @extends('layouts.app')
 @section('content')
 <section class="jumbotron">
+  <div class="container-fluid headpage">
+    <div class="row justify-content-center headinner">
+      <h1>Detalle postulación apoyo proyecto</h1>
+    </div>
+  </div>
     <div class="container ">
-      <h1 class="jumbotron-heading text-center"><b>Detalle postulación apoyo proyecto</b></h1>
-      <p class="lead text-muted text-center">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
 <div class="my-3 p-3 bg-white rounded shadow-sm">
     <h4 class="border-bottom border-gray pb-2 mb-0">PROYECTO FOLIO 45678</h4>
     <h6 class="border-bottom border-gray pb-2 mb-0">Antecedentes generales</h6>
