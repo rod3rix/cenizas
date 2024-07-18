@@ -3,7 +3,7 @@
 @if($acceso && ($caso->estado !== null || $caso->estado === 1))
 <section class="jumbotron">
 <div class="container ">
-    <div class="my-3 p-3 bg-white rounded shadow-sm">
+    <div class="my-3 p-3 bg-white rounded ">
     <div class="media text-muted pt-3">
         <h4>SUGERENCIA, RECLAMO U OTRO CASO N°:{{ $caso->casoid }}</h4>
     </div>
