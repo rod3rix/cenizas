@@ -59,7 +59,7 @@ a.btn-primary {
 
 button:hover.btn,
 a:hover.btn-primary {
-    background-color: var(--brown-1);
+    background-color: var(--brown-1) !important;
 }
 
 .card {
@@ -497,3 +497,15 @@ li.termscond {
     line-height: 1.6;
 }
 
+
+
+.active>.page-link, .page-link.active {
+    z-index: 3;
+    color: var(--yellow-1);
+    background-color: var(--brown-1);
+    border-color: var(--brown-1);
+}
+
+.dt-search {
+    margin-bottom: 6px;
+}
