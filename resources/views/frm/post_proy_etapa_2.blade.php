@@ -1,7 +1,7 @@
 <div id="etapa_2" style="display:none">
     <div class="container mt-3">
         <h5><b>DATOS ORGANIZACIÓN o MIPYME</b></h5>
-        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500</p>
+        <!-- <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500</p> -->
         <div class="container mt-5">
             <!-- Select with Tooltip -->
             <div class="mb-3">
