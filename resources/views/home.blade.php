@@ -10,33 +10,30 @@
         <div class="container">
         <div class="card-deck mb-3 text-center">
         <div class="row mb-3 text-center">
-      <div class="col-md-4 themed-grid-col"><div class="card fondos mb-4 shadow-sm">
+      <div class="col-md-4 themed-grid-col"><div class="card fondos mb-4">
           <div class="card-header">
                <h4>Fondos Concursables</h4>
           </div>
           <div class="card-body">
             <a href="{{ route('postularFondos') }}" class="btn btn-lg btn-block btn-primary">Postular Fondos Concursables</a>
-            <hr>
             <a href="{{ route('seguimientoFondos') }}" class="btn btn-lg btn-block btn-primary">Ver Estado Postulaciones</a>
           </div>
         </div></div>
-      <div class="col-md-4 themed-grid-col"><div class="card proyectos mb-4 shadow-sm">
+      <div class="col-md-4 themed-grid-col"><div class="card proyectos mb-4">
           <div class="card-header">
                 <h4>Apoyo para proyectos</h4>
           </div>
           <div class="card-body">
             <a href="{{ route('postularProyectos') }}" class="btn btn-lg btn-block btn-primary">Postular Proyectos</a>
-            <hr>
             <a href="{{ route('seguimientoProyectos') }}" class="btn btn-lg btn-block btn-primary">Ver Estado Postulaciones</a>
           </div>
         </div></div>
-      <div class="col-md-4 themed-grid-col">  <div class="card sugerencias mb-4 shadow-sm">
+      <div class="col-md-4 themed-grid-col">  <div class="card sugerencias mb-4">
           <div class="card-header">
             <h4>sugerencias/Reclamo</h4>
           </div>
           <div class="card-body">   
             <a href="{{ route('enviarCaso') }}" class="btn btn-lg btn-block btn-primary">Ingresar Casos</a>
-            <hr>
             <a href="{{ route('seguimientoCasosUsu') }}" class="btn btn-lg btn-block btn-primary">Ver Estado Casos</a>
           </div>
         </div></div>
