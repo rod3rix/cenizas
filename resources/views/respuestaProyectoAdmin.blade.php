@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-@if($acceso)
+@if($acceso && ($pproy->estado === 2 || $pproy->estado === 3))
 <section class="jumbotron">
     <div class="container ">
       <h1 class="jumbotron-heading text-center"><b>Ver respuesta Apoyo Proyectos</b></h1>
@@ -261,23 +261,31 @@
 </div>
 
  <div class="my-3 p-3 bg-white rounded shadow-sm">
-    <h6 class="border-bottom border-gray pb-2 mb-0">RESPUESTA</h6>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">{{ $pproy->respuesta }}</strong>
-      </p>
+        <strong class="d-block text-gray-dark">RESPUESTA:</strong>
+        {{ $pproy->respuesta }}<p>
     </div>
     <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125">
-            <strong class="d-block text-gray-dark">Archivo Adjunto</strong>
-        </p>
-      @if($pproy->archivo_respuesta)
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">ESTADO:</strong>
+        @if($pproy->estado==2)
+            Aceptado
+        @else
+            Rechazado
+        @endif<p>
+    </div>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">ARCHIVO ADJUNTO:</strong>
+        @if($pproy->archivo_respuesta)
       <a href="{{ asset('storage/archivos/' . $pproy->archivo_respuesta ) }}" download="{{ $pproy->archivo_respuesta }}">Descargar Adjunto</a>
       @else
       Sin archivo
       @endif 
+      <p>
     </div>
-</div>
+  </div>
 </div>
 </section>
 @else

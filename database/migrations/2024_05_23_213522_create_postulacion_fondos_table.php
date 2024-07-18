@@ -39,12 +39,15 @@ return new class extends Migration
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_termino')->nullable();
             $table->integer('cantidad_dias')->nullable();
+            $table->string('rec_humanos')->nullable();
+            $table->string('mat_insumos')->nullable();
+            $table->string('rec_hum_otros')->nullable();
             $table->string('aporte_solicitado')->nullable();
             $table->string('aporte_terceros')->nullable();
             $table->string('aporte_propio')->nullable();
             $table->string('archivo_anexo')->nullable();
             $table->string('archivo_certificado')->nullable();
-            $table->string('estado')->nullable();
+            $table->integer('estado')->nullable();
             $table->integer('calificar')->nullable();
             $table->string('respuesta', 1500)->nullable();
             $table->string('archivo_respuesta')->nullable();

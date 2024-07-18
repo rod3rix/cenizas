@@ -3,12 +3,11 @@
 <section class="jumbotron text-center">
         <div class="container">
           <h3>PANEL DE ADMINISTRACIÓN</h3>
-          <p class="lead text-muted">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.</p>
           <p>
-            <a href="#" class="btn btn-secondary my-3">VER USUARIOS</a>
-            <a href="#" class="btn btn-secondary my-3">VER USUARIOS FONDOS CONCURSABLES</a>
-            <a href="#" class="btn btn-secondary my-3">VER POSTULACIONES APOYO PROYECTOS</a>
-            <a href="#" class="btn btn-secondary my-3">VER CASOS</a>
+            <a href="{{ route('usuariosRegistrados') }}" class="btn btn-secondary my-3">VER USUARIOS</a>
+            <a href="{{ route('verPostulacionesFondos') }}" class="btn btn-secondary my-3">VER POSTULACIONES FONDOS CONCURSABLES</a>
+            <a href="{{ route('verPostulacionesProyectos') }}" class="btn btn-secondary my-3">VER POSTULACIONES APOYO PROYECTOS</a>
+            <a href="{{ route('verSugerenciaReclamo') }}" class="btn btn-secondary my-3">VER CASOS</a>
           </p>
         </div>
 @if(auth::user()->rol=="1")
@@ -148,75 +147,74 @@
             </div>
         </div>
 </div>
-<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="userModalLabel">Editar Usuario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="userForm">
-                    @csrf
-                    <input type="hidden" id="userId" name="id">
-                    <div class="mb-3 row">
-                        <label for="modalUserName" class="col-sm-4 col-form-label">Nombre</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="modalUserName" name="modalUserName">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="modalUserApellidoPaterno" class="col-sm-4 col-form-label">Apellido Paterno</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="modalUserApellidoPaterno" name="modalUserApellidoPaterno">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="modalUserApellidoMaterno" class="col-sm-4 col-form-label">Apellido Materno</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="modalUserApellidoMaterno" name="modalUserApellidoMaterno">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="modalUserRut" class="col-sm-4 col-form-label">RUT</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="modalUserRut" name="modalUserRut" onkeyup="formatRut(this)">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="modalUserEmail" class="col-sm-4 col-form-label">Email</label>
-                        <div class="col-sm-8">
-                            <input type="email" class="form-control" id="modalUserEmail" name="modalUserEmail">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="modalUserTelefono" class="col-sm-4 col-form-label">Teléfono</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="modalUserTelefono" name="modalUserTelefono" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="modalUserZona" class="col-sm-4 col-form-label">Zona</label>
-                        <div class="col-sm-8">
-                         <select class="form-select" id="modalUserZona" name="modalUserZona">
-                            <option value="1">Taltal</option>
-                            <option value="2">Cabildo</option>
-                        </select>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="modalUserPassword" class="col-sm-4 col-form-label">Contraseña</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="modalUserPassword" name="modalUserPassword">
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                </form>
-            </div>
+          <div class="modal-header">
+            <h5 class="modal-title" id="userModalLabel">Editar Usuario</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="userForm">
+              @csrf
+              <input type="hidden" id="userId" name="id">
+              <div class="mb-3 row">
+                <label for="modalUserName" class="col-sm-4 col-form-label">Nombre</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="modalUserName" name="modalUserName">
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="modalUserApellidoPaterno" class="col-sm-4 col-form-label">Apellido Paterno</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="modalUserApellidoPaterno" name="modalUserApellidoPaterno">
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="modalUserApellidoMaterno" class="col-sm-4 col-form-label">Apellido Materno</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="modalUserApellidoMaterno" name="modalUserApellidoMaterno">
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="modalUserRut" class="col-sm-4 col-form-label">RUT</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="modalUserRut" name="modalUserRut" onkeyup="formatRut(this)">
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="modalUserEmail" class="col-sm-4 col-form-label">Email</label>
+                <div class="col-sm-8">
+                  <input type="email" class="form-control" id="modalUserEmail" name="modalUserEmail">
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="modalUserTelefono" class="col-sm-4 col-form-label">Teléfono</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="modalUserTelefono" name="modalUserTelefono" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12">
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="modalUserZona" class="col-sm-4 col-form-label">Zona</label>
+                <div class="col-sm-8">
+                  <select class="form-select" id="modalUserZona" name="modalUserZona">
+                    <option value="1">Taltal</option>
+                    <option value="2">Cabildo</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="modalUserPassword" class="col-sm-4 col-form-label">Contraseña</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="modalUserPassword" name="modalUserPassword">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
-</div>
 <script>
     const appConfig = {dataTablesLangUrl:
     "{{ asset('lang/datatables/Spanish.json') }}"};

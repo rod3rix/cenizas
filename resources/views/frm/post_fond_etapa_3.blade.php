@@ -133,9 +133,9 @@
                   </div>
 
                   <div class="form-group row">
-                     <label for="otros" class="col-md-2 col-form-label text-md-left">{{ __('Otros') }}</label>
+                     <label for="rec_hum_otros" class="col-md-2 col-form-label text-md-left">{{ __('Otros') }}</label>
                      <div class="col-md-10">
-                        <input id="otros" type="text" class="miles form-control tot_presupuesto" name="otros" value="{{ old('otros') }}" required autocomplete="otros" placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
+                        <input id="rec_hum_otros" type="text" class="miles form-control tot_presupuesto" name="rec_hum_otros" value="{{ old('rec_hum_otros') }}" required autocomplete="rec_hum_otros" placeholder="$" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" onpaste="handlePaste(event)">
                      </div>
                   </div>
 

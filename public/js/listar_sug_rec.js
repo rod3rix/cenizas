@@ -11,43 +11,49 @@ $(document).ready(function() {
                 },
                 data: response,
                 columns: [
-                    { data: 'id' },
-                    { data: 'asunto' },
-                    { data: 'nombre_usuario' },
-                    { data: 'fecha_creacion' },
-                    { data: 'estado' },
-                    { data: 'respuesta' }
+                    { data: 'id', title: 'N° CASO' },
+                    { data: 'asunto', title: 'ASUNTO' },
+                    { data: 'nombre_usuario', title: 'NOMBRE' },
+                    { data: 'fecha_creacion', title: 'FECHA ENVÍO' },
+                    { data: 'estado', title: 'ESTADO' },
+                    { data: 'respuesta', title: 'RESPUESTA' },
+                    { data: 'tipo', title: 'TIPO', visible: false },
+                    { data: 'comuna', title: 'COMUNA', visible: false },
+                    { data: 'direccion', title: 'DIRECCIÓN', visible: false },
+                    { data: 'descripcion', title: 'DESCRIPCIÓN', visible: false },
+                    { data: 'resp', title: 'RESPUESTAS', visible: false }
                 ],
-                dom: 'Bfrtip',
+             dom: 'Bfrtip',
                 buttons: [
                     {
                         extend: 'copy',
                         exportOptions: {
-                            modifier: {
-                                page: 'all'
+                            columns: function ( idx, data, node ) {
+                                return idx !== 5; // Excluye la columna 'respuesta'
                             }
-                        }
+                        },
+                        title: 'Portal Comunidades'
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            modifier: {
-                                page: 'all'
+                            columns: function ( idx, data, node ) {
+                                return idx !== 5; // Excluye la columna 'respuesta'
                             }
                         },
                         filename: 'Portal Comunidades',
                         title: 'Portal Comunidades'
                     },
-                    {
-                        extend: 'pdf',
-                        exportOptions: {
-                            modifier: {
-                                page: 'all'
-                            }
-                        },
-                        filename: 'Portal Comunidades',
-                        title: 'Portal Comunidades'
-                    }
+                    // {
+                    //     extend: 'pdf',
+                    //     exportOptions: {
+                    //         columns: function ( idx, data, node ) {
+                    //             return idx !== 5; // Excluye la columna 'respuesta'
+                    //         }
+                    //     },
+                    //     filename: 'Portal Comunidades',
+                    //     title: 'Portal Comunidades'
+                    // }
                 ],
                 paging: true
             });

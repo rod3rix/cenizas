@@ -1,29 +1,35 @@
 @extends('layouts.app')
 @section('content')
-@if($acceso)
+@if($acceso && ($caso->estado !== null || $caso->estado === 1))
 <section class="jumbotron">
 <div class="container ">
+    <div class="my-3 p-3 bg-white rounded shadow-sm">
     <div class="media text-muted pt-3">
-        <h3>SUGERENCIA, RECLAMO U OTRO CASO N°:{{ $caso->casoid }}</h3>
-        <p class="media-body pb-3 mb-0 small lh-125">
-            <strong class="d-block text-gray-dark"></strong>
-            {{ $caso->respuesta }}
-        </p>
+        <h4>SUGERENCIA, RECLAMO U OTRO CASO N°:{{ $caso->casoid }}</h4>
     </div>
     <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 text-md-right">
-            <div class="mb-3">
-          ARCHIVO ADJUNTO:<br>
-            <a href="{{ asset('storage/archivos/' . $caso->archivo) }}" download>{{ $caso->archivo_respuesta }}</a>
-            </div>
-        </p>
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">RESPUESTA:</strong>
+        {{ $caso->respuesta }}<p>
     </div>
+
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">ARCHIVO ADJUNTO:</strong>
+        @if($caso->archivo_respuesta)
+      <a href="{{ asset('storage/archivos/' . $caso->archivo) }}" download>{{ $caso->archivo_respuesta }}</a>
+      @else
+      Sin archivo
+      @endif 
+      <p>
+    </div>
+  </div>
  
 <div class="accordion" id="accordionExample">
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
     <button class="accordion-button text-center collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-        Ver detalles Caso ingresado
+        VER DETALLE CASO INGRESADO
     </button>
 
     </h2>
@@ -38,8 +44,12 @@
     </div>
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">Localidad:</strong>
-            {{ $caso->localidad }}
+            <strong class="d-block text-gray-dark">Comuna:</strong>
+            @if($caso->comuna === 1)
+              Taltal
+            @else
+              Cabildo
+            @endif 
         </p>
     </div>
     <div class="media text-muted pt-3">
@@ -80,18 +90,6 @@
     </div>
     <div class="media text-muted pt-3">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">Región:</strong>
-            {{ $caso->region }}
-        </p>
-    </div>
-    <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">Comuna:</strong>
-            {{ $caso->comuna }}
-        </p>
-    </div>
-    <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">Dirección:</strong>
             {{ $caso->descripcion }}
         </p>
@@ -112,11 +110,11 @@
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">Adjuntar foto y/o video:</strong>
             Descargar archivo:
-        @if ($caso->archivo)
-            <a href="{{ asset('storage/archivos/' . $caso->archivo) }}" download>{{ $caso->archivo }}</a>
-        @else
-            <p>Sin archivo adjunto</p>
-        @endif
+            @if ($caso->archivo)
+                <a href="{{ asset('storage/archivos/' . $caso->archivo) }}" download>{{ $caso->archivo }}</a>
+            @else
+                <p>Sin archivo adjunto</p>
+            @endif
         </p>
     </div>
 </div>

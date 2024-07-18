@@ -236,8 +236,9 @@ protected $fillable = [
         $zona = Auth::user()->zona;
 
         $postulacion = PostulacionProyectos::join('users', 'postulacion_proyectos.user_id', '=', 'users.id')
-        ->where('users.zona',$zona)
-        ->get(['postulacion_proyectos.*', 'users.*','postulacion_proyectos.id']);
+        ->join('datos_organizaciones', 'postulacion_proyectos.organizacion_id', '=', 'datos_organizaciones.id')
+        ->where('users.zona', $zona)
+        ->get(['datos_organizaciones.*', 'postulacion_proyectos.*', 'postulacion_proyectos.respuesta as resp', 'users.*', 'postulacion_proyectos.id']);
 
         $postulacion = $postulacion->transform(function ($postulacion) {
             switch ($postulacion->estado) {
@@ -257,6 +258,29 @@ protected $fillable = [
                     $postulacion->respuesta = '<a href="' . route("respuestaProyectoAdmin", ["id" => $postulacion->id]) . '">Ver Respuesta</a>';
                     break;
             } 
+
+            $pueblo_originario = [
+                1 => 'Si',
+                0 => 'No',
+            ];
+
+            $postulacion->pueblo_originario = $pueblo_originario[$postulacion->pueblo_originario] ?? $postulacion->pueblo_originario;
+
+            $discapacidad = [
+                1 => 'Si',
+                0 => 'No',
+            ];
+
+            $postulacion->discapacidad = $discapacidad[$postulacion->discapacidad] ?? $postulacion->discapacidad;
+
+            $formacion_formal = [
+                1 => 'Si',
+                0 => 'No',
+            ];
+
+            $postulacion->formacion_formal = $formacion_formal[$postulacion->formacion_formal] ?? $postulacion->formacion_formal;
+
+            $postulacion->acepto_clausula_proy = 'Aceptada';
 
             $postulacion->created_at_formatted = Carbon::parse($postulacion->created_at)->format('d-m-Y');
             

@@ -47,6 +47,9 @@ class PostulacionFondos extends Model
          'fecha_inicio',
          'fecha_termino',
          'cantidad_dias',
+         'rec_humanos',
+         'mat_insumos',
+         'rec_hum_otros',
          'aporte_solicitado',
          'aporte_terceros',
          'aporte_propio',
@@ -90,6 +93,9 @@ class PostulacionFondos extends Model
          'fecha_inicio',
          'fecha_termino',
          'cantidad_dias',
+         'rec_humanos',
+         'mat_insumos',
+         'rec_hum_otros',
          'aporte_solicitado',
          'aporte_terceros',
          'aporte_propio',
@@ -142,6 +148,9 @@ class PostulacionFondos extends Model
             'fecha_inicio' => date('Y-m-d', strtotime($data['fecha_inicio'])),
             'fecha_termino' => date('Y-m-d', strtotime($data['fecha_termino'])),
             'cantidad_dias' => $data['cantidad_dias'],
+            'rec_humanos'  => $data['rec_humanos'],
+            'mat_insumos'  => $data['mat_insumos'],
+            'rec_hum_otros'  => $data['rec_hum_otros'],
             'aporte_solicitado' => $data['aporte_solicitado'],
             'aporte_terceros' => $data['aporte_terceros'],
             'aporte_propio' => $data['aporte_propio'],
@@ -336,15 +345,15 @@ class PostulacionFondos extends Model
             switch ($postulacion->estado_num) {
                 case 1:
                     $postulacion->estado_texto = 'Enviado';
-                    $postulacion->resolucion = 'En proceso';
+                    $postulacion->resolucion = '<a href="' . route("detalleFondoAdmin", ["id" => $postulacion->id_postulacion]) . '">Responder</a>';
                     break;
                 case 2:
                     $postulacion->estado_texto = 'Aceptado';
-                    $postulacion->resolucion = '<a href="' . route("respuestaFondo", ["id" => $postulacion->id_postulacion]) . '">Ver Respuesta</a>';
+                    $postulacion->resolucion = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id_postulacion]) . '">Ver Respuesta</a>';
                     break;
                 case 3:
                     $postulacion->estado_texto = 'Rechazado';
-                    $postulacion->resolucion = '<a href="' . route("respuestaFondo", ["id" => $postulacion->id_postulacion]) . '">Ver Respuesta</a>';
+                    $postulacion->resolucion = '<a href="' . route("respuestaFondoAdmin", ["id" => $postulacion->id_postulacion]) . '">Ver Respuesta</a>';
                     break;
             }
             $postulacion->created_at_formatted = Carbon::parse($postulacion->created_at)->format('d-m-Y');

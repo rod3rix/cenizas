@@ -108,7 +108,9 @@ class AdminController extends Controller
     public function responderCaso($id)
     {
         $caso = Casos::responderCaso($id);
-        
+
+        // dd($caso->estado);
+
         $acceso = User::acceso($caso);
 
         return view('responderCaso', compact('caso','acceso'));
@@ -216,7 +218,7 @@ class AdminController extends Controller
         return view('confirmacionRespuestaCaso');
     }
 
-     public function changePassword(Request $request)
+    public function changePassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
         'current_password' => [
@@ -256,6 +258,26 @@ class AdminController extends Controller
         $user->save();
 
         return response()->json(['success' => true, 'message' => '¡La contraseña ha sido cambiada correctamente!']);
+    }
+
+    public function cambiarComuna()
+    {    
+        $user = auth()->user();
+    
+        if ($user->rol == 1) {
+            if ($user->zona === 1) {
+                $user->zona = 2;
+            } elseif ($user->zona === 2) {
+                $user->zona = 1;
+            }
+
+            $user->save();
+
+            return response()->json(['success' => true, 'message' => '¡La comuna ha sido cambiada correctamente!']);
+        } else {
+
+            return response()->json(['success' => false, 'message' => 'No tienes permiso para cambiar la comuna.']);
+        }
     }
 
     public function getData()

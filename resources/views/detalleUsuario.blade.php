@@ -4,9 +4,6 @@
 <section class="jumbotron">
     <div class="container ">
         <h1 class="jumbotron-heading text-center"><b>Usuario Registrado</b></h1>
-        <p class="lead text-muted text-center">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
-        
-        <!-- Información de Usuario -->
         <div class="my-3 p-3 bg-white rounded shadow-sm">
             <h4 class="border-bottom border-gray pb-2 mb-0">USUARIO ID</h4>
             <h6 class="border-bottom border-gray pb-2 mb-0">Antecedentes generales</h6>
@@ -44,6 +41,16 @@
                 <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <strong class="d-block text-gray-dark">6. Teléfono</strong>
                     {{ $user->fono }}
+                </p>
+            </div>
+            <div class="media text-muted pt-3">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">7. Comuna</strong>
+                    @if($user->zona === 1)
+                      Taltal
+                    @else
+                      Cabildo
+                    @endif  
                 </p>
             </div>
         </div>
@@ -148,7 +155,7 @@
                                                         @foreach($casos as $caso)
                                                         <tr>
                                                             <td class="col-4">{{ $caso->tipo }}</td>
-                                                            <td class="col-4">{{ $caso->created_at }}</td>
+                                                            <td class="col-4">{{ $caso->fecha_creacion }}</td>
                                                             <td class="col-4">{{ $caso->estado }}</td>
                                                             <td class="col-4">{!! $caso->respuesta !!}</td>
                                                         </tr>

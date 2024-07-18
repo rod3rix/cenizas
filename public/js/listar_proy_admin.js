@@ -11,43 +11,71 @@ $(document).ready(function() {
                 },
                 data: response,
                 columns: [
-                    { data: 'id' },
-                    { data: 'nombre_proyecto' },
-                    { data: 'created_at_formatted' },
-                    { data: 'estado' },
-                    { data: 'name' },
-                    { data: 'respuesta' }
+                    { data: 'id', title: 'N° POSTULACIÓN' },
+                    { data: 'nombre_proyecto' , title: 'NOMBRE PROYECTO' },
+                    { data: 'created_at_formatted', title: 'FECHA ENVIO' },
+                    { data: 'estado', title: 'ESTADO' },
+                    { data: 'name', title: 'NOMBRE' },
+                    { data: 'respuesta' , title: 'RESPUESTA' },
+                    { data: 'genero', title: 'GENERO', visible: false },
+                    { data: 'pueblo_originario', title: 'PUEBLO ORIGINARIO', visible: false },
+                    { data: 'discapacidad', title: 'DISCAPACIDAD', visible: false },
+                    { data: 'fecha_nacimiento', title: 'FECHA NACIMIENTO', visible: false },
+                    { data: 'actividad_economica', title: 'ACTIVIDAD ECONOMICA', visible: false },
+                    { data: 'otros', title: 'OTROS', visible: false },
+                    { data: 'direccion', title: 'DIRECCIÓN', visible: false },
+                    { data: 'formacion_formal', title: 'FORMACION FORMAL', visible: false },
+                    { data: 'profesion', title: 'PROFESION', visible: false },
+                    { data: 'nombre_organizacion', title: 'NOMBRE ORGANIZACION', visible: false },
+                    { data: 'rut_organizacion', title: 'RUT', visible: false },
+                    { data: 'domicilio_organizacion', title: 'DOMICILIO', visible: false },
+                    { data: 'antiguedad_anos', title: 'ANTIGUEDAD AÑOS', visible: false },
+                    { data: 'numero_socios', title: 'NUMERO SOCIOS', visible: false },
+                    { data: 'razons_pyme', title: 'RAZON SOCIAL PYME', visible: false },
+                    { data: 'rut_pyme', title: 'RUT PYME', visible: false },
+                    { data: 'domicilio_pyme', title: 'DOMICILIO PYME', visible: false },
+                    { data: 'nombre_proyecto', title: 'NOMBRE PROYECTO', visible: false },
+                    { data: 'nombre_proyecto', title: 'NOMBRE PROYECTO', visible: false },
+                    { data: 'tipo_proyecto', title: 'TIPO PROYECTO', visible: false },
+                    { data: 'lugar_proyecto', title: 'LUGAR PROYECTO', visible: false },
+                    { data: 'directos', title: 'DIRECTOS', visible: false },
+                    { data: 'indirectos', title: 'INDIRECTOS', visible: false },
+                    { data: 'aporte_solicitado', title: 'APORTE SOLICITADO', visible: false },
+                    { data: 'acepto_clausula_proy', title: 'ACEPTO CLAUSULAS', visible: false },
+                    { data: 'estado', title: 'ESTADO', visible: false },
+                    { data: 'resp', title: 'RESPUESTA', visible: false }
                 ],
                 dom: 'Bfrtip',
                 buttons: [
                     {
                         extend: 'copy',
                         exportOptions: {
-                            modifier: {
-                                page: 'all' // Exportar todas las páginas
+                            columns: function ( idx, data, node ) {
+                                return idx !== 5; // Excluye la columna 'respuesta'
                             }
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            modifier: {
-                                page: 'all' // Exportar todas las páginas
+                            columns: function ( idx, data, node ) {
+                                return idx !== 5; // Excluye la columna 'respuesta'
                             }
                         },
                         filename: 'Portal Comunidades', // Nombre del archivo Excel
                         title: 'Portal Comunidades'
                     },
-                    {
-                        extend: 'pdf',
-                        exportOptions: {
-                            modifier: {
-                                page: 'all' // Exportar todas las páginas
-                            }
-                        },
-                        filename: 'Portal Comunidades', // Nombre del archivo PDF
-                        title: 'Portal Comunidades'
-                    }
+                    // {
+                    //     extend: 'pdf',
+                    //     orientation: 'landscape', // Establece la orientación a horizontal
+                    //     exportOptions: {
+                    //         columns: function ( idx, data, node ) {
+                    //             return idx !== 5; // Excluye la columna 'respuesta'
+                    //         }
+                    //     },
+                    //     filename: 'Portal Comunidades', // Nombre del archivo PDF
+                    //     title: 'Portal Comunidades'
+                    // }
                 ],
                 paging: true // Habilitar paginación
             });
